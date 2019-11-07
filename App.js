@@ -3,9 +3,9 @@ import { StyleSheet, Text, View } from 'react-native'
 
 import { withAuthenticator } from 'aws-amplify-react-native'
 
-import Amplify from '@aws-amplify/core'
-import config from './aws-exports'
-Amplify.configure(config)
+import Amplify, { Auth } from 'aws-amplify';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
 
 class App extends React.Component {
   render() {

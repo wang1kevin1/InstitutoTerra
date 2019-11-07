@@ -23,6 +23,11 @@ export default class AccountUtil extends React.Component {
     await Auth.configSignignUp(username, authCode)
     console.log('confirm sign up successful!')
   }
+  async resendSignUp() {
+    const { username } = this.state
+    await Auth.resendSignUp(username)
+    console.log('confirm sign up resent!')
+  }
   async signIn() {
     const { username, password  } = this.state
     const user = await Auth.signIn(username, password)
@@ -33,5 +38,21 @@ export default class AccountUtil extends React.Component {
     const { user, authCode } = this.state
     await Auth.configSignignIn(user, authCode)
     console.log('user now successfully signed in to the app!!')
+  }
+  async signOut() {
+    await Auth.signOut()
+    console.log('user now successfully signed out of the app!!')
+  }
+  async changePassword() {
+    await Auth.currentAuthenticatedUser()
+    .then(user => {
+        return Auth.changePassword(user, 'oldPassword', 'newPassword');
+    })
+    console.log('successfully changed password!!')
+  }
+  async forgotPassword() {
+    await Auth.forgotPassword(username)
+    await Auth.forgotPasswordSubmit(username, code, new_password)
+    console.log('successfully changed new password!!')
   }
 }
