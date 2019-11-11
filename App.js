@@ -1,30 +1,157 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import { View, TouchableOpacity } from 'react-native'
 
-import { withAuthenticator } from 'aws-amplify-react-native'
+import { 
+  createSwitchNavigator, 
+  createStackNavigator ,
+  createDrawerNavigator,
+  createMaterialTopTabNavigator
+} from 'react-navigation'
 
-import Amplify, { Auth } from 'aws-amplify';
-import awsconfig from './aws-exports';
-Amplify.configure(awsconfig);
+import { Ionicons } from '@expo/vector-icons';
 
-class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Yo!</Text>
-      </View>
-    );
+// Auth stack screen imports
+import AuthLoadingScreen from './src/components/auth/AuthLoadingScreen'
+import WelcomeScreen from './src/components/auth/WelcomeScreen'
+import SignUpScreen from './src/components/auth/SignUpScreen'
+import SignInScreen from './src/components/auth/SignInScreen'
+import ForgetPasswordScreen from './src/components/auth/ForgetPasswordScreen'
+
+// App stack screen imports
+import HomeScreen from './src/components/user/HomeScreen'
+import SettingsScreen from './src/components/user/SettingsScreen'
+import ProfileScreen from './src/components/user/ProfileScreen'
+
+// Amplify imports and config
+import Amplify from '@aws-amplify/core'
+import config from './aws-exports'
+Amplify.configure(config)
+
+// Configurations and options for the AppTabNavigator
+const configurations = {
+  Home: {
+    screen: HomeScreen,
+    navigationOptions: {
+      tabBarLabel: 'Home',
+      tabBarIcon: ({ tintColor }) => (
+        <Ionicons style={{fontSize: 26, color: tintColor}} name="ios-home" />
+      )
+    }
+  },
+  Profile: {
+    screen: ProfileScreen,
+    navigationOptions: {
+      tabBarLabel: 'Profile',
+      tabBarIcon: ({tintColor}) => (
+        <Ionicons style={{fontSize: 26, color: tintColor}} name="ios-person" />
+      )
+    }
+  },
+  Settings: {
+    screen: SettingsScreen,
+    navigationOptions: {
+      tabBarLabel: 'Settings',
+      tabBarIcon: ({ tintColor }) => (
+        <Ionicons style={{fontSize: 26, color: tintColor}} name="ios-settings" />
+      )
+    }
+  },
+}
+
+const options = {
+  tabBarPosition: 'bottom',
+  swipeEnabled: true,
+  animationEnabled: true,
+  navigationOptions: {
+    tabBarVisible: true
+  },
+  tabBarOptions: {
+    showLabel: true,
+    activeTintColor: '#fff',
+    inactiveTintColor: '#fff9',
+    style: {
+      backgroundColor: '#f16f69',
+    },
+    labelStyle: {
+      fontSize: 12,
+      fontWeight: 'bold',
+      marginBottom: 12,
+      marginTop:12,
+    },
+    indicatorStyle: {
+      height: 0,
+    },
+    showIcon: true,
   }
 }
 
-export default withAuthenticator(App)
+// Bottom App tabs
+const AppTabNavigator = createMaterialTopTabNavigator(configurations, options)
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+// Making the common header title dynamic in AppTabNavigator
+AppTabNavigator.navigationOptions = ({ navigation }) => {
+  let { routeName } = navigation.state.routes[navigation.state.index]
+  let headerTitle = routeName
+  return {
+    headerTitle,
+  }
+}
+
+const AppStackNavigator = createStackNavigator({
+  Header: {
+    screen: AppTabNavigator,
+    // Set the header icon
+    navigationOptions: ({navigation}) => ({
+      headerLeft: (
+        <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+          <View style={{paddingHorizontal: 10}}>
+            <Ionicons size={24} name="md-menu" />
+          </View>
+        </TouchableOpacity>
+      )
+    })
+  }    
+})
+
+// App stack for the drawer
+const AppDrawerNavigator = createDrawerNavigator({
+  Tabs: AppStackNavigator, // defined above
+  Home: HomeScreen,
+  Profile: ProfileScreen,
+  Settings: SettingsScreen
+})
+
+// Auth stack
+const AuthStackNavigator = createStackNavigator({
+  Welcome: {
+    screen: WelcomeScreen,
+    navigationOptions: () => ({
+      title: `Welcome to this App`, // for the header screen
+      headerBackTitle: 'Back'
+    }),
   },
-});
+  SignUp: {
+    screen: SignUpScreen,
+    navigationOptions: () => ({
+      title: `Create a new account`,
+    }),
+  },
+  SignIn: {
+    screen: SignInScreen,
+    navigationOptions: () => ({
+      title: `Log in to your account`,
+    }),
+  },
+  ForgetPassword: {
+    screen: ForgetPasswordScreen,
+    navigationOptions: () => ({
+      title: `Create a new password`,
+    }),
+  },
+})
+
+export default createSwitchNavigator({
+  Authloading: AuthLoadingScreen,
+  Auth: AuthStackNavigator, // the Auth stack
+  App: AppDrawerNavigator, // the App stack
+})
