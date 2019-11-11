@@ -15,7 +15,7 @@ import AuthLoadingScreen from './src/components/auth/AuthLoadingScreen'
 import WelcomeScreen from './src/components/auth/WelcomeScreen'
 import SignUpScreen from './src/components/auth/SignUpScreen'
 import SignInScreen from './src/components/auth/SignInScreen'
-import ForgetPasswordScreen from './src/components/auth/ForgetPasswordScreen'
+import ForgetPasswordScreen from './src/components/auth/ForgotPasswordScreen'
 
 // App stack screen imports
 import HomeScreen from './src/components/user/HomeScreen'

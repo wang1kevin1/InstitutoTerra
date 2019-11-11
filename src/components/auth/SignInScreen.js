@@ -25,7 +25,7 @@ import {
 import Auth from '@aws-amplify/auth'
 
 // Load the app logo
-const logo = require('./../src/assets/logo.png')
+const logo = require('../../assets/logo.png')
 
 export default class SignInScreen extends React.Component {
   state = {

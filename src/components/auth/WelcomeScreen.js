@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 
 // Load the app logo
-const logo = require('./../assets/logo.png')
+const logo = require('../../assets/logo.png')
 
 export default class WelcomeScreen extends React.Component {
   handleRoute = async (destination) => {

@@ -26,10 +26,10 @@ import {
 import Auth from '@aws-amplify/auth'
 
 // Import data for countries
-import data from './../utilities/countriesData'
+import data from '../../utilities/CountryCode'
 
 // Load the app logo
-const logo = require('./../assets/logo.png')
+const logo = require('../../assets/logo.png')
 
 // Default render of country flag
 const defaultFlag = data.filter(
