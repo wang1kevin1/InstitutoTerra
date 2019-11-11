@@ -2,11 +2,12 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native'
 
 import { 
-  createSwitchNavigator, 
-  createStackNavigator ,
-  createDrawerNavigator,
-  createMaterialTopTabNavigator
+  createSwitchNavigator, createAppContainer, 
 } from 'react-navigation'
+
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createDrawerNavigator } from 'react-navigation-drawer';
 
 import { Ionicons } from '@expo/vector-icons';
 
@@ -150,8 +151,12 @@ const AuthStackNavigator = createStackNavigator({
   },
 })
 
-export default createSwitchNavigator({
+const AppSwitchNavigator = createSwitchNavigator({
   Authloading: AuthLoadingScreen,
   Auth: AuthStackNavigator, // the Auth stack
   App: AppDrawerNavigator, // the App stack
 })
+
+const App = createAppContainer(AppSwitchNavigator);
+
+export default App;
