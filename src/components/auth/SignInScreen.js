@@ -21,6 +21,8 @@ import {
   Input
 } from 'native-base'
 
+import Colors from '../../utilities/Colors'
+
 // AWS Amplify modular import
 import Auth from '@aws-amplify/auth'
 
@@ -159,7 +161,7 @@ export default class SignInScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#5059ae',
+    backgroundColor: Colors.primary,
     justifyContent: 'center',
     flexDirection: 'column'
   },
@@ -179,7 +181,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
-    backgroundColor: '#5059ae',
+    backgroundColor: Colors.primary,
   },
   itemStyle: {
     marginBottom: 20,
