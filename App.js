@@ -13,15 +13,17 @@ import { Ionicons } from '@expo/vector-icons';
 
 // Auth stack screen imports
 import AuthLoadingScreen from './src/components/auth/AuthLoadingScreen'
-import WelcomeScreen from './src/components/auth/WelcomeScreen'
 import SignUpScreen from './src/components/auth/SignUpScreen'
 import SignInScreen from './src/components/auth/SignInScreen'
-import ForgetPasswordScreen from './src/components/auth/ForgotPasswordScreen'
+import ForgotPasswordScreen from './src/components/auth/ForgotPasswordScreen'
 
 // App stack screen imports
 import HomeScreen from './src/components/user/HomeScreen'
 import SettingsScreen from './src/components/user/SettingsScreen'
 import ProfileScreen from './src/components/user/ProfileScreen'
+
+// Main app screen imports
+import WelcomeScreen from './src/components/main/WelcomeScreen'
 
 // Amplify imports and config
 import Amplify from '@aws-amplify/core'
@@ -143,13 +145,13 @@ const AuthStackNavigator = createStackNavigator({
       title: `Log in to your account`,
     }),
   },
-  ForgetPassword: {
-    screen: ForgetPasswordScreen,
+  ForgotPassword: {
+    screen: ForgotPasswordScreen,
     navigationOptions: () => ({
       title: `Create a new password`,
     }),
   },
-})
+}, { headerMode: 'none' })
 
 const AppSwitchNavigator = createSwitchNavigator({
   Authloading: AuthLoadingScreen,

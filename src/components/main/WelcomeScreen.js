@@ -8,8 +8,11 @@ import {
   Image
 } from 'react-native'
 
+import Colors from '../../utilities/Colors'
+
 // Load the app logo
 const logo = require('../../assets/logo.png')
+
 
 export default class WelcomeScreen extends React.Component {
   handleRoute = async (destination) => {
@@ -34,7 +37,7 @@ export default class WelcomeScreen extends React.Component {
           <Text style={styles.textStyle}>Sign Up</Text>
         </TouchableOpacity>
         <TouchableOpacity 
-          onPress={() => this.handleRoute('ForgetPassword')}
+          onPress={() => this.handleRoute('ForgotPassword')}
           style={styles.buttonStyle}>
           <Text style={styles.textStyle}>Forget password ?</Text>
         </TouchableOpacity>
@@ -46,7 +49,7 @@ export default class WelcomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.green,
     alignItems: 'center',
     justifyContent: 'center',
   },
