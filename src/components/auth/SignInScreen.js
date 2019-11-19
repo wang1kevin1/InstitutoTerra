@@ -22,55 +22,26 @@ import {
 
 import { Ionicons } from '@expo/vector-icons';
 
-
-
 import Colors from '../../utilities/Colors'
 
-
-// AWS Amplify modular import
 import Auth from '@aws-amplify/auth'
 
 export default class SignInScreen extends React.Component {
   state = {
     email: '',
     password: '',
-    fadeIn: new Animated.Value(0),
-    fadeOut: new Animated.Value(0),
-    isHidden: false
   }
-  componentDidMount() {
-    this.fadeIn()
-  }
-  fadeIn() {
-    Animated.timing(
-      this.state.fadeIn,
-      {
-        toValue: 1,
-        duration: 1000,
-        useNativeDriver: true
-      }
-    ).start()
-    this.setState({ isHidden: true })
-  }
-  fadeOut() {
-    Animated.timing(
-      this.state.fadeOut,
-      {
-        toValue: 1,
-        duration: 1000,
-        useNativeDriver: true
-      }
-    ).start()
-    this.setState({ isHidden: false })
-  }
+  
   onChangeText(key, value) {
     this.setState({
       [key]: value
     })
   }
+
   handleRoute = async (destination) => {
     await this.props.navigation.navigate(destination)
   }
+
   // Sign in users with Auth
   async signIn() {
     const { email, password } = this.state
@@ -90,7 +61,6 @@ export default class SignInScreen extends React.Component {
       })
   }
   
-
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -115,8 +85,6 @@ export default class SignInScreen extends React.Component {
                       keyboardType={'email-address'}
                       onSubmitEditing={(event) => { this.refs.SecondInput._root.focus() }}
                       onChangeText={value => this.onChangeText('email', value)}
-                      onFocus={() => this.fadeOut()}
-                      onEndEditing={() => this.fadeIn()}
                     />
                   </Item>
                   <Item style={styles.itemStyle}>
@@ -131,8 +99,6 @@ export default class SignInScreen extends React.Component {
                       secureTextEntry={true}
                       ref='SecondInput'
                       onChangeText={value => this.onChangeText('password', value)}
-                      onFocus={() => this.fadeOut()}
-                      onEndEditing={() => this.fadeIn()}
                     />
                   </Item>
                   {/* SignIn Button */}
@@ -227,5 +193,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.lightblue,
   },
-  
 })
