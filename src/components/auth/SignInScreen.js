@@ -92,7 +92,6 @@ export default class SignInScreen extends React.Component {
   
 
   render() {
-    let { fadeOut, fadeIn, isHidden } = this.state
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar />
@@ -105,15 +104,15 @@ export default class SignInScreen extends React.Component {
                 <View style={styles.container}>
                   {/* Text Entry for Email/Password */}
                   <Item style={styles.itemStyle}>
-                    <Ionicons name="ios-mail" style={styles.iconStyle} />
+                    <Ionicons style={styles.iconStyle} name="ios-mail" />
                     <Input
                       style={styles.input}
                       placeholder='Email'
                       placeholderTextColor={Colors.lightblue}
-                      keyboardType={'email-address'}
                       returnKeyType='next'
                       autoCapitalize='none'
                       autoCorrect={false}
+                      keyboardType={'email-address'}
                       onSubmitEditing={(event) => { this.refs.SecondInput._root.focus() }}
                       onChangeText={value => this.onChangeText('email', value)}
                       onFocus={() => this.fadeOut()}
@@ -186,7 +185,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    height: 200,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -198,15 +196,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderRadius: 10,
   },
-
   iconStyle: {
     color: Colors.lightblue,
     fontSize: 30,
     marginRight: 15,
     marginLeft: 15,
-    flex: 0.1,
-    justifyContent: 'center',
-    alignSelf: 'center'
+    flex: 0.1
   },
   buttonStyle1: {
     alignItems: 'center',
