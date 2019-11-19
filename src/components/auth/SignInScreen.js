@@ -1,4 +1,5 @@
 import React from 'react'
+
 import {
   StyleSheet,
   View,
@@ -10,8 +11,6 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   Alert,
-  Animated,
-  Button,
 } from 'react-native'
 
 import {
