@@ -11,9 +11,7 @@ import {
   Keyboard,
   View,
   Alert,
-  Modal,
-  FlatList,
-  Animated,
+  ActivityIndicator,
 } from 'react-native'
 
 import {
@@ -56,9 +54,12 @@ export default class SignUpScreen extends React.Component {
     Keyboard.dismiss()
     this.setState({ isLoading: true })
     await Auth.signUp({
-      email,
-      password,
-      attributes: { username }
+      username: this.state.email,
+      password: this.state.password,
+      attributes: { 
+        email: this.state.email,
+        name: this.state.username,
+      }
     })
     .then(() => {
       this.setState({ isLoading: false })
