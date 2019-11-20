@@ -23,7 +23,7 @@ import SettingsScreen from './src/components/user/SettingsScreen'
 import ProfileScreen from './src/components/user/ProfileScreen'
 
 // Main app screen imports
-import WelcomeScreen from './src/components/main/WelcomeScreen'
+import DebugScreen from './src/components/main/DebugScreen'
 
 // Amplify imports and config
 import Amplify from '@aws-amplify/core'
@@ -126,10 +126,10 @@ const AppDrawerNavigator = createDrawerNavigator({
 
 // Auth stack
 const AuthStackNavigator = createStackNavigator({
-  Welcome: {
-    screen: WelcomeScreen,
+  Debug: {
+    screen: DebugScreen,
     navigationOptions: () => ({
-      title: `Welcome to this App`, // for the header screen
+      title: `Debug Screen`, // for the header screen
       headerBackTitle: 'Back'
     }),
   },

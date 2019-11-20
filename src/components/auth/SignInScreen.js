@@ -39,10 +39,6 @@ export default class SignInScreen extends React.Component {
     })
   }
 
-  handleRoute = async (destination) => {
-    await this.props.navigation.navigate(destination)
-  }
-
   // Sign in users with Auth
   async signIn() {
     const { email, password } = this.state
@@ -77,7 +73,7 @@ export default class SignInScreen extends React.Component {
             <View style={styles.container}>
               <Container style={styles.infoContainer}>
                 <View style={styles.container}>
-                  {/* Text Entry for Email/Password */}
+                  {/* Email */}
                   <Item style={styles.itemStyle}>
                     <Ionicons style={styles.iconStyle} name="ios-mail" />
                     <Input
@@ -92,6 +88,7 @@ export default class SignInScreen extends React.Component {
                       onChangeText={value => this.onChangeText('email', value)}
                     />
                   </Item>
+                  {/* Password */}
                   <Item style={styles.itemStyle}>
                     <Ionicons style={styles.iconStyle} name="ios-lock" />
                     <Input
@@ -106,7 +103,7 @@ export default class SignInScreen extends React.Component {
                       onChangeText={value => this.onChangeText('password', value)}
                     />
                   </Item>
-                  {/* SignIn Button */}
+                  {/* Sign In Button */}
                   <TouchableOpacity
                     onPress={() => this.signIn()}
                     disabled={this.state.isLoading}
@@ -115,22 +112,23 @@ export default class SignInScreen extends React.Component {
                       Sign In
                     </Text>
                   </TouchableOpacity>
-                  {/* Create Account Button */}
+                  {/* Sign Up Text */}
                   <TouchableOpacity
-                    onPress={() => this.handleRoute('SignUp')}
+                    onPress={() => this.props.navigation.navigate('SignUp')}
                     style={styles.buttonStyle2}>
                     <Text style={styles.buttonText2}>
                       New User? Create an Account!
                     </Text>
                   </TouchableOpacity>
-                  {/* Forgot Password Button */}
+                  {/* Forgot Password Text */}
                   <TouchableOpacity
-                    onPress={() => this.handleRoute('ForgotPassword')}
+                    onPress={() => this.props.navigation.navigate('ForgotPassword')}
                     style={styles.buttonStyle2}>
                     <Text style={styles.buttonText2}>
                       Forgot Password?
                     </Text>
                   </TouchableOpacity>
+                  {/* Loading ActivityIndicator */}
                   {this.state.isLoading &&
                     <View>
                       <ActivityIndicator color={Colors.lightblue} size='large' animating={this.state.isLoading} />

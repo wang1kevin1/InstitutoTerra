@@ -14,7 +14,7 @@ import Colors from '../../utilities/Colors'
 const logo = require('../../assets/logo.png')
 
 
-export default class WelcomeScreen extends React.Component {
+export default class DebugScreen extends React.Component {
   handleRoute = async (destination) => {
     await this.props.navigation.navigate(destination)
   }

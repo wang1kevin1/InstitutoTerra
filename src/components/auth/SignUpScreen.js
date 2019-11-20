@@ -31,7 +31,9 @@ export default class SignUpScreen extends React.Component {
     email: '',
     password: '',
     password_confirmation: '',
-    isLoading: false
+    isLoading: false,
+    hidePassword1: true,
+    hidePassword2: true
   }
   
   onChangeText(key, value) {
@@ -40,6 +42,25 @@ export default class SignUpScreen extends React.Component {
     })
   }
 
+  // toggles secure text password 
+  handleHidePassword1 = () => {
+    if (this.state.hidePassword1) {
+      this.setState({hidePassword1: false})
+    } else {
+      this.setState({hidePassword1: true})
+    }
+  }
+
+  // toggles secure text password confirmation
+  handleHidePassword2 = () => {
+    if (this.state.hidePassword2) {
+      this.setState({hidePassword2: false})
+    } else {
+      this.setState({hidePassword2: true})
+    }
+  }
+
+  // checks for password match
   handleSignUp = () => {
     if (this.state.password !== this.state.password_confirmation) {
       Alert.alert('Passwords do not match')
@@ -90,9 +111,9 @@ export default class SignUpScreen extends React.Component {
             <View style={styles.container}>
               <Container style={styles.infoContainer}>
                 <View style={styles.container}>
-                  {/* Text Entry for User Info */}
+                  {/* Name */}
                   <Item style={styles.itemStyle}>
-                    <Ionicons style={styles.iconStyle} name="ios-person" />
+                    <Ionicons style={styles.iconStyle1} name="ios-person" />
                     <Input
                       style={styles.input}
                       placeholder='Name'
@@ -104,8 +125,9 @@ export default class SignUpScreen extends React.Component {
                       onChangeText={value => this.onChangeText('username', value)}
                     />
                   </Item>
+                  {/* Email */}
                   <Item style={styles.itemStyle}>
-                    <Ionicons style={styles.iconStyle} name="ios-mail" />
+                    <Ionicons style={styles.iconStyle1} name="ios-mail" />
                     <Input
                       style={styles.input}
                       placeholder='Email'
@@ -119,8 +141,9 @@ export default class SignUpScreen extends React.Component {
                       onChangeText={value => this.onChangeText('email', value)}
                     />
                   </Item>
+                  {/* Password */}
                   <Item style={styles.itemStyle}>
-                    <Ionicons style={styles.iconStyle} name="ios-lock" />
+                    <Ionicons style={styles.iconStyle1} name="ios-lock" />
                     <Input
                       style={styles.input}
                       placeholder='Password'
@@ -128,14 +151,16 @@ export default class SignUpScreen extends React.Component {
                       returnKeyType='go'
                       autoCapitalize='none'
                       autoCorrect={false}
-                      secureTextEntry={true}
+                      secureTextEntry={this.state.hidePassword1}
                       ref='ThirdInput'
                       onSubmitEditing={(event) => { this.refs.FourthInput._root.focus() }}
                       onChangeText={value => this.onChangeText('password', value)}
                     />
+                    <Ionicons style={styles.iconStyle2} name="ios-eye" onPress={() => this.handleHidePassword1()}/>
                   </Item>
+                  {/* Confirm Password */}
                   <Item style={styles.itemStyle}>
-                    <Ionicons style={styles.iconStyle} name="ios-lock" />
+                    <Ionicons style={styles.iconStyle1} name="ios-lock" />
                     <Input
                       style={styles.input}
                       placeholder='Confirm Password'
@@ -143,10 +168,11 @@ export default class SignUpScreen extends React.Component {
                       returnKeyType='go'
                       autoCapitalize='none'
                       autoCorrect={false}
-                      secureTextEntry={true}
+                      secureTextEntry={this.state.hidePassword2}
                       ref='FourthInput'
                       onChangeText={value => this.onChangeText('password_confirmation', value)}
                     />
+                    <Ionicons style={styles.iconStyle2} name="ios-eye" onPress={() => this.handleHidePassword2()}/>
                   </Item>
                   {/* SignUp Button */}
                   <TouchableOpacity
@@ -157,6 +183,7 @@ export default class SignUpScreen extends React.Component {
                       Sign Up
                     </Text>
                   </TouchableOpacity>
+                  {/* Loading ActivityIndicator */}
                   {this.state.isLoading &&
                     <View>
                       <ActivityIndicator color={Colors.lightblue} size='large' animating={this.state.isLoading} />
@@ -199,9 +226,16 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderRadius: 10,
   },
-  iconStyle: {
+  iconStyle1: {
     color: Colors.lightblue,
     fontSize: 30,
+    marginRight: 15,
+    marginLeft: 15,
+    flex: 0.1
+  },
+  iconStyle2: {
+    color: Colors.grey,
+    fontSize: 20,
     marginRight: 15,
     marginLeft: 15,
     flex: 0.1

@@ -1,4 +1,5 @@
 import React from 'react'
+
 import {
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -10,7 +11,6 @@ import {
   Keyboard,
   View,
   Alert,
-  Animated
 } from 'react-native'
 
 import { Ionicons } from '@expo/vector-icons';
@@ -23,43 +23,13 @@ import {
 // AWS Amplify modular import
 import Auth from '@aws-amplify/auth'
 
-// Load the app logo
-const logo = require('../../assets/logo.png')
-
 export default class ForgetPasswordScreen extends React.Component {
   state = {
     username: '',
     authCode: '',
     newPassword: '',
-    fadeIn: new Animated.Value(0),  // Initial value for opacity: 0
-    fadeOut: new Animated.Value(1),  // Initial value for opacity: 1
-    isHidden: false
   }
-  componentDidMount() {
-    this.fadeIn()
-  }
-  fadeIn() {
-    Animated.timing(
-      this.state.fadeIn,
-      {
-        toValue: 1,
-        duration: 1000,
-        useNativeDriver: true
-      }
-    ).start()
-    this.setState({isHidden: true})
-  }
-  fadeOut() {
-    Animated.timing(
-      this.state.fadeOut,
-      {
-        toValue: 0,
-        duration: 1000,
-        useNativeDriver: true
-      }
-    ).start()
-    this.setState({isHidden: false})
-  }
+  
   onChangeText(key, value) {
     this.setState({
       [key]: value
@@ -99,7 +69,6 @@ export default class ForgetPasswordScreen extends React.Component {
     })
   }
   render() {
-    let { fadeOut, fadeIn, isHidden } = this.state
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar/>
@@ -110,21 +79,6 @@ export default class ForgetPasswordScreen extends React.Component {
           keyboardVerticalOffset={23}>
           <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
             <View style={styles.container}>
-              {/* App Logo */}
-              <View style={styles.logoContainer}>
-                {
-                  isHidden ?
-                  <Animated.Image 
-                    source={logo} 
-                    style={{ opacity: fadeIn, width: 160, height: 167 }}
-                  />
-                  :
-                  <Animated.Image 
-                    source={logo} 
-                    style={{ opacity: fadeOut, width: 160, height: 167 }}
-                  />
-                }
-              </View>
               {/* Infos */}
               <Container style={styles.infoContainer}>
                 <View style={styles.container}>
@@ -140,8 +94,6 @@ export default class ForgetPasswordScreen extends React.Component {
                       autoCapitalize='none'
                       autoCorrect={false}
                       onChangeText={value => this.onChangeText('username', value)}
-                      onFocus={this.fadeOut.bind(this)}
-                      onEndEditing={this.fadeIn.bind(this)}
                     />
                   </Item>
                   <TouchableOpacity
@@ -164,8 +116,6 @@ export default class ForgetPasswordScreen extends React.Component {
                       secureTextEntry={true}
                       onSubmitEditing={(event) => { this.refs.SecondInput._root.focus() }}
                       onChangeText={value => this.onChangeText('newPassword', value)}
-                      onFocus={this.fadeOut.bind(this)}
-                      onEndEditing={this.fadeIn.bind(this)}
                     />
                   </Item>
                   {/* Code confirmation section  */}
@@ -182,8 +132,6 @@ export default class ForgetPasswordScreen extends React.Component {
                       secureTextEntry={false}
                       ref='SecondInput'
                       onChangeText={value => this.onChangeText('authCode', value)}
-                      onFocus={this.fadeOut.bind(this)}
-                      onEndEditing={this.fadeIn.bind(this)}
                     />
                   </Item>
                   <TouchableOpacity
@@ -246,15 +194,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: "#fff",
-  },
-  logoContainer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    height: 600,
-    bottom: 180,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
   },
 })
