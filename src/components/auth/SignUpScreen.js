@@ -27,37 +27,47 @@ import Colors from '../../utilities/Colors'
 
 import Auth from '@aws-amplify/auth'
 
-// Import data for countries
-import data from '../../utilities/CountryCode'
-
 export default class SignUpScreen extends React.Component {
   state = {
     username: '',
     email: '',
     password: '',
     password_confirmation: '',
+    isLoading: false
   }
-  // Get user input
+  
   onChangeText(key, value) {
     this.setState({
       [key]: value
     })
   }
 
+  handleSignUp = () => {
+    if (this.state.password !== this.state.password_confirmation) {
+      Alert.alert('Passwords do not match')
+    } else {
+      this.signUp()
+    }
+  }
+
   // Sign up user with AWS Amplify Auth
   async signUp() {
     const { username, password, email } = this.state
-    // rename variable to conform with Amplify Auth field phone attribute
+    Keyboard.dismiss()
+    this.setState({ isLoading: true })
     await Auth.signUp({
       email,
       password,
       attributes: { username }
     })
     .then(() => {
+      this.setState({ isLoading: false })
       console.log('sign up successful!')
-      Alert.alert('An email has been sent to confirm your sign up.')
+      Alert.alert('An email has been sent to confirm your sign up')
+      this.props.navigation.navigate('SignIn')
     })
     .catch(err => {
+      this.setState({ isLoading: false })
       if (! err.message) {
         console.log('Error when signing up: ', err)
         Alert.alert('Error when signing up: ', err)
@@ -139,7 +149,7 @@ export default class SignUpScreen extends React.Component {
                   </Item>
                   {/* SignUp Button */}
                   <TouchableOpacity
-                    onPress={() => this.signUp()}
+                    onPress={() => this.handleSignUp()}
                     disabled={this.state.isLoading}
                     style={styles.buttonStyle1}>
                     <Text style={styles.buttonText1}>
