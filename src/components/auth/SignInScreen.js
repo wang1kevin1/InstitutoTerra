@@ -11,6 +11,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   Alert,
+  ActivityIndicator,
 } from 'react-native'
 
 import {
@@ -29,8 +30,9 @@ export default class SignInScreen extends React.Component {
   state = {
     email: '',
     password: '',
+    isLoading: false,
   }
-  
+
   onChangeText(key, value) {
     this.setState({
       [key]: value
@@ -44,12 +46,16 @@ export default class SignInScreen extends React.Component {
   // Sign in users with Auth
   async signIn() {
     const { email, password } = this.state
+    Keyboard.dismiss()
+    this.setState({ isLoading: true })
     await Auth.signIn(email, password)
       .then(user => {
         this.setState({ user })
+        this.setState({ isLoading: false })
         this.props.navigation.navigate('Authloading')
       })
       .catch(err => {
+        this.setState({ isLoading: false })
         if (!err.message) {
           console.log('Error when signing in: ', err)
           Alert.alert('Error when signing in: ', err)
@@ -59,7 +65,7 @@ export default class SignInScreen extends React.Component {
         }
       })
   }
-  
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -103,6 +109,7 @@ export default class SignInScreen extends React.Component {
                   {/* SignIn Button */}
                   <TouchableOpacity
                     onPress={() => this.signIn()}
+                    disabled={this.state.isLoading}
                     style={styles.buttonStyle1}>
                     <Text style={styles.buttonText1}>
                       Sign In
@@ -124,6 +131,11 @@ export default class SignInScreen extends React.Component {
                       Forgot Password?
                     </Text>
                   </TouchableOpacity>
+                  {this.state.isLoading &&
+                    <View>
+                      <ActivityIndicator color={Colors.lightblue} size='large' animating={this.state.isLoading} />
+                    </View>
+                  }
                 </View>
               </Container>
             </View>
