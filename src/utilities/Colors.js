@@ -10,7 +10,7 @@ const Colors = {
   lightgreen: '#c7e59a',
   mutedgreen: '#effbdd',
 
-  lightblue: '#82a2f4',
+  lightblue: '#82a2f4'
 }
 
-export default Colors;
+export default Colors

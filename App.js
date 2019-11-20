@@ -1,15 +1,15 @@
-import React from 'react';
+import React from 'react'
 import { View, TouchableOpacity } from 'react-native'
 
-import { 
-  createSwitchNavigator, createAppContainer, 
+import {
+  createSwitchNavigator, createAppContainer
 } from 'react-navigation'
 
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
-import { createStackNavigator } from 'react-navigation-stack';
-import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
+import { createStackNavigator } from 'react-navigation-stack'
+import { createDrawerNavigator } from 'react-navigation-drawer'
 
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons'
 
 // Auth stack screen imports
 import AuthLoadingScreen from './src/components/auth/AuthLoadingScreen'
@@ -37,7 +37,7 @@ const configurations = {
     navigationOptions: {
       tabBarLabel: 'Home',
       tabBarIcon: ({ tintColor }) => (
-        <Ionicons style={{fontSize: 26, color: tintColor}} name="ios-home" />
+        <Ionicons style={{ fontSize: 26, color: tintColor }} name='ios-home' />
       )
     }
   },
@@ -45,8 +45,8 @@ const configurations = {
     screen: ProfileScreen,
     navigationOptions: {
       tabBarLabel: 'Profile',
-      tabBarIcon: ({tintColor}) => (
-        <Ionicons style={{fontSize: 26, color: tintColor}} name="ios-person" />
+      tabBarIcon: ({ tintColor }) => (
+        <Ionicons style={{ fontSize: 26, color: tintColor }} name='ios-person' />
       )
     }
   },
@@ -55,10 +55,10 @@ const configurations = {
     navigationOptions: {
       tabBarLabel: 'Settings',
       tabBarIcon: ({ tintColor }) => (
-        <Ionicons style={{fontSize: 26, color: tintColor}} name="ios-settings" />
+        <Ionicons style={{ fontSize: 26, color: tintColor }} name='ios-settings' />
       )
     }
-  },
+  }
 }
 
 const options = {
@@ -73,18 +73,18 @@ const options = {
     activeTintColor: '#fff',
     inactiveTintColor: '#fff9',
     style: {
-      backgroundColor: '#f16f69',
+      backgroundColor: '#f16f69'
     },
     labelStyle: {
       fontSize: 12,
       fontWeight: 'bold',
       marginBottom: 12,
-      marginTop:12,
+      marginTop: 12
     },
     indicatorStyle: {
-      height: 0,
+      height: 0
     },
-    showIcon: true,
+    showIcon: true
   }
 }
 
@@ -93,10 +93,10 @@ const AppTabNavigator = createMaterialTopTabNavigator(configurations, options)
 
 // Making the common header title dynamic in AppTabNavigator
 AppTabNavigator.navigationOptions = ({ navigation }) => {
-  let { routeName } = navigation.state.routes[navigation.state.index]
-  let headerTitle = routeName
+  const { routeName } = navigation.state.routes[navigation.state.index]
+  const headerTitle = routeName
   return {
-    headerTitle,
+    headerTitle
   }
 }
 
@@ -104,16 +104,16 @@ const AppStackNavigator = createStackNavigator({
   Header: {
     screen: AppTabNavigator,
     // Set the header icon
-    navigationOptions: ({navigation}) => ({
+    navigationOptions: ({ navigation }) => ({
       headerLeft: (
         <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-          <View style={{paddingHorizontal: 10}}>
-            <Ionicons size={24} name="md-menu" />
+          <View style={{ paddingHorizontal: 10 }}>
+            <Ionicons size={24} name='md-menu' />
           </View>
         </TouchableOpacity>
       )
     })
-  }    
+  }
 })
 
 // App stack for the drawer
@@ -129,36 +129,36 @@ const AuthStackNavigator = createStackNavigator({
   Debug: {
     screen: DebugScreen,
     navigationOptions: () => ({
-      title: `Debug Screen`, // for the header screen
+      title: 'Debug Screen', // for the header screen
       headerBackTitle: 'Back'
-    }),
+    })
   },
   SignUp: {
     screen: SignUpScreen,
     navigationOptions: () => ({
-      title: `Create a new account`,
-    }),
+      title: 'Create a new account'
+    })
   },
   SignIn: {
     screen: SignInScreen,
     navigationOptions: () => ({
-      title: `Log in to your account`,
-    }),
+      title: 'Log in to your account'
+    })
   },
   ForgotPassword: {
     screen: ForgotPasswordScreen,
     navigationOptions: () => ({
-      title: `Create a new password`,
-    }),
-  },
+      title: 'Create a new password'
+    })
+  }
 }, { headerMode: 'none' })
 
 const AppSwitchNavigator = createSwitchNavigator({
   Authloading: AuthLoadingScreen,
   Auth: AuthStackNavigator, // the Auth stack
-  App: AppDrawerNavigator, // the App stack
+  App: AppDrawerNavigator // the App stack
 })
 
-const App = createAppContainer(AppSwitchNavigator);
+const App = createAppContainer(AppSwitchNavigator)
 
-export default App;
+export default App

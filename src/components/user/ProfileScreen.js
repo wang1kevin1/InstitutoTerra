@@ -2,13 +2,13 @@ import React from 'react'
 import {
   StyleSheet,
   View,
-  Text,
+  Text
 } from 'react-native'
 
 export default class ProfileScreen extends React.Component {
-  render() {
+  render () {
     return (
-      <View style={styles.container}> 
+      <View style={styles.container}>
         <Text style={styles.textStyle}>Profile</Text>
       </View>
     )
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#5059ae',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   textStyle: {
     fontWeight: 'bold',
