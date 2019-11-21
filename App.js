@@ -16,10 +16,10 @@ import AuthLoadingScreen from './src/components/auth/AuthLoadingScreen'
 import SignUpScreen from './src/components/auth/SignUpScreen'
 import SignInScreen from './src/components/auth/SignInScreen'
 import ForgotPasswordScreen from './src/components/auth/ForgotPasswordScreen'
+import SettingsScreen from './src/components/auth/SettingsScreen'
 
 // App stack screen imports
 import HomeScreen from './src/components/user/HomeScreen'
-import SettingsScreen from './src/components/user/SettingsScreen'
 import ProfileScreen from './src/components/user/ProfileScreen'
 
 // Main app screen imports
@@ -116,7 +116,7 @@ const AppStackNavigator = createStackNavigator({
   }
 })
 
-// App stack for the drawer
+// to be removed (app drawer)
 const AppDrawerNavigator = createDrawerNavigator({
   Tabs: AppStackNavigator, // defined above
   Home: HomeScreen,
@@ -156,7 +156,7 @@ const AuthStackNavigator = createStackNavigator({
 const AppSwitchNavigator = createSwitchNavigator({
   AuthLoading: AuthLoadingScreen,
   Auth: AuthStackNavigator, // the Auth stack
-  App: AppDrawerNavigator // the App stack
+  App: AppDrawerNavigator // to be removed
 })
 
 const App = createAppContainer(AppSwitchNavigator)
