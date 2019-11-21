@@ -1,11 +1,13 @@
 import React from 'react'
+
 import {
   StyleSheet,
   View,
   ActivityIndicator,
 } from 'react-native'
 
-// AWS Amplify modular import
+import Colors from '../../utilities/Colors'
+
 import Auth from '@aws-amplify/auth'
 
 export default class AuthLoadingScreen extends React.Component {
@@ -15,6 +17,7 @@ export default class AuthLoadingScreen extends React.Component {
   async componentDidMount () {
     await this.loadApp()
   }
+
   // Get the logged in users and remember them
   loadApp = async () => {
     await Auth.currentAuthenticatedUser()
@@ -24,10 +27,11 @@ export default class AuthLoadingScreen extends React.Component {
     .catch(err => console.log(err))
     this.props.navigation.navigate(this.state.userToken ? 'App' : 'Auth')
   }
+  
   render() {
     return (
       <View style={styles.container}> 
-        <ActivityIndicator size="large" color="#fff" />
+        <ActivityIndicator size="large" color={Colors.lightblue} />
       </View>
     )
   }
@@ -35,7 +39,7 @@ export default class AuthLoadingScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: Colors.lightgreen,
     alignItems: 'center',
     justifyContent: 'center',
   },

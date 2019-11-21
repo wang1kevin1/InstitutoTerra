@@ -13,14 +13,16 @@ import {
   Alert,
 } from 'react-native'
 
-import { Ionicons } from '@expo/vector-icons';
-
 import {
   Container,
   Item,
-  Input} from 'native-base'
+  Input
+} from 'native-base'
 
-// AWS Amplify modular import
+import { Ionicons } from '@expo/vector-icons';
+
+import Colors from '../../utilities/Colors'
+
 import Auth from '@aws-amplify/auth'
 
 export default class ForgetPasswordScreen extends React.Component {

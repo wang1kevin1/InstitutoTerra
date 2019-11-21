@@ -154,7 +154,7 @@ const AuthStackNavigator = createStackNavigator({
 }, { headerMode: 'none' })
 
 const AppSwitchNavigator = createSwitchNavigator({
-  Authloading: AuthLoadingScreen,
+  AuthLoading: AuthLoadingScreen,
   Auth: AuthStackNavigator, // the Auth stack
   App: AppDrawerNavigator // the App stack
 })
