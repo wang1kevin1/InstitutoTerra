@@ -198,8 +198,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   buttonText2: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 14,
+    fontWeight: 'normal',
     color: Colors.lightblue,
   },
 })
