@@ -150,7 +150,7 @@ const AuthStackNavigator = createStackNavigator({
     navigationOptions: () => ({
       title: 'Create a new password'
     })
-  }
+  },
 }, { headerMode: 'none' })
 
 const AppSwitchNavigator = createSwitchNavigator({

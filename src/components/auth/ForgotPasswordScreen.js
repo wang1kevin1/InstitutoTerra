@@ -27,9 +27,7 @@ import Auth from '@aws-amplify/auth'
 
 export default class ForgetPasswordScreen extends React.Component {
   state = {
-    username: '',
-    authCode: '',
-    newPassword: '',
+    email: '',
   }
   
   onChangeText(key, value) {
@@ -39,37 +37,23 @@ export default class ForgetPasswordScreen extends React.Component {
   }
   // Request a new password
   async forgotPassword() {
-    const { username } = this.state
-    await Auth.forgotPassword(username)
-    .then(data => console.log('New code sent', data))
-    .catch(err => {
-      if (! err.message) {
-        console.log('Error while setting up the new password: ', err)
-        Alert.alert('Error while setting up the new password: ', err)
-      } else {
-        console.log('Error while setting up the new password: ', err.message)
-        Alert.alert('Error while setting up the new password: ', err.message)
-      }
-    })
-  }
-  // Upon confirmation redirect the user to the Sign In page
-  async forgotPasswordSubmit() {
-    const { username, authCode, newPassword } = this.state
-    await Auth.forgotPasswordSubmit(username, authCode, newPassword)
-    .then(() => {
-      this.props.navigation.navigate('SignIn')
-      console.log('the New password submitted successfully')
+    this.setState({ username: this.state.email })
+    await Auth.forgotPassword(this.state.email)
+    .then(data => {
+      console.log('New code sent', data)
+      Alert.alert('A validation code has been sent to your email')
     })
     .catch(err => {
       if (! err.message) {
-        console.log('Error while confirming the new password: ', err)
-        Alert.alert('Error while confirming the new password: ', err)
+        console.log('Error while sending validation code: ', err)
+        Alert.alert('Error while sending validation code: ', err)
       } else {
-        console.log('Error while confirming the new password: ', err.message)
-        Alert.alert('Error while confirming the new password: ', err.message)
+        console.log('Error while sending validation code: ', err.message)
+        Alert.alert('Error while sending validation code: ', err.message)
       }
     })
   }
+  
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -81,66 +65,27 @@ export default class ForgetPasswordScreen extends React.Component {
           keyboardVerticalOffset={23}>
           <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
             <View style={styles.container}>
-              {/* Infos */}
               <Container style={styles.infoContainer}>
                 <View style={styles.container}>
-                  {/* Username */}
+                  {/* Email */}
                   <Item style={styles.itemStyle}>
-                    <Ionicons name="ios-person" style={styles.iconStyle} />
+                    <Ionicons name="ios-mail" style={styles.iconStyle1} />
                     <Input
                       style={styles.input}
-                      placeholder='Username'
-                      placeholderTextColor='#adb4bc'
+                      placeholder='Email'
+                      placeholderTextColor={Colors.lightblue}
                       keyboardType={'email-address'}
                       returnKeyType='go'
                       autoCapitalize='none'
                       autoCorrect={false}
-                      onChangeText={value => this.onChangeText('username', value)}
+                      onChangeText={value => this.onChangeText('email', value)}
                     />
                   </Item>
                   <TouchableOpacity
                     onPress={() => this.forgotPassword()}
-                    style={styles.buttonStyle}>
-                    <Text style={styles.buttonText}>
+                    style={styles.buttonStyle1}>
+                    <Text style={styles.buttonText1}>
                       Send Code
-                    </Text>
-                  </TouchableOpacity>
-                  {/* the New password section  */}
-                  <Item style={styles.itemStyle}>
-                    <Ionicons name="ios-lock" style={styles.iconStyle} />
-                    <Input
-                      style={styles.input}
-                      placeholder='New password'
-                      placeholderTextColor='#adb4bc'
-                      returnKeyType='next'
-                      autoCapitalize='none'
-                      autoCorrect={false}
-                      secureTextEntry={true}
-                      onSubmitEditing={(event) => { this.refs.SecondInput._root.focus() }}
-                      onChangeText={value => this.onChangeText('newPassword', value)}
-                    />
-                  </Item>
-                  {/* Code confirmation section  */}
-                  <Item style={styles.itemStyle}>
-                    <Ionicons name="md-apps" style={styles.iconStyle} />
-                    <Input
-                      style={styles.input}
-                      placeholder='Confirmation code'
-                      placeholderTextColor='#adb4bc'
-                      keyboardType={'numeric'}
-                      returnKeyType='done'
-                      autoCapitalize='none'
-                      autoCorrect={false}
-                      secureTextEntry={false}
-                      ref='SecondInput'
-                      onChangeText={value => this.onChangeText('authCode', value)}
-                    />
-                  </Item>
-                  <TouchableOpacity
-                    onPress={() => this.forgotPasswordSubmit()}
-                    style={styles.buttonStyle}>
-                    <Text style={styles.buttonText}>
-                      Confirm the new password
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -155,7 +100,7 @@ export default class ForgetPasswordScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#5059ae',
+    backgroundColor: Colors.lightgreen,
     justifyContent: 'center',
     flexDirection: 'column'
   },
@@ -163,38 +108,40 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 17,
     fontWeight: 'bold',
-    color: '#fff',
+    color: Colors.lightblue,
   },
   infoContainer: {
     position: 'absolute',
     left: 0,
     right: 0,
-    height: 200,
-    bottom: 25,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
-    backgroundColor: '#5059ae',
+    backgroundColor: Colors.lightgreen,
   },
   itemStyle: {
     marginBottom: 20,
+    backgroundColor: Colors.white,
+    borderRadius: 10,
   },
-  iconStyle: {
-    color: '#fff',
-    fontSize: 28,
-    marginRight: 15
+  iconStyle1: {
+    color: Colors.lightblue,
+    fontSize: 30,
+    marginRight: 15,
+    marginLeft: 15,
+    flex: 0.1
   },
-  buttonStyle: {
+  buttonStyle1: {
     alignItems: 'center',
-    backgroundColor: '#b44666',
+    backgroundColor: Colors.lightblue,
     padding: 14,
     marginBottom: 20,
-    borderRadius: 3,
+    borderRadius: 10,
   },
-  buttonText: {
+  buttonText1: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: "#fff",
+    color: Colors.white,
   },
 })
