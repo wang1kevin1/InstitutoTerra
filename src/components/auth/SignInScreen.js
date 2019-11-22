@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   SafeAreaView,
-  StatusBar,
   KeyboardAvoidingView,
   Keyboard,
   Alert,
@@ -65,7 +64,6 @@ export default class SignInScreen extends React.Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <StatusBar />
         <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
           <TouchableWithoutFeedback
             style={styles.container}

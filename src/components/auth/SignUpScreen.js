@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Text,
   SafeAreaView,
-  StatusBar,
   KeyboardAvoidingView,
   Keyboard,
   View,

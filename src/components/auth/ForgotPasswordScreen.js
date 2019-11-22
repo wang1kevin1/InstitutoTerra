@@ -6,11 +6,11 @@ import {
   StyleSheet,
   Text,
   SafeAreaView,
-  StatusBar,
   KeyboardAvoidingView,
   Keyboard,
   View,
   Alert,
+  ActivityIndicator
 } from 'react-native'
 
 import {
@@ -30,7 +30,13 @@ import CodeInput from 'react-native-confirmation-code-input';
 export default class ForgetPasswordScreen extends React.Component {
   state = {
     email: '',
-    stage: '2',
+    authcode: '',
+    password: '',
+    password_confirmation: '',
+    stage: '1',
+    isLoading: false,
+    hidePassword1: true,
+    hidePassword2: true
   }
 
   onChangeText(key, value) {
@@ -38,8 +44,37 @@ export default class ForgetPasswordScreen extends React.Component {
       [key]: value
     })
   }
+
+  // toggles secure text password 
+  handleHidePassword1 = () => {
+    if (this.state.hidePassword1) {
+      this.setState({ hidePassword1: false })
+    } else {
+      this.setState({ hidePassword1: true })
+    }
+  }
+
+  // toggles secure text password confirmation
+  handleHidePassword2 = () => {
+    if (this.state.hidePassword2) {
+      this.setState({ hidePassword2: false })
+    } else {
+      this.setState({ hidePassword2: true })
+    }
+  }
+
+  // checks for password match
+  handleReset = () => {
+    if (this.state.password !== this.state.password_confirmation) {
+      Alert.alert('Passwords do not match')
+    } else {
+      this.forgotPasswordSubmit()
+    }
+  }
+
   // Request verification code for new password
   async forgotPassword() {
+    Keyboard.dismiss()
     await Auth.forgotPassword(this.state.email)
       .then(data => {
         console.log('New code sent', data)
@@ -57,15 +92,21 @@ export default class ForgetPasswordScreen extends React.Component {
       })
   }
 
-  // Upon confirmation redirect the user to the Sign In page
+  // calls AWS Cognito to reset password if authcode is correct
   async forgotPasswordSubmit() {
-    const { username, authCode, newPassword } = this.state
-    await Auth.forgotPasswordSubmit(username, authCode, newPassword)
+    Keyboard.dismiss()
+    this.setState({ isLoading: true })
+    const { email, authcode, password } = this.state
+    await Auth.forgotPasswordSubmit(email, authcode, password)
       .then(() => {
+        this.setState({ isLoading: false })
+        console.log('Your password has been reset')
+        Alert.alert('Your password has been reset')
+        this.setState({ stage: '1' })
         this.props.navigation.navigate('SignIn')
-        console.log('the New password submitted successfully')
       })
       .catch(err => {
+        this.setState({ isLoading: false })
         if (!err.message) {
           console.log('Error while confirming the new password: ', err)
           Alert.alert('Error while confirming the new password: ', err)
@@ -87,11 +128,11 @@ export default class ForgetPasswordScreen extends React.Component {
           <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
             <View style={styles.container}>
               <Container style={styles.infoContainer}>
-                {/* Email for password reset */}
+                {/* Stage 1: Email for password reset */}
                 {this.state.stage == '1' &&
                   <View style={styles.container}>
                     {/* Email */}
-                    <Item style={styles.itemStyle1}>
+                    <Item style={styles.itemStyle}>
                       <Ionicons name="ios-mail" style={styles.iconStyle1} />
                       <Input
                         style={styles.input}
@@ -114,7 +155,7 @@ export default class ForgetPasswordScreen extends React.Component {
                     </TouchableOpacity>
                   </View>
                 }
-                {/* Verification code for password reset */}
+                {/* Stage 2: Verification code for password reset */}
                 {this.state.stage == '2' &&
                   <View style={styles.container}>
                     {/* Verification Code message*/}
@@ -134,7 +175,7 @@ export default class ForgetPasswordScreen extends React.Component {
                       space={4}
                       autoFocus={false}
                       codeInputStyle={{ fontWeight: '800' }}
-                      onFulfill={(code) => this._onFulfill(code)}
+                      onFulfill={(code) => this.setState({ authcode: code })}
                     />
                     {/* Didn't receive code link */}
                     <TouchableOpacity
@@ -146,12 +187,64 @@ export default class ForgetPasswordScreen extends React.Component {
                     </TouchableOpacity>
                     {/* Confirm code input */}
                     <TouchableOpacity
-                      onPress={() => this.forgotPassword()}
+                      onPress={() => this.setState({ stage: '3' })}
                       style={styles.buttonStyle1}>
                       <Text style={styles.buttonText1}>
                         Reset Password
                       </Text>
                     </TouchableOpacity>
+                  </View>
+                }
+                {/* Stage 3: Password reset */}
+                {this.state.stage == '3' &&
+                  <View style={styles.container}>
+                    {/* Password */}
+                    <Item style={styles.itemStyle}>
+                      <Ionicons style={styles.iconStyle1} name="ios-lock" />
+                      <Input
+                        style={styles.input}
+                        placeholder='Password'
+                        placeholderTextColor={Colors.lightblue}
+                        returnKeyType='go'
+                        autoCapitalize='none'
+                        autoCorrect={false}
+                        secureTextEntry={this.state.hidePassword1}
+                        onSubmitEditing={(event) => { this.refs.SecondInput._root.focus() }}
+                        onChangeText={value => this.onChangeText('password', value)}
+                      />
+                      <Ionicons style={styles.iconStyle2} name="ios-eye" onPress={() => this.handleHidePassword1()} />
+                    </Item>
+                    {/* Confirm Password */}
+                    <Item style={styles.itemStyle}>
+                      <Ionicons style={styles.iconStyle1} name="ios-lock" />
+                      <Input
+                        style={styles.input}
+                        placeholder='Confirm Password'
+                        placeholderTextColor={Colors.lightblue}
+                        returnKeyType='go'
+                        autoCapitalize='none'
+                        autoCorrect={false}
+                        secureTextEntry={this.state.hidePassword2}
+                        ref='SecondInput'
+                        onChangeText={value => this.onChangeText('password_confirmation', value)}
+                      />
+                      <Ionicons style={styles.iconStyle2} name="ios-eye" onPress={() => this.handleHidePassword2()} />
+                    </Item>
+                    {/* Confirm Password Reset Button */}
+                    <TouchableOpacity
+                      onPress={() => this.handleReset()}
+                      disabled={this.state.isLoading}
+                      style={styles.buttonStyle1}>
+                      <Text style={styles.buttonText1}>
+                        Confirm Password Reset
+                      </Text>
+                    </TouchableOpacity>
+                    {/* Loading ActivityIndicator */}
+                    {this.state.isLoading &&
+                      <View>
+                        <ActivityIndicator color={Colors.lightblue} size='large' animating={this.state.isLoading} />
+                      </View>
+                    }
                   </View>
                 }
               </Container>
@@ -185,7 +278,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     backgroundColor: Colors.lightgreen,
   },
-  itemStyle1: {
+  itemStyle: {
     marginBottom: 20,
     backgroundColor: Colors.white,
     borderRadius: 10,
@@ -193,6 +286,13 @@ const styles = StyleSheet.create({
   iconStyle1: {
     color: Colors.lightblue,
     fontSize: 30,
+    marginRight: 15,
+    marginLeft: 15,
+    flex: 0.1
+  },
+  iconStyle2: {
+    color: Colors.grey,
+    fontSize: 20,
     marginRight: 15,
     marginLeft: 15,
     flex: 0.1
@@ -222,7 +322,7 @@ const styles = StyleSheet.create({
     color: Colors.lightblue,
   },
   messageText1: {
-    marginTop: 100,
+    marginTop: 200,
     fontSize: 18,
     fontWeight: 'bold',
     color: Colors.darkgrey,
