@@ -29,11 +29,11 @@ import CodeInput from 'react-native-confirmation-code-input';
 
 export default class ForgetPasswordScreen extends React.Component {
   state = {
+    stage: '1',
     email: '',
     authcode: '',
     password: '',
     password_confirmation: '',
-    stage: '1',
     isLoading: false,
     hidePassword1: true,
     hidePassword2: true
