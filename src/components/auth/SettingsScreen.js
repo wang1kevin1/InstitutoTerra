@@ -118,7 +118,7 @@ export default class SettingsScreen extends React.Component {
                       />
                       <SettingsList.Item
                         icon={<Ionicons style={styles.iconStyle3} name="ios-lock" />}
-                        title='Password'
+                        title=' Password'
                         onPress={() => this.setState({ setting: 'setPassword' })}
                       />
                       <SettingsList.Header headerStyle={{ marginTop: 15 }} />
@@ -149,7 +149,6 @@ export default class SettingsScreen extends React.Component {
             </TouchableWithoutFeedback>
           </KeyboardAvoidingView>
         </SafeAreaView>
-
       );
     } else {
       return (
@@ -229,8 +228,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     padding: 30,
     alignContent: 'flex-end',
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    borderWidth: 1,
+    borderColor: Colors.lightgrey
   },
   footerTxt: {
     fontSize: 10,
