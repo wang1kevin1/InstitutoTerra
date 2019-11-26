@@ -1,4 +1,5 @@
 import React from 'react'
+
 import {
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -9,7 +10,7 @@ import {
   Keyboard,
   View,
   Alert,
-  Image
+  Image,
 } from 'react-native'
 
 import {
@@ -20,11 +21,15 @@ import {
 
 import { Ionicons } from '@expo/vector-icons';
 
+import SettingsList from 'react-native-settings-list';
+
 import Colors from '../../utilities/Colors'
 
 import Auth from '@aws-amplify/auth'
 
 const logo = require('../../assets/logo.png')
+
+const terra = require('../../assets/terra.png')
 
 export default class SettingsScreen extends React.Component {
   state = {
@@ -92,47 +97,70 @@ export default class SettingsScreen extends React.Component {
           <KeyboardAvoidingView style={styles.container2} behavior='padding' enabled>
             <TouchableWithoutFeedback style={styles.container2} onPress={Keyboard.dismiss}>
               <View style={styles.container2}>
-                <Container style={styles.infoContainer2}>
-                  <View style={styles.container2}>
-                    {/* Email */}
-                    <Item style={styles.itemStyle}>
-                      <Ionicons name="ios-mail" style={styles.iconStyle1} />
-                      <Input
-                        style={styles.input}
-                        placeholder='Email'
-                        placeholderTextColor={Colors.lightblue}
-                        keyboardType={'email-address'}
-                        returnKeyType='go'
-                        autoCapitalize='none'
-                        autoCorrect={false}
-                        onChangeText={value => this.onChangeText('email', value)}
-                      />
-                    </Item>
-                    {/* Send code button */}
-                    <TouchableOpacity
-                      onPress={() => this.setState({ setting: 'setName' })}
-                      style={styles.buttonStyle1}>
-                      <Text style={styles.buttonText1}>
-                        Send Code
-                      </Text>
-                    </TouchableOpacity>
+                <View style={{ backgroundColor: '#EFEFF4', flex: 1 }}>
+                  <View style={{ borderBottomWidth: 1, backgroundColor: Colors.green, borderColor: '#c8c7cc' }}>
+                    <Text style={{ alignSelf: 'center', marginTop: 40, marginBottom: 15, fontWeight: 'bold', fontSize: 20 }}>Settings</Text>
                   </View>
-                </Container>
+                  <View style={{ backgroundColor: '#EFEFF4', flex: 1 }}>
+                    <SettingsList borderColor='#c8c7cc' defaultItemSize={50}>
+                      <SettingsList.Header headerStyle={{ marginTop: 15 }} />
+                      <SettingsList.Item
+                        icon={<Ionicons style={styles.iconStyle3} name="ios-person" />}
+                        title='Name'
+                        titleInfo='Kevin Wang'
+                        onPress={() => this.setState({ setting: 'setName' })}
+                      />
+                      <SettingsList.Item
+                        icon={<Ionicons style={styles.iconStyle3} name="ios-mail" />}
+                        title='Email'
+                        titleInfo='wang1kevin1@gmail.com'
+                        onPress={() => this.setState({ setting: 'setEmail' })}
+                      />
+                      <SettingsList.Item
+                        icon={<Ionicons style={styles.iconStyle3} name="ios-lock" />}
+                        title='Password'
+                        onPress={() => this.setState({ setting: 'setPassword' })}
+                      />
+                      <SettingsList.Header headerStyle={{ marginTop: 15 }} />
+                      <SettingsList.Item
+                        icon={<Ionicons style={styles.iconStyle3} name="md-globe" />}
+                        title='Language'
+                        titleInfo='English'
+                        onPress={() => this.setState({ setting: 'setLanguage' })}
+                      />
+                      <SettingsList.Item
+                        icon={<Ionicons style={styles.iconStyle3} name="md-exit" />}
+                        title='Sign Out'
+                        onPress={() => Alert.alert('Signing out')}
+                      />
+                    </SettingsList>
+                  </View>
+                </View>
+                <View style={styles.footer}>
+                  <Text style={styles.footerTxt}>made possible with</Text>
+                  <TouchableOpacity onPress={() => Alert.alert('About Section')}>
+                  <Image 
+                    source={terra}
+                    style={{ width: 151, height: 13, marginTop: 9, resizeMode: 'contain'}}
+                  />
+                  </TouchableOpacity>
+                </View>
               </View>
             </TouchableWithoutFeedback>
           </KeyboardAvoidingView>
         </SafeAreaView>
+
       );
     } else {
       return (
-        <SafeAreaView style={styles.container1}>
-          <KeyboardAvoidingView style={styles.container1} behavior='padding' enabled>
-            <TouchableWithoutFeedback style={styles.container1} onPress={Keyboard.dismiss}>
-              <View style={styles.container1}>
-                <Container style={styles.infoContainer1}>
+        <SafeAreaView style={styles.container}>
+          <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
+            <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
+              <View style={styles.container}>
+                <Container style={styles.infoContainer}>
                   {/* setName: set account name */}
                   {this.state.setting == 'setName' &&
-                    <View style={styles.container1}>
+                    <View style={styles.container}>
                       {/* Email */}
                       <Item style={styles.itemStyle}>
                         <Ionicons name="ios-mail" style={styles.iconStyle1} />
@@ -168,7 +196,7 @@ export default class SettingsScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container1: {
+  container: {
     flex: 1,
     backgroundColor: Colors.lightgreen,
     justifyContent: 'center',
@@ -176,7 +204,7 @@ const styles = StyleSheet.create({
   },
   container2: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: '#EFEFF4',
     justifyContent: 'center',
     flexDirection: 'column'
   },
@@ -186,7 +214,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.lightblue,
   },
-  infoContainer1: {
+  infoContainer: {
     position: 'absolute',
     left: 0,
     right: 0,
@@ -196,15 +224,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     backgroundColor: Colors.lightgreen,
   },
-  infoContainer2: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    flexDirection: 'row',
-    justifyContent: 'center',
+  footer: {
     alignItems: 'center',
-    paddingHorizontal: 30,
     backgroundColor: Colors.white,
+    padding: 30,
+    alignContent: 'flex-end',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  footerTxt: {
+    fontSize: 10,
+    fontWeight: 'normal',
+    color: Colors.black,
   },
   itemStyle: {
     marginBottom: 20,
@@ -224,6 +255,13 @@ const styles = StyleSheet.create({
     marginRight: 15,
     marginLeft: 15,
     flex: 0.1
+  },
+  iconStyle3: {
+    color: Colors.lightblue,
+    fontSize: 30,
+    marginRight: 15,
+    marginLeft: 15,
+    alignSelf: 'center'
   },
   buttonStyle1: {
     alignItems: 'center',
@@ -248,12 +286,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'normal',
     color: Colors.lightblue,
-  },
-  messageText1: {
-    marginTop: 200,
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: Colors.darkgrey,
-    alignContent: 'center'
   },
 })
