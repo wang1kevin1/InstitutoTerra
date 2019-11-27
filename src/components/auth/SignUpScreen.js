@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Text,
   SafeAreaView,
-  StatusBar,
   KeyboardAvoidingView,
   Keyboard,
   View,
@@ -27,7 +26,7 @@ import Auth from '@aws-amplify/auth'
 
 export default class SignUpScreen extends React.Component {
   state = {
-    username: '',
+    name: '',
     email: '',
     password: '',
     password_confirmation: '',
@@ -71,7 +70,6 @@ export default class SignUpScreen extends React.Component {
 
   // Sign up user with AWS Amplify Auth
   async signUp() {
-    const { username, password, email } = this.state
     Keyboard.dismiss()
     this.setState({ isLoading: true })
     await Auth.signUp({
@@ -79,7 +77,7 @@ export default class SignUpScreen extends React.Component {
       password: this.state.password,
       attributes: { 
         email: this.state.email,
-        name: this.state.username,
+        name: this.state.name,
       }
     })
     .then(() => {
@@ -103,7 +101,6 @@ export default class SignUpScreen extends React.Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <StatusBar />
         <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
           <TouchableWithoutFeedback
             style={styles.container}
@@ -122,7 +119,7 @@ export default class SignUpScreen extends React.Component {
                       autoCapitalize='none'
                       autoCorrect={false}
                       onSubmitEditing={(event) => { this.refs.SecondInput._root.focus() }}
-                      onChangeText={value => this.onChangeText('username', value)}
+                      onChangeText={value => this.onChangeText('name', value)}
                     />
                   </Item>
                   {/* Email */}
@@ -148,7 +145,7 @@ export default class SignUpScreen extends React.Component {
                       style={styles.input}
                       placeholder='Password'
                       placeholderTextColor={Colors.lightblue}
-                      returnKeyType='go'
+                      returnKeyType='next'
                       autoCapitalize='none'
                       autoCorrect={false}
                       secureTextEntry={this.state.hidePassword1}
