@@ -42,6 +42,8 @@ export default class SettingsScreen extends React.Component {
     password: '',
     newpassword: '',
     newpassword_confirmation: '',
+    hidePassword1: true,
+    hidePassword2: true
     //language: 'English',
   }
 
@@ -53,6 +55,33 @@ export default class SettingsScreen extends React.Component {
     this.setState({
       [key]: value
     })
+  }
+
+  // toggles secure text password 
+  handleHidePassword1 = () => {
+    if (this.state.hidePassword1) {
+      this.setState({ hidePassword1: false })
+    } else {
+      this.setState({ hidePassword1: true })
+    }
+  }
+
+  // toggles secure text password confirmation
+  handleHidePassword2 = () => {
+    if (this.state.hidePassword2) {
+      this.setState({ hidePassword2: false })
+    } else {
+      this.setState({ hidePassword2: true })
+    }
+  }
+
+  // checks for password match
+  handleReset = () => {
+    if (this.state.newpassword !== this.state.newpassword_confirmation) {
+      Alert.alert('Passwords do not match')
+    } else {
+      this.changePassword()
+    }
   }
 
   // Gets current authenticated user's info
@@ -82,7 +111,7 @@ export default class SettingsScreen extends React.Component {
     this.setState({ isLoading: true })
     await Auth.currentAuthenticatedUser()
       .then(user => {
-        return Auth.updateUserAttributes(user, {'name': name});
+        return Auth.updateUserAttributes(user, { 'name': name });
       })
       .then(data => {
         this.setState({ isLoading: false })
@@ -108,7 +137,7 @@ export default class SettingsScreen extends React.Component {
     this.setState({ isLoading: true })
     await Auth.currentAuthenticatedUser()
       .then(user => {
-        return Auth.updateUserAttributes(user, {'email': email});
+        return Auth.updateUserAttributes(user, { 'email': email });
       })
       .then(data => {
         this.setState({ isLoading: false })
@@ -128,6 +157,7 @@ export default class SettingsScreen extends React.Component {
       })
   }
 
+  // Verifies new email
   verifyEmail = async () => {
     Keyboard.dismiss()
     await Auth.verifyCurrentUserAttributeSubmit("email", this.state.authcode)
@@ -149,13 +179,21 @@ export default class SettingsScreen extends React.Component {
 
   // Change user password for the app
   changePassword = async () => {
-    const { password1, password2 } = this.state
+    Keyboard.dismiss()
+    this.setState({ isLoading: true })
+    const { password, newpassword } = this.state
     await Auth.currentAuthenticatedUser()
       .then(user => {
-        return Auth.changePassword(user, password1, password2)
+        return Auth.changePassword(user, password, newpassword)
       })
-      .then(data => console.log('Password changed successfully', data))
+      .then(data => {
+        console.log('Password changed successfully', data)
+        Alert.alert('Password changed successfully')
+        this.setState({ isLoading: false })
+        this.setState({ setting: 'list' })
+      })
       .catch(err => {
+        this.setState({ isLoading: false })
         if (!err.message) {
           console.log('Error changing password: ', err)
           Alert.alert('Error changing password: ', err)
@@ -225,12 +263,12 @@ export default class SettingsScreen extends React.Component {
                         icon={<Ionicons style={styles.iconStyle3} name="md-globe" />}
                         title='Language'
                         titleInfo='English'
-                        onPress={() => this.setState({ setting: 'setLanguage' })}
+                        onPress={() => Alert.alert('Currently only English is available. We will work on adding accessibility in the near future.')}
                       />
                       <SettingsList.Item
                         icon={<Ionicons style={styles.iconStyle3} name="md-exit" />}
                         title='Sign Out'
-                        onPress={() => Alert.alert('Signing out')}
+                        onPress={() => this.signOutAlert()}
                       />
                     </SettingsList>
                   </View>
@@ -343,14 +381,6 @@ export default class SettingsScreen extends React.Component {
                         codeInputStyle={{ fontWeight: '800' }}
                         onFulfill={(code) => this.setState({ authcode: code })}
                       />
-                      {/* Didn't receive code link */}
-                      <TouchableOpacity
-                        onPress={() => this.changeEmail()}
-                        style={styles.buttonStyle2}>
-                        <Text style={styles.buttonText2}>
-                          Resend verification code
-                      </Text>
-                      </TouchableOpacity>
                       {/* Confirm code input */}
                       <TouchableOpacity
                         onPress={() => this.verifyEmail()}
@@ -361,115 +391,183 @@ export default class SettingsScreen extends React.Component {
                       </TouchableOpacity>
                     </View>
                   }
+                  {/* setPassword: set account password */}
+                  {this.state.setting == 'setPassword' &&
+                    <View style={styles.container}>
+                      {/* Current Password */}
+                      <Item style={styles.itemStyle}>
+                        <Ionicons style={styles.iconStyle1} name="ios-lock" />
+                        <Input
+                          style={styles.input}
+                          placeholder='Current Password'
+                          placeholderTextColor={Colors.lightblue}
+                          returnKeyType='next'
+                          autoCapitalize='none'
+                          autoCorrect={false}
+                          secureTextEntry={true}
+                          onSubmitEditing={(event) => { this.refs.SecondInput._root.focus() }}
+                          onChangeText={value => this.onChangeText('password', value)}
+                        />
+                      </Item>
+                      {/* New Password */}
+                      <Item style={styles.itemStyle}>
+                        <Ionicons style={styles.iconStyle1} name="ios-lock" />
+                        <Input
+                          style={styles.input}
+                          placeholder='New Password'
+                          placeholderTextColor={Colors.lightblue}
+                          returnKeyType='next'
+                          autoCapitalize='none'
+                          autoCorrect={false}
+                          secureTextEntry={this.state.hidePassword1}
+                          ref='SecondInput'
+                          onSubmitEditing={(event) => { this.refs.ThirdInput._root.focus() }}
+                          onChangeText={value => this.onChangeText('newpassword', value)}
+                        />
+                        <Ionicons style={styles.iconStyle2} name="ios-eye" onPress={() => this.handleHidePassword1()} />
+                      </Item>
+                      {/* Confirm New Password */}
+                      <Item style={styles.itemStyle}>
+                        <Ionicons style={styles.iconStyle1} name="ios-lock" />
+                        <Input
+                          style={styles.input}
+                          placeholder='Confirm New Password'
+                          placeholderTextColor={Colors.lightblue}
+                          returnKeyType='go'
+                          autoCapitalize='none'
+                          autoCorrect={false}
+                          secureTextEntry={this.state.hidePassword2}
+                          ref='ThirdInput'
+                          onChangeText={value => this.onChangeText('newpassword_confirmation', value)}
+                        />
+                        <Ionicons style={styles.iconStyle2} name="ios-eye" onPress={() => this.handleHidePassword2()} />
+                      </Item>
+                      {/* Confirm Password Reset Button */}
+                      <TouchableOpacity
+                        onPress={() => this.handleReset()}
+                        disabled={this.state.isLoading}
+                        style={styles.buttonStyle1}>
+                        <Text style={styles.buttonText1}>
+                          Confirm Password Change
+                      </Text>
+                      </TouchableOpacity>
+                      {/* Loading ActivityIndicator */}
+                      {this.state.isLoading &&
+                        <View>
+                          <ActivityIndicator color={Colors.lightblue} size='large' animating={this.state.isLoading} />
+                        </View>
+                      }
+                    </View>
+                  }
                 </Container>
               </View>
             </TouchableWithoutFeedback>
           </KeyboardAvoidingView>
         </SafeAreaView>
-      );
+          );
+        }
+      }
     }
-  }
-}
-
+    
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.lightgreen,
-    justifyContent: 'center',
-    flexDirection: 'column'
-  },
+            container: {
+            flex: 1,
+          backgroundColor: Colors.lightgreen,
+          justifyContent: 'center',
+          flexDirection: 'column'
+        },
   container2: {
-    flex: 1,
-    backgroundColor: '#EFEFF4',
-    justifyContent: 'center',
-    flexDirection: 'column'
-  },
+            flex: 1,
+          backgroundColor: '#EFEFF4',
+          justifyContent: 'center',
+          flexDirection: 'column'
+        },
   input: {
-    flex: 1,
-    fontSize: 17,
-    fontWeight: 'bold',
-    color: Colors.lightblue,
-  },
+            flex: 1,
+          fontSize: 17,
+          fontWeight: 'bold',
+          color: Colors.lightblue,
+        },
   infoContainer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 30,
-    backgroundColor: Colors.lightgreen,
-  },
+            position: 'absolute',
+          left: 0,
+          right: 0,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingHorizontal: 30,
+          backgroundColor: Colors.lightgreen,
+        },
   footer: {
-    alignItems: 'center',
-    backgroundColor: Colors.white,
-    padding: 30,
-    alignContent: 'flex-end',
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
-    borderWidth: 1,
-    borderColor: Colors.lightgrey
-  },
+            alignItems: 'center',
+          backgroundColor: Colors.white,
+          padding: 30,
+          alignContent: 'flex-end',
+          borderTopLeftRadius: 15,
+          borderTopRightRadius: 15,
+          borderWidth: 1,
+          borderColor: Colors.lightgrey
+        },
   footerTxt: {
-    fontSize: 10,
-    fontWeight: 'normal',
-    color: Colors.black,
-  },
+            fontSize: 10,
+          fontWeight: 'normal',
+          color: Colors.black,
+        },
   itemStyle: {
-    marginBottom: 20,
-    backgroundColor: Colors.white,
-    borderRadius: 10,
-  },
+            marginBottom: 20,
+          backgroundColor: Colors.white,
+          borderRadius: 10,
+        },
   iconStyle1: {
-    color: Colors.lightblue,
-    fontSize: 30,
-    marginRight: 15,
-    marginLeft: 15,
-    flex: 0.1
-  },
+            color: Colors.lightblue,
+          fontSize: 30,
+          marginRight: 15,
+          marginLeft: 15,
+          flex: 0.1
+        },
   iconStyle2: {
-    color: Colors.grey,
-    fontSize: 20,
-    marginRight: 15,
-    marginLeft: 15,
-    flex: 0.1
-  },
+            color: Colors.grey,
+          fontSize: 20,
+          marginRight: 15,
+          marginLeft: 15,
+          flex: 0.1
+        },
   iconStyle3: {
-    color: Colors.lightblue,
-    fontSize: 30,
-    marginRight: 15,
-    marginLeft: 15,
-    alignSelf: 'center'
-  },
+            color: Colors.lightblue,
+          fontSize: 30,
+          marginRight: 15,
+          marginLeft: 15,
+          alignSelf: 'center'
+        },
   buttonStyle1: {
-    alignItems: 'center',
-    backgroundColor: Colors.lightblue,
-    padding: 14,
-    marginBottom: 20,
-    borderRadius: 10,
-  },
+            alignItems: 'center',
+          backgroundColor: Colors.lightblue,
+          padding: 14,
+          marginBottom: 20,
+          borderRadius: 10,
+        },
   buttonText1: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: Colors.white,
-  },
+            fontSize: 18,
+          fontWeight: 'bold',
+          color: Colors.white,
+        },
   buttonStyle2: {
-    alignItems: 'center',
-    backgroundColor: Colors.lightgreen,
-    padding: 5,
-    marginBottom: 10,
-    borderRadius: 10,
-  },
+            alignItems: 'center',
+          backgroundColor: Colors.lightgreen,
+          padding: 5,
+          marginBottom: 10,
+          borderRadius: 10,
+        },
   buttonText2: {
-    fontSize: 14,
-    fontWeight: 'normal',
-    color: Colors.lightblue,
-  },
+            fontSize: 14,
+          fontWeight: 'normal',
+          color: Colors.lightblue,
+        },
   messageText1: {
-    marginTop: 200,
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: Colors.darkgrey,
-    alignContent: 'center'
-  },
+            marginTop: 200,
+          fontSize: 18,
+          fontWeight: 'bold',
+          color: Colors.darkgrey,
+          alignContent: 'center'
+        },
 })
