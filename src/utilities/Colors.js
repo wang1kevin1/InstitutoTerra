@@ -2,15 +2,15 @@ const Colors = {
   white: '#fff',
   black: '#000',
 
-  darkgrey: '#2f2f2f',
-  grey: '#6d7365',
-  lightgrey: '#f6f6f6',
+  darkgrey: '#6D7365',
+  grey: '#9A9A9A',
+  lightgrey: '#E0E0E0',
 
-  green: '#658c1c',
-  lightgreen: '#c7e59a',
+  green: '#638C1C',
+  lightgreen: '#CAF28D',
   mutedgreen: '#effbdd',
 
-  lightblue: '#82a2f4'
+  lightblue: '#82A2F4'
 }
 
 export default Colors
