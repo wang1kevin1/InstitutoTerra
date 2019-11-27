@@ -11,6 +11,7 @@ import {
   View,
   Alert,
   Image,
+  ActivityIndicator,
 } from 'react-native'
 
 import {
@@ -23,17 +24,19 @@ import { Ionicons } from '@expo/vector-icons';
 
 import SettingsList from 'react-native-settings-list';
 
+import CodeInput from 'react-native-confirmation-code-input';
+
 import Colors from '../../utilities/Colors'
 
 import Auth from '@aws-amplify/auth'
-
-const logo = require('../../assets/logo.png')
 
 const terra = require('../../assets/terra.png')
 
 export default class SettingsScreen extends React.Component {
   state = {
     setting: 'list',
+    isLoading: false,
+    authcode: '',
     name: '',
     email: '',
     password: '',
@@ -42,10 +45,106 @@ export default class SettingsScreen extends React.Component {
     //language: 'English',
   }
 
+  componentDidMount() {
+    this.getUserInfo()
+  }
+
   onChangeText(key, value) {
     this.setState({
       [key]: value
     })
+  }
+
+  // Gets current authenticated user's info
+  getUserInfo = async () => {
+    await Auth.currentAuthenticatedUser({ bypassCache: true })
+      .then(user => {
+        console.log(user)
+        this.setState({ user })
+        this.setState({ name: user.attributes.name })
+        this.setState({ email: user.attributes.email })
+      })
+      .catch(err => {
+        if (!err.message) {
+          console.log('Error getting user info: ', err)
+          Alert.alert('Error getting user info: ', err)
+        } else {
+          console.log('Error getting user info: ', err.message)
+          Alert.alert('Error getting user info: ', err.message)
+        }
+      })
+  }
+
+  // Change user name
+  changeName = async () => {
+    const { name } = this.state
+    Keyboard.dismiss()
+    this.setState({ isLoading: true })
+    await Auth.currentAuthenticatedUser()
+      .then(user => {
+        return Auth.updateUserAttributes(user, {'name': name});
+      })
+      .then(data => {
+        this.setState({ isLoading: false })
+        console.log('Name changed successfully', data)
+        this.setState({ setting: 'list' })
+      })
+      .catch(err => {
+        this.setState({ isLoading: false })
+        if (!err.message) {
+          console.log('Error changing name: ', err)
+          Alert.alert('Error changing name: ', err)
+        } else {
+          console.log('Error changing name: ', err.message)
+          Alert.alert('Error changing name: ', err.message)
+        }
+      })
+  }
+
+  // Change user email
+  changeEmail = async () => {
+    const { email } = this.state
+    Keyboard.dismiss()
+    this.setState({ isLoading: true })
+    await Auth.currentAuthenticatedUser()
+      .then(user => {
+        return Auth.updateUserAttributes(user, {'email': email});
+      })
+      .then(data => {
+        this.setState({ isLoading: false })
+        console.log('Email change process started', data)
+        Alert.alert('A verification code has been sent to your new email')
+        this.setState({ setting: 'emailCode' })
+      })
+      .catch(err => {
+        this.setState({ isLoading: false })
+        if (!err.message) {
+          console.log('Error changing email: ', err)
+          Alert.alert('Error changing email: ', err)
+        } else {
+          console.log('Error changing email: ', err.message)
+          Alert.alert('Error changing email: ', err.message)
+        }
+      })
+  }
+
+  verifyEmail = async () => {
+    Keyboard.dismiss()
+    await Auth.verifyCurrentUserAttributeSubmit("email", this.state.authcode)
+      .then(data => {
+        console.log('Email change confirmed', data)
+        Alert.alert('Email changed successfully')
+        this.setState({ setting: 'list' })
+      })
+      .catch(err => {
+        if (!err.message) {
+          console.log('Error verifying email: ', err)
+          Alert.alert('Error verifying email: ', err)
+        } else {
+          console.log('Error verifying email: ', err.message)
+          Alert.alert('Error verifying email: ', err.message)
+        }
+      })
   }
 
   // Change user password for the app
@@ -107,13 +206,13 @@ export default class SettingsScreen extends React.Component {
                       <SettingsList.Item
                         icon={<Ionicons style={styles.iconStyle3} name="ios-person" />}
                         title='Name'
-                        titleInfo='Kevin Wang'
+                        titleInfo={this.state.name}
                         onPress={() => this.setState({ setting: 'setName' })}
                       />
                       <SettingsList.Item
                         icon={<Ionicons style={styles.iconStyle3} name="ios-mail" />}
                         title='Email'
-                        titleInfo='wang1kevin1@gmail.com'
+                        titleInfo={this.state.email}
                         onPress={() => this.setState({ setting: 'setEmail' })}
                       />
                       <SettingsList.Item
@@ -139,10 +238,10 @@ export default class SettingsScreen extends React.Component {
                 <View style={styles.footer}>
                   <Text style={styles.footerTxt}>made possible with</Text>
                   <TouchableOpacity onPress={() => Alert.alert('About Section')}>
-                  <Image 
-                    source={terra}
-                    style={{ width: 151, height: 13, marginTop: 9, resizeMode: 'contain'}}
-                  />
+                    <Image
+                      source={terra}
+                      style={{ width: 151, height: 13, marginTop: 9, resizeMode: 'contain' }}
+                    />
                   </TouchableOpacity>
                 </View>
               </View>
@@ -160,26 +259,104 @@ export default class SettingsScreen extends React.Component {
                   {/* setName: set account name */}
                   {this.state.setting == 'setName' &&
                     <View style={styles.container}>
+                      {/* Name */}
+                      <Item style={styles.itemStyle}>
+                        <Ionicons style={styles.iconStyle1} name="ios-person" />
+                        <Input
+                          style={styles.input}
+                          placeholder='Name'
+                          placeholderTextColor={Colors.lightblue}
+                          returnKeyType='go'
+                          autoCapitalize='none'
+                          autoCorrect={false}
+                          onChangeText={value => this.onChangeText('name', value)}
+                        />
+                      </Item>
+                      {/* Confirm Button */}
+                      <TouchableOpacity
+                        onPress={() => this.changeName()}
+                        disabled={this.state.isLoading}
+                        style={styles.buttonStyle1}>
+                        <Text style={styles.buttonText1}>
+                          Save Changes
+                        </Text>
+                      </TouchableOpacity>
+                      {/* Loading ActivityIndicator */}
+                      {this.state.isLoading &&
+                        <View>
+                          <ActivityIndicator color={Colors.lightblue} size='large' animating={this.state.isLoading} />
+                        </View>
+                      }
+                    </View>
+                  }
+                  {/* setEmail: set account email */}
+                  {this.state.setting == 'setEmail' &&
+                    <View style={styles.container}>
                       {/* Email */}
                       <Item style={styles.itemStyle}>
-                        <Ionicons name="ios-mail" style={styles.iconStyle1} />
+                        <Ionicons style={styles.iconStyle1} name="ios-mail" />
                         <Input
                           style={styles.input}
                           placeholder='Email'
                           placeholderTextColor={Colors.lightblue}
-                          keyboardType={'email-address'}
                           returnKeyType='go'
                           autoCapitalize='none'
                           autoCorrect={false}
                           onChangeText={value => this.onChangeText('email', value)}
                         />
                       </Item>
-                      {/* Send code button */}
+                      {/* Confirm Button */}
                       <TouchableOpacity
-                        onPress={() => this.forgotPassword()}
+                        onPress={() => this.changeEmail()}
+                        disabled={this.state.isLoading}
                         style={styles.buttonStyle1}>
                         <Text style={styles.buttonText1}>
-                          Send Code
+                          Confirm Email
+                        </Text>
+                      </TouchableOpacity>
+                      {/* Loading ActivityIndicator */}
+                      {this.state.isLoading &&
+                        <View>
+                          <ActivityIndicator color={Colors.lightblue} size='large' animating={this.state.isLoading} />
+                        </View>
+                      }
+                    </View>
+                  }
+                  {this.state.setting == 'emailCode' &&
+                    <View style={styles.container}>
+                      {/* Verification Code message*/}
+                      <Text style={styles.messageText1}>
+                        Please enter your verification code:
+                      </Text>
+                      {/* Verification Code input*/}
+                      <CodeInput
+                        ref="CodeInput"
+                        keyboardType="numeric"
+                        codeLength={6}
+                        className='border-circle'
+                        inactiveColor={Colors.green}
+                        activeColor={Colors.lightblue}
+                        cellBorderWidth={2.0}
+                        size={50}
+                        space={4}
+                        autoFocus={false}
+                        codeInputStyle={{ fontWeight: '800' }}
+                        onFulfill={(code) => this.setState({ authcode: code })}
+                      />
+                      {/* Didn't receive code link */}
+                      <TouchableOpacity
+                        onPress={() => this.changeEmail()}
+                        style={styles.buttonStyle2}>
+                        <Text style={styles.buttonText2}>
+                          Resend verification code
+                      </Text>
+                      </TouchableOpacity>
+                      {/* Confirm code input */}
+                      <TouchableOpacity
+                        onPress={() => this.verifyEmail()}
+                        style={styles.buttonStyle1}>
+                        <Text style={styles.buttonText1}>
+                          Verify New Email
                       </Text>
                       </TouchableOpacity>
                     </View>
@@ -287,5 +464,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'normal',
     color: Colors.lightblue,
+  },
+  messageText1: {
+    marginTop: 200,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: Colors.darkgrey,
+    alignContent: 'center'
   },
 })

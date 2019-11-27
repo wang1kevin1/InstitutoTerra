@@ -41,11 +41,6 @@ export default class DebugScreen extends React.Component {
           style={styles.buttonStyle}>
           <Text style={styles.textStyle}>Forget password ?</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
-          onPress={() => this.handleRoute('Settings')}
-          style={styles.buttonStyle}>
-          <Text style={styles.textStyle}>Settings ?</Text>
-        </TouchableOpacity>
       </View>
     )
   }

@@ -26,6 +26,7 @@ import Amplify from '@aws-amplify/core'
 import config from './aws-exports'
 Amplify.configure(config)
 
+// Dashboard stack
 const DashboardStackNavigator = createStackNavigator({
   Home: HomeScreen,
   Profile: ProfileScreen,

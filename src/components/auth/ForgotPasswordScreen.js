@@ -182,7 +182,7 @@ export default class ForgetPasswordScreen extends React.Component {
                       onPress={() => this.forgotPassword()}
                       style={styles.buttonStyle2}>
                       <Text style={styles.buttonText2}>
-                        Resend validation code
+                        Resend verification code
                       </Text>
                     </TouchableOpacity>
                     {/* Confirm code input */}
@@ -205,7 +205,7 @@ export default class ForgetPasswordScreen extends React.Component {
                         style={styles.input}
                         placeholder='Password'
                         placeholderTextColor={Colors.lightblue}
-                        returnKeyType='go'
+                        returnKeyType='next'
                         autoCapitalize='none'
                         autoCorrect={false}
                         secureTextEntry={this.state.hidePassword1}
