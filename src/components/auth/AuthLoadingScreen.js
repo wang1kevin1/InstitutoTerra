@@ -25,7 +25,7 @@ export default class AuthLoadingScreen extends React.Component {
       this.setState({userToken: user.signInUserSession.accessToken.jwtToken})
     })
     .catch(err => console.log(err))
-    this.props.navigation.navigate(this.state.userToken ? 'Dashboard' : 'Auth')
+    this.props.navigation.navigate(this.state.userToken ? 'Main' : 'Auth')
   }
   
   render() {
