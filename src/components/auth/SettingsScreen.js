@@ -221,7 +221,7 @@ export default class SettingsScreen extends React.Component {
     await Auth.signOut()
       .then(() => {
         console.log('Sign out complete')
-        this.props.navigation.navigate('AuthLoading')
+        this.props.navigation.navigate('Home')
       })
       .catch(err => console.log('Error while signing out!', err))
   }
