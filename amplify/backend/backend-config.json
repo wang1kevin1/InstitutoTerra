@@ -1,9 +1,0 @@
-{
-	"auth": {
-		"institutoterrabc9982ab": {
-			"service": "Cognito",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": []
-		}
-	}
-}
