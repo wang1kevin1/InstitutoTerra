@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   SafeAreaView,
+  StatusBar,
   KeyboardAvoidingView,
   Keyboard,
   Alert,
@@ -64,6 +65,7 @@ export default class SignInScreen extends React.Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
+        <StatusBar />
         <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
           <TouchableWithoutFeedback
             style={styles.container}
@@ -196,8 +198,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   buttonText2: {
-    fontSize: 14,
-    fontWeight: 'normal',
+    fontSize: 18,
+    fontWeight: 'bold',
     color: Colors.lightblue,
   },
 })
