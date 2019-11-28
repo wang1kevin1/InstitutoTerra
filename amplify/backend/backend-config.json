@@ -1,26 +1,9 @@
 {
 	"auth": {
-		"ZeroCarbon": {
+		"institutoterrabc9982ab": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation",
-			"dependsOn": [
-				{
-					"category": "function",
-					"resourceName": "ZeroCarbonCustomMessage",
-					"triggerProvider": "Cognito",
-					"attributes": [
-						"Arn",
-						"Name"
-					]
-				}
-			]
-		}
-	},
-	"function": {
-		"ZeroCarbonCustomMessage": {
-			"service": "Lambda",
-			"providerPlugin": "awscloudformation",
-			"build": true
+			"dependsOn": []
 		}
 	}
 }

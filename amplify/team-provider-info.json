@@ -11,15 +11,8 @@
             "StackId": "arn:aws:cloudformation:us-west-2:047918932235:stack/amplify-institutoterra-terra-120225/085f7680-ff3e-11e9-bbf1-0af3380f813e"
         },
         "categories": {
-            "function": {
-                "ZeroCarbonCustomMessage": {
-                    "REDIRECTURL": "",
-                    "EMAILSUBJECT": "ZeroCarbon: Email Confirmation",
-                    "EMAILMESSAGE": ""
-                }
-            },
             "auth": {
-                "ZeroCarbon": {}
+                "institutoterrabc9982ab": {}
             }
         }
     }
