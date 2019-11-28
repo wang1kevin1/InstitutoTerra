@@ -47,7 +47,7 @@ export default class SignInScreen extends React.Component {
       .then(user => {
         this.setState({ user })
         this.setState({ isLoading: false })
-        this.props.navigation.navigate('AuthLoading')
+        this.props.navigation.navigate('Home')
       })
       .catch(err => {
         this.setState({ isLoading: false })
