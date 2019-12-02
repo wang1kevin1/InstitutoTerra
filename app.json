@@ -26,8 +26,8 @@
     },
     "android": {
       "splash": {
-        "ldpi": "./src/assets/splash/splash-mdpi.png",
-        "mdpi": "./src/assets/splash/splash-mdpi.png",
+        "ldpi": "./src/assets/splash/splash-hdpi.png",
+        "mdpi": "./src/assets/splash/splash-hdpi.png",
         "hdpi": "./src/assets/splash/splash-hdpi.png",
         "xhdpi": "./src/assets/splash/splash-hdpi.png",
         "xxhdpi": "./src/assets/splash/splash-hdpi.png",
