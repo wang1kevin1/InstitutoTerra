@@ -19,7 +19,7 @@
     ],
     "ios": {
       "splash": {
-        "image": "./src/assets/splash/splash-xhdpi.png",
+        "image": "./src/assets/splash/splash-hdpi.png",
         "resizeMode": "cover"
       },
       "bundleIdentifier": "org.institutoterra.zerocarbon"
@@ -28,10 +28,10 @@
       "splash": {
         "ldpi": "./src/assets/splash/splash-mdpi.png",
         "mdpi": "./src/assets/splash/splash-mdpi.png",
-        "hdpi": "./src/assets/splash/splash-xhdpi.png",
-        "xhdpi": "./src/assets/splash/splash-xhdpi.png",
-        "xxhdpi": "./src/assets/splash/splash-xxxhdpi.png",
-        "xxxhdpi": "./src/assets/splash/splash-xxxhdpi.png",
+        "hdpi": "./src/assets/splash/splash-hdpi.png",
+        "xhdpi": "./src/assets/splash/splash-hdpi.png",
+        "xxhdpi": "./src/assets/splash/splash-hdpi.png",
+        "xxxhdpi": "./src/assets/splash/splash-hdpi.png",
         "resizeMode": "cover"
       },
       "package": "org.institutoterra.zerocarbon"
