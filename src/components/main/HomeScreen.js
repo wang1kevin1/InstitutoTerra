@@ -47,12 +47,12 @@ export default class SettingsScreen extends React.Component {
 
   render() {
     return (
-        <SafeAreaView style={styles.container1}>
+        <SafeAreaView style={styles.splash}>
           <ImageBackground source={this.background} style={{ width: '100%', height: '100%' }}>
-          <KeyboardAvoidingView style={styles.container2} behavior='padding' enabled>
-            <TouchableWithoutFeedback style={styles.container2} onPress={Keyboard.dismiss}>
-              <View style={styles.container2}>
-                <View style={styles.container2}>
+          <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
+            <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
+              <View style={styles.container}>
+                <View style={styles.container}>
                   <TouchableOpacity activeOpacity={0.9}
                     onPress={() => this.props.navigation.navigate('SignIn')}
                     style={styles.buttonStyle1}>
@@ -87,13 +87,13 @@ export default class SettingsScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container1: {
+  splash: {
     flex: 1,
     justifyContent: 'center',
     flexDirection: 'column',
     backgroundColor: Colors.green,
   },
-  container2: {
+  container: {
     flex: 1,
     justifyContent: 'center',
     flexDirection: 'column',
