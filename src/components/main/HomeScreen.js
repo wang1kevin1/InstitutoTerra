@@ -37,10 +37,6 @@ export default class SettingsScreen extends React.Component {
     flight: '',
   }
 
-  componentDidMount() {
-    this.checkAuth()
-  }
-
   componentWillMount() {
     this.background = require('../../assets/home.png')
   }
@@ -76,23 +72,29 @@ export default class SettingsScreen extends React.Component {
                 <View style={styles.container}>
                   {/* isAuthenticated: false */}
                   {!this.state.isAuthenticated &&
-                    <TouchableOpacity activeOpacity={0.9}
-                      onPress={() => this.props.navigation.navigate('SignIn')}
-                      style={styles.buttonStyle1}>
+                    <View style={styles.container}>
+                      <TouchableOpacity activeOpacity={0.9}
+                        onPress={() => this.props.navigation.navigate('SignIn')}
+                        style={styles.buttonStyle1}>
+                        <Ionicons style={styles.iconStyle1} name="ios-person" />
+                      </TouchableOpacity>
                       <Text style={styles.buttonText1}>
                         SignIn
                       </Text>
-                    </TouchableOpacity>
+                    </View>
                   }
                   {/* isAuthenticated: true */}
                   {this.state.isAuthenticated &&
-                    <TouchableOpacity activeOpacity={0.9}
-                      onPress={() => this.props.navigation.navigate('UserDashboard')}
-                      style={styles.buttonStyle1}>
+                    <View style={styles.container}>
+                      <TouchableOpacity activeOpacity={0.9}
+                        onPress={() => this.props.navigation.navigate('UserDashboard')}
+                        style={styles.buttonStyle1}>
+                        <Foundation style={styles.iconStyle1} name="trees" />
+                      </TouchableOpacity>
                       <Text style={styles.buttonText1}>
                         UserDashboard
                       </Text>
-                    </TouchableOpacity>
+                    </View>
                   }
                 </View>
                 <View style={styles.footer}>
@@ -183,10 +185,17 @@ const styles = StyleSheet.create({
   },
   buttonStyle1: {
     alignItems: 'center',
-    backgroundColor: Colors.lightblue,
+    backgroundColor: Colors.darkgrey,
     padding: 14,
     marginBottom: 20,
-    borderRadius: 10,
+    height:60,
+    width: 60,
+    borderRadius: 120,
+    borderColor: Colors.lightgreen,
+    borderWidth: 2,
+    position: 'absolute',
+    top: 40,
+    right: 10,
   },
   buttonText1: {
     fontSize: 18,
