@@ -23,22 +23,20 @@ import {
 
 import { Ionicons } from '@expo/vector-icons';
 
-import SettingsList from 'react-native-settings-list';
-
-import CodeInput from 'react-native-confirmation-code-input';
-
 import Colors from '../../utilities/Colors'
 
 import Auth from '@aws-amplify/auth'
 
 const terra = require('../../assets/terra/terra-white.png')
 
-const background = require('../../assets/home.png')
-
 export default class SettingsScreen extends React.Component {
   state = {
     isAuthenticated: false,
     flight: '',
+  }
+
+  componentWillMount() {
+    this.background = require('../../assets/home.png')
   }
 
   onChangeText(key, value) {
@@ -49,50 +47,56 @@ export default class SettingsScreen extends React.Component {
 
   render() {
     return (
-      <ImageBackground source={background} style={{width: '100%', height: '100%'}}>
-      <SafeAreaView style={styles.container}>
-        <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
-          <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
-            <View style={styles.container}>
-              <View style={styles.container}>
-                <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('SignIn')}
-                  style={styles.buttonStyle1}>
-                  <Text style={styles.buttonText1}>
-                    SignIn
+        <SafeAreaView style={styles.container1}>
+          <ImageBackground source={this.background} style={{ width: '100%', height: '100%' }}>
+          <KeyboardAvoidingView style={styles.container2} behavior='padding' enabled>
+            <TouchableWithoutFeedback style={styles.container2} onPress={Keyboard.dismiss}>
+              <View style={styles.container2}>
+                <View style={styles.container2}>
+                  <TouchableOpacity activeOpacity={0.9}
+                    onPress={() => this.props.navigation.navigate('SignIn')}
+                    style={styles.buttonStyle1}>
+                    <Text style={styles.buttonText1}>
+                      SignIn
                 </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('UserDashboard')}
-                  style={styles.buttonStyle1}>
-                  <Text style={styles.buttonText1}>
-                    UserDashboard
+                  </TouchableOpacity>
+                  <TouchableOpacity activeOpacity={0.9}
+                    onPress={() => this.props.navigation.navigate('UserDashboard')}
+                    style={styles.buttonStyle1}>
+                    <Text style={styles.buttonText1}>
+                      UserDashboard
                 </Text>
-                </TouchableOpacity>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.footer}>
+                  <Text style={styles.footerTxt}>made possible with</Text>
+                  <TouchableOpacity onPress={() => Alert.alert('About Section')}>
+                    <Image
+                      source={terra}
+                      style={{ width: 151, height: 13, marginTop: 9, resizeMode: 'contain' }}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
-              <View style={styles.footer}>
-                <Text style={styles.footerTxt}>made possible with</Text>
-                <TouchableOpacity onPress={() => Alert.alert('About Section')}>
-                  <Image
-                    source={terra}
-                    style={{ width: 151, height: 13, marginTop: 9, resizeMode: 'contain' }}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-      </ImageBackground>
+            </TouchableWithoutFeedback>
+          </KeyboardAvoidingView>
+          </ImageBackground>
+        </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  container1: {
     flex: 1,
     justifyContent: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    backgroundColor: Colors.green,
+  },
+  container2: {
+    flex: 1,
+    justifyContent: 'center',
+    flexDirection: 'column',
   },
   input: {
     flex: 1,
