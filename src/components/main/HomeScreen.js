@@ -21,6 +21,8 @@ import {
   Input
 } from 'native-base'
 
+import { NavigationEvents } from 'react-navigation';
+
 import { Ionicons } from '@expo/vector-icons';
 
 import Colors from '../../utilities/Colors'
@@ -35,6 +37,10 @@ export default class SettingsScreen extends React.Component {
     flight: '',
   }
 
+  componentDidMount() {
+    this.checkAuth()
+  }
+
   componentWillMount() {
     this.background = require('../../assets/home.png')
   }
@@ -45,6 +51,19 @@ export default class SettingsScreen extends React.Component {
     })
   }
 
+  // Checks if a user is logged in
+  checkAuth = async () => {
+    await Auth.currentAuthenticatedUser({ bypassCache: true })
+      .then(() => {
+        console.log('A user is logged in')
+        this.setState({ isAuthenticated: true })
+      })
+      .catch(err => {
+        console.log('Nobody is logged in')
+        this.setState({ isAuthenticated: false })
+      })
+  }
+
   render() {
     return (
         <SafeAreaView style={styles.splash}>
@@ -52,21 +71,29 @@ export default class SettingsScreen extends React.Component {
           <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
             <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
               <View style={styles.container}>
+              {/* Update isAuthenticated on navigation refresh */}
+              <NavigationEvents onWillFocus={() => this.checkAuth()} />
                 <View style={styles.container}>
-                  <TouchableOpacity activeOpacity={0.9}
-                    onPress={() => this.props.navigation.navigate('SignIn')}
-                    style={styles.buttonStyle1}>
-                    <Text style={styles.buttonText1}>
-                      SignIn
-                </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity activeOpacity={0.9}
-                    onPress={() => this.props.navigation.navigate('UserDashboard')}
-                    style={styles.buttonStyle1}>
-                    <Text style={styles.buttonText1}>
-                      UserDashboard
-                </Text>
-                  </TouchableOpacity>
+                  {/* isAuthenticated: false */}
+                  {!this.state.isAuthenticated &&
+                    <TouchableOpacity activeOpacity={0.9}
+                      onPress={() => this.props.navigation.navigate('SignIn')}
+                      style={styles.buttonStyle1}>
+                      <Text style={styles.buttonText1}>
+                        SignIn
+                      </Text>
+                    </TouchableOpacity>
+                  }
+                  {/* isAuthenticated: true */}
+                  {this.state.isAuthenticated &&
+                    <TouchableOpacity activeOpacity={0.9}
+                      onPress={() => this.props.navigation.navigate('UserDashboard')}
+                      style={styles.buttonStyle1}>
+                      <Text style={styles.buttonText1}>
+                        UserDashboard
+                      </Text>
+                    </TouchableOpacity>
+                  }
                 </View>
                 <View style={styles.footer}>
                   <Text style={styles.footerTxt}>made possible with</Text>
@@ -112,7 +139,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
-    //backgroundColor: Colors.lightgreen,
   },
   footer: {
     alignItems: 'center',
