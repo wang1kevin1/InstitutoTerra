@@ -76,10 +76,9 @@ export default class SettingsScreen extends React.Component {
                       <TouchableOpacity activeOpacity={0.9}
                         onPress={() => this.props.navigation.navigate('SignIn')}
                         style={styles.buttonStyle1}>
-                        <Ionicons style={styles.iconStyle1} name="ios-person" />
                       </TouchableOpacity>
                       <Text style={styles.buttonText1}>
-                        SignIn
+                        Sign In
                       </Text>
                     </View>
                   }
@@ -89,13 +88,25 @@ export default class SettingsScreen extends React.Component {
                       <TouchableOpacity activeOpacity={0.9}
                         onPress={() => this.props.navigation.navigate('UserDashboard')}
                         style={styles.buttonStyle1}>
-                        <Foundation style={styles.iconStyle1} name="trees" />
                       </TouchableOpacity>
                       <Text style={styles.buttonText1}>
-                        UserDashboard
+                        Dashboard
                       </Text>
                     </View>
                   }
+                   <Item style={styles.itemStyle}>
+                    <Input
+                      style={styles.input}
+                      placeholder='Flight Number'
+                      placeholderTextColor={Colors.white}
+                      returnKeyType='go'
+                      autoCapitalize='none'
+                      autoCorrect={false}
+                      secureTextEntry={true}
+                      onChangeText={value => this.onChangeText('flight', value)}
+                    />
+                    <Ionicons style={styles.iconStyle1} name="md-arrow-forward" />
+                  </Item>
                 </View>
                 <View style={styles.footer}>
                   <Text style={styles.footerTxt}>made possible with</Text>
@@ -158,8 +169,12 @@ const styles = StyleSheet.create({
     color: Colors.white,
   },
   itemStyle: {
-    marginBottom: 20,
-    backgroundColor: Colors.white,
+    width: 300,
+    marginBottom: 300,
+    justifyContent: 'center', 
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: Colors.green,
     borderRadius: 10,
   },
   iconStyle1: {
@@ -168,20 +183,6 @@ const styles = StyleSheet.create({
     marginRight: 15,
     marginLeft: 15,
     flex: 0.1
-  },
-  iconStyle2: {
-    color: Colors.grey,
-    fontSize: 20,
-    marginRight: 15,
-    marginLeft: 15,
-    flex: 0.1
-  },
-  iconStyle3: {
-    color: Colors.lightblue,
-    fontSize: 30,
-    marginRight: 15,
-    marginLeft: 15,
-    alignSelf: 'center'
   },
   buttonStyle1: {
     alignItems: 'center',
@@ -201,6 +202,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: Colors.white,
+    position: 'absolute',
+    top: 120,
+    right: 10,
   },
   buttonStyle2: {
     alignItems: 'center',
