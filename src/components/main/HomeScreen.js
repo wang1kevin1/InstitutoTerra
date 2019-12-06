@@ -70,6 +70,7 @@ export default class SettingsScreen extends React.Component {
               {/* Update isAuthenticated on navigation refresh */}
               <NavigationEvents onWillFocus={() => this.checkAuth()} />
                 <View style={styles.container}>
+                <Container style={styles.buttonContainer}>
                   {/* isAuthenticated: false */}
                   {!this.state.isAuthenticated &&
                     <View style={styles.container}>
@@ -78,7 +79,7 @@ export default class SettingsScreen extends React.Component {
                         style={styles.buttonStyle1}>
                       </TouchableOpacity>
                       <Text style={styles.buttonText1}>
-                        Sign In
+                        Dashboard
                       </Text>
                     </View>
                   }
@@ -94,19 +95,22 @@ export default class SettingsScreen extends React.Component {
                       </Text>
                     </View>
                   }
-                   <Item style={styles.itemStyle}>
-                    <Input
-                      style={styles.input}
-                      placeholder='Flight Number'
-                      placeholderTextColor={Colors.white}
-                      returnKeyType='go'
-                      autoCapitalize='none'
-                      autoCorrect={false}
-                      secureTextEntry={true}
-                      onChangeText={value => this.onChangeText('flight', value)}
-                    />
-                    <Ionicons style={styles.iconStyle1} name="md-arrow-forward" />
-                  </Item>
+                  </Container>
+                  <Container style={styles.infoContainer}>
+                    <Item style={styles.itemStyle}>
+                      <Input
+                        style={styles.input}
+                        placeholder='Flight Number'
+                        placeholderTextColor={Colors.white}
+                        returnKeyType='go'
+                        autoCapitalize='none'
+                        autoCorrect={false}
+                        secureTextEntry={true}
+                        onChangeText={value => this.onChangeText('flight', value)}
+                      />
+                      <Ionicons style={styles.iconStyle1} name="md-arrow-forward" />
+                    </Item>
+                  </Container>
                 </View>
                 <View style={styles.footer}>
                   <Text style={styles.footerTxt}>made possible with</Text>
@@ -152,6 +156,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
+    backgroundColor: 'transparent'
+  },
+  buttonContainer: {
+    position: 'absolute',
+    paddingHorizontal: 30,
+    backgroundColor: 'transparent',
+    top: 0,
+    right: 0,
+    backgroundColor: Colors.black
   },
   footer: {
     alignItems: 'center',
@@ -170,7 +183,6 @@ const styles = StyleSheet.create({
   },
   itemStyle: {
     width: 300,
-    marginBottom: 300,
     justifyContent: 'center', 
     alignItems: 'center',
     alignSelf: 'center',
@@ -188,23 +200,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.darkgrey,
     padding: 14,
-    marginBottom: 20,
     height:60,
     width: 60,
     borderRadius: 120,
     borderColor: Colors.lightgreen,
     borderWidth: 2,
-    position: 'absolute',
-    top: 40,
-    right: 10,
   },
   buttonText1: {
     fontSize: 18,
     fontWeight: 'bold',
     color: Colors.white,
-    position: 'absolute',
-    top: 120,
-    right: 10,
+    alignItems: 'center'
   },
   buttonStyle2: {
     alignItems: 'center',
