@@ -62,40 +62,38 @@ export default class SettingsScreen extends React.Component {
 
   render() {
     return (
-        <SafeAreaView style={styles.splash}>
-          <ImageBackground source={this.background} style={{ width: '100%', height: '100%' }}>
+      <SafeAreaView style={styles.splash}>
+        <ImageBackground source={this.background} style={{ width: '100%', height: '100%' }}>
           <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
             <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
               <View style={styles.container}>
-              {/* Update isAuthenticated on navigation refresh */}
-              <NavigationEvents onWillFocus={() => this.checkAuth()} />
-                <View style={styles.container}>
-                <Container style={styles.buttonContainer}>
-                  {/* isAuthenticated: false */}
-                  {!this.state.isAuthenticated &&
-                    <View style={styles.container}>
-                      <TouchableOpacity activeOpacity={0.9}
-                        onPress={() => this.props.navigation.navigate('SignIn')}
-                        style={styles.buttonStyle1}>
-                      </TouchableOpacity>
-                      <Text style={styles.buttonText1}>
-                        Dashboard
-                      </Text>
-                    </View>
-                  }
-                  {/* isAuthenticated: true */}
-                  {this.state.isAuthenticated &&
-                    <View style={styles.container}>
-                      <TouchableOpacity activeOpacity={0.9}
-                        onPress={() => this.props.navigation.navigate('UserDashboard')}
-                        style={styles.buttonStyle1}>
-                      </TouchableOpacity>
-                      <Text style={styles.buttonText1}>
-                        Dashboard
-                      </Text>
-                    </View>
-                  }
-                  </Container>
+                {/* Update isAuthenticated on navigation refresh */}
+                <NavigationEvents onWillFocus={() => this.checkAuth()} />
+                  <View style={styles.container}>
+                    {/* isAuthenticated: false */}
+                    {!this.state.isAuthenticated &&
+                      <View style={styles.buttonView}>
+                        <TouchableOpacity activeOpacity={0.9}
+                          onPress={() => this.props.navigation.navigate('SignIn')}
+                          style={styles.buttonStyle1}>
+                        </TouchableOpacity>
+                        <Text style={styles.buttonText1}>
+                          Dashboard
+                        </Text>
+                      </View>
+                    }
+                    {/* isAuthenticated: true */}
+                    {this.state.isAuthenticated &&
+                      <View style={styles.buttonView}>
+                        <TouchableOpacity activeOpacity={0.9}
+                          onPress={() => this.props.navigation.navigate('UserDashboard')}
+                          style={styles.buttonStyle1}>
+                        </TouchableOpacity>
+                        <Text style={styles.buttonText1}>
+                          Dashboard
+                        </Text>
+                      </View>
+                    }
                   <Container style={styles.infoContainer}>
                     <Item style={styles.itemStyle}>
                       <Input
@@ -124,8 +122,8 @@ export default class SettingsScreen extends React.Component {
               </View>
             </TouchableWithoutFeedback>
           </KeyboardAvoidingView>
-          </ImageBackground>
-        </SafeAreaView>
+        </ImageBackground>
+      </SafeAreaView>
     );
   }
 }
@@ -158,13 +156,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     backgroundColor: 'transparent'
   },
-  buttonContainer: {
+  buttonView: {
     position: 'absolute',
     paddingHorizontal: 30,
     backgroundColor: 'transparent',
-    top: 0,
-    right: 0,
-    backgroundColor: Colors.black
+    top: 40,
+    alignSelf: 'flex-end',
+    backgroundColor: Colors.black,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   footer: {
     alignItems: 'center',
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   },
   itemStyle: {
     width: 300,
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
     backgroundColor: Colors.green,
@@ -197,20 +197,19 @@ const styles = StyleSheet.create({
     flex: 0.1
   },
   buttonStyle1: {
-    alignItems: 'center',
     backgroundColor: Colors.darkgrey,
-    padding: 14,
-    height:60,
+    height: 60,
     width: 60,
     borderRadius: 120,
     borderColor: Colors.lightgreen,
     borderWidth: 2,
+    alignSelf: 'center'
   },
   buttonText1: {
     fontSize: 18,
     fontWeight: 'bold',
     color: Colors.white,
-    alignItems: 'center'
+    alignSelf: 'center'
   },
   buttonStyle2: {
     alignItems: 'center',
