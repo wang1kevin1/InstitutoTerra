@@ -48,7 +48,7 @@ export default class SettingsScreen extends React.Component {
   }
 
   // Checks if a user is logged in
-  checkAuth = async () => {
+  async checkAuth() {
     await Auth.currentAuthenticatedUser({ bypassCache: true })
       .then(() => {
         console.log('A user is logged in')
@@ -62,66 +62,66 @@ export default class SettingsScreen extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.splash}>
+      <SafeAreaView style={styles.container}>
         <ImageBackground source={this.background} style={{ width: '100%', height: '100%' }}>
-          <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
-            <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
+          <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
+            <View style={styles.container}>
+              {/* Update isAuthenticated on navigation refresh */}
+              <NavigationEvents onWillFocus={() => this.checkAuth()} />
               <View style={styles.container}>
-                {/* Update isAuthenticated on navigation refresh */}
-                <NavigationEvents onWillFocus={() => this.checkAuth()} />
-                  <View style={styles.container}>
-                    {/* isAuthenticated: false */}
-                    {!this.state.isAuthenticated &&
-                      <View style={styles.buttonView}>
-                        <TouchableOpacity activeOpacity={0.9}
-                          onPress={() => this.props.navigation.navigate('SignIn')}
-                          style={styles.buttonStyle1}>
-                        </TouchableOpacity>
-                        <Text style={styles.buttonText1}>
-                          Dashboard
+                {/* isAuthenticated: false */}
+                {!this.state.isAuthenticated &&
+                  <View style={styles.buttonView}>
+                    <TouchableOpacity activeOpacity={0.9}
+                      onPress={() => this.props.navigation.navigate('SignIn')}
+                      style={styles.buttonStyle1}>
+                    </TouchableOpacity>
+                    <Text style={styles.buttonText1}>
+                      SIGN IN
                         </Text>
-                      </View>
-                    }
-                    {/* isAuthenticated: true */}
-                    {this.state.isAuthenticated &&
-                      <View style={styles.buttonView}>
-                        <TouchableOpacity activeOpacity={0.9}
-                          onPress={() => this.props.navigation.navigate('UserDashboard')}
-                          style={styles.buttonStyle1}>
-                        </TouchableOpacity>
-                        <Text style={styles.buttonText1}>
-                          Dashboard
+                  </View>
+                }
+                {/* isAuthenticated: true */}
+                {this.state.isAuthenticated &&
+                  <View style={styles.buttonView}>
+                    <TouchableOpacity activeOpacity={0.9}
+                      onPress={() => this.props.navigation.navigate('UserDashboard')}
+                      style={styles.buttonStyle1}>
+                    </TouchableOpacity>
+                    <Text style={styles.buttonText1}>
+                      DASHBOARD
                         </Text>
-                      </View>
-                    }
-                  <Container style={styles.infoContainer}>
-                    <Item style={styles.itemStyle}>
-                      <Input
-                        style={styles.input}
-                        placeholder='Flight Number'
-                        placeholderTextColor={Colors.white}
-                        returnKeyType='go'
-                        autoCapitalize='none'
-                        autoCorrect={false}
-                        secureTextEntry={true}
-                        onChangeText={value => this.onChangeText('flight', value)}
-                      />
-                      <Ionicons style={styles.iconStyle1} name="md-arrow-forward" />
-                    </Item>
-                  </Container>
-                </View>
-                <View style={styles.footer}>
-                  <Text style={styles.footerTxt}>made possible with</Text>
-                  <TouchableOpacity onPress={() => Alert.alert('About Section')}>
-                    <Image
-                      source={terra}
-                      style={{ width: 151, height: 13, marginTop: 9, resizeMode: 'contain' }}
-                    />
-                  </TouchableOpacity>
+                  </View>
+                }
+              </View>
+              <View style={styles.infoContainer}>
+                {/* Enter flight number */}
+                <View style={styles.itemStyle}>
+                  <Input
+                    style={styles.input}
+                    placeholder='Flight Number'
+                    placeholderTextColor={Colors.white}
+                    returnKeyType='go'
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    secureTextEntry={true}
+                    onChangeText={value => this.onChangeText('flight', value)}
+                  />
+                  <Ionicons style={styles.iconStyle1} name="md-arrow-forward" />
                 </View>
               </View>
-            </TouchableWithoutFeedback>
-          </KeyboardAvoidingView>
+
+              <View style={styles.footer}>
+                <Text style={styles.footerTxt}>made possible with</Text>
+                <TouchableOpacity onPress={() => Alert.alert('About Section')}>
+                  <Image
+                    source={terra}
+                    style={{ width: 151, height: 13, marginTop: 9, resizeMode: 'contain' }}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
         </ImageBackground>
       </SafeAreaView>
     );
@@ -141,10 +141,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   input: {
-    flex: 1,
     fontSize: 17,
     fontWeight: 'bold',
-    color: Colors.lightblue,
+    color: Colors.white,
   },
   infoContainer: {
     position: 'absolute',
@@ -153,8 +152,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 30,
-    backgroundColor: 'transparent'
   },
   buttonView: {
     position: 'absolute',
@@ -162,8 +159,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     top: 40,
     alignSelf: 'flex-end',
-    backgroundColor: Colors.black,
-    justifyContent: 'center',
     alignItems: 'center',
   },
   footer: {
@@ -182,19 +177,22 @@ const styles = StyleSheet.create({
     color: Colors.white,
   },
   itemStyle: {
+    height: 70,
     width: 300,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center',
-    backgroundColor: Colors.green,
+    padding: 15,
+    borderColor: 'blue',
+    borderWidth: 2,
+    backgroundColor: Colors.grey,
     borderRadius: 10,
+    borderColor: Colors.lightblue,
+    borderWidth: 2,
+    flexDirection: 'row'
   },
   iconStyle1: {
-    color: Colors.lightblue,
+    color: Colors.white,
     fontSize: 30,
     marginRight: 15,
     marginLeft: 15,
-    flex: 0.1
   },
   buttonStyle1: {
     backgroundColor: Colors.darkgrey,
@@ -203,13 +201,11 @@ const styles = StyleSheet.create({
     borderRadius: 120,
     borderColor: Colors.lightgreen,
     borderWidth: 2,
-    alignSelf: 'center'
   },
   buttonText1: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
-    color: Colors.white,
-    alignSelf: 'center'
+    color: Colors.lightgreen,
   },
   buttonStyle2: {
     alignItems: 'center',
