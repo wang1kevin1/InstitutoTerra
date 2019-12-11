@@ -110,6 +110,20 @@ export default class SettingsScreen extends React.Component {
                   <Ionicons style={styles.iconStyle1} name="md-arrow-forward" />
                 </View>
               </View>
+              <TouchableOpacity activeOpacity={0.9}
+                  onPress={() => Alert.alert('Checkout Screen')}
+                  style={styles.buttonStyle2}>
+                  <Text style={styles.buttonText2}>
+                    PROCEED WITH NO FLIGHT NUMBER
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.9}
+                  onPress={() => Alert.alert('About trees page')}
+                  style={styles.buttonStyle2}>
+                  <Text style={styles.buttonText2}>
+                    WHERE ARE MY TREES?
+                  </Text>
+                </TouchableOpacity>
 
               <View style={styles.footer}>
                 <Text style={styles.footerTxt}>made possible with</Text>
@@ -177,7 +191,7 @@ const styles = StyleSheet.create({
     color: Colors.white,
   },
   itemStyle: {
-    height: 70,
+    height: 60,
     width: 300,
     padding: 15,
     borderColor: 'blue',
@@ -212,18 +226,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lightgreen,
     padding: 5,
     marginBottom: 10,
+    marginHorizontal: 25,
     borderRadius: 10,
   },
   buttonText2: {
-    fontSize: 14,
-    fontWeight: 'normal',
-    color: Colors.lightblue,
-  },
-  messageText1: {
-    marginTop: 200,
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: 'bold',
-    color: Colors.darkgrey,
-    alignContent: 'center'
+    color: Colors.grey,
   },
 })
