@@ -273,6 +273,7 @@ export default class SettingsScreen extends React.Component {
                     </SettingsList>
                   </View>
                 </View>
+                {/* Footer */}
                 <View style={styles.footer}>
                   <Text style={styles.footerTxt}>made possible with</Text>
                   <TouchableOpacity onPress={() => Alert.alert('About Section')}>

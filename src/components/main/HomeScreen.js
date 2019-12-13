@@ -11,7 +11,6 @@ import {
   View,
   Alert,
   Image,
-  ActivityIndicator,
   ImageBackground
 } from 'react-native'
 
@@ -37,6 +36,7 @@ export default class SettingsScreen extends React.Component {
     flight: '',
   }
 
+  // load background
   componentWillMount() {
     this.background = require('../../assets/home.png')
   }
@@ -78,7 +78,7 @@ export default class SettingsScreen extends React.Component {
                     </TouchableOpacity>
                     <Text style={styles.buttonText1}>
                       SIGN IN
-                        </Text>
+                    </Text>
                   </View>
                 }
                 {/* isAuthenticated: true */}
@@ -90,7 +90,7 @@ export default class SettingsScreen extends React.Component {
                     </TouchableOpacity>
                     <Text style={styles.buttonText1}>
                       PROFILE
-                        </Text>
+                    </Text>
                   </View>
                 }
               </View>
@@ -107,24 +107,27 @@ export default class SettingsScreen extends React.Component {
                     secureTextEntry={true}
                     onChangeText={value => this.onChangeText('flight', value)}
                   />
-                  <Ionicons style={styles.iconStyle1} name="md-arrow-forward" onPress={() => Alert.alert('Send this.flight as prop to Calculate Carbon')}/>
+                  {/* Pass flight prop to CalculateEmissions */}
+                  <Ionicons style={styles.iconStyle1} name="md-arrow-forward" onPress={() => Alert.alert('Send this.flight as prop to Calculate Carbon')} />
                 </View>
               </View>
+              {/* Redirect to donation checkout */}
               <TouchableOpacity activeOpacity={0.9}
-                  onPress={() => Alert.alert('Checkout Screen')}
-                  style={styles.buttonStyle2}>
-                  <Text style={styles.buttonText2}>
-                    PROCEED WITH NO FLIGHT NUMBER
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.9}
-                  onPress={() => Alert.alert('About trees page')}
-                  style={styles.buttonStyle2}>
-                  <Text style={styles.buttonText2}>
-                    WHERE ARE MY TREES?
-                  </Text>
-                </TouchableOpacity>
-
+                onPress={() => Alert.alert('Checkout Screen')}
+                style={styles.buttonStyle2}>
+                <Text style={styles.buttonText2}>
+                  PROCEED WITH NO FLIGHT NUMBER
+                </Text>
+              </TouchableOpacity>
+              {/* Redirect to info page */}
+              <TouchableOpacity activeOpacity={0.9}
+                onPress={() => Alert.alert('About trees page')}
+                style={styles.buttonStyle2}>
+                <Text style={styles.buttonText2}>
+                  WHERE ARE MY TREES?
+                </Text>
+              </TouchableOpacity>
+              {/* Footer */}
               <View style={styles.footer}>
                 <Text style={styles.footerTxt}>made possible with</Text>
                 <TouchableOpacity onPress={() => Alert.alert('About Section')}>
