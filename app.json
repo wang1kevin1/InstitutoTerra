@@ -19,22 +19,24 @@
     ],
     "ios": {
       "splash": {
-        "image": "./src/assets/splash/splash-xhdpi.png",
+        "image": "./src/assets/splash/splash-hdpi.png",
         "resizeMode": "cover"
       },
       "bundleIdentifier": "org.institutoterra.zerocarbon"
     },
     "android": {
       "splash": {
-        "ldpi": "./src/assets/splash/splash-mdpi.png",
-        "mdpi": "./src/assets/splash/splash-mdpi.png",
-        "hdpi": "./src/assets/splash/splash-xhdpi.png",
-        "xhdpi": "./src/assets/splash/splash-xhdpi.png",
-        "xxhdpi": "./src/assets/splash/splash-xxxhdpi.png",
-        "xxxhdpi": "./src/assets/splash/splash-xxxhdpi.png",
+        "ldpi": "./src/assets/splash/splash-hdpi.png",
+        "mdpi": "./src/assets/splash/splash-hdpi.png",
+        "hdpi": "./src/assets/splash/splash-hdpi.png",
+        "xhdpi": "./src/assets/splash/splash-hdpi.png",
+        "xxhdpi": "./src/assets/splash/splash-hdpi.png",
+        "xxxhdpi": "./src/assets/splash/splash-hdpi.png",
         "resizeMode": "cover"
       },
       "package": "org.institutoterra.zerocarbon"
-    }
+    },
+    "description": "An app promoting the planting of trees to offset carbon emissions. http://www.institutoterra.org/eng/",
+    "githubUrl": "https://github.com/wang1kevin1/InstitutoTerra.git"
   }
 }

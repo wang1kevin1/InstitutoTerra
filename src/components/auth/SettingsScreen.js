@@ -30,7 +30,7 @@ import Colors from '../../utilities/Colors'
 
 import Auth from '@aws-amplify/auth'
 
-const terra = require('../../assets/terra.png')
+const terra = require('../../assets/terra/terra-green.png')
 
 export default class SettingsScreen extends React.Component {
   state = {
@@ -221,7 +221,7 @@ export default class SettingsScreen extends React.Component {
     await Auth.signOut()
       .then(() => {
         console.log('Sign out complete')
-        this.props.navigation.navigate('AuthLoading')
+        this.props.navigation.navigate('Home')
       })
       .catch(err => console.log('Error while signing out!', err))
   }
@@ -273,6 +273,7 @@ export default class SettingsScreen extends React.Component {
                     </SettingsList>
                   </View>
                 </View>
+                {/* Footer */}
                 <View style={styles.footer}>
                   <Text style={styles.footerTxt}>made possible with</Text>
                   <TouchableOpacity onPress={() => Alert.alert('About Section')}>
@@ -387,7 +388,7 @@ export default class SettingsScreen extends React.Component {
                         style={styles.buttonStyle1}>
                         <Text style={styles.buttonText1}>
                           Verify New Email
-                      </Text>
+                        </Text>
                       </TouchableOpacity>
                     </View>
                   }
@@ -449,7 +450,7 @@ export default class SettingsScreen extends React.Component {
                         style={styles.buttonStyle1}>
                         <Text style={styles.buttonText1}>
                           Confirm Password Change
-                      </Text>
+                        </Text>
                       </TouchableOpacity>
                       {/* Loading ActivityIndicator */}
                       {this.state.isLoading &&
@@ -464,110 +465,110 @@ export default class SettingsScreen extends React.Component {
             </TouchableWithoutFeedback>
           </KeyboardAvoidingView>
         </SafeAreaView>
-          );
-        }
-      }
+      );
     }
-    
+  }
+}
+
 const styles = StyleSheet.create({
-            container: {
-            flex: 1,
-          backgroundColor: Colors.lightgreen,
-          justifyContent: 'center',
-          flexDirection: 'column'
-        },
+  container: {
+    flex: 1,
+    backgroundColor: Colors.lightgreen,
+    justifyContent: 'center',
+    flexDirection: 'column'
+  },
   container2: {
-            flex: 1,
-          backgroundColor: '#EFEFF4',
-          justifyContent: 'center',
-          flexDirection: 'column'
-        },
+    flex: 1,
+    backgroundColor: '#EFEFF4',
+    justifyContent: 'center',
+    flexDirection: 'column'
+  },
   input: {
-            flex: 1,
-          fontSize: 17,
-          fontWeight: 'bold',
-          color: Colors.lightblue,
-        },
+    flex: 1,
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: Colors.lightblue,
+  },
   infoContainer: {
-            position: 'absolute',
-          left: 0,
-          right: 0,
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          paddingHorizontal: 30,
-          backgroundColor: Colors.lightgreen,
-        },
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 30,
+    backgroundColor: Colors.lightgreen,
+  },
   footer: {
-            alignItems: 'center',
-          backgroundColor: Colors.white,
-          padding: 30,
-          alignContent: 'flex-end',
-          borderTopLeftRadius: 15,
-          borderTopRightRadius: 15,
-          borderWidth: 1,
-          borderColor: Colors.lightgrey
-        },
+    alignItems: 'center',
+    backgroundColor: Colors.white,
+    padding: 30,
+    alignContent: 'flex-end',
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    borderWidth: 1,
+    borderColor: Colors.lightgrey
+  },
   footerTxt: {
-            fontSize: 10,
-          fontWeight: 'normal',
-          color: Colors.black,
-        },
+    fontSize: 10,
+    fontWeight: 'normal',
+    color: Colors.black,
+  },
   itemStyle: {
-            marginBottom: 20,
-          backgroundColor: Colors.white,
-          borderRadius: 10,
-        },
+    marginBottom: 20,
+    backgroundColor: Colors.white,
+    borderRadius: 10,
+  },
   iconStyle1: {
-            color: Colors.lightblue,
-          fontSize: 30,
-          marginRight: 15,
-          marginLeft: 15,
-          flex: 0.1
-        },
+    color: Colors.lightblue,
+    fontSize: 30,
+    marginRight: 15,
+    marginLeft: 15,
+    flex: 0.1
+  },
   iconStyle2: {
-            color: Colors.grey,
-          fontSize: 20,
-          marginRight: 15,
-          marginLeft: 15,
-          flex: 0.1
-        },
+    color: Colors.grey,
+    fontSize: 20,
+    marginRight: 15,
+    marginLeft: 15,
+    flex: 0.1
+  },
   iconStyle3: {
-            color: Colors.lightblue,
-          fontSize: 30,
-          marginRight: 15,
-          marginLeft: 15,
-          alignSelf: 'center'
-        },
+    color: Colors.lightblue,
+    fontSize: 30,
+    marginRight: 15,
+    marginLeft: 15,
+    alignSelf: 'center'
+  },
   buttonStyle1: {
-            alignItems: 'center',
-          backgroundColor: Colors.lightblue,
-          padding: 14,
-          marginBottom: 20,
-          borderRadius: 10,
-        },
+    alignItems: 'center',
+    backgroundColor: Colors.lightblue,
+    padding: 14,
+    marginBottom: 20,
+    borderRadius: 10,
+  },
   buttonText1: {
-            fontSize: 18,
-          fontWeight: 'bold',
-          color: Colors.white,
-        },
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: Colors.white,
+  },
   buttonStyle2: {
-            alignItems: 'center',
-          backgroundColor: Colors.lightgreen,
-          padding: 5,
-          marginBottom: 10,
-          borderRadius: 10,
-        },
+    alignItems: 'center',
+    backgroundColor: Colors.lightgreen,
+    padding: 5,
+    marginBottom: 10,
+    borderRadius: 10,
+  },
   buttonText2: {
-            fontSize: 14,
-          fontWeight: 'normal',
-          color: Colors.lightblue,
-        },
+    fontSize: 14,
+    fontWeight: 'normal',
+    color: Colors.lightblue,
+  },
   messageText1: {
-            marginTop: 200,
-          fontSize: 18,
-          fontWeight: 'bold',
-          color: Colors.darkgrey,
-          alignContent: 'center'
-        },
+    marginTop: 200,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: Colors.darkgrey,
+    alignContent: 'center'
+  },
 })
