@@ -89,7 +89,7 @@ export default class SettingsScreen extends React.Component {
                       style={styles.buttonStyle1}>
                     </TouchableOpacity>
                     <Text style={styles.buttonText1}>
-                      DASHBOARD
+                      PROFILE
                         </Text>
                   </View>
                 }
@@ -107,7 +107,7 @@ export default class SettingsScreen extends React.Component {
                     secureTextEntry={true}
                     onChangeText={value => this.onChangeText('flight', value)}
                   />
-                  <Ionicons style={styles.iconStyle1} name="md-arrow-forward" />
+                  <Ionicons style={styles.iconStyle1} name="md-arrow-forward" onPress={() => Alert.alert('Send this.flight as prop to Calculate Carbon')}/>
                 </View>
               </View>
               <TouchableOpacity activeOpacity={0.9}
