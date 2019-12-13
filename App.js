@@ -18,6 +18,8 @@ import SettingsScreen from './src/components/auth/SettingsScreen'
 import HomeScreen from './src/components/user/HomeScreen'
 import ProfileScreen from './src/components/user/ProfileScreen'
 
+// EmissionsStack
+import FlightInfoScreen from './src/components/calc/FlightInfo'
 // Debug tool
 import DebugScreen from './src/components/main/DebugScreen'
 
@@ -30,6 +32,7 @@ Amplify.configure(config)
 const DashboardStackNavigator = createStackNavigator({
   Home: HomeScreen,
   Profile: ProfileScreen,
+  fInfo: FlightInfoScreen,
 }, { headerMode: 'none' })
 
 // Auth stack

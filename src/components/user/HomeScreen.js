@@ -20,6 +20,13 @@ export default class HomeScreen extends React.Component {
             Settings
           </Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('fInfo')}
+          style={styles.buttonStyle1}>
+          <Text style={styles.buttonText1}>
+            Flight Info
+          </Text>
+        </TouchableOpacity>
       </View>
     )
   }
