@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native'
-import Colors from "../utilities/Colors.js"
+import Colors from "../../utilities/Colors.js"
 
-class CarbonFootprint extends Component {
+export default class FlightInfo extends React.Component {
    state = {
       iata: '',
       isLoading: true
@@ -78,16 +78,9 @@ class CarbonFootprint extends Component {
 
    render() {
       return (
-         <SafeAreaView>
-            <View style={styles.container}>
-               <View  height="15%">
-                  <Text padding='10%'>
-                     Flight Number: from {this.state.depCityName} to {this.state.arrCityName}
-                  </Text>
-                  <Text>
-                     This trip was over {this.state.distanceTraveled} km
-                  </Text>
-               </View>
+         <SafeAreaView style={styles.container}>
+            <View style={styles.semicontainer}>
+               <Text>Flight Distance is >= {this.state.distanceTraveled}</Text>
             </View>
          </SafeAreaView>
       )
@@ -98,7 +91,11 @@ const styles = StyleSheet.create({
       flex: 1,
       flexDirection: 'column',
       justifyContent: 'center',
+      backgroundColor: Colors.green,
+    },
+    semicontainer:{
+      flex: 1,
+      paddingTop: '20%',
       backgroundColor: Colors.white,
     }
 });
-export default CarbonFootprint
