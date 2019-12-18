@@ -18,6 +18,8 @@ import UserDashboardScreen from './src/components/user/UserDashboardScreen'
 
 // Main stack
 import HomeScreen from './src/components/main/HomeScreen'
+import FlightInfoScreen from './src/components/calc/FlightInfo'
+import CarbonEmissionsScreen from './src/components/calc/CarbonEmissions'
 
 // Amplify imports and config
 import Amplify from '@aws-amplify/core'
@@ -34,6 +36,8 @@ const AuthStackNavigator = createStackNavigator({
 // Main stack
 const MainStackNavigator = createStackNavigator({
   Home: HomeScreen,
+  FlightInfo: FlightInfoScreen,
+  CarbonEmissions: CarbonEmissionsScreen,
   UserDashboard: UserDashboardScreen, // DashboardStack
   Settings: SettingsScreen, 
   Auth: AuthStackNavigator, // AuthStackNavigator
