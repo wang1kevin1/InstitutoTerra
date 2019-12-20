@@ -14,10 +14,9 @@ export default class FlightInfo extends Component {
       tripIndex: 1,
    }
    componentDidMount = () => {
+      /* Fetch route data using flight number*/
       let chars = this.props.navigation.getParam('flightNum', 'numCode').slice(0,2).toUpperCase();
       let nums = this.props.navigation.getParam('flightNum', 'numCode').slice(2).toUpperCase();
-
-
       fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIata=${chars}&flightnumber=${nums}`, {
          method: 'GET'
       })
@@ -42,6 +41,7 @@ export default class FlightInfo extends Component {
          console.error(error);
       });
    }
+   /*Fetch departure/arrival airports, airline, and airplane information*/
    getPortsPlanes(Codes){
       let arrAirportCall = fetch(`https://aviation-edge.com/v2/public/airportDatabase?key=760fd0-cefe7a&codeIataAirport=${Codes[0]}`);
       let depAirportCall = fetch(`https://aviation-edge.com/v2/public/airportDatabase?key=760fd0-cefe7a&codeIataAirport=${Codes[1]}`);
@@ -73,6 +73,7 @@ export default class FlightInfo extends Component {
             console.error(error);
          });
    }
+   /*Fetch arrival/departure city information */
    getCities(IataCodes){
       let arrCityCall = fetch(`https://aviation-edge.com/v2/public/cityDatabase?key=760fd0-cefe7a&codeIataCity=${IataCodes[0]}`)
       let depCityCall = fetch(`https://aviation-edge.com/v2/public/cityDatabase?key=760fd0-cefe7a&codeIataCity=${IataCodes[1]}`)
@@ -88,6 +89,7 @@ export default class FlightInfo extends Component {
             console.error(error);
          });
    }
+   /*Calculate distance between arrival and departure airports */
    getDistance(){
      let earthRad = 6731;
      let latDiff = (this.state.arrLat - this.state.depLat) * Math.PI / 180;
@@ -107,6 +109,7 @@ export default class FlightInfo extends Component {
         distanceTraveled: d,
      });
   }
+  /*Load fonts*/
   _cacheResourcesAsync = () => {
 
    return Font.loadAsync({
@@ -134,6 +137,7 @@ export default class FlightInfo extends Component {
       } = this.state;
       if(!isReady)
       return (
+         /*Loading view*/
          <AppLoading
           startAsync={this._cacheResourcesAsync}
           onFinish={() => this.setState({isLoading: false})}
@@ -145,6 +149,7 @@ export default class FlightInfo extends Component {
             
             <View style={styles.semicontainer}>
             <View style={styles.buttonBarTop}>
+            {/*Route Option Buttons*/}
                <TouchableOpacity style={styles.leftGreenButton} onPress={() => this.setState({tripIndex: 1})}>
                   <Text style={styles.buttonText}>ONE WAY</Text>
                </TouchableOpacity>
@@ -152,13 +157,16 @@ export default class FlightInfo extends Component {
                   <Text style={styles.buttonText}>ROUNDTRIP</Text>
                </TouchableOpacity>
             </View>
+            {/*Flight Number*/}
                <Text style={styles.smallBlueText}>FLIGHT NUMBER:</Text>
-               <Text style={styles.bigBlueText}>{flightChars} {flightNums}</Text>         
+               <Text style={styles.bigBlueText}>{flightChars} {flightNums}</Text>    
             <View style={styles.planeInfoText}>
+            {/*Departure and arrival city & IATA*/}
                <Text style={styles.midGreyText}>{depCityName}({depCityIata}) to {arrCityName}({arrCityIata}) </Text>
    <Text style={styles.midGreyText}>via {airlineName} {planeMake} {planeModel}</Text>
             </View>
             <View style={styles.buttonBarBottom}>
+            {/*Seat class selector*/}
                <TouchableOpacity style={styles.leftGreenButton} onPress={() => this.setState({seatIndex: 'Economy'})}>
                   <Text style={styles.buttonText}>ECONOMY</Text>
                </TouchableOpacity>
@@ -171,23 +179,29 @@ export default class FlightInfo extends Component {
             </View>
             <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={5}/>
             <View style={styles.receiptContainer}>
+            {/*More flight information*/}
                <View style={styles.textRow}>
                   <Text style={styles.receiptTextLeft}>FLIGHT:</Text>
+                  {/*Arrival to Departure*/}
                   <Text style={styles.receiptTextRight}>{depCityName} &#8594; {arrCityName}</Text>
                </View>
                <View style={styles.textRow}>
                   <Text style={styles.receiptTextLeft}>DISTANCE:</Text>
+                  {/*Distance of flight*/}
                   <Text style={styles.receiptTextRight}>{distanceTraveled} km</Text>
                </View>
                <View style={styles.textRow}>
                   <Text style={styles.receiptTextLeft}>AIRPLANE:</Text>
+                  {/*Type of plane*/}
                   <Text style={styles.receiptTextRight}>{planeMake} {planeModel}</Text>
                </View>
                <View style={styles.textRow}>
                   <Text style={styles.receiptTextLeft}>CLASS:</Text>
+                  {/*Class of seat*/}
                   <Text style={styles.receiptTextRight}>{seatIndex}</Text>
                </View>    
             </View>
+            {/*Navigate to next screen*/}
             <TouchableOpacity
                style={styles.bottomGreenButton}
                onPress={() => this.props.navigation.navigate('CarbonEmissions',{

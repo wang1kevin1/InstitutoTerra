@@ -15,6 +15,7 @@ export default class CarbonEmissions extends Component {
       cost: 1.50,
    }
    componentDidMount = () =>{
+      //set state parameters
       this.setState({
          distance: this.props.navigation.getParam('distance', 'distanceTraveled'),
          planeMake: this.props.navigation.getParam('planeMake', 'Make'),
@@ -26,7 +27,8 @@ export default class CarbonEmissions extends Component {
       })
       this.calcEmissions();
    }
-
+   //Calculate emissions using distance and seat class
+   //Calculate years to  neutralize emission footprint
    calcEmissions(){
       let temp = this.props.navigation.getParam('distance', 'distanceTraveled');
       tempD = Math.round(temp);
@@ -37,6 +39,7 @@ export default class CarbonEmissions extends Component {
          years: tempY
       })
    }
+   //load fonts
    _cacheResourcesAsync = () => {
 
       return Font.loadAsync({
@@ -62,11 +65,14 @@ export default class CarbonEmissions extends Component {
                   <TouchableOpacity>
                      <Text>&#8592;</Text>
                   </TouchableOpacity>
+                  {/*Flight number*/}
                   <Text style={styles.midBlueText}>FLIGHT {flightChars} {flightNums}</Text>
+                  {/*Sign-inbutton*/}
                   <TouchableOpacity style={styles.buttonSignIn} onPress={() => this.props.navigation.navigate('SignIn')}>
                   </TouchableOpacity>
                </View>
                <View style={styles.topText}>
+                  {/*CO2 footprint*/}
                   <Text style={styles.bigGreyText}>{footprint}</Text>
                   <View style={styles.alignSubScript}>
                      <Text style={styles.midGreyText}>METRIC TONS CO</Text>
@@ -74,31 +80,38 @@ export default class CarbonEmissions extends Component {
                   </View>
                </View>
                <View style={styles.iterateGroup}>
+                  {/*Subtract tree*/}
                   <TouchableOpacity style={styles.iterators} onPress={() => this.setState({treeNum: this.state.treeNum - 1, cost: this.state.cost - 1.50})}>
                      <Text>&#8722;</Text>
                   </TouchableOpacity>
+                  {/*Tree counter*/}
                   <View style={styles.treeCounter}>
                      <Text style={styles.treeCountText}>{treeNum}</Text>
                   </View>
+                  {/*Add tree*/}
                   <TouchableOpacity style={styles.iterators} onPress={() => this.setState({treeNum: this.state.treeNum + 1, cost: this.state.cost + 1.50})}>
                      <Text>&#43;</Text>
                   </TouchableOpacity>
                </View>
                <View style={styles.bottomText}>
+                  {/*Years to neutralize carbon footprint*/}
                   <Text style={styles.midBlueText}>YEARS TO NEUTRALIZE</Text>
                   <Text style={styles.bigBlueText}>{years}</Text>
                </View>   
             <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={5}/>
             <View style={styles.receiptContainer}>
                <View style={styles.textRow}>
+                  {/*Total trees donated in transaction*/}
                   <Text style={styles.receiptTextLeft}>TOTAL TREES:</Text>
                   <Text style={styles.receiptTextRight}>{treeNum}</Text>
                </View>
                <View style={styles.textRow}>
+                  {/*Cost of transaction*/}
                   <Text style={styles.receiptTextLeft}>PRICE:</Text>
                   <Text style={styles.receiptTextRight}>{cost}</Text>
                </View>
             </View>
+            {/*Navigate to checkout page*/}
             <TouchableOpacity style={styles.bottomGreenButton}>
                <Text style={styles.buttonText}>CHECKOUT</Text>
             </TouchableOpacity>

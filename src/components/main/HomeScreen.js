@@ -61,6 +61,7 @@ export default class SettingsScreen extends React.Component {
   }
 
   checkNum(){
+    /*Check if the inputed flight number is valid*/
     let chars = this.state.flight.slice(0,2).toUpperCase();
     console.log(chars);
     let nums = this.state.flight.slice(2);
