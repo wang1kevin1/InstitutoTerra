@@ -8,6 +8,8 @@ import {
   TouchableOpacity 
 } from 'react-native'
 
+import { AppLoading } from 'expo';
+
 import Dash from 'react-native-dash';
 
 import * as Font from 'expo-font';
@@ -67,6 +69,8 @@ export default class CarbonEmissionsScreen extends React.Component {
       years
     } = this.state;
 
+    this._cacheResourcesAsync
+    
     return (
       <SafeAreaView style={styles.containerTop}>
         <View style={styles.semicontainer}>

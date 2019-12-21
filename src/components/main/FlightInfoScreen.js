@@ -8,11 +8,11 @@ import {
   TouchableOpacity
 } from 'react-native'
 
+import { AppLoading } from 'expo';
+
 import Dash from 'react-native-dash';
 
 import * as Font from 'expo-font';
-
-import { AppLoading } from 'expo';
 
 import Colors from "../../assets/Colors.js"
 
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
   receiptContainer: {
     //  paddingRight: '5%',
   },
-  
+
   planeInfoText: {
     paddingTop: '0%',
     paddingBottom: '3%',

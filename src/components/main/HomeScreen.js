@@ -146,7 +146,7 @@ export default class SettingsScreen extends React.Component {
               </View>
               {/* Redirect to donation checkout */}
               <TouchableOpacity activeOpacity={0.9}
-                onPress={() => Alert.alert('Checkout Screen')}
+                onPress={() => this.props.navigation.navigate('CarbonEmissions')}
                 style={styles.buttonStyle2}>
                 <Text style={styles.buttonText2}>
                   PROCEED WITH NO FLIGHT NUMBER
