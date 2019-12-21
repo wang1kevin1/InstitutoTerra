@@ -21,7 +21,7 @@ import {
 
 import { Ionicons } from '@expo/vector-icons';
 
-import Colors from '../../utilities/Colors'
+import Colors from '../../assets/Colors'
 
 import Auth from '@aws-amplify/auth'
 

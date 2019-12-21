@@ -18,8 +18,8 @@ import UserDashboardScreen from './src/components/user/UserDashboardScreen'
 
 // Main stack
 import HomeScreen from './src/components/main/HomeScreen'
-import FlightInfoScreen from './src/components/calc/FlightInfo'
-import CarbonEmissionsScreen from './src/components/calc/CarbonEmissions'
+import FlightInfoScreen from './src/components/main/FlightInfoScreen'
+import CarbonEmissionsScreen from './src/components/main/CarbonEmissionsScreen'
 
 // Amplify imports and config
 import Amplify from '@aws-amplify/core'

@@ -24,7 +24,7 @@ import { NavigationEvents } from 'react-navigation';
 
 import { Ionicons } from '@expo/vector-icons';
 
-import Colors from '../../utilities/Colors'
+import Colors from '../../assets/Colors'
 
 import Auth from '@aws-amplify/auth'
 
@@ -60,41 +60,39 @@ export default class SettingsScreen extends React.Component {
       })
   }
 
-  checkNum(){
-    /*Check if the inputed flight number is valid*/
-    let chars = this.state.flight.slice(0,2).toUpperCase();
+  // Check if the inputed flight number is valid
+  checkNum() {
+    let chars = this.state.flight.slice(0, 2).toUpperCase();
     console.log(chars);
     let nums = this.state.flight.slice(2);
     console.log(nums);
     fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIata=${chars}&flightnumber=${nums}`, {
-         method: 'GET'
-      })
+      method: 'GET'
+    })
       .then((response) => response.json())
       .then((responseJson) => {
-         this.setState({
-            validNum: true,
-            data: responseJson[0],
-         })
-      console.log(this.state.data);
-      if(!this.state.data){
         this.setState({
-          validNum: false,
+          validNum: true,
+          data: responseJson[0],
         })
-      }
+        console.log(this.state.data);
+        if (!this.state.data) {
+          this.setState({
+            validNum: false,
+          })
+        }
         return this.state.validNum;
       }).then((validNum) => {
-        if(validNum){
-          this.props.navigation.navigate('FlightInfo',{flightNum: this.state.flight})
-        }else{
-          this.AlertHandler();
+        if (validNum) {
+          this.props.navigation.navigate('FlightInfo', { flightNum: this.state.flight })
+        } else {
+          Alert.alert('Please enter a valid flight number with no spaces')
         }
       }).catch((error) => {
         console.error(error);
       });
   }
-  AlertHandler=()=>{
-    alert('Please enter a valid flight number with no spaces.');
-  }
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -139,7 +137,7 @@ export default class SettingsScreen extends React.Component {
                     returnKeyType='go'
                     autoCapitalize='none'
                     autoCorrect={false}
-                    secureTextEntry={true}
+                    secureTextEntry={false}
                     onChangeText={value => this.onChangeText('flight', value)}
                   />
                   {/* Pass flight prop to CalculateEmissions */}
@@ -152,14 +150,6 @@ export default class SettingsScreen extends React.Component {
                 style={styles.buttonStyle2}>
                 <Text style={styles.buttonText2}>
                   PROCEED WITH NO FLIGHT NUMBER
-                </Text>
-              </TouchableOpacity>
-              {/* Redirect to info page */}
-              <TouchableOpacity activeOpacity={0.9}
-                onPress={() => Alert.alert('About trees page')}
-                style={styles.buttonStyle2}>
-                <Text style={styles.buttonText2}>
-                  WHERE ARE MY TREES?
                 </Text>
               </TouchableOpacity>
               {/* Footer */}

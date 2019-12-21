@@ -26,7 +26,7 @@ import SettingsList from 'react-native-settings-list';
 
 import CodeInput from 'react-native-confirmation-code-input';
 
-import Colors from '../../utilities/Colors'
+import Colors from '../../assets/Colors'
 
 import Auth from '@aws-amplify/auth'
 

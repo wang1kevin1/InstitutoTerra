@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
-import Colors from '../../utilities/Colors'
+import Colors from '../../assets/Colors'
 
 export default class UserDashboardScreen extends React.Component {
   render() {
