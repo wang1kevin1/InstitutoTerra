@@ -131,6 +131,7 @@ export default class FlightInfoScreen extends React.Component {
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     console.log(c);
     let d = earthRad * c;
+    d = d.toFixed(2);
     console.log("should have distance here")
     console.log(d)
     this.setState({
