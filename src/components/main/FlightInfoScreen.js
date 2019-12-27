@@ -132,11 +132,19 @@ export default class FlightInfoScreen extends React.Component {
     console.log(c);
     let d = earthRad * c;
     d = d.toFixed(2);
-    console.log("should have distance here")
     console.log(d)
     this.setState({
       distanceTraveled: d,
     });
+  }
+
+  // toggles secure text password 
+  handleHidePassword1 = () => {
+    if (this.state.hidePassword1) {
+      this.setState({ hidePassword1: false })
+    } else {
+      this.setState({ hidePassword1: true })
+    }
   }
 
   render() {
@@ -166,74 +174,87 @@ export default class FlightInfoScreen extends React.Component {
       )
     return (
       <SafeAreaView style={styles.containerTop}>
-          <View style={styles.buttonBarTop}>
-            {/*Route Option Buttons*/}
-            <TouchableOpacity 
-              style={styles.leftGreenButton} 
+        <View style={styles.buttonBarTop}>
+          {/*Route Option Buttons*/}
+          <View style={[styles.leftGreenButton, { opacity: (this.state.tripIndex == 1) ? 1 : 0.5 }]}>
+            <TouchableOpacity
               onPress={() => this.setState({ tripIndex: 1 })}>
               <Text style={styles.buttonText}>ONE WAY</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.rightGreenButtton} onPress={() => this.setState({ tripIndex: 2 })}>
+          </View>
+          <View style={[styles.rightGreenButton, { opacity: (this.state.tripIndex == 2) ? 1 : 0.5 }]}>
+            <TouchableOpacity
+              onPress={() => this.setState({ tripIndex: 2 })}>
               <Text style={styles.buttonText}>ROUNDTRIP</Text>
             </TouchableOpacity>
           </View>
-          {/*Flight Number*/}
-          <Text style={styles.smallBlueText}>FLIGHT NUMBER:</Text>
-          <Text style={styles.bigBlueText}>{flightChars} {flightNums}</Text>
-          <View style={styles.planeInfoText}>
-            {/*Departure and arrival city & IATA*/}
-            <Text style={styles.midGreyText}>{depCityName}({depCityIata}) to {arrCityName}({arrCityIata}) </Text>
-            <Text style={styles.midGreyText}>via {airlineName} {planeMake} {planeModel}</Text>
-          </View>
-          <View style={styles.buttonBarBottom}>
-            {/*Seat class selector*/}
-            <TouchableOpacity style={styles.leftGreenButton} onPress={() => this.setState({ seatIndex: 'Economy' })}>
+        </View>
+        {/*Flight Number*/}
+        <Text style={styles.smallBlueText}>FLIGHT NUMBER:</Text>
+        <Text style={styles.bigBlueText}>{flightChars} {flightNums}</Text>
+        <View style={styles.planeInfoText}>
+          {/*Departure and arrival city & IATA*/}
+          <Text style={styles.midGreyText}>{depCityName}({depCityIata}) to {arrCityName}({arrCityIata}) </Text>
+          <Text style={styles.midGreyText}>via {airlineName} {planeMake} {planeModel}</Text>
+        </View>
+        <View style={styles.buttonBarBottom}>
+          {/*Seat class selector*/}
+          <View style={[styles.leftGreenButton, { opacity: (this.state.seatIndex == 'Economy') ? 1 : 0.5 }]}>
+            <TouchableOpacity
+              onPress={() => this.setState({ seatIndex: 'Economy' })}>
               <Text style={styles.buttonText}>ECONOMY</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.middleGreenButtton} onPress={() => this.setState({ seatIndex: 'Business' })}>
+          </View>
+          <View style={[styles.middleGreenButton, { opacity: (this.state.seatIndex == 'Business') ? 1 : 0.5 }]}>
+            <TouchableOpacity
+              onPress={() => this.setState({ seatIndex: 'Business' })}>
               <Text style={styles.buttonText}>BUSINESS</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.rightGreenButtton} onPress={() => this.setState({ seatIndex: 'First Class' })}>
+          </View>
+          <View style={[styles.rightGreenButton, { opacity: (this.state.seatIndex == 'First Class') ? 1 : 0.5 }]}>
+            <TouchableOpacity
+              onPress={() => this.setState({ seatIndex: 'First Class' })}>
               <Text style={styles.buttonText}>FIRST CLASS</Text>
             </TouchableOpacity>
           </View>
-          <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={5} />
-          <View style={styles.receiptContainer}>
-            {/*More flight information*/}
-            <View style={styles.textRow}>
-              <Text style={styles.receiptTextLeft}>FLIGHT:</Text>
-              {/*Arrival to Departure*/}
-              <Text style={styles.receiptTextRight}>{depCityName} &#8594; {arrCityName}</Text>
-            </View>
-            <View style={styles.textRow}>
-              <Text style={styles.receiptTextLeft}>DISTANCE:</Text>
-              {/*Distance of flight*/}
-              <Text style={styles.receiptTextRight}>{distanceTraveled} km</Text>
-            </View>
-            <View style={styles.textRow}>
-              <Text style={styles.receiptTextLeft}>AIRPLANE:</Text>
-              {/*Type of plane*/}
-              <Text style={styles.receiptTextRight}>{planeMake} {planeModel}</Text>
-            </View>
-            <View style={styles.textRow}>
-              <Text style={styles.receiptTextLeft}>CLASS:</Text>
-              {/*Class of seat*/}
-              <Text style={styles.receiptTextRight}>{seatIndex}</Text>
-            </View>
+        </View>
+        <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={5} />
+        <View style={styles.receiptContainer}>
+          {/*More flight information*/}
+          <View style={styles.textRow}>
+            <Text style={styles.receiptTextLeft}>FLIGHT:</Text>
+            {/*Arrival to Departure*/}
+            <Text style={styles.receiptTextRight}>{depCityName} &#8594; {arrCityName}</Text>
           </View>
-          {/*Navigate to next screen*/}
-          <TouchableOpacity
-            style={styles.bottomGreenButton}
-            onPress={() => this.props.navigation.navigate('CarbonEmissions', {
-              distance: distanceTraveled,
-              planeMake: planeMake,
-              planeModel: planeModel,
-              seatState: seatIndex,
-              flightChars: flightChars,
-              flightNums: flightNums,
-            })}>
-            <Text style={styles.buttonText}>CALCULATE CARBON EMMISSIONS</Text>
-          </TouchableOpacity>
+          <View style={styles.textRow}>
+            <Text style={styles.receiptTextLeft}>DISTANCE:</Text>
+            {/*Distance of flight*/}
+            <Text style={styles.receiptTextRight}>{distanceTraveled * this.state.tripIndex} km</Text>
+          </View>
+          <View style={styles.textRow}>
+            <Text style={styles.receiptTextLeft}>AIRPLANE:</Text>
+            {/*Type of plane*/}
+            <Text style={styles.receiptTextRight}>{planeMake} {planeModel}</Text>
+          </View>
+          <View style={styles.textRow}>
+            <Text style={styles.receiptTextLeft}>CLASS:</Text>
+            {/*Class of seat*/}
+            <Text style={styles.receiptTextRight}>{seatIndex}</Text>
+          </View>
+        </View>
+        {/*Navigate to next screen*/}
+        <TouchableOpacity
+          style={styles.bottomGreenButton}
+          onPress={() => this.props.navigation.navigate('CarbonEmissions', {
+            distance: distanceTraveled,
+            planeMake: planeMake,
+            planeModel: planeModel,
+            seatState: seatIndex,
+            flightChars: flightChars,
+            flightNums: flightNums,
+          })}>
+          <Text style={styles.buttonText}>CALCULATE CARBON EMMISSIONS</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     )
   }
@@ -301,14 +322,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  middleGreenButtton: {
+  middleGreenButton: {
     backgroundColor: Colors.lightgreen,
     marginRight: 3,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  rightGreenButtton: {
+  rightGreenButton: {
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
     backgroundColor: Colors.lightgreen,
