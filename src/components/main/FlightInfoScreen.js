@@ -166,10 +166,11 @@ export default class FlightInfoScreen extends React.Component {
       )
     return (
       <SafeAreaView style={styles.containerTop}>
-        <View style={styles.semicontainer}>
           <View style={styles.buttonBarTop}>
             {/*Route Option Buttons*/}
-            <TouchableOpacity style={styles.leftGreenButton} onPress={() => this.setState({ tripIndex: 1 })}>
+            <TouchableOpacity 
+              style={styles.leftGreenButton} 
+              onPress={() => this.setState({ tripIndex: 1 })}>
               <Text style={styles.buttonText}>ONE WAY</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.rightGreenButtton} onPress={() => this.setState({ tripIndex: 2 })}>
@@ -233,7 +234,6 @@ export default class FlightInfoScreen extends React.Component {
             })}>
             <Text style={styles.buttonText}>CALCULATE CARBON EMMISSIONS</Text>
           </TouchableOpacity>
-        </View>
       </SafeAreaView>
     )
   }
@@ -243,23 +243,17 @@ const styles = StyleSheet.create({
   containerTop: {
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: Colors.lightgreen,
+    paddingLeft: '5%',
+    paddingRight: '5%',
+    flex: 1,
+    marginTop: '10%',
+    paddingTop: '25%',
+    paddingBottom: '15%',
+    backgroundColor: Colors.white,
   },
   containerBottom: {
     flex: 1,
     backgroundColor: Colors.white,
-  },
-  semicontainer: {
-    paddingLeft: '5%',
-    paddingRight: '5%',
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    flex: 1,
-    marginTop: '10%',
-    paddingTop: '5%',
-    paddingBottom: '15%',
-    backgroundColor: Colors.white,
-
   },
   receiptContainer: {
     //  paddingRight: '5%',
@@ -287,16 +281,16 @@ const styles = StyleSheet.create({
   },
   buttonBarTop: {
     flexDirection: 'row',
-    height: '12%',
+    height: '8%',
     justifyContent: 'center',
     width: '50%',
     marginTop: '3%'
   },
   buttonBarBottom: {
     flexDirection: 'row',
-    height: '12%',
+    height: '8%',
     justifyContent: 'center',
-    marginTop: '3%'
+    marginTop: '3%',
   },
   leftGreenButton: {
     borderTopLeftRadius: 5,
@@ -323,9 +317,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   bottomGreenButton: {
-    borderRadius: 5,
+    borderRadius: 10,
     backgroundColor: Colors.lightgreen,
-    height: '40%',
+    height: '16%',
     justifyContent: 'center',
     alignItems: 'center',
   },

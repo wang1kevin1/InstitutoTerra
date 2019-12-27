@@ -145,8 +145,9 @@ export default class SettingsScreen extends React.Component {
                 </View>
               </View>
               {/* Redirect to donation checkout */}
+              {/* NAVIGATION FOR TESTING ONLY */}
               <TouchableOpacity activeOpacity={0.9}
-                onPress={() => this.props.navigation.navigate('CarbonEmissions')}
+                onPress={() => this.props.navigation.navigate('CarbonEmissions')} 
                 style={styles.buttonStyle2}>
                 <Text style={styles.buttonText2}>
                   PROCEED WITH NO FLIGHT NUMBER
