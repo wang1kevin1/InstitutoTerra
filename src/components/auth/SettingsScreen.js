@@ -26,11 +26,11 @@ import SettingsList from 'react-native-settings-list';
 
 import CodeInput from 'react-native-confirmation-code-input';
 
-import Colors from '../../assets/Colors'
+import Colors from '../../assets/Colors';
 
-import Auth from '@aws-amplify/auth'
+import Footer from '../utilities/Footer.js';
 
-const terra = require('../../assets/terra/terra-green.png')
+import Auth from '@aws-amplify/auth';
 
 export default class SettingsScreen extends React.Component {
   state = {
@@ -273,16 +273,7 @@ export default class SettingsScreen extends React.Component {
                     </SettingsList>
                   </View>
                 </View>
-                {/* Footer */}
-                <View style={styles.footer}>
-                  <Text style={styles.footerTxt}>made possible with</Text>
-                  <TouchableOpacity onPress={() => Alert.alert('About Section')}>
-                    <Image
-                      source={terra}
-                      style={{ width: 151, height: 13, marginTop: 9, resizeMode: 'contain' }}
-                    />
-                  </TouchableOpacity>
-                </View>
+                <Footer color='white' />
               </View>
             </TouchableWithoutFeedback>
           </KeyboardAvoidingView>
@@ -498,21 +489,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 30,
     backgroundColor: Colors.lightgreen,
-  },
-  footer: {
-    alignItems: 'center',
-    backgroundColor: Colors.white,
-    padding: 30,
-    alignContent: 'flex-end',
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
-    borderWidth: 1,
-    borderColor: Colors.lightgrey
-  },
-  footerTxt: {
-    fontSize: 10,
-    fontWeight: 'normal',
-    color: Colors.black,
   },
   itemStyle: {
     marginBottom: 20,

@@ -13,7 +13,9 @@ import { Ionicons } from '@expo/vector-icons';
 
 import Dash from 'react-native-dash';
 
-import Colors from "../../assets/Colors.js"
+import Colors from '../../assets/Colors.js';
+
+import Footer from '../utilities/Footer.js';
 
 console.log(process.env.REACT_APP_API_KEY)
 
@@ -153,7 +155,7 @@ export default class FlightInfoScreen extends React.Component {
     } = this.state;
     if (!isReady) {
       return (
-        <SafeAreaView style={styles.containerTop}>
+        <SafeAreaView style={styles.container}>
           <View style={{flexDirection: 'column', flex: 1, justifyContent: 'center' }}>
             <Ionicons name="ios-paper-plane" style={styles.loadingIcon} />
             <Text style={[styles.loadingText, { alignItems: 'center', justifyContent: 'center', marginBottom: '5%' }]}>
@@ -166,7 +168,8 @@ export default class FlightInfoScreen extends React.Component {
     }
     else {
       return (
-        <SafeAreaView style={styles.containerTop}>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.containerTop}>
           <View style={styles.buttonBarTop}>
             {/*Route Option Buttons*/}
             <View style={[styles.leftGreenButton, { opacity: (this.state.tripIndex == 1) ? 1 : 0.5 }]}>
@@ -248,6 +251,8 @@ export default class FlightInfoScreen extends React.Component {
             })}>
             <Text style={styles.buttonText}>CALCULATE CARBON EMMISSIONS</Text>
           </TouchableOpacity>
+          </View>
+          <Footer color='white' />
         </SafeAreaView>
       )
     }
@@ -255,12 +260,15 @@ export default class FlightInfoScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    flexDirection: 'column'
+  },
   containerTop: {
-    flexDirection: 'column',
     justifyContent: 'center',
     paddingLeft: '5%',
     paddingRight: '5%',
-    flex: 1,
     marginTop: '10%',
     paddingTop: '25%',
     paddingBottom: '15%',

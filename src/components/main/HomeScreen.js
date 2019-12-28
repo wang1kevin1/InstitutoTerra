@@ -24,11 +24,11 @@ import { NavigationEvents } from 'react-navigation';
 
 import { Ionicons } from '@expo/vector-icons';
 
-import Colors from '../../assets/Colors'
+import Colors from '../../assets/Colors';
 
-import Auth from '@aws-amplify/auth'
+import Footer from '../utilities/Footer.js';
 
-const terra = require('../../assets/terra/terra-white.png')
+import Auth from '@aws-amplify/auth';
 
 export default class SettingsScreen extends React.Component {
   state = {
@@ -84,9 +84,11 @@ export default class SettingsScreen extends React.Component {
         return this.state.validNum;
       }).then((validNum) => {
         if (validNum) {
+          this.refs.flightSearch._root.clear(); 
           this.props.navigation.navigate('FlightInfo', { flightNum: this.state.flight })
         } else {
           Alert.alert('Please enter a valid flight number with no spaces')
+          this.refs.flightSearch._root.clear(); 
         }
       }).catch((error) => {
         console.error(error);
@@ -138,10 +140,13 @@ export default class SettingsScreen extends React.Component {
                     autoCapitalize='none'
                     autoCorrect={false}
                     secureTextEntry={false}
+                    ref='flightSearch'
                     onChangeText={value => this.onChangeText('flight', value)}
                   />
                   {/* Pass flight prop to CalculateEmissions */}
-                  <Ionicons style={styles.iconStyle1} name="md-arrow-forward" onPress={() => this.checkNum()} />
+                  <Ionicons style={styles.iconStyle1} 
+                    name="md-arrow-forward" 
+                    onPress={() => this.checkNum()} />
                 </View>
               </View>
               {/* Redirect to donation checkout */}
@@ -153,16 +158,7 @@ export default class SettingsScreen extends React.Component {
                   PROCEED WITH NO FLIGHT NUMBER
                 </Text>
               </TouchableOpacity>
-              {/* Footer */}
-              <View style={styles.footer}>
-                <Text style={styles.footerTxt}>made possible with</Text>
-                <TouchableOpacity onPress={() => Alert.alert('About Section')}>
-                  <Image
-                    source={terra}
-                    style={{ width: 151, height: 13, marginTop: 9, resizeMode: 'contain' }}
-                  />
-                </TouchableOpacity>
-              </View>
+              <Footer color='green' />
             </View>
           </TouchableWithoutFeedback>
         </ImageBackground>
@@ -203,21 +199,6 @@ const styles = StyleSheet.create({
     top: 40,
     alignSelf: 'flex-end',
     alignItems: 'center',
-  },
-  footer: {
-    alignItems: 'center',
-    backgroundColor: Colors.green,
-    padding: 30,
-    alignContent: 'flex-end',
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
-    borderWidth: 1,
-    borderColor: Colors.green
-  },
-  footerTxt: {
-    fontSize: 10,
-    fontWeight: 'normal',
-    color: Colors.white,
   },
   itemStyle: {
     height: 60,
