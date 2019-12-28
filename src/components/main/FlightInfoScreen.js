@@ -5,14 +5,13 @@ import {
   Text,
   StyleSheet,
   SafeAreaView,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator
 } from 'react-native'
 
-import { AppLoading } from 'expo';
+import { Ionicons } from '@expo/vector-icons';
 
 import Dash from 'react-native-dash';
-
-import * as Font from 'expo-font';
 
 import Colors from "../../assets/Colors.js"
 
@@ -21,7 +20,6 @@ console.log(process.env.REACT_APP_API_KEY)
 export default class FlightInfoScreen extends React.Component {
   state = {
     iata: '',
-    isLoading: true,
     isReady: false,
     seatIndex: 'Economy',
     tripIndex: 1,
@@ -41,7 +39,6 @@ export default class FlightInfoScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
-          isLoading: false,
           data: responseJson[0],
           airlineIata: responseJson[0].airlineIata,
           arrivalIata: responseJson[0].arrivalIata,
@@ -154,92 +151,106 @@ export default class FlightInfoScreen extends React.Component {
       distanceTraveled,
       seatIndex
     } = this.state;
-
-    return (
-      <SafeAreaView style={styles.containerTop}>
-        <View style={styles.buttonBarTop}>
-          {/*Route Option Buttons*/}
-          <View style={[styles.leftGreenButton, { opacity: (this.state.tripIndex == 1) ? 1 : 0.5 }]}>
-            <TouchableOpacity
-              onPress={() => this.setState({ tripIndex: 1 })}>
-              <Text style={styles.buttonText}>ONE WAY</Text>
-            </TouchableOpacity>
+    if (!isReady) {
+      return (
+        <SafeAreaView style={styles.containerTop}>
+          <View style={{flexDirection: 'column', flex: 1, justifyContent: 'center' }}>
+            <Ionicons name="ios-paper-plane" style={styles.loadingIcon} />
+            <Text style={[styles.loadingText, { alignItems: 'center', justifyContent: 'center', marginBottom: '5%' }]}>
+              RETRIEVING FLIGHT
+            </Text>  
+            <ActivityIndicator color={Colors.lightblue} size='large' animating={!isReady} />
           </View>
-          <View style={[styles.rightGreenButton, { opacity: (this.state.tripIndex == 2) ? 1 : 0.5 }]}>
-            <TouchableOpacity
-              onPress={() => this.setState({ tripIndex: 2 })}>
-              <Text style={styles.buttonText}>ROUNDTRIP</Text>
-            </TouchableOpacity>
+        </SafeAreaView>
+      )
+    }
+    else {
+      return (
+        <SafeAreaView style={styles.containerTop}>
+          <View style={styles.buttonBarTop}>
+            {/*Route Option Buttons*/}
+            <View style={[styles.leftGreenButton, { opacity: (this.state.tripIndex == 1) ? 1 : 0.5 }]}>
+              <TouchableOpacity
+                onPress={() => this.setState({ tripIndex: 1 })}>
+                <Text style={styles.buttonText}>ONE WAY</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={[styles.rightGreenButton, { opacity: (this.state.tripIndex == 2) ? 1 : 0.5 }]}>
+              <TouchableOpacity
+                onPress={() => this.setState({ tripIndex: 2 })}>
+                <Text style={styles.buttonText}>ROUNDTRIP</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-        {/*Flight Number*/}
-        <Text style={styles.smallBlueText}>FLIGHT NUMBER:</Text>
-        <Text style={styles.bigBlueText}>{flightChars} {flightNums}</Text>
-        <View style={styles.planeInfoText}>
-          {/*Departure and arrival city & IATA*/}
-          <Text style={styles.midGreyText}>{depCityName}({depCityIata}) to {arrCityName}({arrCityIata}) </Text>
-          <Text style={styles.midGreyText}>via {airlineName} {planeMake} {planeModel}</Text>
-        </View>
-        <View style={styles.buttonBarBottom}>
-          {/*Seat class selector*/}
-          <View style={[styles.leftGreenButton, { opacity: (this.state.seatIndex == 'Economy') ? 1 : 0.5 }]}>
-            <TouchableOpacity
-              onPress={() => this.setState({ seatIndex: 'Economy' })}>
-              <Text style={styles.buttonText}>ECONOMY</Text>
-            </TouchableOpacity>
+          {/*Flight Number*/}
+          <Text style={styles.smallBlueText}>FLIGHT NUMBER:</Text>
+          <Text style={styles.bigBlueText}>{flightChars} {flightNums}</Text>
+          <View style={styles.planeInfoText}>
+            {/*Departure and arrival city & IATA*/}
+            <Text style={styles.midGreyText}>{depCityName}({depCityIata}) to {arrCityName}({arrCityIata}) </Text>
+            <Text style={styles.midGreyText}>via {airlineName} {planeMake} {planeModel}</Text>
           </View>
-          <View style={[styles.middleGreenButton, { opacity: (this.state.seatIndex == 'Business') ? 1 : 0.5 }]}>
-            <TouchableOpacity
-              onPress={() => this.setState({ seatIndex: 'Business' })}>
-              <Text style={styles.buttonText}>BUSINESS</Text>
-            </TouchableOpacity>
+          <View style={styles.buttonBarBottom}>
+            {/*Seat class selector*/}
+            <View style={[styles.leftGreenButton, { opacity: (this.state.seatIndex == 'Economy') ? 1 : 0.5 }]}>
+              <TouchableOpacity
+                onPress={() => this.setState({ seatIndex: 'Economy' })}>
+                <Text style={styles.buttonText}>ECONOMY</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={[styles.middleGreenButton, { opacity: (this.state.seatIndex == 'Business') ? 1 : 0.5 }]}>
+              <TouchableOpacity
+                onPress={() => this.setState({ seatIndex: 'Business' })}>
+                <Text style={styles.buttonText}>BUSINESS</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={[styles.rightGreenButton, { opacity: (this.state.seatIndex == 'First Class') ? 1 : 0.5 }]}>
+              <TouchableOpacity
+                onPress={() => this.setState({ seatIndex: 'First Class' })}>
+                <Text style={styles.buttonText}>FIRST CLASS</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={[styles.rightGreenButton, { opacity: (this.state.seatIndex == 'First Class') ? 1 : 0.5 }]}>
-            <TouchableOpacity
-              onPress={() => this.setState({ seatIndex: 'First Class' })}>
-              <Text style={styles.buttonText}>FIRST CLASS</Text>
-            </TouchableOpacity>
+          <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={5} />
+          <View style={styles.receiptContainer}>
+            {/*More flight information*/}
+            <View style={styles.textRow}>
+              <Text style={styles.receiptTextLeft}>FLIGHT:</Text>
+              {/*Arrival to Departure*/}
+              <Text style={styles.receiptTextRight}>{depCityName} &#8594; {arrCityName}</Text>
+            </View>
+            <View style={styles.textRow}>
+              <Text style={styles.receiptTextLeft}>DISTANCE:</Text>
+              {/*Distance of flight*/}
+              <Text style={styles.receiptTextRight}>{distanceTraveled * this.state.tripIndex} km</Text>
+            </View>
+            <View style={styles.textRow}>
+              <Text style={styles.receiptTextLeft}>AIRPLANE:</Text>
+              {/*Type of plane*/}
+              <Text style={styles.receiptTextRight}>{planeMake} {planeModel}</Text>
+            </View>
+            <View style={styles.textRow}>
+              <Text style={styles.receiptTextLeft}>CLASS:</Text>
+              {/*Class of seat*/}
+              <Text style={styles.receiptTextRight}>{seatIndex}</Text>
+            </View>
           </View>
-        </View>
-        <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={5} />
-        <View style={styles.receiptContainer}>
-          {/*More flight information*/}
-          <View style={styles.textRow}>
-            <Text style={styles.receiptTextLeft}>FLIGHT:</Text>
-            {/*Arrival to Departure*/}
-            <Text style={styles.receiptTextRight}>{depCityName} &#8594; {arrCityName}</Text>
-          </View>
-          <View style={styles.textRow}>
-            <Text style={styles.receiptTextLeft}>DISTANCE:</Text>
-            {/*Distance of flight*/}
-            <Text style={styles.receiptTextRight}>{distanceTraveled * this.state.tripIndex} km</Text>
-          </View>
-          <View style={styles.textRow}>
-            <Text style={styles.receiptTextLeft}>AIRPLANE:</Text>
-            {/*Type of plane*/}
-            <Text style={styles.receiptTextRight}>{planeMake} {planeModel}</Text>
-          </View>
-          <View style={styles.textRow}>
-            <Text style={styles.receiptTextLeft}>CLASS:</Text>
-            {/*Class of seat*/}
-            <Text style={styles.receiptTextRight}>{seatIndex}</Text>
-          </View>
-        </View>
-        {/*Navigate to next screen*/}
-        <TouchableOpacity
-          style={styles.bottomGreenButton}
-          onPress={() => this.props.navigation.navigate('CarbonEmissions', {
-            distance: distanceTraveled,
-            planeMake: planeMake,
-            planeModel: planeModel,
-            seatState: seatIndex,
-            flightChars: flightChars,
-            flightNums: flightNums,
-          })}>
-          <Text style={styles.buttonText}>CALCULATE CARBON EMMISSIONS</Text>
-        </TouchableOpacity>
-      </SafeAreaView>
-    )
+          {/*Navigate to next screen*/}
+          <TouchableOpacity
+            style={styles.bottomGreenButton}
+            onPress={() => this.props.navigation.navigate('CarbonEmissions', {
+              distance: distanceTraveled,
+              planeMake: planeMake,
+              planeModel: planeModel,
+              seatState: seatIndex,
+              flightChars: flightChars,
+              flightNums: flightNums,
+            })}>
+            <Text style={styles.buttonText}>CALCULATE CARBON EMMISSIONS</Text>
+          </TouchableOpacity>
+        </SafeAreaView>
+      )
+    }
   }
 }
 
@@ -352,5 +363,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: '5%',
+  },
+  loadingIcon: {
+    color: Colors.lightblue,
+    fontSize: 120,
+    textAlign: 'center'
+  },
+  loadingText: {
+    marginTop: '5%',
+    fontFamily: 'Montserrat-bold',
+    fontSize: 12,
+    color: Colors.lightblue,
+    textAlign: 'center'
   }
 });
