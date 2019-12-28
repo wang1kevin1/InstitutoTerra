@@ -27,14 +27,6 @@ export default class FlightInfoScreen extends React.Component {
     tripIndex: 1,
   }
 
-  /*Load fonts*/
-  _cacheResourcesAsync = () => {
-    return Font.loadAsync({
-      'Montserrat': require('../../assets/fonts/Montserrat-Regular.ttf'),
-      'Montserrat-bold': require('../../assets/fonts/Montserrat-Bold.ttf'),
-    });
-  }
-
   componentDidMount = () => {
     this.getFlight()
   }
@@ -163,15 +155,6 @@ export default class FlightInfoScreen extends React.Component {
       seatIndex
     } = this.state;
 
-    if (!isReady)
-      return (
-        /*Loading view*/
-        <AppLoading
-          startAsync={this._cacheResourcesAsync}
-          onFinish={() => this.setState({ isLoading: false })}
-          onError={console.warn}
-        />
-      )
     return (
       <SafeAreaView style={styles.containerTop}>
         <View style={styles.buttonBarTop}>

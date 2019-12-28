@@ -1,5 +1,7 @@
 import React from 'react'
 
+import * as Font from 'expo-font';
+
 import {
   createSwitchNavigator, 
   createAppContainer,
@@ -47,6 +49,19 @@ const AppSwitchNavigator = createSwitchNavigator({
   Main: MainStackNavigator, // the MainStack
 })
 
-const App = createAppContainer(AppSwitchNavigator)
+const AppContainer = createAppContainer(AppSwitchNavigator)
 
-export default App
+export default class App extends React.Component {
+  componentDidMount = () => {
+    Font.loadAsync({
+      'Montserrat': require('./src/assets/fonts/Montserrat-Regular.ttf'),
+      'Montserrat-bold': require('./src/assets/fonts/Montserrat-Bold.ttf'),
+    });
+  }
+
+  render() {
+    return(
+      <AppContainer/>
+    )
+  }
+}
