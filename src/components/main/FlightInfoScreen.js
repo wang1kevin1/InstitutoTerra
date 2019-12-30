@@ -7,10 +7,10 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
-  Alert
+  StatusBar,
 } from 'react-native'
 
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome, Feather } from '@expo/vector-icons';
 
 import Dash from 'react-native-dash';
 
@@ -18,10 +18,13 @@ import Colors from '../../assets/Colors.js';
 
 import Footer from '../utilities/Footer.js';
 
+import Auth from '@aws-amplify/auth';
+
 console.log(process.env.REACT_APP_API_KEY)
 
 export default class FlightInfoScreen extends React.Component {
   state = {
+    isAuthenticated: 'false',
     iata: '',
     isReady: false,
     seatIndex: 'Economy',
@@ -30,6 +33,29 @@ export default class FlightInfoScreen extends React.Component {
 
   componentDidMount = () => {
     this.getFlight()
+    this.checkAuth()
+  }
+
+  // Checks if a user is logged in
+  async checkAuth() {
+    await Auth.currentAuthenticatedUser({ bypassCache: true })
+      .then(() => {
+        console.log('A user is logged in')
+        this.setState({ isAuthenticated: true })
+      })
+      .catch(err => {
+        console.log('Nobody is logged in')
+        this.setState({ isAuthenticated: false })
+      })
+  }
+
+  // Sends user to sign up or dashboard depending on Auth state
+  handleUserRedirect() {
+    if (this.state.isAuthenticated) {
+      this.props.navigation.navigate('UserDashboard')
+    } else {
+      this.props.navigation.navigate('SignIn')
+    }
   }
 
   /* Fetch route data using flight number*/
@@ -130,15 +156,6 @@ export default class FlightInfoScreen extends React.Component {
     });
   }
 
-  // toggles secure text password 
-  handleHidePassword1 = () => {
-    if (this.state.hidePassword1) {
-      this.setState({ hidePassword1: false })
-    } else {
-      this.setState({ hidePassword1: true })
-    }
-  }
-
   render() {
     const {
       isReady,
@@ -154,6 +171,7 @@ export default class FlightInfoScreen extends React.Component {
       distanceTraveled,
       seatIndex
     } = this.state;
+
     if (!isReady) {
       return (
         <SafeAreaView style={styles.container}>
@@ -171,12 +189,13 @@ export default class FlightInfoScreen extends React.Component {
       return (
         <SafeAreaView style={styles.container}>
           <View style={styles.containerTop}>
-          <View style={styles.buttonBarTop}>
+            <StatusBar />
+            <View style={styles.buttonBarTop}>
               {/*Navigation Buttons*/}
-              
-
-
-              
+              <Feather style={styles.navigationIcon} name="home"
+                onPress={() => this.props.navigation.navigate('Home')} />
+              <FontAwesome style={styles.navigationIcon} name="user-circle-o"
+                onPress={() => this.handleUserRedirect()} />
             </View>
             <View style={styles.buttonBarMiddle}>
               {/*Route Option Buttons*/}
@@ -278,8 +297,8 @@ const styles = StyleSheet.create({
     paddingLeft: '5%',
     paddingRight: '5%',
     marginTop: '10%',
-    paddingTop: '25%',
-    paddingBottom: '15%',
+    paddingTop: '15%',
+    paddingBottom: '5%',
     backgroundColor: Colors.white,
   },
   containerBottom: {
@@ -312,19 +331,19 @@ const styles = StyleSheet.create({
   buttonBarTop: {
     flexDirection: 'row',
     height: '10%',
-    justifyContent: 'center',
-    marginTop: '3%'
+    justifyContent: 'space-between',
+    marginBottom: '5%'
   },
   buttonBarMiddle: {
     flexDirection: 'row',
-    height: '8%',
+    height: '6%',
     justifyContent: 'center',
     width: '66%',
     marginTop: '3%'
   },
   buttonBarBottom: {
     flexDirection: 'row',
-    height: '8%',
+    height: '6%',
     justifyContent: 'center',
     marginTop: '3%',
   },
@@ -355,7 +374,7 @@ const styles = StyleSheet.create({
   bottomGreenButton: {
     borderRadius: 10,
     backgroundColor: Colors.lightgreen,
-    height: '18%',
+    height: '10%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -377,8 +396,8 @@ const styles = StyleSheet.create({
   dashedLine: {
     width: '100%',
     height: 1,
-    marginTop: '10%',
-    marginBottom: '10%'
+    marginTop: '5%',
+    marginBottom: '5%'
   },
   textRow: {
     flexDirection: 'row',
@@ -396,5 +415,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: Colors.lightblue,
     textAlign: 'center'
-  }
+  },
+  navigationIcon: {
+    color: Colors.grey,
+    fontSize: 30,
+  },
 });
