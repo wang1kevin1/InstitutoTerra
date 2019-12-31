@@ -23,8 +23,8 @@ export default class CarbonEmissionsScreen extends React.Component {
     isAuthenticated: 'false',
     data: [],
     iata: '',
-    treeNum: 1,
-    cost: 1.50,
+    treeNum: 0,
+    cost: 0,
   }
 
   componentDidMount = () => {
@@ -36,7 +36,6 @@ export default class CarbonEmissionsScreen extends React.Component {
       seatState: this.props.navigation.getParam('seatState', 'state'),
       flightChars: this.props.navigation.getParam('flightChars', 'chars'),
       flightNums: this.props.navigation.getParam('flightNums', 'nums'),
-      cost: this.state.treeNum * 1.50
     })
     this.checkAuth()
     this.calcEmissions()
@@ -61,6 +60,24 @@ export default class CarbonEmissionsScreen extends React.Component {
       this.props.navigation.navigate('UserDashboard')
     } else {
       this.props.navigation.navigate('SignIn')
+    }
+  }
+
+  // handle add
+  handleAdd() {
+    this.setState({
+      treeNum: this.state.treeNum + 1, 
+      cost: this.state.cost + 1.50 
+    })
+  }
+
+  // handle remove
+  handleRemove() {
+    if(this.state.treeNum != 0) {
+      this.setState({
+        treeNum: this.state.treeNum - 1, 
+        cost: this.state.cost - 1.50 
+      })
     }
   }
 
@@ -110,7 +127,7 @@ export default class CarbonEmissionsScreen extends React.Component {
             {/*Subtract tree*/}
             <TouchableOpacity 
               style={styles.iterators} 
-              onPress={() => this.setState({ treeNum: this.state.treeNum - 1, cost: this.state.cost - 1.50 })}>
+              onPress={() => this.handleRemove()}>
               <Text>&#8722;</Text>
             </TouchableOpacity>
             {/*Tree counter*/}
@@ -120,14 +137,19 @@ export default class CarbonEmissionsScreen extends React.Component {
             {/*Add tree*/}
             <TouchableOpacity 
               style={styles.iterators} 
-              onPress={() => this.setState({ treeNum: this.state.treeNum + 1, cost: this.state.cost + 1.50 })}>
+              onPress={() => this.handleAdd()}>
               <Text>&#43;</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.bottomText}>
             {/*Years to neutralize carbon footprint*/}
             <Text style={styles.midBlueText}>YEARS TO NEUTRALIZE</Text>
-            <Text style={styles.bigBlueText}>{years}</Text>
+            {(years != Infinity) &&
+              <Text style={styles.bigBlueText}>{years}</Text>
+            }
+            {(years == Infinity) &&
+              <Text style={styles.bigBlueText}>&#x2014;</Text>
+            }
           </View>
           <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={5} />
           <View style={styles.receiptContainer}>
