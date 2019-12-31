@@ -28,6 +28,7 @@ export default class CarbonEmissionsScreen extends React.Component {
     iata: '',
     treeNum: 0,
     total_cost: 0,
+    years: Infinity,
   }
 
   componentDidMount = () => {
@@ -72,6 +73,7 @@ export default class CarbonEmissionsScreen extends React.Component {
       treeNum: this.state.treeNum + 1, 
       total_cost: this.state.total_cost + cost 
     })
+    this.calcYears()
   }
 
   // handle remove
@@ -81,18 +83,24 @@ export default class CarbonEmissionsScreen extends React.Component {
         treeNum: this.state.treeNum - 1, 
         total_cost: this.state.total_cost - cost 
       })
+      this.calcYears()
     }
   }
 
   //Calculate emissions using distance and seat class
-  //Calculate years to neutralize emission footprint
   calcEmissions() {
     let temp = this.props.navigation.getParam('distance', 'distanceTraveled');
     tempD = Math.round(temp);
     tempF = tempD / 1000;
-    tempY = Math.round(tempF * 5 / this.state.treeNum);
     this.setState({
       footprint: tempF,
+    })
+  }
+
+  //Calculate years to neutralize emission footprint
+  calcYears() {
+    tempY = Math.round(this.state.footprint * 5 / this.state.treeNum);
+    this.setState({
       years: tempY
     })
   }
@@ -147,10 +155,10 @@ export default class CarbonEmissionsScreen extends React.Component {
           <View style={styles.bottomText}>
             {/*Years to neutralize carbon footprint*/}
             <Text style={styles.midBlueText}>YEARS TO NEUTRALIZE</Text>
-            {(years != Infinity) &&
+            {years != Infinity &&
               <Text style={styles.bigBlueText}>{years}</Text>
             }
-            {(years == Infinity) &&
+            {years == Infinity &&
               <Text style={styles.bigBlueText}>&#x2014;</Text>
             }
           </View>
