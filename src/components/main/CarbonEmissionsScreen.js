@@ -18,13 +18,16 @@ import Footer from '../utilities/Footer.js';
 
 import Auth from '@aws-amplify/auth';
 
+// cost per tree
+const cost = 6;
+
 export default class CarbonEmissionsScreen extends React.Component {
   state = {
     isAuthenticated: 'false',
     data: [],
     iata: '',
     treeNum: 0,
-    cost: 0,
+    total_cost: 0,
   }
 
   componentDidMount = () => {
@@ -67,7 +70,7 @@ export default class CarbonEmissionsScreen extends React.Component {
   handleAdd() {
     this.setState({
       treeNum: this.state.treeNum + 1, 
-      cost: this.state.cost + 1.50 
+      total_cost: this.state.total_cost + cost 
     })
   }
 
@@ -76,7 +79,7 @@ export default class CarbonEmissionsScreen extends React.Component {
     if(this.state.treeNum != 0) {
       this.setState({
         treeNum: this.state.treeNum - 1, 
-        cost: this.state.cost - 1.50 
+        total_cost: this.state.total_cost - cost 
       })
     }
   }
@@ -100,7 +103,7 @@ export default class CarbonEmissionsScreen extends React.Component {
       flightNums,
       treeNum,
       footprint,
-      cost,
+      total_cost,
       years
     } = this.state;
     
@@ -161,7 +164,7 @@ export default class CarbonEmissionsScreen extends React.Component {
             <View style={styles.textRow}>
               {/*Cost of transaction*/}
               <Text style={styles.receiptTextLeft}>PRICE:</Text>
-              <Text style={styles.receiptTextRight}>{cost}</Text>
+              <Text style={styles.receiptTextRight}>${total_cost}</Text>
             </View>
           </View>
           {/*Navigate to checkout page*/}
