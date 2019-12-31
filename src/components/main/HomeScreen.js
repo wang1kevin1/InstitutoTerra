@@ -38,7 +38,7 @@ export default class SettingsScreen extends React.Component {
 
   // load background
   componentWillMount() {
-    this.background = require('../../assets/home.png')
+    this.background = require('../../assets/background/home.png')
   }
 
   onChangeText(key, value) {

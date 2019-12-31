@@ -11,9 +11,9 @@ import {
 
 import Colors from '../../assets/Colors'
 
-const terra_greentxt = require('../../assets/terra/terra-green.png')
+const terra_greentxt = require('../../assets/footer/terra-green.png')
 
-const terra_whitetxt = require('../../assets/terra/terra-white.png')
+const terra_whitetxt = require('../../assets/footer/terra-white.png')
 
 class Footer extends React.Component {
   constructor(props) {
