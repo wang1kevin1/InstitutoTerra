@@ -8,28 +8,23 @@ import {
   TouchableOpacity 
 } from 'react-native'
 
-import { AppLoading } from 'expo';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
 
 import Dash from 'react-native-dash';
 
-import * as Font from 'expo-font';
+import Colors from '../../assets/Colors.js';
 
-import Colors from "../../assets/Colors.js"
+import Footer from '../utilities/Footer.js';
+
+import Auth from '@aws-amplify/auth';
 
 export default class CarbonEmissionsScreen extends React.Component {
   state = {
+    isAuthenticated: 'false',
     data: [],
     iata: '',
     treeNum: 1,
     cost: 1.50,
-  }
-
-  //load fonts
-  _cacheResourcesAsync = () => {
-    return Font.loadAsync({
-      'Montserrat': require('../../assets/fonts/Montserrat-Regular.ttf'),
-      'Montserrat-bold': require('../../assets/fonts/Montserrat-Bold.ttf'),
-    });
   }
 
   componentDidMount = () => {
@@ -43,7 +38,30 @@ export default class CarbonEmissionsScreen extends React.Component {
       flightNums: this.props.navigation.getParam('flightNums', 'nums'),
       cost: this.state.treeNum * 1.50
     })
-    this.calcEmissions();
+    this.checkAuth()
+    this.calcEmissions()
+  }
+
+  // Checks if a user is logged in
+  async checkAuth() {
+    await Auth.currentAuthenticatedUser({ bypassCache: true })
+      .then(() => {
+        console.log('A user is logged in')
+        this.setState({ isAuthenticated: true })
+      })
+      .catch(err => {
+        console.log('Nobody is logged in')
+        this.setState({ isAuthenticated: false })
+      })
+  }
+
+  // Sends user to sign up or dashboard depending on Auth state
+  handleUserRedirect() {
+    if (this.state.isAuthenticated) {
+      this.props.navigation.navigate('UserDashboard')
+    } else {
+      this.props.navigation.navigate('SignIn')
+    }
   }
 
   //Calculate emissions using distance and seat class
@@ -68,30 +86,24 @@ export default class CarbonEmissionsScreen extends React.Component {
       cost,
       years
     } = this.state;
-
-    this._cacheResourcesAsync
     
     return (
-      <SafeAreaView style={styles.containerTop}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.semicontainer}>
           <View style={styles.topBar}>
-            <TouchableOpacity>
-              <Text>&#8592;</Text>
-            </TouchableOpacity>
-            {/*Flight number*/}
+            {/*Navigation Buttons*/}
+            <Ionicons style={styles.navigationIcon} name="md-arrow-back" 
+              onPress={() => this.props.navigation.goBack()} />
             <Text style={styles.midBlueText}>FLIGHT {flightChars} {flightNums}</Text>
-            {/*Sign-inbutton*/}
-            <TouchableOpacity 
-              style={styles.buttonSignIn} 
-              onPress={() => this.props.navigation.navigate('SignIn')}>
-            </TouchableOpacity>
+            <FontAwesome style={styles.navigationIcon} name="user-circle-o"
+                onPress={() => this.handleUserRedirect()} />
           </View>
           <View style={styles.topText}>
             {/*CO2 footprint*/}
             <Text style={styles.bigGreyText}>{footprint}</Text>
             <View style={styles.alignSubScript}>
               <Text style={styles.midGreyText}>METRIC TONS CO</Text>
-              <Text style={{ fontSize: 10, lineHeight: 37, color: Colors.darkgrey }}>2</Text>
+              <Text style={{ fontSize: 10, lineHeight: 30, color: Colors.darkgrey }}>2</Text>
             </View>
           </View>
           <View style={styles.iterateGroup}>
@@ -136,26 +148,25 @@ export default class CarbonEmissionsScreen extends React.Component {
             <Text style={styles.buttonText}>CHECKOUT</Text>
           </TouchableOpacity>
         </View>
+        <Footer color='white' />
       </SafeAreaView>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  containerTop: {
+  container: {
+    flex: 0.97,
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: Colors.lightgreen,
   },
   semicontainer: {
+    justifyContent: 'center',
     paddingLeft: '5%',
     paddingRight: '5%',
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    flex: 1,
     marginTop: '10%',
-    paddingTop: '5%',
-    paddingBottom: '15%',
+    paddingTop: '25%',
+    paddingBottom: '5%',
     backgroundColor: Colors.white,
   },
   receiptContainer: {
@@ -163,9 +174,10 @@ const styles = StyleSheet.create({
   },
   topBar: {
     justifyContent: 'space-between',
-    alignItems: 'center',
+    height: '10%',
     flexDirection: 'row',
-    marginBottom: '20%'
+    marginBottom: '5%',
+    marginTop: '8%'
   },
   alignSubScript: {
     justifyContent: 'center',
@@ -173,30 +185,34 @@ const styles = StyleSheet.create({
   },
   midBlueText: {
     fontFamily: 'Montserrat',
-    fontSize: 16,
+    fontSize: 14,
     color: Colors.lightblue,
     justifyContent: 'center',
     alignItems: 'center',
+    lineHeight: 30
   },
   bigBlueText: {
     fontFamily: 'Montserrat-bold',
-    fontSize: 30,
-    color: Colors.lightblue
+    fontSize: 25,
+    color: Colors.lightblue,
+    lineHeight: 30
   },
   midGreyText: {
     fontFamily: 'Montserrat',
-    fontSize: 15,
+    fontSize: 14,
     color: Colors.darkgrey,
+    lineHeight: 25
   },
   bigGreyText: {
     fontFamily: 'Montserrat-bold',
-    fontSize: 30,
-    color: Colors.darkgrey
+    fontSize: 20,
+    color: Colors.darkgrey,
+    lineHeight: 25
   },
   bottomGreenButton: {
-    borderRadius: 5,
+    borderRadius: 10,
     backgroundColor: Colors.lightgreen,
-    height: '40%',
+    height: '13%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -218,8 +234,8 @@ const styles = StyleSheet.create({
   dashedLine: {
     width: '100%',
     height: 1,
-    marginTop: '20%',
-    marginBottom: '10%'
+    marginTop: '10%',
+    marginBottom: '5%'
   },
   topText: {
     flexDirection: 'column',
@@ -238,16 +254,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100%',
-    marginBottom: '25%'
+    height: '40%',
+    marginBottom: '3%'
   },
   iterators: {
-    width: '3%',
     borderRadius: 5,
     backgroundColor: Colors.lightgreen,
     justifyContent: 'center',
     alignItems: 'center',
-    height: '20%',
+    height: '25%',
     width: '10%',
   },
   treeCounter: {
@@ -256,22 +271,18 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.darkgrey,
     justifyContent: 'center',
     alignItems: 'center',
-    height: '95%',
+    height: '90%',
     width: '30%',
-    borderRadius: 25
+    borderRadius: 25,
   },
   treeCountText: {
     fontFamily: 'Montserrat-bold',
     color: Colors.white,
     fontSize: 50
   },
-  buttonSignIn: {
-    backgroundColor: Colors.darkgrey,
-    height: 40,
-    width: 40,
-    borderRadius: 120,
-    borderColor: Colors.lightgreen,
-    borderWidth: 2,
+  navigationIcon: {
+    color: Colors.grey,
+    fontSize: 30,
   },
 });
 

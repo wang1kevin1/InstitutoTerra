@@ -32,8 +32,8 @@ export default class FlightInfoScreen extends React.Component {
   }
 
   componentDidMount = () => {
-    this.getFlight()
     this.checkAuth()
+    this.getFlight()
   }
 
   // Checks if a user is logged in
@@ -189,7 +189,6 @@ export default class FlightInfoScreen extends React.Component {
       return (
         <SafeAreaView style={styles.container}>
           <View style={styles.containerTop}>
-            <StatusBar />
             <View style={styles.buttonBarTop}>
               {/*Navigation Buttons*/}
               <Feather style={styles.navigationIcon} name="home"
@@ -374,7 +373,7 @@ const styles = StyleSheet.create({
   bottomGreenButton: {
     borderRadius: 10,
     backgroundColor: Colors.lightgreen,
-    height: '10%',
+    height: '13%',
     justifyContent: 'center',
     alignItems: 'center',
   },
