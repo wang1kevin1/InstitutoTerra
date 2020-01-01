@@ -268,7 +268,7 @@ export default class FlightInfoScreen extends React.Component {
             <TouchableOpacity
               style={styles.bottomGreenButton}
               onPress={() => this.props.navigation.navigate('CarbonEmissions', {
-                distance: distanceTraveled,
+                distance: distanceTraveled * this.state.tripIndex,
                 planeMake: planeMake,
                 planeModel: planeModel,
                 seatState: seatIndex,
