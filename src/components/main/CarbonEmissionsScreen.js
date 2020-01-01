@@ -5,7 +5,8 @@ import {
   Text, 
   StyleSheet, 
   SafeAreaView, 
-  TouchableOpacity 
+  TouchableOpacity,
+  Alert
 } from 'react-native'
 
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
@@ -28,7 +29,6 @@ export default class CarbonEmissionsScreen extends React.Component {
     iata: '',
     treeNum: 0,
     total_cost: 0,
-    years: Infinity,
   }
 
   componentDidMount = () => {
@@ -73,7 +73,6 @@ export default class CarbonEmissionsScreen extends React.Component {
       treeNum: this.state.treeNum + 1, 
       total_cost: this.state.total_cost + cost 
     })
-    this.calcYears()
   }
 
   // handle remove
@@ -83,7 +82,6 @@ export default class CarbonEmissionsScreen extends React.Component {
         treeNum: this.state.treeNum - 1, 
         total_cost: this.state.total_cost - cost 
       })
-      this.calcYears()
     }
   }
 
@@ -100,9 +98,7 @@ export default class CarbonEmissionsScreen extends React.Component {
   //Calculate years to neutralize emission footprint
   calcYears() {
     tempY = Math.round(this.state.footprint * 5 / this.state.treeNum);
-    this.setState({
-      years: tempY
-    })
+    return (tempY)
   }
 
   render() {
@@ -112,8 +108,9 @@ export default class CarbonEmissionsScreen extends React.Component {
       treeNum,
       footprint,
       total_cost,
-      years
     } = this.state;
+
+    const years = this.calcYears()
     
     return (
       <SafeAreaView style={styles.container}>
@@ -177,7 +174,8 @@ export default class CarbonEmissionsScreen extends React.Component {
           </View>
           {/*Navigate to checkout page*/}
           <TouchableOpacity 
-            style={styles.bottomGreenButton}>
+            style={styles.bottomGreenButton}
+            onPress={() => Alert.alert('Link to checkout')}>
             <Text style={styles.buttonText}>CHECKOUT</Text>
           </TouchableOpacity>
         </View>
