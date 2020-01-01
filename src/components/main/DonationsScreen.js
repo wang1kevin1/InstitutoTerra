@@ -22,28 +22,17 @@ import Auth from '@aws-amplify/auth';
 // cost per tree
 const cost = 6;
 
-export default class CarbonEmissionsScreen extends React.Component {
+export default class DonationsScreen extends React.Component {
   state = {
     isAuthenticated: 'false',
     data: [],
-    iata: '',
     treeNum: 0,
     total_cost: 0,
     color: Colors.grey
   }
 
   componentDidMount = () => {
-    //set state parameters
-    this.setState({
-      distance: this.props.navigation.getParam('distance', 'distanceTraveled'),
-      planeMake: this.props.navigation.getParam('planeMake', 'Make'),
-      planeModel: this.props.navigation.getParam('planeModel', 'Model'),
-      seatState: this.props.navigation.getParam('seatState', 'state'),
-      flightChars: this.props.navigation.getParam('flightChars', 'chars'),
-      flightNums: this.props.navigation.getParam('flightNums', 'nums'),
-    })
     this.checkAuth()
-    this.calcEmissions()
   }
 
   // Checks if a user is logged in
@@ -72,7 +61,7 @@ export default class CarbonEmissionsScreen extends React.Component {
   colorVariant() {
     switch (this.state.treeNum) {
       case 0:
-        return(Colors.grey)
+        return (Colors.grey)
       case 1:
         return (Colors.greygreen1)
       case 2:
@@ -111,32 +100,12 @@ export default class CarbonEmissionsScreen extends React.Component {
     }
   }
 
-  //Calculate emissions using distance and seat class
-  calcEmissions() {
-    let temp = this.props.navigation.getParam('distance', 'distanceTraveled');
-    tempD = Math.round(temp);
-    tempF = tempD / 1000;
-    this.setState({
-      footprint: tempF,
-    })
-  }
-
-  //Calculate years to neutralize emission footprint
-  calcYears() {
-    tempY = Math.round(this.state.footprint * 5 / this.state.treeNum);
-    return (tempY)
-  }
-
   render() {
     const {
-      flightChars,
-      flightNums,
       treeNum,
-      footprint,
       total_cost,
     } = this.state;
 
-    const years = this.calcYears()
     const color = this.colorVariant()
 
     return (
@@ -144,18 +113,17 @@ export default class CarbonEmissionsScreen extends React.Component {
         <View style={styles.semicontainer}>
           <View style={styles.topBar}>
             {/*Navigation Buttons*/}
-            <Ionicons style={styles.navigationIcon} name="md-arrow-back"
-              onPress={() => this.props.navigation.goBack()} />
-            <Text style={styles.midBlueText}>FLIGHT {flightChars} {flightNums}</Text>
+            <Feather style={styles.navigationIcon} name="home"
+              onPress={() => this.props.navigation.navigate('Home')} />
             <FontAwesome style={styles.navigationIcon} name="user-circle-o"
               onPress={() => this.handleUserRedirect()} />
           </View>
           <View style={styles.topText}>
             {/*CO2 footprint*/}
-            <Text style={styles.bigGreyText}>{footprint}</Text>
+            <Text style={styles.bigGreyText}></Text>
             <View style={styles.alignSubScript}>
-              <Text style={styles.midGreyText}>METRIC TONS CO</Text>
-              <Text style={{ fontSize: 10, lineHeight: 30, color: Colors.darkgrey }}>2</Text>
+              <Text style={styles.midGreyText}></Text>
+              <Text style={{ fontSize: 10, lineHeight: 30, color: Colors.darkgrey }}></Text>
             </View>
           </View>
           <View style={styles.iterateGroup}>
@@ -163,10 +131,10 @@ export default class CarbonEmissionsScreen extends React.Component {
             <TouchableOpacity
               style={[styles.iterators, { backgroundColor: (this.state.treeNum == 0) ? Colors.grey : Colors.lightgreen }]}
               onPress={() => this.handleRemove()}>
-              <Feather style={[styles.iteratorIcon, { color: (this.state.treeNum == 0) ? Colors.white : Colors.lightblue}]} name="minus" />
+              <Feather style={[styles.iteratorIcon, { color: (this.state.treeNum == 0) ? Colors.white : Colors.lightblue }]} name="minus" />
             </TouchableOpacity>
             {/*Tree counter*/}
-            <View style={[styles.treeCounter, { backgroundColor: color}]}>
+            <View style={[styles.treeCounter, { backgroundColor: color }]}>
               <Text style={styles.treeCountText}>{treeNum}</Text>
             </View>
             {/*Add tree*/}
@@ -178,13 +146,8 @@ export default class CarbonEmissionsScreen extends React.Component {
           </View>
           <View style={styles.bottomText}>
             {/*Years to neutralize carbon footprint*/}
-            <Text style={styles.midBlueText}>YEARS TO NEUTRALIZE</Text>
-            {years != Infinity &&
-              <Text style={styles.bigBlueText}>{years}</Text>
-            }
-            {years == Infinity &&
-              <Text style={styles.bigBlueText}>&#x2014;</Text>
-            }
+            <Text style={styles.midBlueText}></Text>
+              <Text style={styles.bigBlueText}></Text>
           </View>
           <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={5} />
           <View style={styles.receiptContainer}>

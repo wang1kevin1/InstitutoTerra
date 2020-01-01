@@ -18,10 +18,15 @@ import SettingsScreen from './src/components/auth/SettingsScreen'
 // DashboardStack
 import UserDashboardScreen from './src/components/user/UserDashboardScreen'
 
-// Main stack
+// MainStack head
 import HomeScreen from './src/components/main/HomeScreen'
+
+// FlightStack
 import FlightInfoScreen from './src/components/main/FlightInfoScreen'
 import CarbonEmissionsScreen from './src/components/main/CarbonEmissionsScreen'
+
+// NoFlightStack
+import DonationsScreen from './src/components/main/DonationsScreen'
 
 // Amplify imports and config
 import Amplify from '@aws-amplify/core'
@@ -35,11 +40,22 @@ const AuthStackNavigator = createStackNavigator({
   ForgotPassword: ForgotPasswordScreen,
 }, { headerMode: 'none' })
 
+// Calculate Stack
+const FlightStackNavigator = createStackNavigator({
+  FlightInfo: FlightInfoScreen,
+  CarbonEmissions: CarbonEmissionsScreen,
+}, { headerMode: 'none' })
+
+// Donations Stack
+const NoFlightStackNavigator = createStackNavigator({
+  Donations: DonationsScreen,
+}, { headerMode: 'none' })
+
 // Main stack
 const MainStackNavigator = createStackNavigator({
   Home: HomeScreen,
-  FlightInfo: FlightInfoScreen,
-  CarbonEmissions: CarbonEmissionsScreen,
+  Flight: FlightStackNavigator, // FlightStack
+  NoFlight: NoFlightStackNavigator, // NoFlightStack
   UserDashboard: UserDashboardScreen, // DashboardStack
   Settings: SettingsScreen, 
   Auth: AuthStackNavigator, // AuthStackNavigator
