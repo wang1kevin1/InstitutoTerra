@@ -11,8 +11,6 @@ import {
 
 import { Ionicons, FontAwesome, Feather } from '@expo/vector-icons';
 
-import Dash from 'react-native-dash';
-
 import Colors from '../../assets/Colors.js';
 
 import Footer from '../utilities/Footer.js';
@@ -26,10 +24,6 @@ export default class CarbonEmissionsScreen extends React.Component {
   state = {
     isAuthenticated: 'false',
     data: [],
-    iata: '',
-    treeNum: 0,
-    total_cost: 0,
-    color: Colors.grey
   }
 
   componentDidMount = () => {
@@ -68,49 +62,6 @@ export default class CarbonEmissionsScreen extends React.Component {
     }
   }
 
-  // handle color variants
-  colorVariant() {
-    switch (this.state.treeNum) {
-      case 0:
-        return(Colors.grey)
-      case 1:
-        return (Colors.greygreen1)
-      case 2:
-        return (Colors.greygreen2)
-      case 3:
-        return (Colors.greygreen3)
-      case 4:
-        return (Colors.greygreen4)
-      default:
-        return (Colors.lightgreen)
-    }
-  }
-
-  //handle checkout redirect
-  handleCheckout() {
-    if (this.state.treeNum != 0) {
-      Alert.alert('Link to receipt')
-    }
-  }
-
-  // handle add
-  handleAdd() {
-    this.setState({
-      treeNum: this.state.treeNum + 1,
-      total_cost: this.state.total_cost + cost
-    })
-  }
-
-  // handle remove
-  handleRemove() {
-    if (this.state.treeNum != 0) {
-      this.setState({
-        treeNum: this.state.treeNum - 1,
-        total_cost: this.state.total_cost - cost
-      })
-    }
-  }
-
   //Calculate emissions using distance and seat class
   calcEmissions() {
     let temp = this.props.navigation.getParam('distance', 'distanceTraveled');
@@ -121,89 +72,44 @@ export default class CarbonEmissionsScreen extends React.Component {
     })
   }
 
-  //Calculate years to neutralize emission footprint
-  calcYears() {
-    tempY = Math.round(this.state.footprint * 5 / this.state.treeNum);
-    return (tempY)
-  }
-
   render() {
     const {
       flightChars,
       flightNums,
-      treeNum,
       footprint,
-      total_cost,
     } = this.state;
-
-    const years = this.calcYears()
-    const color = this.colorVariant()
 
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.semicontainer}>
-          <View style={styles.topBar}>
+        <View style={styles.containerTop}>
+          <View style={styles.buttonBarTop}>
             {/*Navigation Buttons*/}
             <Ionicons style={styles.navigationIcon} name="md-arrow-back"
               onPress={() => this.props.navigation.goBack()} />
-            <Text style={styles.midBlueText}>FLIGHT {flightChars} {flightNums}</Text>
             <FontAwesome style={styles.navigationIcon} name="user-circle-o"
               onPress={() => this.handleUserRedirect()} />
           </View>
+          {/*Flight Number*/}
+          <Text style={styles.smallBlueText}>FLIGHT NUMBER:</Text>
+          <Text style={styles.bigBlueText}>{flightChars} {flightNums}</Text>
+          {/*CO2 footprint*/}
           <View style={styles.topText}>
-            {/*CO2 footprint*/}
-            <Text style={styles.bigGreyText}>{footprint}</Text>
+            <Text style={styles.bigWhiteText}>{footprint}</Text>
             <View style={styles.alignSubScript}>
-              <Text style={styles.midGreyText}>METRIC TONS CO</Text>
-              <Text style={{ fontSize: 10, lineHeight: 30, color: Colors.darkgrey }}>2</Text>
+              <Text style={styles.midWhiteText}>METRIC TONS CO</Text>
+              <Text style={{ fontSize: 12, lineHeight: 30, color: Colors.white }}>2</Text>
             </View>
+            <Text style={styles.smallBlueText}>WE CAN FIX THIS TOGETHER</Text>
           </View>
-          <View style={styles.iterateGroup}>
-            {/*Subtract tree*/}
-            <TouchableOpacity
-              style={[styles.iterators, { backgroundColor: (this.state.treeNum == 0) ? Colors.grey : Colors.lightgreen }]}
-              onPress={() => this.handleRemove()}>
-              <Feather style={[styles.iteratorIcon, { color: (this.state.treeNum == 0) ? Colors.white : Colors.lightblue}]} name="minus" />
-            </TouchableOpacity>
-            {/*Tree counter*/}
-            <View style={[styles.treeCounter, { backgroundColor: color}]}>
-              <Text style={styles.treeCountText}>{treeNum}</Text>
-            </View>
-            {/*Add tree*/}
-            <TouchableOpacity
-              style={[styles.iterators, { backgroundColor: Colors.lightgreen }]}
-              onPress={() => this.handleAdd()}>
-              <Feather style={[styles.iteratorIcon, { color: Colors.lightblue }]} name="plus" />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.bottomText}>
-            {/*Years to neutralize carbon footprint*/}
-            <Text style={styles.midBlueText}>YEARS TO NEUTRALIZE</Text>
-            {years != Infinity &&
-              <Text style={styles.bigBlueText}>{years}</Text>
-            }
-            {years == Infinity &&
-              <Text style={styles.bigBlueText}>&#x2014;</Text>
-            }
-          </View>
-          <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={5} />
-          <View style={styles.receiptContainer}>
-            <View style={styles.textRow}>
-              {/*Total trees donated in transaction*/}
-              <Text style={styles.receiptTextLeft}>TOTAL TREES:</Text>
-              <Text style={styles.receiptTextRight}>{treeNum}</Text>
-            </View>
-            <View style={styles.textRow}>
-              {/*Cost of transaction*/}
-              <Text style={styles.receiptTextLeft}>PRICE:</Text>
-              <Text style={styles.receiptTextRight}>${total_cost}</Text>
-            </View>
-          </View>
-          {/*Navigate to checkout page*/}
+          {/*Navigate to next screen*/}
           <TouchableOpacity
-            style={[styles.bottomGreenButton, { backgroundColor: (this.state.treeNum == 0) ? Colors.grey : Colors.lightgreen }]}
-            onPress={() => this.handleCheckout()}>
-            <Text style={styles.buttonText}>CHECKOUT</Text>
+            style={styles.bottomGreenButton}
+            onPress={() => this.props.navigation.navigate('CheckoutWithFlight', {
+              footprint: footprint,
+              flightChars: flightChars,
+              flightNums: flightNums,
+            })}>
+            <Text style={styles.buttonText}>PLANT TREES</Text>
           </TouchableOpacity>
         </View>
         <Footer color='white' />
@@ -214,58 +120,56 @@ export default class CarbonEmissionsScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.97,
-    flexDirection: 'column',
+    flex: 1,
     justifyContent: 'center',
+    flexDirection: 'column',
+    backgroundColor: Colors.darkgrey,
   },
-  semicontainer: {
+  containerTop: {
     justifyContent: 'center',
     paddingLeft: '5%',
     paddingRight: '5%',
     marginTop: '10%',
-    paddingTop: '25%',
+    paddingTop: '15%',
     paddingBottom: '5%',
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.darkgrey,
   },
-  receiptContainer: {
-    //  paddingRight: '5%',
+  smallBlueText: {
+    fontFamily: 'Montserrat',
+    fontSize: 12,
+    color: Colors.lightblue,
   },
-  topBar: {
-    justifyContent: 'space-between',
-    height: '10%',
+  bigBlueText: {
+    fontFamily: 'Montserrat-bold',
+    fontSize: 30,
+    color: Colors.lightblue
+  },
+  buttonBarTop: {
     flexDirection: 'row',
-    marginBottom: '5%',
-    marginTop: '8%'
+    height: '10%',
+    justifyContent: 'space-between',
+    marginBottom: '5%'
+  },
+  topText: {
+    marginTop: '20%',
+    marginBottom: '20%',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  midWhiteText: {
+    fontFamily: 'Montserrat',
+    fontSize: 22,
+    color: Colors.white,
+    lineHeight: 25
+  },
+  bigWhiteText: {
+    fontFamily: 'Montserrat-bold',
+    fontSize: 48,
+    color: Colors.white,
   },
   alignSubScript: {
     justifyContent: 'center',
     flexDirection: 'row',
-  },
-  midBlueText: {
-    fontFamily: 'Montserrat',
-    fontSize: 14,
-    color: Colors.lightblue,
-    justifyContent: 'center',
-    alignItems: 'center',
-    lineHeight: 30
-  },
-  bigBlueText: {
-    fontFamily: 'Montserrat-bold',
-    fontSize: 25,
-    color: Colors.lightblue,
-    lineHeight: 30
-  },
-  midGreyText: {
-    fontFamily: 'Montserrat',
-    fontSize: 14,
-    color: Colors.darkgrey,
-    lineHeight: 25
-  },
-  bigGreyText: {
-    fontFamily: 'Montserrat-bold',
-    fontSize: 20,
-    color: Colors.darkgrey,
-    lineHeight: 25
   },
   bottomGreenButton: {
     borderRadius: 10,
@@ -279,69 +183,8 @@ const styles = StyleSheet.create({
     color: Colors.darkgrey,
     fontSize: 12
   },
-  receiptTextLeft: {
-    fontFamily: 'Montserrat',
-    color: Colors.darkgrey,
-    fontSize: 12
-  },
-  receiptTextRight: {
-    fontFamily: 'Montserrat-bold',
-    color: Colors.darkgrey,
-    fontSize: 12
-  },
-  dashedLine: {
-    width: '100%',
-    height: 1,
-    marginTop: '10%',
-    marginBottom: '5%'
-  },
-  topText: {
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  bottomText: {
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  textRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: '5%',
-  },
-  iterateGroup: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '40%',
-    marginBottom: '3%'
-  },
-  iterators: {
-    borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '25%',
-    width: '10%',
-  },
-  treeCounter: {
-    marginLeft: '20%',
-    marginRight: '20%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '90%',
-    width: '30%',
-    borderRadius: 25,
-  },
-  treeCountText: {
-    fontFamily: 'Montserrat-bold',
-    color: Colors.white,
-    fontSize: 50
-  },
   navigationIcon: {
-    color: Colors.grey,
+    color: Colors.white,
     fontSize: 30,
   },
-  iteratorIcon: {
-    fontSize: 25,
-  },
 });
-

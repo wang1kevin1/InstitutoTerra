@@ -24,6 +24,7 @@ import HomeScreen from './src/components/main/HomeScreen'
 // FlightStack
 import FlightInfoScreen from './src/components/main/FlightInfoScreen'
 import CarbonEmissionsScreen from './src/components/main/CarbonEmissionsScreen'
+import CheckoutWithFlightScreen from './src/components/main/CheckoutWithFlightScreen'
 
 // NoFlightStack
 import DonationsScreen from './src/components/main/DonationsScreen'
@@ -44,6 +45,7 @@ const AuthStackNavigator = createStackNavigator({
 const FlightStackNavigator = createStackNavigator({
   FlightInfo: FlightInfoScreen,
   CarbonEmissions: CarbonEmissionsScreen,
+  CheckoutWithFlight: CheckoutWithFlightScreen,
 }, { headerMode: 'none' })
 
 // Donations Stack
