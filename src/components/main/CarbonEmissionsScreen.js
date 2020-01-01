@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  SafeAreaView, 
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
   TouchableOpacity,
   Alert
 } from 'react-native'
@@ -29,6 +29,7 @@ export default class CarbonEmissionsScreen extends React.Component {
     iata: '',
     treeNum: 0,
     total_cost: 0,
+    color: Colors.grey
   }
 
   componentDidMount = () => {
@@ -67,20 +68,45 @@ export default class CarbonEmissionsScreen extends React.Component {
     }
   }
 
+  // handle color variants
+  colorVariant() {
+    switch (this.state.treeNum) {
+      case 0:
+        return(Colors.grey)
+      case 1:
+        return (Colors.greygreen1)
+      case 2:
+        return (Colors.greygreen2)
+      case 3:
+        return (Colors.greygreen3)
+      case 4:
+        return (Colors.greygreen4)
+      default:
+        return (Colors.lightgreen)
+    }
+  }
+
+  //handle checkout redirect
+  handleCheckout() {
+    if (this.state.treeNum != 0) {
+      Alert.alert('Link to checkout')
+    }
+  }
+
   // handle add
   handleAdd() {
     this.setState({
-      treeNum: this.state.treeNum + 1, 
-      total_cost: this.state.total_cost + cost 
+      treeNum: this.state.treeNum + 1,
+      total_cost: this.state.total_cost + cost
     })
   }
 
   // handle remove
   handleRemove() {
-    if(this.state.treeNum != 0) {
+    if (this.state.treeNum != 0) {
       this.setState({
-        treeNum: this.state.treeNum - 1, 
-        total_cost: this.state.total_cost - cost 
+        treeNum: this.state.treeNum - 1,
+        total_cost: this.state.total_cost - cost
       })
     }
   }
@@ -111,17 +137,18 @@ export default class CarbonEmissionsScreen extends React.Component {
     } = this.state;
 
     const years = this.calcYears()
-    
+    const color = this.colorVariant()
+
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.semicontainer}>
           <View style={styles.topBar}>
             {/*Navigation Buttons*/}
-            <Ionicons style={styles.navigationIcon} name="md-arrow-back" 
+            <Ionicons style={styles.navigationIcon} name="md-arrow-back"
               onPress={() => this.props.navigation.goBack()} />
             <Text style={styles.midBlueText}>FLIGHT {flightChars} {flightNums}</Text>
             <FontAwesome style={styles.navigationIcon} name="user-circle-o"
-                onPress={() => this.handleUserRedirect()} />
+              onPress={() => this.handleUserRedirect()} />
           </View>
           <View style={styles.topText}>
             {/*CO2 footprint*/}
@@ -133,18 +160,18 @@ export default class CarbonEmissionsScreen extends React.Component {
           </View>
           <View style={styles.iterateGroup}>
             {/*Subtract tree*/}
-            <TouchableOpacity 
-              style={styles.iterators} 
+            <TouchableOpacity
+              style={[styles.iterators, { backgroundColor: (this.state.treeNum == 0) ? Colors.grey : Colors.lightgreen }]}
               onPress={() => this.handleRemove()}>
               <Text>&#8722;</Text>
             </TouchableOpacity>
             {/*Tree counter*/}
-            <View style={styles.treeCounter}>
+            <View style={[styles.treeCounter, { backgroundColor: color}]}>
               <Text style={styles.treeCountText}>{treeNum}</Text>
             </View>
             {/*Add tree*/}
-            <TouchableOpacity 
-              style={styles.iterators} 
+            <TouchableOpacity
+              style={[styles.iterators, { backgroundColor: Colors.lightgreen }]}
               onPress={() => this.handleAdd()}>
               <Text>&#43;</Text>
             </TouchableOpacity>
@@ -173,9 +200,9 @@ export default class CarbonEmissionsScreen extends React.Component {
             </View>
           </View>
           {/*Navigate to checkout page*/}
-          <TouchableOpacity 
-            style={styles.bottomGreenButton}
-            onPress={() => Alert.alert('Link to checkout')}>
+          <TouchableOpacity
+            style={[styles.bottomGreenButton, { backgroundColor: (this.state.treeNum == 0) ? Colors.grey : Colors.lightgreen }]}
+            onPress={() => this.handleCheckout()}>
             <Text style={styles.buttonText}>CHECKOUT</Text>
           </TouchableOpacity>
         </View>
@@ -290,7 +317,6 @@ const styles = StyleSheet.create({
   },
   iterators: {
     borderRadius: 5,
-    backgroundColor: Colors.lightgreen,
     justifyContent: 'center',
     alignItems: 'center',
     height: '25%',
@@ -299,7 +325,6 @@ const styles = StyleSheet.create({
   treeCounter: {
     marginLeft: '20%',
     marginRight: '20%',
-    backgroundColor: Colors.darkgrey,
     justifyContent: 'center',
     alignItems: 'center',
     height: '90%',
