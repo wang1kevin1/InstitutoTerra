@@ -9,7 +9,7 @@ import {
   Alert
 } from 'react-native'
 
-import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import { Ionicons, FontAwesome, Feather } from '@expo/vector-icons';
 
 import Dash from 'react-native-dash';
 
@@ -163,7 +163,7 @@ export default class CarbonEmissionsScreen extends React.Component {
             <TouchableOpacity
               style={[styles.iterators, { backgroundColor: (this.state.treeNum == 0) ? Colors.grey : Colors.lightgreen }]}
               onPress={() => this.handleRemove()}>
-              <Text>&#8722;</Text>
+              <Feather style={[styles.iteratorIcon, { color: (this.state.treeNum == 0) ? Colors.white : Colors.lightblue}]} name="minus" />
             </TouchableOpacity>
             {/*Tree counter*/}
             <View style={[styles.treeCounter, { backgroundColor: color}]}>
@@ -173,7 +173,7 @@ export default class CarbonEmissionsScreen extends React.Component {
             <TouchableOpacity
               style={[styles.iterators, { backgroundColor: Colors.lightgreen }]}
               onPress={() => this.handleAdd()}>
-              <Text>&#43;</Text>
+              <Feather style={[styles.iteratorIcon, { color: Colors.lightblue }]} name="plus" />
             </TouchableOpacity>
           </View>
           <View style={styles.bottomText}>
@@ -339,6 +339,9 @@ const styles = StyleSheet.create({
   navigationIcon: {
     color: Colors.grey,
     fontSize: 30,
+  },
+  iteratorIcon: {
+    fontSize: 25,
   },
 });
 
