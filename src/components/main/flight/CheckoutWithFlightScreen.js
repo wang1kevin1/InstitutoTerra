@@ -13,9 +13,9 @@ import { Ionicons, FontAwesome, Feather } from '@expo/vector-icons';
 
 import Dash from 'react-native-dash';
 
-import Colors from '../../assets/Colors.js';
+import Colors from '../../../assets/Colors.js';
 
-import Footer from '../utilities/Footer.js';
+import Footer from '../../utilities/Footer.js';
 
 import Auth from '@aws-amplify/auth';
 
@@ -199,7 +199,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.97,
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
   },
@@ -213,14 +213,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   receiptContainer: {
-    //  paddingRight: '5%',
   },
   topBar: {
     justifyContent: 'space-between',
     height: '10%',
     flexDirection: 'row',
-    marginBottom: '5%',
-    marginTop: '8%'
+    marginTop: '15%'
   },
   alignSubScript: {
     justifyContent: 'center',

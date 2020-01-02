@@ -22,12 +22,12 @@ import UserDashboardScreen from './src/components/user/UserDashboardScreen'
 import HomeScreen from './src/components/main/HomeScreen'
 
 // FlightStack
-import FlightInfoScreen from './src/components/main/FlightInfoScreen'
-import CarbonEmissionsScreen from './src/components/main/CarbonEmissionsScreen'
-import CheckoutWithFlightScreen from './src/components/main/CheckoutWithFlightScreen'
+import FlightInfoScreen from './src/components/main/flight/FlightInfoScreen'
+import CarbonEmissionsScreen from './src/components/main/flight/CarbonEmissionsScreen'
+import CheckoutWithFlightScreen from './src/components/main/flight/CheckoutWithFlightScreen'
 
 // NoFlightStack
-import CheckoutWithoutFlightScreen from './src/components/main/CheckoutWithoutFlightScreen'
+import CheckoutWithoutFlightScreen from './src/components/main/noFlight/CheckoutWithoutFlightScreen'
 
 // Amplify imports and config
 import Amplify from '@aws-amplify/core'
