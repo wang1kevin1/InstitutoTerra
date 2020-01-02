@@ -199,7 +199,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0.97,
     flexDirection: 'column',
     justifyContent: 'center',
   },
@@ -213,12 +213,14 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   receiptContainer: {
+    //  paddingRight: '5%',
   },
   topBar: {
     justifyContent: 'space-between',
     height: '10%',
     flexDirection: 'row',
-    marginTop: '15%'
+    marginBottom: '5%',
+    marginTop: '8%'
   },
   alignSubScript: {
     justifyContent: 'center',
