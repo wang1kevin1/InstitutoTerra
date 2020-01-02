@@ -67,7 +67,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
   colorVariant() {
     switch (this.state.treeNum) {
       case 0:
-        return(Colors.grey)
+        return (Colors.grey)
       case 1:
         return (Colors.greygreen1)
       case 2:
@@ -148,10 +148,10 @@ export default class CheckoutWithFlightScreen extends React.Component {
             <TouchableOpacity
               style={[styles.iterators, { backgroundColor: (this.state.treeNum == 0) ? Colors.grey : Colors.lightgreen }]}
               onPress={() => this.handleRemove()}>
-              <Feather style={[styles.iteratorIcon, { color: (this.state.treeNum == 0) ? Colors.white : Colors.lightblue}]} name="minus" />
+              <Feather style={[styles.iteratorIcon, { color: (this.state.treeNum == 0) ? Colors.white : Colors.lightblue }]} name="minus" />
             </TouchableOpacity>
             {/*Tree counter*/}
-            <View style={[styles.treeCounter, { backgroundColor: color}]}>
+            <View style={[styles.treeCounter, { backgroundColor: color }]}>
               <Text style={styles.treeCountText}>{treeNum}</Text>
             </View>
             {/*Add tree*/}

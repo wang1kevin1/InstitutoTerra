@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
     borderWidth: 1,
     borderColor: Colors.lightgrey,
-    borderBottomWidth: 0
+    borderBottomWidth: 0,
   },
   footerTxtWhite: {
     fontSize: 10,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
     borderWidth: 1,
     borderColor: Colors.green,
-    borderBottomWidth: 0
+    borderBottomWidth: 0,
   },
   footerTxtGreen: {
     fontSize: 10,

@@ -84,11 +84,11 @@ export default class SettingsScreen extends React.Component {
         return this.state.validNum;
       }).then((validNum) => {
         if (validNum) {
-          this.refs.flightSearch._root.clear(); 
+          this.refs.flightSearch._root.clear();
           this.props.navigation.navigate('FlightInfo', { flightNum: this.state.flight })
         } else {
           Alert.alert('Please enter a valid flight number with no spaces')
-          this.refs.flightSearch._root.clear(); 
+          this.refs.flightSearch._root.clear();
         }
       }).catch((error) => {
         console.error(error);
@@ -144,15 +144,15 @@ export default class SettingsScreen extends React.Component {
                     onChangeText={value => this.onChangeText('flight', value)}
                   />
                   {/* Pass flight prop to CalculateEmissions */}
-                  <Ionicons style={styles.iconStyle1} 
-                    name="md-arrow-forward" 
+                  <Ionicons style={styles.iconStyle1}
+                    name="md-arrow-forward"
                     onPress={() => this.checkNum()} />
                 </View>
               </View>
               {/* Redirect to donation checkout */}
               {/* NAVIGATION FOR TESTING ONLY */}
               <TouchableOpacity activeOpacity={0.9}
-                onPress={() => this.props.navigation.navigate('Donations')} 
+                onPress={() => this.props.navigation.navigate('Donations')}
                 style={styles.buttonStyle2}>
                 <Text style={styles.buttonText2}>
                   PROCEED WITH NO FLIGHT NUMBER

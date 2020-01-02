@@ -275,7 +275,7 @@ export default class FlightInfoScreen extends React.Component {
                 flightChars: flightChars,
                 flightNums: flightNums,
               })}>
-              <Text style={styles.buttonText}>CALCULATE CARBON EMMISSIONS</Text>
+              <Text style={styles.buttonText}>CALCULATE CARBON FOOTPRINT</Text>
             </TouchableOpacity>
           </View>
           <Footer color='white' />
@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   receiptContainer: {
-    // 
+    //
   },
   planeInfoText: {
     paddingTop: '0%',

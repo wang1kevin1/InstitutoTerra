@@ -121,17 +121,15 @@ export default class CarbonEmissionsScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     flexDirection: 'column',
+    //justifyContent: 'center',
     backgroundColor: Colors.darkgrey,
   },
   containerTop: {
     justifyContent: 'center',
     paddingLeft: '5%',
     paddingRight: '5%',
-    marginTop: '10%',
-    paddingTop: '15%',
-    paddingBottom: '5%',
+    marginTop: '5%',
     backgroundColor: Colors.darkgrey,
   },
   smallBlueText: {
@@ -142,17 +140,17 @@ const styles = StyleSheet.create({
   bigBlueText: {
     fontFamily: 'Montserrat-bold',
     fontSize: 30,
-    color: Colors.lightblue
+    color: Colors.lightblue,
+    marginBottom: '30%',
   },
   buttonBarTop: {
     flexDirection: 'row',
     height: '10%',
     justifyContent: 'space-between',
-    marginBottom: '5%'
+    marginTop: '10%'
   },
   topText: {
-    marginTop: '20%',
-    marginBottom: '20%',
+    marginBottom: '46%',
     flexDirection: 'column',
     alignItems: 'center',
   },
@@ -174,7 +172,7 @@ const styles = StyleSheet.create({
   bottomGreenButton: {
     borderRadius: 10,
     backgroundColor: Colors.lightgreen,
-    height: '13%',
+    height: '9%',
     justifyContent: 'center',
     alignItems: 'center',
   },
