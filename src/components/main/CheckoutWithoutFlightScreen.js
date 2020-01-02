@@ -22,7 +22,7 @@ import Auth from '@aws-amplify/auth';
 // cost per tree
 const cost = 6;
 
-export default class DonationsScreen extends React.Component {
+export default class CheckoutWithoutFlightScreen extends React.Component {
   state = {
     isAuthenticated: 'false',
     data: [],

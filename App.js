@@ -27,7 +27,7 @@ import CarbonEmissionsScreen from './src/components/main/CarbonEmissionsScreen'
 import CheckoutWithFlightScreen from './src/components/main/CheckoutWithFlightScreen'
 
 // NoFlightStack
-import DonationsScreen from './src/components/main/DonationsScreen'
+import CheckoutWithoutFlightScreen from './src/components/main/CheckoutWithoutFlightScreen'
 
 // Amplify imports and config
 import Amplify from '@aws-amplify/core'
@@ -41,16 +41,16 @@ const AuthStackNavigator = createStackNavigator({
   ForgotPassword: ForgotPasswordScreen,
 }, { headerMode: 'none' })
 
-// Calculate Stack
+// Flight Stack
 const FlightStackNavigator = createStackNavigator({
   FlightInfo: FlightInfoScreen,
   CarbonEmissions: CarbonEmissionsScreen,
   CheckoutWithFlight: CheckoutWithFlightScreen,
 }, { headerMode: 'none' })
 
-// Donations Stack
+// NoFlight Stack
 const NoFlightStackNavigator = createStackNavigator({
-  Donations: DonationsScreen,
+  CheckoutWithoutFlight: CheckoutWithoutFlightScreen,
 }, { headerMode: 'none' })
 
 // Main stack
