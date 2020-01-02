@@ -161,6 +161,7 @@ export default class FlightInfoScreen extends React.Component {
       isReady,
       flightChars,
       flightNums,
+      tripIndex,
       arrCityName,
       depCityName,
       arrCityIata,
@@ -246,7 +247,12 @@ export default class FlightInfoScreen extends React.Component {
               <View style={styles.textRow}>
                 <Text style={styles.receiptTextLeft}>FLIGHT</Text>
                 {/* Departure to Arrival */}
-                <Text style={styles.receiptTextRight}>{depCityName} &#8594; {arrCityName}</Text>
+                {tripIndex == 1 &&
+                  <Text style={styles.receiptTextRight}>{depCityName} &#10230; {arrCityName}</Text>
+                }
+                {tripIndex == 2 &&
+                  <Text style={styles.receiptTextRight}>{depCityName} &#10231; {arrCityName}</Text>
+                }
               </View>
               <View style={styles.textRow}>
                 <Text style={styles.receiptTextLeft}>DISTANCE</Text>
@@ -268,6 +274,7 @@ export default class FlightInfoScreen extends React.Component {
             <TouchableOpacity
               style={styles.bottomGreenButton}
               onPress={() => this.props.navigation.navigate('CarbonEmissions', {
+                tripIndex: tripIndex,
                 depCityName: depCityName,
                 arrCityName: arrCityName,
                 distance: distanceTraveled * this.state.tripIndex,

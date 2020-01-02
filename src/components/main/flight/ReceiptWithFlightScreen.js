@@ -28,6 +28,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
   componentDidMount = () => {
     //set state parameters
     this.setState({
+      tripIndex: this.props.navigation.getParam('tripIndex', 'tripIndex'),
       depCityName: this.props.navigation.getParam('depCityName', 'departureCity'),
       arrCityName: this.props.navigation.getParam('arrCityName', 'arrivalCity'),
       footprint: this.props.navigation.getParam('footprint', 'carbonEmissions'),
@@ -71,6 +72,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
 
   render() {
     const {
+      tripIndex,
       depCityName,
       arrCityName,
       footprint,
@@ -96,12 +98,18 @@ export default class ReceiptWithFlightScreen extends React.Component {
             <View style={styles.textRow}>
               {/*Route*/}
               <Text style={styles.receiptTextLeft}>ROUTE</Text>
-              <Text style={styles.receiptTextRight}>{depCityName} &#8594; {arrCityName}</Text>
+              {/* Departure to Arrival */}
+              {tripIndex == 1 &&
+                <Text style={styles.receiptTextRight}>{depCityName} &#10230; {arrCityName}</Text>
+              }
+              {tripIndex == 2 &&
+                <Text style={styles.receiptTextRight}>{depCityName} &#10231; {arrCityName}</Text>
+              }
             </View>
             <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={0} />
             <View style={styles.textRow}>
               {/*Carbon Footprints*/}
-              <Text style={styles.receiptTextLeft}>CARBON FOOTPRINT</Text>
+              <Text style={styles.receiptTextLeft}>CARBON FOOTPRINT (METRIC TONS)</Text>
               <Text style={styles.receiptTextRight}>{footprint}</Text>
             </View>
             <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={0} />

@@ -29,6 +29,7 @@ export default class CarbonEmissionsScreen extends React.Component {
   componentDidMount = () => {
     //set state parameters
     this.setState({
+      tripIndex: this.props.navigation.getParam('tripIndex', 'tripIndex'),
       depCityName: this.props.navigation.getParam('depCityName', 'departureCity'),
       arrCityName: this.props.navigation.getParam('arrCityName', 'arrivalCity'),
       distance: this.props.navigation.getParam('distance', 'distanceTraveled'),
@@ -107,6 +108,7 @@ export default class CarbonEmissionsScreen extends React.Component {
           <TouchableOpacity
             style={styles.bottomGreenButton}
             onPress={() => this.props.navigation.navigate('CheckoutWithFlight', {
+              tripIndex: this.state.tripIndex,
               depCityName: this.state.depCityName,
               arrCityName: this.state.arrCityName,
               footprint: footprint,

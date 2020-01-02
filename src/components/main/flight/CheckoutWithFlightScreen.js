@@ -34,6 +34,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
   componentDidMount = () => {
     //set state parameters
     this.setState({
+      tripIndex: this.props.navigation.getParam('tripIndex', 'tripIndex'),
       depCityName: this.props.navigation.getParam('depCityName', 'departureCity'),
       arrCityName: this.props.navigation.getParam('arrCityName', 'arrivalCity'),
       footprint: this.props.navigation.getParam('footprint', 'carbonEmissions'),
@@ -87,6 +88,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
   handleCheckout() {
     if (this.state.treeNum != 0) {
       this.props.navigation.navigate('ReceiptWithFlight', {
+        tripIndex: this.state.tripIndex,
         depCityName: this.state.depCityName,
         arrCityName: this.state.arrCityName,
         footprint: this.state.footprint,
