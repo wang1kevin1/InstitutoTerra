@@ -29,6 +29,7 @@ import ReceiptWithFlightScreen from './src/components/main/flight/ReceiptWithFli
 
 // NoFlightStack
 import CheckoutWithoutFlightScreen from './src/components/main/noFlight/CheckoutWithoutFlightScreen'
+import ReceiptWithoutFlightScreen from './src/components/main/noFlight/ReceiptWithoutFlightScreen'
 
 // Amplify imports and config
 import Amplify from '@aws-amplify/core'
@@ -53,6 +54,7 @@ const FlightStackNavigator = createStackNavigator({
 // NoFlight Stack
 const NoFlightStackNavigator = createStackNavigator({
   CheckoutWithoutFlight: CheckoutWithoutFlightScreen,
+  ReceiptWithoutFlight: ReceiptWithoutFlightScreen,
 }, { headerMode: 'none' })
 
 // Main stack

@@ -19,7 +19,7 @@ import Footer from '../../utilities/Footer.js';
 
 import Auth from '@aws-amplify/auth';
 
-export default class ReceiptWithFlightScreen extends React.Component {
+export default class ReceiptWithoutFlightScreen extends React.Component {
   state = {
     isAuthenticated: 'false',
     data: [],
@@ -28,15 +28,8 @@ export default class ReceiptWithFlightScreen extends React.Component {
   componentDidMount = () => {
     //set state parameters
     this.setState({
-      tripIndex: this.props.navigation.getParam('tripIndex', 'tripIndex'),
-      depCityName: this.props.navigation.getParam('depCityName', 'departureCity'),
-      arrCityName: this.props.navigation.getParam('arrCityName', 'arrivalCity'),
-      footprint: this.props.navigation.getParam('footprint', 'carbonEmissions'),
       treeNum: this.props.navigation.getParam('treeNum', 'treeNum'),
-      years: this.props.navigation.getParam('years', 'years'),
       total_cost: this.props.navigation.getParam('total_cost', 'total_cost'),
-      flightChars: this.props.navigation.getParam('flightChars', 'chars'),
-      flightNums: this.props.navigation.getParam('flightNums', 'nums'),
     })
     this.checkAuth()
   }
@@ -65,15 +58,8 @@ export default class ReceiptWithFlightScreen extends React.Component {
 
   render() {
     const {
-      tripIndex,
-      depCityName,
-      arrCityName,
-      footprint,
       treeNum,
-      years,
       total_cost,
-      flightChars,
-      flightNums,
     } = this.state;
 
     return (
@@ -83,39 +69,14 @@ export default class ReceiptWithFlightScreen extends React.Component {
             {/*Navigation Buttons*/}
             <Ionicons style={styles.navigationIcon} name="md-arrow-back"
               onPress={() => this.props.navigation.goBack()} />
-            <Text style={styles.flightBlueText}>FLIGHT {flightChars} {flightNums}</Text>
             <FontAwesome style={styles.navigationIcon} name="user-circle-o"
               onPress={() => this.handleUserRedirect()} />
           </View>
           <View style={styles.receiptContainer}>
             <View style={styles.textRow}>
-              {/*Route*/}
-              <Text style={styles.receiptTextLeft}>ROUTE</Text>
-              {/* Departure to Arrival */}
-              {tripIndex == 1 &&
-                <Text style={styles.receiptTextRight}>{depCityName} &#10230; {arrCityName}</Text>
-              }
-              {tripIndex == 2 &&
-                <Text style={styles.receiptTextRight}>{depCityName} &#10231; {arrCityName}</Text>
-              }
-            </View>
-            <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={0} />
-            <View style={styles.textRow}>
-              {/*Carbon Footprints*/}
-              <Text style={styles.receiptTextLeft}>CARBON FOOTPRINT (METRIC TONS)</Text>
-              <Text style={styles.receiptTextRight}>{footprint}</Text>
-            </View>
-            <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={0} />
-            <View style={styles.textRow}>
               {/*Total trees donated in transaction*/}
               <Text style={styles.receiptTextLeft}>TOTAL TREES</Text>
               <Text style={styles.receiptTextRight}>{treeNum}</Text>
-            </View>
-            <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={0} />
-            <View style={styles.textRow}>
-              {/*Years to neutralize*/}
-              <Text style={styles.receiptTextLeft}>YEARS TO NEUTRALIZE</Text>
-              <Text style={styles.receiptTextRight}>{years}</Text>
             </View>
             <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={0} />
             <View style={styles.textRow}>
@@ -156,8 +117,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   receiptContainer: {
-    paddingTop: '24%',
-    paddingBottom: '25%',
+    paddingTop: '40%',
+    paddingBottom: '40%',
   },
   alignText: {
     justifyContent: 'center',
@@ -167,7 +128,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: '10%',
     flexDirection: 'row',
-    marginBottom: '5%',
+    marginBottom: '13%',
     marginTop: '13%'
   },
   flightBlueText: {

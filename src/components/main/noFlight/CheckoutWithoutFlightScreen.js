@@ -9,7 +9,7 @@ import {
   Alert
 } from 'react-native'
 
-import { Ionicons, FontAwesome, Feather } from '@expo/vector-icons';
+import { FontAwesome, Feather } from '@expo/vector-icons';
 
 import Dash from 'react-native-dash';
 
@@ -78,7 +78,10 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
   //handle checkout redirect
   handleCheckout() {
     if (this.state.treeNum != 0) {
-      Alert.alert('Link to receipt')
+      this.props.navigation.navigate('ReceiptWithoutFlight', {
+        treeNum: this.state.treeNum,
+        total_cost: this.state.total_cost,
+      })
     }
   }
 
@@ -147,7 +150,7 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
           <View style={styles.bottomText}>
             {/*Years to neutralize carbon footprint*/}
             <Text style={styles.midBlueText}></Text>
-              <Text style={styles.bigBlueText}></Text>
+            <Text style={styles.bigBlueText}></Text>
           </View>
           <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={5} />
           <View style={styles.receiptContainer}>
