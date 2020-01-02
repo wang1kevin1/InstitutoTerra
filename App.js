@@ -25,6 +25,7 @@ import HomeScreen from './src/components/main/HomeScreen'
 import FlightInfoScreen from './src/components/main/flight/FlightInfoScreen'
 import CarbonEmissionsScreen from './src/components/main/flight/CarbonEmissionsScreen'
 import CheckoutWithFlightScreen from './src/components/main/flight/CheckoutWithFlightScreen'
+import ReceiptWithFlightScreen from './src/components/main/flight/ReceiptWithFlightScreen'
 
 // NoFlightStack
 import CheckoutWithoutFlightScreen from './src/components/main/noFlight/CheckoutWithoutFlightScreen'
@@ -46,6 +47,7 @@ const FlightStackNavigator = createStackNavigator({
   FlightInfo: FlightInfoScreen,
   CarbonEmissions: CarbonEmissionsScreen,
   CheckoutWithFlight: CheckoutWithFlightScreen,
+  ReceiptWithFlight: ReceiptWithFlightScreen,
 }, { headerMode: 'none' })
 
 // NoFlight Stack
@@ -74,6 +76,7 @@ export default class App extends React.Component {
     Font.loadAsync({
       'Montserrat': require('./src/assets/fonts/Montserrat-Regular.ttf'),
       'Montserrat-bold': require('./src/assets/fonts/Montserrat-Bold.ttf'),
+      'Fago-black': require('./src/assets/fonts/Fago-Black.ttf'),
     });
   }
 

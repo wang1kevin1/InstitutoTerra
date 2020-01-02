@@ -34,6 +34,8 @@ export default class CheckoutWithFlightScreen extends React.Component {
   componentDidMount = () => {
     //set state parameters
     this.setState({
+      depCityName: this.props.navigation.getParam('depCityName', 'departureCity'),
+      arrCityName: this.props.navigation.getParam('arrCityName', 'arrivalCity'),
       footprint: this.props.navigation.getParam('footprint', 'carbonEmissions'),
       flightChars: this.props.navigation.getParam('flightChars', 'chars'),
       flightNums: this.props.navigation.getParam('flightNums', 'nums'),
@@ -84,7 +86,16 @@ export default class CheckoutWithFlightScreen extends React.Component {
   //handle checkout redirect
   handleCheckout() {
     if (this.state.treeNum != 0) {
-      Alert.alert('Link to receipt')
+      this.props.navigation.navigate('ReceiptWithFlight', {
+        depCityName: this.state.depCityName,
+        arrCityName: this.state.arrCityName,
+        footprint: this.state.footprint,
+        treeNum: this.state.treeNum,
+        years: this.calcYears(),
+        total_cost: this.state.total_cost,
+        flightChars: this.state.flightChars,
+        flightNums: this.state.flightNums,
+      })
     }
   }
 
@@ -171,16 +182,16 @@ export default class CheckoutWithFlightScreen extends React.Component {
               <Text style={styles.bigBlueText}>&#x2014;</Text>
             }
           </View>
-          <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={5} />
+          <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={0} />
           <View style={styles.receiptContainer}>
             <View style={styles.textRow}>
               {/*Total trees donated in transaction*/}
-              <Text style={styles.receiptTextLeft}>TOTAL TREES:</Text>
+              <Text style={styles.receiptTextLeft}>TOTAL TREES</Text>
               <Text style={styles.receiptTextRight}>{treeNum}</Text>
             </View>
             <View style={styles.textRow}>
               {/*Cost of transaction*/}
-              <Text style={styles.receiptTextLeft}>PRICE:</Text>
+              <Text style={styles.receiptTextLeft}>PRICE</Text>
               <Text style={styles.receiptTextRight}>${total_cost}</Text>
             </View>
           </View>
@@ -255,7 +266,7 @@ const styles = StyleSheet.create({
   bottomGreenButton: {
     borderRadius: 10,
     backgroundColor: Colors.lightgreen,
-    height: '13%',
+    height: '14%',
     justifyContent: 'center',
     alignItems: 'center',
   },

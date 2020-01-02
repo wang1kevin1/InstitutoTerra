@@ -212,7 +212,7 @@ export default class FlightInfoScreen extends React.Component {
               </View>
             </View>
             {/*Flight Number*/}
-            <Text style={styles.smallBlueText}>FLIGHT NUMBER:</Text>
+            <Text style={styles.smallBlueText}>FLIGHT NUMBER</Text>
             <Text style={styles.bigBlueText}>{flightChars} {flightNums}</Text>
             <View style={styles.planeInfoText}>
               {/*Departure and arrival city & IATA*/}
@@ -240,26 +240,26 @@ export default class FlightInfoScreen extends React.Component {
                 </TouchableOpacity>
               </View>
             </View>
-            <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={5} />
+            <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={0} />
             <View style={styles.receiptContainer}>
               {/*More flight information*/}
               <View style={styles.textRow}>
-                <Text style={styles.receiptTextLeft}>FLIGHT:</Text>
-                {/*Arrival to Departure*/}
+                <Text style={styles.receiptTextLeft}>FLIGHT</Text>
+                {/* Departure to Arrival */}
                 <Text style={styles.receiptTextRight}>{depCityName} &#8594; {arrCityName}</Text>
               </View>
               <View style={styles.textRow}>
-                <Text style={styles.receiptTextLeft}>DISTANCE:</Text>
+                <Text style={styles.receiptTextLeft}>DISTANCE</Text>
                 {/*Distance of flight*/}
                 <Text style={styles.receiptTextRight}>{distanceTraveled * this.state.tripIndex} km</Text>
               </View>
               <View style={styles.textRow}>
-                <Text style={styles.receiptTextLeft}>AIRPLANE:</Text>
+                <Text style={styles.receiptTextLeft}>AIRPLANE</Text>
                 {/*Type of plane*/}
                 <Text style={styles.receiptTextRight}>{planeMake} {planeModel}</Text>
               </View>
               <View style={styles.textRow}>
-                <Text style={styles.receiptTextLeft}>CLASS:</Text>
+                <Text style={styles.receiptTextLeft}>CLASS</Text>
                 {/*Class of seat*/}
                 <Text style={styles.receiptTextRight}>{seatIndex}</Text>
               </View>
@@ -268,6 +268,8 @@ export default class FlightInfoScreen extends React.Component {
             <TouchableOpacity
               style={styles.bottomGreenButton}
               onPress={() => this.props.navigation.navigate('CarbonEmissions', {
+                depCityName: depCityName,
+                arrCityName: arrCityName,
                 distance: distanceTraveled * this.state.tripIndex,
                 planeMake: planeMake,
                 planeModel: planeModel,
