@@ -63,13 +63,6 @@ export default class ReceiptWithFlightScreen extends React.Component {
     }
   }
 
-  //handle checkout redirect
-  handleCheckout() {
-    if (this.state.treeNum != 0) {
-      Alert.alert('Link to receipt')
-    }
-  }
-
   render() {
     const {
       tripIndex,
@@ -134,7 +127,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
           {/*Navigate to checkout page*/}
           <TouchableOpacity
             style={[styles.bottomGreenButton, { backgroundColor: (this.state.treeNum == 0) ? Colors.grey : Colors.lightgreen }]}
-            onPress={() => this.handleCheckout()}>
+            onPress={() => Alert.alert('Link to payment, send cost prop')}>
             <View style={styles.alignText}>
               <Text style={styles.buttonText}>PAY WITH </Text>
               <Text style={styles.stripeText}> stripe</Text>
