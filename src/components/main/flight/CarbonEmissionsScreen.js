@@ -127,21 +127,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    //justifyContent: 'center',
     backgroundColor: Colors.darkgrey,
   },
   containerTop: {
     justifyContent: 'center',
     paddingLeft: '5%',
     paddingRight: '5%',
-    marginTop: '5%',
+    paddingTop: '20%',
     backgroundColor: Colors.darkgrey,
   },
   buttonBarTop: {
     flexDirection: 'row',
     height: '10%',
     justifyContent: 'space-between',
-    marginTop: '10%'
+    marginBottom: '10%',
   },
   smallBlueText: {
     fontFamily: 'Montserrat',
@@ -152,13 +151,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-bold',
     fontSize: 30,
     color: Colors.lightblue,
-    marginBottom: '30%',
   },
   midText: {
-    marginBottom: '41%',
+    marginTop: '25%',
+    marginBottom: '45%',
     flexDirection: 'column',
     alignItems: 'center',
-    height: '30%',
   },
   midWhiteText: {
     fontFamily: 'Montserrat',
@@ -178,7 +176,7 @@ const styles = StyleSheet.create({
   bottomGreenButton: {
     borderRadius: 10,
     backgroundColor: Colors.lightgreen,
-    height: '9%',
+    height: '10%',
     justifyContent: 'center',
     alignItems: 'center',
   },
