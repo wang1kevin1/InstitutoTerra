@@ -6,6 +6,7 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
+  ImageBackground,
   Alert
 } from 'react-native'
 
@@ -125,6 +126,9 @@ export default class CarbonEmissionsScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  image:{
+    width: '100%'
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -156,9 +160,10 @@ const styles = StyleSheet.create({
     marginTop: '10%'
   },
   topText: {
-    marginBottom: '46%',
+    marginBottom: '41%',
     flexDirection: 'column',
     alignItems: 'center',
+    height: '30%',
   },
   midWhiteText: {
     fontFamily: 'Montserrat',

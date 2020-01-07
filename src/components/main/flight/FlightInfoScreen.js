@@ -287,7 +287,7 @@ export default class FlightInfoScreen extends React.Component {
               <Text style={styles.buttonText}>CALCULATE CARBON FOOTPRINT</Text>
             </TouchableOpacity>
           </View>
-          <Footer color='white' />
+          <Footer style={styles.footerCorrection} color='white' />
         </SafeAreaView>
       )
     }
@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
     paddingRight: '5%',
     marginTop: '10%',
     paddingTop: '15%',
-    paddingBottom: '5%',
+    paddingBottom: '10%',
     backgroundColor: Colors.white,
   },
   containerBottom: {
@@ -428,4 +428,9 @@ const styles = StyleSheet.create({
     color: Colors.grey,
     fontSize: 30,
   },
+  footerCorrection: {
+    marginTop: '10%',
+    flex:1,
+    justifyContent:"flex-end"
+  }
 });
