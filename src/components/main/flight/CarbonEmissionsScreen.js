@@ -6,8 +6,6 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  ImageBackground,
-  Alert
 } from 'react-native'
 
 import { Ionicons, FontAwesome, Feather } from '@expo/vector-icons';
@@ -97,7 +95,7 @@ export default class CarbonEmissionsScreen extends React.Component {
           <Text style={styles.smallBlueText}>FLIGHT NUMBER</Text>
           <Text style={styles.bigBlueText}>{flightChars} {flightNums}</Text>
           {/*CO2 footprint*/}
-          <View style={styles.topText}>
+          <View style={styles.midText}>
             <Text style={styles.bigWhiteText}>{footprint}</Text>
             <View style={styles.alignSubScript}>
               <Text style={styles.midWhiteText}>METRIC TONS CO</Text>
@@ -126,9 +124,6 @@ export default class CarbonEmissionsScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  image:{
-    width: '100%'
-  },
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -142,6 +137,12 @@ const styles = StyleSheet.create({
     marginTop: '5%',
     backgroundColor: Colors.darkgrey,
   },
+  buttonBarTop: {
+    flexDirection: 'row',
+    height: '10%',
+    justifyContent: 'space-between',
+    marginTop: '10%'
+  },
   smallBlueText: {
     fontFamily: 'Montserrat',
     fontSize: 12,
@@ -153,13 +154,7 @@ const styles = StyleSheet.create({
     color: Colors.lightblue,
     marginBottom: '30%',
   },
-  buttonBarTop: {
-    flexDirection: 'row',
-    height: '10%',
-    justifyContent: 'space-between',
-    marginTop: '10%'
-  },
-  topText: {
+  midText: {
     marginBottom: '41%',
     flexDirection: 'column',
     alignItems: 'center',
