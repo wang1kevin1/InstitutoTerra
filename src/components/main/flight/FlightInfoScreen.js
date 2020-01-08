@@ -175,7 +175,7 @@ export default class FlightInfoScreen extends React.Component {
 
     if (!isReady) {
       return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.containerLoading}>
           <View style={{ flexDirection: 'column', flex: 1, justifyContent: 'center' }}>
             <Ionicons name="ios-paper-plane" style={styles.loadingIcon} />
             <Text style={[styles.loadingText, { alignItems: 'center', justifyContent: 'center', marginBottom: '5%' }]}>
@@ -190,14 +190,14 @@ export default class FlightInfoScreen extends React.Component {
       return (
         <SafeAreaView style={styles.container}>
           <View style={styles.containerTop}>
-            <View style={styles.buttonBarTop}>
+            <View style={styles.buttonBarNav}>
               {/*Navigation Buttons*/}
               <Feather style={styles.navigationIcon} name="home"
                 onPress={() => this.props.navigation.navigate('Home')} />
               <FontAwesome style={styles.navigationIcon} name="user-circle-o"
                 onPress={() => this.handleUserRedirect()} />
             </View>
-            <View style={styles.buttonBarMiddle}>
+            <View style={styles.buttonBarTop}>
               {/*Route Option Buttons*/}
               <View style={[styles.leftGreenButton, { opacity: (this.state.tripIndex == 1) ? 1 : 0.5 }]}>
                 <TouchableOpacity
@@ -287,7 +287,7 @@ export default class FlightInfoScreen extends React.Component {
               <Text style={styles.buttonText}>CALCULATE CARBON FOOTPRINT</Text>
             </TouchableOpacity>
           </View>
-          <Footer style={styles.footerCorrection} color='white' />
+          <Footer color='white' />
         </SafeAreaView>
       )
     }
@@ -295,54 +295,43 @@ export default class FlightInfoScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  containerLoading: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    backgroundColor: Colors.white,
+  },
+  loadingIcon: {
+    color: Colors.lightblue,
+    fontSize: 120,
+    textAlign: 'center'
+  },
+  loadingText: {
+    marginTop: '5%',
+    fontFamily: 'Montserrat-bold',
+    fontSize: 12,
+    color: Colors.lightblue,
+    textAlign: 'center'
+  },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    backgroundColor: Colors.white,
   },
   containerTop: {
     justifyContent: 'center',
     paddingLeft: '5%',
     paddingRight: '5%',
-    marginTop: '10%',
-    paddingTop: '15%',
-    paddingBottom: '10%',
+    paddingTop: '20%',
     backgroundColor: Colors.white,
   },
-  containerBottom: {
-    flex: 1,
-    backgroundColor: Colors.white,
-  },
-  receiptContainer: {
-    //
-  },
-  planeInfoText: {
-    paddingTop: '0%',
-    paddingBottom: '3%',
-  },
-  smallBlueText: {
-    marginTop: '5%',
-    fontFamily: 'Montserrat',
-    fontSize: 12,
-    color: Colors.lightblue,
-  },
-  bigBlueText: {
-    fontFamily: 'Montserrat-bold',
-    fontSize: 30,
-    color: Colors.lightblue
-  },
-  midGreyText: {
-    fontFamily: 'Montserrat',
-    fontSize: 15,
-    color: Colors.darkgrey,
-  },
-  buttonBarTop: {
+  buttonBarNav: {
     flexDirection: 'row',
     height: '10%',
     justifyContent: 'space-between',
     marginBottom: '5%'
   },
-  buttonBarMiddle: {
+  buttonBarTop: {
     flexDirection: 'row',
     height: '6%',
     justifyContent: 'center',
@@ -379,10 +368,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  planeInfoText: {
+    paddingTop: '0%',
+    paddingBottom: '3%',
+  },
+  smallBlueText: {
+    marginTop: '5%',
+    fontFamily: 'Montserrat',
+    fontSize: 12,
+    color: Colors.lightblue,
+  },
+  bigBlueText: {
+    fontFamily: 'Montserrat-bold',
+    fontSize: 30,
+    color: Colors.lightblue
+  },
+  midGreyText: {
+    fontFamily: 'Montserrat',
+    fontSize: 15,
+    color: Colors.darkgrey,
+  },
   bottomGreenButton: {
     borderRadius: 10,
     backgroundColor: Colors.lightgreen,
-    height: '13%',
+    height: '10%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -390,6 +399,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-bold',
     color: Colors.darkgrey,
     fontSize: 12
+  },
+  receiptContainer: {
+    marginBottom: '14%'
   },
   receiptTextLeft: {
     fontFamily: 'Montserrat',
@@ -412,25 +424,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: '5%',
   },
-  loadingIcon: {
-    color: Colors.lightblue,
-    fontSize: 120,
-    textAlign: 'center'
-  },
-  loadingText: {
-    marginTop: '5%',
-    fontFamily: 'Montserrat-bold',
-    fontSize: 12,
-    color: Colors.lightblue,
-    textAlign: 'center'
-  },
   navigationIcon: {
     color: Colors.grey,
     fontSize: 30,
   },
-  footerCorrection: {
-    marginTop: '10%',
-    flex:1,
-    justifyContent:"flex-end"
-  }
 });

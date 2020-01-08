@@ -84,7 +84,7 @@ export default class CarbonEmissionsScreen extends React.Component {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.containerTop}>
-          <View style={styles.buttonBarTop}>
+          <View style={styles.buttonBarNav}>
             {/*Navigation Buttons*/}
             <Ionicons style={styles.navigationIcon} name="md-arrow-back"
               onPress={() => this.props.navigation.goBack()} />
@@ -136,11 +136,11 @@ const styles = StyleSheet.create({
     paddingTop: '20%',
     backgroundColor: Colors.darkgrey,
   },
-  buttonBarTop: {
+  buttonBarNav: {
     flexDirection: 'row',
     height: '10%',
     justifyContent: 'space-between',
-    marginBottom: '10%',
+    marginBottom: '5%',
   },
   smallBlueText: {
     fontFamily: 'Montserrat',
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   },
   midText: {
     marginTop: '25%',
-    marginBottom: '45%',
+    marginBottom: '50%',
     alignItems: 'center',
   },
   midWhiteText: {

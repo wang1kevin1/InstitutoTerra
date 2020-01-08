@@ -77,6 +77,10 @@ const styles = StyleSheet.create({
     color: Colors.black,
   },
   footerGreen: {
+    position: 'absolute', 
+    left: 0, 
+    right: 0, 
+    bottom: 0,
     alignItems: 'center',
     backgroundColor: Colors.green,
     padding: 30,
