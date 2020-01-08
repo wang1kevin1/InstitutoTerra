@@ -153,8 +153,9 @@ const styles = StyleSheet.create({
     color: Colors.lightblue,
   },
   midText: {
+    height: '31%',
     marginTop: '25%',
-    marginBottom: '50%',
+    marginBottom: '35%',
     alignItems: 'center',
   },
   midWhiteText: {
