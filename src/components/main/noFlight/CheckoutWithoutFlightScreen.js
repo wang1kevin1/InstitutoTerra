@@ -6,7 +6,6 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  Alert
 } from 'react-native'
 
 import { FontAwesome, Feather } from '@expo/vector-icons';
@@ -113,8 +112,8 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
 
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.semicontainer}>
-          <View style={styles.topBar}>
+        <View style={styles.containerTop}>
+          <View style={styles.buttonBarNav}>
             {/*Navigation Buttons*/}
             <Feather style={styles.navigationIcon} name="home"
               onPress={() => this.props.navigation.navigate('Home')} />
@@ -180,28 +179,28 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.97,
+    flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center',
+    backgroundColor: Colors.white,
   },
-  semicontainer: {
+  containerTop: {
     justifyContent: 'center',
     paddingLeft: '5%',
     paddingRight: '5%',
-    marginTop: '10%',
-    paddingTop: '25%',
-    paddingBottom: '5%',
+    paddingTop: '20%',
     backgroundColor: Colors.white,
   },
-  receiptContainer: {
-    //  paddingRight: '5%',
-  },
-  topBar: {
-    justifyContent: 'space-between',
-    height: '10%',
+  buttonBarNav: {
     flexDirection: 'row',
+    height: '10%',
+    justifyContent: 'space-between',
     marginBottom: '5%',
-    marginTop: '8%'
+  },
+  topText: {
+    alignItems: 'center',
+  },
+  bottomText: {
+    alignItems: 'center',
   },
   alignSubScript: {
     justifyContent: 'center',
@@ -211,7 +210,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat',
     fontSize: 14,
     color: Colors.lightblue,
-    justifyContent: 'center',
     alignItems: 'center',
     lineHeight: 30
   },
@@ -233,17 +231,38 @@ const styles = StyleSheet.create({
     color: Colors.darkgrey,
     lineHeight: 25
   },
-  bottomGreenButton: {
-    borderRadius: 10,
-    backgroundColor: Colors.lightgreen,
-    height: '13%',
+  iterateGroup: {
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    height: '35%',
   },
-  buttonText: {
+  iterators: {
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '20%',
+    width: '10%',
+  },
+  iteratorIcon: {
+    fontSize: 25,
+  },
+  treeCounter: {
+    marginLeft: '20%',
+    marginRight: '20%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '70%',
+    width: '30%',
+    borderRadius: 25,
+  },
+  treeCountText: {
     fontFamily: 'Montserrat-bold',
-    color: Colors.darkgrey,
-    fontSize: 12
+    color: Colors.white,
+    fontSize: 50
+  },
+  receiptContainer: {
+    //marginBottom: '5%'
   },
   receiptTextLeft: {
     fontFamily: 'Montserrat',
@@ -258,56 +277,29 @@ const styles = StyleSheet.create({
   dashedLine: {
     width: '100%',
     height: 1,
-    marginTop: '10%',
+    marginTop: '15%',
     marginBottom: '5%'
-  },
-  topText: {
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  bottomText: {
-    flexDirection: 'column',
-    alignItems: 'center',
   },
   textRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: '5%',
   },
-  iterateGroup: {
-    flexDirection: 'row',
+  bottomGreenButton: {
+    borderRadius: 10,
+    backgroundColor: Colors.lightgreen,
+    height: '10%',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '40%',
-    marginBottom: '3%'
   },
-  iterators: {
-    borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '25%',
-    width: '10%',
-  },
-  treeCounter: {
-    marginLeft: '20%',
-    marginRight: '20%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '90%',
-    width: '30%',
-    borderRadius: 25,
-  },
-  treeCountText: {
+  buttonText: {
     fontFamily: 'Montserrat-bold',
-    color: Colors.white,
-    fontSize: 50
+    color: Colors.darkgrey,
+    fontSize: 12
   },
   navigationIcon: {
     color: Colors.grey,
     fontSize: 30,
-  },
-  iteratorIcon: {
-    fontSize: 25,
   },
 });
 

@@ -6,7 +6,6 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  Alert
 } from 'react-native'
 
 import { Ionicons, FontAwesome, Feather } from '@expo/vector-icons';
