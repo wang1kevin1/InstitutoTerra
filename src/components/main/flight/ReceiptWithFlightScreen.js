@@ -78,8 +78,8 @@ export default class ReceiptWithFlightScreen extends React.Component {
 
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.semicontainer}>
-          <View style={styles.topBar}>
+        <View style={styles.containerTop}>
+          <View style={styles.buttonBarNav}>
             {/*Navigation Buttons*/}
             <Ionicons style={styles.navigationIcon} name="md-arrow-back"
               onPress={() => this.props.navigation.goBack()} />
@@ -142,33 +142,22 @@ export default class ReceiptWithFlightScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.97,
+    flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center',
+    backgroundColor: Colors.white,
   },
-  semicontainer: {
+  containerTop: {
     justifyContent: 'center',
     paddingLeft: '5%',
     paddingRight: '5%',
-    marginTop: '10%',
-    paddingTop: '25%',
-    paddingBottom: '5%',
+    paddingTop: '20%',
     backgroundColor: Colors.white,
   },
-  receiptContainer: {
-    paddingTop: '24%',
-    paddingBottom: '25%',
-  },
-  alignText: {
-    justifyContent: 'center',
+  buttonBarNav: {
     flexDirection: 'row',
-  },
-  topBar: {
-    justifyContent: 'space-between',
     height: '10%',
-    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: '5%',
-    marginTop: '13%'
   },
   flightBlueText: {
     fontFamily: 'Montserrat',
@@ -178,10 +167,38 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     lineHeight: 30
   },
+  receiptContainer: {
+    paddingTop: '25%',
+    paddingBottom: '30%',
+  },
+  dashedLine: {
+    width: '100%',
+    height: 0.5,
+    marginBottom: '5%'
+  },
+  textRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: '5%',
+  },
+  receiptTextLeft: {
+    fontFamily: 'Montserrat',
+    color: Colors.darkgrey,
+    fontSize: 12
+  },
+  receiptTextRight: {
+    fontFamily: 'Montserrat-bold',
+    color: Colors.darkgrey,
+    fontSize: 12
+  },
+  alignText: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
   bottomGreenButton: {
     borderRadius: 10,
     backgroundColor: Colors.lightgreen,
-    height: '14%',
+    height: '10%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -196,32 +213,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 18
   },
-  receiptTextLeft: {
-    fontFamily: 'Montserrat',
-    color: Colors.darkgrey,
-    fontSize: 12
-  },
-  receiptTextRight: {
-    fontFamily: 'Montserrat-bold',
-    color: Colors.darkgrey,
-    fontSize: 12
-  },
-  dashedLine: {
-    width: '100%',
-    height: 0.5,
-    marginBottom: '5%'
-  },
-  textRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: '5%',
-  },
   navigationIcon: {
     color: Colors.grey,
     fontSize: 30,
-  },
-  iteratorIcon: {
-    fontSize: 25,
   },
 });
 
