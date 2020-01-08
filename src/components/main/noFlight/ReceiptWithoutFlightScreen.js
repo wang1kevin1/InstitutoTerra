@@ -135,7 +135,8 @@ const styles = StyleSheet.create({
   dashedLine: {
     width: '100%',
     height: 0.5,
-    marginBottom: '5%'
+    marginBottom: '5%',
+    marginTop: '5%'
   },
   textRow: {
     flexDirection: 'row',
