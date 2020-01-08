@@ -31,7 +31,7 @@ class Footer extends React.Component {
           <TouchableOpacity onPress={() => Alert.alert('About Section')}>
             <Image
               source={terra_whitetxt}
-              style={{ width: 151, height: 13, marginTop: 9, resizeMode: 'contain' }}
+              style={{ width: 200, height: 20, marginTop: 9, resizeMode: 'contain' }}
             />
           </TouchableOpacity>
         </View >
@@ -44,7 +44,7 @@ class Footer extends React.Component {
           <TouchableOpacity onPress={() => Alert.alert('About Section')}>
             <Image
               source={terra_greentxt}
-              style={{ width: 151, height: 13, marginTop: 9, resizeMode: 'contain' }}
+              style={{ width: 200, height: 20, marginTop: 9, resizeMode: 'contain' }}
             />
           </TouchableOpacity>
         </View >
@@ -61,15 +61,16 @@ const styles = StyleSheet.create({
     left: 0, 
     right: 0, 
     bottom: 0,
+    height: '15%',
+    width: '100%',
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: Colors.white,
-    padding: 30,
-    justifyContent: 'flex-end',
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
     borderWidth: 1,
-    borderColor: Colors.lightgrey,
     borderBottomWidth: 0,
+    borderColor: Colors.lightgrey,
   },
   footerTxtWhite: {
     fontSize: 10,
@@ -81,15 +82,16 @@ const styles = StyleSheet.create({
     left: 0, 
     right: 0, 
     bottom: 0,
+    height: '15%',
+    width: '100%',
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: Colors.green,
-    padding: 30,
-    justifyContent: 'flex-end',
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
     borderWidth: 1,
-    borderColor: Colors.green,
     borderBottomWidth: 0,
+    borderColor: Colors.green,
   },
   footerTxtGreen: {
     fontSize: 10,
