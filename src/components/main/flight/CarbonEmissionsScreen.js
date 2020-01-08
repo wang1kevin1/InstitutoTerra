@@ -154,10 +154,8 @@ const styles = StyleSheet.create({
   },
   midText: {
     marginTop: '25%',
-    marginBottom: '40%',
-    flexDirection: 'column',
+    marginBottom: '45%',
     alignItems: 'center',
-    height: '33%'
   },
   midWhiteText: {
     fontFamily: 'Montserrat',
