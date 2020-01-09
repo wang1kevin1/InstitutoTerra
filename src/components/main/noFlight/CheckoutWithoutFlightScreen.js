@@ -4,6 +4,7 @@ import {
   View,
   Text,
   StyleSheet,
+  Dimensions,
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native'
@@ -177,11 +178,15 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
   }
 }
 
+const { width, height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
     backgroundColor: Colors.white,
+    height: height,
+    width: width
   },
   containerTop: {
     justifyContent: 'center',
