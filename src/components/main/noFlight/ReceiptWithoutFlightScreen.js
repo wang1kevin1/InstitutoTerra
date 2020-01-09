@@ -84,6 +84,15 @@ export default class ReceiptWithoutFlightScreen extends React.Component {
               <Text style={styles.receiptTextLeft}>PRICE</Text>
               <Text style={styles.receiptTextRight}>${total_cost}</Text>
             </View>
+            <View style={styles.textRow}>
+              
+            </View>
+            <View style={styles.textRow}>
+              
+            </View>
+            <View style={styles.textRow}>
+              
+            </View>
           </View>
           {/*Navigate to checkout page*/}
           <TouchableOpacity
@@ -130,13 +139,12 @@ const styles = StyleSheet.create({
   },
   receiptContainer: {
     paddingTop: '40%',
-    paddingBottom: '60%',
+    paddingBottom: '46%',
   },
   dashedLine: {
     width: '100%',
     height: 0.5,
-    marginBottom: '5%',
-    marginTop: '5%'
+    marginBottom: '5%'
   },
   textRow: {
     flexDirection: 'row',
