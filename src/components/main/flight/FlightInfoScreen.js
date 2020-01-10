@@ -4,10 +4,10 @@ import {
   View,
   Text,
   StyleSheet,
+  Dimensions,
   SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
-  StatusBar,
 } from 'react-native'
 
 import { Ionicons, FontAwesome, Feather } from '@expo/vector-icons';
@@ -294,11 +294,15 @@ export default class FlightInfoScreen extends React.Component {
   }
 }
 
+const { width, height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   containerLoading: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
+    height: height,
+    width: width,
     backgroundColor: Colors.white,
   },
   loadingIcon: {
@@ -316,6 +320,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+    height: height,
+    width: width,
     backgroundColor: Colors.white,
   },
   containerTop: {

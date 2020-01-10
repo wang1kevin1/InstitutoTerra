@@ -4,6 +4,7 @@ import {
   View,
   Text,
   StyleSheet,
+  Dimensions,
   SafeAreaView,
   TouchableOpacity,
   Alert
@@ -110,10 +111,14 @@ export default class ReceiptWithoutFlightScreen extends React.Component {
   }
 }
 
+const { width, height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+    height: height,
+    width: width,
     backgroundColor: Colors.white,
   },
   containerTop: {
