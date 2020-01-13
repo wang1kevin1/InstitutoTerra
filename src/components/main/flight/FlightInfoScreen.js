@@ -325,10 +325,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   containerTop: {
-    justifyContent: 'center',
     paddingLeft: '5%',
     paddingRight: '5%',
-    paddingTop: '20%',
+    paddingTop: '15%',
     backgroundColor: Colors.white,
   },
   buttonBarNav: {
@@ -342,13 +341,11 @@ const styles = StyleSheet.create({
     height: '6%',
     justifyContent: 'center',
     width: '66%',
-    marginTop: '3%'
   },
   buttonBarBottom: {
     flexDirection: 'row',
     height: '6%',
     justifyContent: 'center',
-    marginTop: '3%',
   },
   leftGreenButton: {
     borderTopLeftRadius: 5,
@@ -407,7 +404,7 @@ const styles = StyleSheet.create({
     fontSize: 12
   },
   receiptContainer: {
-    marginBottom: '14%'
+    marginBottom: '15%'
   },
   receiptTextLeft: {
     fontFamily: 'Montserrat',

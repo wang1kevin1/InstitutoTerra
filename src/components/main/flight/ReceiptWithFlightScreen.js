@@ -152,10 +152,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   containerTop: {
-    justifyContent: 'center',
     paddingLeft: '5%',
     paddingRight: '5%',
-    paddingTop: '20%',
+    paddingTop: '15%',
     backgroundColor: Colors.white,
   },
   buttonBarNav: {
@@ -173,18 +172,18 @@ const styles = StyleSheet.create({
     lineHeight: 30
   },
   receiptContainer: {
-    paddingTop: '25%',
-    paddingBottom: '30%',
+    paddingTop: '20%',
+    paddingBottom: '25%',
   },
   dashedLine: {
     width: '100%',
     height: 0.5,
-    marginBottom: '5%'
   },
   textRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: '5%',
+    marginTop: '5%'
   },
   receiptTextLeft: {
     fontFamily: 'Montserrat',

@@ -221,17 +221,16 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   containerTop: {
-    justifyContent: 'center',
     paddingLeft: '5%',
     paddingRight: '5%',
-    paddingTop: '20%',
+    paddingTop: '15%',
     backgroundColor: Colors.white,
   },
   buttonBarNav: {
     flexDirection: 'row',
     height: '10%',
     justifyContent: 'space-between',
-    marginBottom: '5%',
+    marginBottom: '2%',
   },
   topText: {
     alignItems: 'center',
@@ -314,7 +313,7 @@ const styles = StyleSheet.create({
   dashedLine: {
     width: '100%',
     height: 1,
-    marginTop: '10%',
+    marginTop: '8%',
     marginBottom: '5%'
   },
   textRow: {
