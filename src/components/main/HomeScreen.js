@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   StyleSheet,
+  Dimensions,
   Text,
   SafeAreaView,
   KeyboardAvoidingView,
@@ -22,7 +23,7 @@ import {
 
 import { NavigationEvents } from 'react-navigation';
 
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 
 import Colors from '../../assets/Colors';
 
@@ -98,66 +99,66 @@ export default class SettingsScreen extends React.Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <ImageBackground source={this.background} style={{ width: '100%', height: '100%' }}>
+        <ImageBackground source={this.background} style={styles.imageBackground}>
           <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
             <View style={styles.container}>
-              {/* Update isAuthenticated on navigation refresh */}
-              <NavigationEvents onWillFocus={() => this.checkAuth()} />
-              <View style={styles.container}>
-                {/* isAuthenticated: false */}
-                {!this.state.isAuthenticated &&
-                  <View style={styles.buttonView}>
+              <View style={styles.containerTop}>
+                {/* Update isAuthenticated on navigation refresh */}
+                <NavigationEvents onWillFocus={() => this.checkAuth()} />
+                <View style={styles.buttonBarNav}>
+                  {/* isAuthenticated: false */}
+                  {!this.state.isAuthenticated &&
                     <TouchableOpacity activeOpacity={0.9}
                       onPress={() => this.props.navigation.navigate('SignIn')}
-                      style={styles.buttonStyle1}>
+                      style={styles.navStyle}>
+                      <FontAwesome style={styles.navigationIcon} name="user-circle-o" />
+                      <Text style={styles.navText}>
+                        SIGN IN
+                        </Text>
                     </TouchableOpacity>
-                    <Text style={styles.buttonText1}>
-                      SIGN IN
-                    </Text>
-                  </View>
-                }
-                {/* isAuthenticated: true */}
-                {this.state.isAuthenticated &&
-                  <View style={styles.buttonView}>
+                  }
+                  {/* isAuthenticated: true */}
+                  {this.state.isAuthenticated &&
                     <TouchableOpacity activeOpacity={0.9}
                       onPress={() => this.props.navigation.navigate('UserDashboard')}
-                      style={styles.buttonStyle1}>
+                      style={styles.navStyle}>
+                      <FontAwesome style={styles.navigationIcon} name="user-circle-o" />
+                      <Text style={styles.navText}>
+                        PROFILE
+                        </Text>
                     </TouchableOpacity>
-                    <Text style={styles.buttonText1}>
-                      PROFILE
-                    </Text>
-                  </View>
-                }
-              </View>
-              <View style={styles.infoContainer}>
-                {/* Enter flight number */}
-                <View style={styles.itemStyle}>
-                  <Input
-                    style={styles.input}
-                    placeholder='Flight Number'
-                    placeholderTextColor={Colors.white}
-                    returnKeyType='go'
-                    autoCapitalize='none'
-                    autoCorrect={false}
-                    secureTextEntry={false}
-                    ref='flightSearch'
-                    onChangeText={value => this.onChangeText('flight', value)}
-                  />
-                  {/* Pass flight prop to CalculateEmissions */}
-                  <Ionicons style={styles.iconStyle1}
-                    name="md-arrow-forward"
-                    onPress={() => this.checkNum()} />
+                  }
                 </View>
-              </View>
-              {/* Redirect to donation checkout */}
-              {/* NAVIGATION FOR TESTING ONLY */}
-              <TouchableOpacity activeOpacity={0.9}
-                onPress={() => this.props.navigation.navigate('CheckoutWithoutFlight')}
-                style={styles.buttonStyle2}>
-                <Text style={styles.buttonText2}>
-                  PROCEED WITH NO FLIGHT NUMBER
+                <View style={styles.infoContainer}>
+                  {/* Enter flight number */}
+                  <View style={styles.itemStyle}>
+                    <Input
+                      style={styles.input}
+                      placeholder='Flight Number'
+                      placeholderTextColor={Colors.white}
+                      returnKeyType='go'
+                      autoCapitalize='none'
+                      autoCorrect={false}
+                      secureTextEntry={false}
+                      ref='flightSearch'
+                      onChangeText={value => this.onChangeText('flight', value)}
+                    />
+                    {/* Pass flight prop to CalculateEmissions */}
+                    <Ionicons style={styles.iconStyle1}
+                      name="md-arrow-forward"
+                      onPress={() => this.checkNum()} />
+                  </View>
+                </View>
+                {/* Redirect to donation checkout */}
+                {/* NAVIGATION FOR TESTING ONLY */}
+                <TouchableOpacity activeOpacity={0.9}
+                  onPress={() => this.props.navigation.navigate('CheckoutWithoutFlight')}
+                  style={styles.buttonStyle2}>
+                  <Text style={styles.buttonText2}>
+                    PROCEED WITH NO FLIGHT NUMBER
                 </Text>
-              </TouchableOpacity>
+                </TouchableOpacity>
+              </View>
               <Footer color='green' />
             </View>
           </TouchableWithoutFeedback>
@@ -167,29 +168,51 @@ export default class SettingsScreen extends React.Component {
   }
 }
 
+const { width, height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
-  splash: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: Colors.green,
+  imageBackground: {
+    height: height,
+    width: width
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
     flexDirection: 'column',
+    height: height,
+    width: width,
+    backgroundColor: 'transparent',
   },
+  containerTop: {
+    paddingLeft: '5%',
+    paddingRight: '5%',
+    paddingTop: '15%',
+    backgroundColor: 'transparent',
+  },
+  buttonBarNav: {
+    flexDirection: 'row',
+    height: '15%',
+    justifyContent: 'flex-end',
+    marginBottom: '5%',
+  },
+  navStyle: {
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  navigationIcon: {
+    color: Colors.lightgreen,
+    fontSize: 30,
+  },
+  navText: {
+    fontFamily: 'Montserrat-bold',
+    fontSize: 12,
+    color: Colors.lightgreen,
+  },
+
+
   input: {
     fontSize: 17,
     fontWeight: 'bold',
     color: Colors.white,
-  },
-  infoContainer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   buttonView: {
     position: 'absolute',
@@ -216,14 +239,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     marginRight: 15,
     marginLeft: 15,
-  },
-  buttonStyle1: {
-    backgroundColor: Colors.darkgrey,
-    height: 60,
-    width: 60,
-    borderRadius: 120,
-    borderColor: Colors.lightgreen,
-    borderWidth: 2,
   },
   buttonText1: {
     fontSize: 16,
