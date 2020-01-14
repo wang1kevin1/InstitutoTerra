@@ -122,10 +122,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   containerTop: {
-    paddingLeft: '5%',
-    paddingRight: '5%',
-    paddingTop: '10%',
-    paddingBottom: '8%',
+    paddingLeft: width * 0.05,
+    paddingRight: width * 0.05,
+    paddingTop: height * 0.07,
+    marginBottom: height * 0.1,
     backgroundColor: Colors.white,
   },
   buttonBarNav: {
