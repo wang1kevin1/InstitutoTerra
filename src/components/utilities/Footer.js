@@ -32,7 +32,7 @@ class Footer extends React.Component {
           <TouchableOpacity onPress={() => Alert.alert('About Section')}>
             <Image
               source={terra_whitetxt}
-              style={{ width: 200, height: 20, marginTop: 9, resizeMode: 'contain' }}
+              style={styles.image}
             />
           </TouchableOpacity>
         </View >
@@ -45,7 +45,7 @@ class Footer extends React.Component {
           <TouchableOpacity onPress={() => Alert.alert('About Section')}>
             <Image
               source={terra_greentxt}
-              style={{ width: 200, height: 20, marginTop: 9, resizeMode: 'contain' }}
+              style={styles.image}
             />
           </TouchableOpacity>
         </View >
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     left: 0, 
     right: 0, 
     bottom: 0,
-    height: height * 0.15,
+    height: height * 0.13,
     width: width,
     alignItems: 'center',
     justifyContent: 'center',
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     left: 0, 
     right: 0, 
     bottom: 0,
-    height: height * 0.15,
+    height: height * 0.13,
     width: width,
     alignItems: 'center',
     justifyContent: 'center',
@@ -101,4 +101,10 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
     color: Colors.white,
   },
+  image: {
+    width: width * 0.5,
+    height: height * 0.05, 
+    marginTop: '1%', 
+    resizeMode: 'contain' 
+  }
 })

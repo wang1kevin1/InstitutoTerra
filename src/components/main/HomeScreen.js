@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   containerTop: {
     paddingLeft: '5%',
     paddingRight: '5%',
-    paddingTop: '15%',
+    paddingTop: '10%',
     backgroundColor: 'transparent',
   },
   buttonBarNav: {
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   navText: {
-    fontFamily: 'Montserrat-bold',
+    fontWeight: 'bold',
     fontSize: 12,
     color: Colors.lightgreen,
   },

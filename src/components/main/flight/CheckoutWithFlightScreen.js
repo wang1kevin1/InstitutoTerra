@@ -223,14 +223,14 @@ const styles = StyleSheet.create({
   containerTop: {
     paddingLeft: '5%',
     paddingRight: '5%',
-    paddingTop: '15%',
+    paddingTop: '10%',
     backgroundColor: Colors.white,
   },
   buttonBarNav: {
     flexDirection: 'row',
     height: '10%',
     justifyContent: 'space-between',
-    marginBottom: '2%',
+    //marginBottom: '2%',
   },
   topText: {
     alignItems: 'center',
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     fontSize: 50
   },
   receiptContainer: {
-    //marginBottom: '5%'
+    marginBottom: '5%'
   },
   receiptTextLeft: {
     fontFamily: 'Montserrat',
@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
   dashedLine: {
     width: '100%',
     height: 1,
-    marginTop: '8%',
+    marginTop: '5%',
     marginBottom: '5%'
   },
   textRow: {
