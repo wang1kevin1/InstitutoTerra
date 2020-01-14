@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
     paddingLeft: '5%',
     paddingRight: '5%',
     paddingTop: '10%',
+    paddingBottom: '8%',
     backgroundColor: Colors.white,
   },
   buttonBarNav: {
@@ -142,8 +143,8 @@ const styles = StyleSheet.create({
     lineHeight: 30
   },
   receiptContainer: {
-    paddingTop: '48%',
-    paddingBottom: '20%',
+    paddingTop: '50%',
+    paddingBottom: '10%',
     justifyContent: 'center',
   },
   dashedLine: {

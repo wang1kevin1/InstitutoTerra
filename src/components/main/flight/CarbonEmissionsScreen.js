@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
     paddingLeft: '5%',
     paddingRight: '5%',
     paddingTop: '10%',
+    paddingBottom: '8%',
     backgroundColor: Colors.darkgrey,
   },
   buttonBarNav: {
@@ -159,7 +160,7 @@ const styles = StyleSheet.create({
   midText: {
     height: '30%',
     marginTop: '25%',
-    marginBottom: '32%',
+    marginBottom: '31%',
     alignItems: 'center',
   },
   midWhiteText: {
