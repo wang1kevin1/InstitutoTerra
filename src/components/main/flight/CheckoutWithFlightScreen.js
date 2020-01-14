@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   containerTop: {
     paddingLeft: '5%',
     paddingRight: '5%',
-    paddingTop: '2%',
+    paddingTop: '15%',
     backgroundColor: Colors.white,
   },
   buttonBarNav: {
@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
   dashedLine: {
     width: '100%',
     height: 1,
-    marginTop: '4%',
+    marginTop: '8%',
     marginBottom: '5%'
   },
   textRow: {

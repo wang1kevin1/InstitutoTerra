@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
   containerTop: {
     paddingLeft: '5%',
     paddingRight: '5%',
-    paddingTop: '4%',
+    paddingTop: '15%',
     backgroundColor: Colors.white,
   },
   buttonBarNav: {

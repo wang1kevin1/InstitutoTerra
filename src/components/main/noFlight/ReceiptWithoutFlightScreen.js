@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   containerTop: {
     paddingLeft: '5%',
     paddingRight: '5%',
-    paddingTop: '2%',
+    paddingTop: '15%',
     backgroundColor: Colors.white,
   },
   buttonBarNav: {
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: '5%',
-    marginBottom: '4%'
+    marginBottom: '5%'
   },
   receiptTextLeft: {
     fontFamily: 'Montserrat',
