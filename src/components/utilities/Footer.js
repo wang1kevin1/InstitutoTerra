@@ -2,6 +2,7 @@ import React from 'react'
 
 import {
   StyleSheet,
+  Dimensions,
   View,
   Text,
   TouchableOpacity,
@@ -55,14 +56,16 @@ class Footer extends React.Component {
 
 export default Footer
 
+const { width, height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   footerWhite: {
     position: 'absolute', 
     left: 0, 
     right: 0, 
     bottom: 0,
-    height: '15%',
-    width: '100%',
+    height: height * 0.15,
+    width: width,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.white,
@@ -82,8 +85,8 @@ const styles = StyleSheet.create({
     left: 0, 
     right: 0, 
     bottom: 0,
-    height: '15%',
-    width: '100%',
+    height: height * 0.15,
+    width: width,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.green,
