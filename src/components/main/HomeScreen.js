@@ -6,12 +6,10 @@ import {
   StyleSheet,
   Dimensions,
   Text,
-  SafeAreaView,
   KeyboardAvoidingView,
   Keyboard,
   View,
   Alert,
-  Image,
   ImageBackground
 } from 'react-native'
 
@@ -98,7 +96,6 @@ export default class SettingsScreen extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.container}>
         <ImageBackground source={this.background} style={styles.imageBackground}>
           <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
             <View style={styles.container}>
@@ -129,9 +126,9 @@ export default class SettingsScreen extends React.Component {
                     </TouchableOpacity>
                   }
                 </View>
-                <View style={styles.infoContainer}>
+                <View style={styles.searchContainer}>
                   {/* Enter flight number */}
-                  <View style={styles.itemStyle}>
+                  <Item style={styles.searchInput}>
                     <Input
                       style={styles.input}
                       placeholder='Flight Number'
@@ -139,15 +136,14 @@ export default class SettingsScreen extends React.Component {
                       returnKeyType='go'
                       autoCapitalize='none'
                       autoCorrect={false}
-                      secureTextEntry={false}
                       ref='flightSearch'
                       onChangeText={value => this.onChangeText('flight', value)}
                     />
                     {/* Pass flight prop to CalculateEmissions */}
-                    <Ionicons style={styles.iconStyle1}
+                    <Ionicons style={styles.searchIcon}
                       name="md-arrow-forward"
                       onPress={() => this.checkNum()} />
-                  </View>
+                  </Item>
                 </View>
                 {/* Redirect to donation checkout */}
                 {/* NAVIGATION FOR TESTING ONLY */}
@@ -163,7 +159,6 @@ export default class SettingsScreen extends React.Component {
             </View>
           </TouchableWithoutFeedback>
         </ImageBackground>
-      </SafeAreaView>
     );
   }
 }
@@ -183,16 +178,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   containerTop: {
-    paddingLeft: '5%',
-    paddingRight: '5%',
-    paddingTop: '10%',
+    paddingLeft: width * 0.05,
+    paddingRight: width * 0.05,
+    paddingTop: height * 0.06,
+    marginBottom: height * 0.10,
     backgroundColor: 'transparent',
   },
   buttonBarNav: {
     flexDirection: 'row',
-    height: '15%',
+    height: height * 0.05,
     justifyContent: 'flex-end',
-    marginBottom: '5%',
   },
   navStyle: {
     flexDirection: 'column',
@@ -207,13 +202,30 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: Colors.lightgreen,
   },
-
-
+  searchContainer: {
+    paddingTop: height * 0.20,
+    paddingBottom: height * 0.325,
+  },
+  searchInput: {
+    marginBottom: 20,
+    backgroundColor: Colors.grey,
+    borderRadius: 10,
+    borderColor: 'transparent'
+  },
   input: {
+    flex: 1,
     fontSize: 17,
     fontWeight: 'bold',
-    color: Colors.white,
+    color: Colors.lightblue,
   },
+  searchIcon: {
+    color: Colors.white,
+    fontSize: 20,
+    padding: 10,
+    justifyContent: 'flex-end'
+  },
+
+
   buttonView: {
     position: 'absolute',
     paddingHorizontal: 30,
@@ -222,24 +234,8 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     alignItems: 'center',
   },
-  itemStyle: {
-    height: 60,
-    width: 300,
-    padding: 15,
-    borderColor: 'blue',
-    borderWidth: 2,
-    backgroundColor: Colors.grey,
-    borderRadius: 10,
-    borderColor: Colors.lightblue,
-    borderWidth: 2,
-    flexDirection: 'row'
-  },
-  iconStyle1: {
-    color: Colors.white,
-    fontSize: 30,
-    marginRight: 15,
-    marginLeft: 15,
-  },
+  
+  
   buttonText1: {
     fontSize: 16,
     fontWeight: 'bold',

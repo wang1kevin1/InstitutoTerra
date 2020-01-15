@@ -168,6 +168,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     backgroundColor: Colors.white,
     borderRadius: 10,
+    borderColor: 'transparent'
   },
   iconStyle: {
     color: Colors.lightblue,
