@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   StyleSheet,
+  Dimensions,
   Text,
   SafeAreaView,
   KeyboardAvoidingView,
@@ -22,13 +23,13 @@ import {
 
 import { NavigationEvents } from 'react-navigation';
 
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 
-import Colors from '../../utilities/Colors'
+import Colors from '../../assets/Colors';
 
-import Auth from '@aws-amplify/auth'
+import Footer from '../utilities/Footer.js';
 
-const terra = require('../../assets/terra/terra-white.png')
+import Auth from '@aws-amplify/auth';
 
 export default class SettingsScreen extends React.Component {
   state = {
@@ -38,7 +39,7 @@ export default class SettingsScreen extends React.Component {
 
   // load background
   componentWillMount() {
-    this.background = require('../../assets/home.png')
+    this.background = require('../../assets/background/home.png')
   }
 
   onChangeText(key, value) {
@@ -60,83 +61,105 @@ export default class SettingsScreen extends React.Component {
       })
   }
 
+  // Check if the inputed flight number is valid
+  checkNum() {
+    let chars = this.state.flight.slice(0, 2).toUpperCase();
+    console.log(chars);
+    let nums = this.state.flight.slice(2);
+    console.log(nums);
+    fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIata=${chars}&flightnumber=${nums}`, {
+      method: 'GET'
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({
+          validNum: true,
+          data: responseJson[0],
+        })
+        console.log(this.state.data);
+        if (!this.state.data) {
+          this.setState({
+            validNum: false,
+          })
+        }
+        return this.state.validNum;
+      }).then((validNum) => {
+        if (validNum) {
+          this.refs.flightSearch._root.clear();
+          this.props.navigation.navigate('FlightInfo', { flightNum: this.state.flight })
+        } else {
+          Alert.alert('Please enter a valid flight number with no spaces')
+          this.refs.flightSearch._root.clear();
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+  }
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <ImageBackground source={this.background} style={{ width: '100%', height: '100%' }}>
+        <ImageBackground source={this.background} style={styles.imageBackground}>
           <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
             <View style={styles.container}>
-              {/* Update isAuthenticated on navigation refresh */}
-              <NavigationEvents onWillFocus={() => this.checkAuth()} />
-              <View style={styles.container}>
-                {/* isAuthenticated: false */}
-                {!this.state.isAuthenticated &&
-                  <View style={styles.buttonView}>
+              <View style={styles.containerTop}>
+                {/* Update isAuthenticated on navigation refresh */}
+                <NavigationEvents onWillFocus={() => this.checkAuth()} />
+                <View style={styles.buttonBarNav}>
+                  {/* isAuthenticated: false */}
+                  {!this.state.isAuthenticated &&
                     <TouchableOpacity activeOpacity={0.9}
                       onPress={() => this.props.navigation.navigate('SignIn')}
-                      style={styles.buttonStyle1}>
+                      style={styles.navStyle}>
+                      <FontAwesome style={styles.navigationIcon} name="user-circle-o" />
+                      <Text style={styles.navText}>
+                        SIGN IN
+                        </Text>
                     </TouchableOpacity>
-                    <Text style={styles.buttonText1}>
-                      SIGN IN
-                    </Text>
-                  </View>
-                }
-                {/* isAuthenticated: true */}
-                {this.state.isAuthenticated &&
-                  <View style={styles.buttonView}>
+                  }
+                  {/* isAuthenticated: true */}
+                  {this.state.isAuthenticated &&
                     <TouchableOpacity activeOpacity={0.9}
                       onPress={() => this.props.navigation.navigate('UserDashboard')}
-                      style={styles.buttonStyle1}>
+                      style={styles.navStyle}>
+                      <FontAwesome style={styles.navigationIcon} name="user-circle-o" />
+                      <Text style={styles.navText}>
+                        PROFILE
+                        </Text>
                     </TouchableOpacity>
-                    <Text style={styles.buttonText1}>
-                      PROFILE
-                    </Text>
-                  </View>
-                }
-              </View>
-              <View style={styles.infoContainer}>
-                {/* Enter flight number */}
-                <View style={styles.itemStyle}>
-                  <Input
-                    style={styles.input}
-                    placeholder='Flight Number'
-                    placeholderTextColor={Colors.white}
-                    returnKeyType='go'
-                    autoCapitalize='none'
-                    autoCorrect={false}
-                    secureTextEntry={true}
-                    onChangeText={value => this.onChangeText('flight', value)}
-                  />
-                  {/* Pass flight prop to CalculateEmissions */}
-                  <Ionicons style={styles.iconStyle1} name="md-arrow-forward" onPress={() => Alert.alert('Send this.flight as prop to Calculate Carbon')} />
+                  }
                 </View>
-              </View>
-              {/* Redirect to donation checkout */}
-              <TouchableOpacity activeOpacity={0.9}
-                onPress={() => Alert.alert('Checkout Screen')}
-                style={styles.buttonStyle2}>
-                <Text style={styles.buttonText2}>
-                  PROCEED WITH NO FLIGHT NUMBER
+                <View style={styles.infoContainer}>
+                  {/* Enter flight number */}
+                  <View style={styles.itemStyle}>
+                    <Input
+                      style={styles.input}
+                      placeholder='Flight Number'
+                      placeholderTextColor={Colors.white}
+                      returnKeyType='go'
+                      autoCapitalize='none'
+                      autoCorrect={false}
+                      secureTextEntry={false}
+                      ref='flightSearch'
+                      onChangeText={value => this.onChangeText('flight', value)}
+                    />
+                    {/* Pass flight prop to CalculateEmissions */}
+                    <Ionicons style={styles.iconStyle1}
+                      name="md-arrow-forward"
+                      onPress={() => this.checkNum()} />
+                  </View>
+                </View>
+                {/* Redirect to donation checkout */}
+                {/* NAVIGATION FOR TESTING ONLY */}
+                <TouchableOpacity activeOpacity={0.9}
+                  onPress={() => this.props.navigation.navigate('CheckoutWithoutFlight')}
+                  style={styles.buttonStyle2}>
+                  <Text style={styles.buttonText2}>
+                    PROCEED WITH NO FLIGHT NUMBER
                 </Text>
-              </TouchableOpacity>
-              {/* Redirect to info page */}
-              <TouchableOpacity activeOpacity={0.9}
-                onPress={() => Alert.alert('About trees page')}
-                style={styles.buttonStyle2}>
-                <Text style={styles.buttonText2}>
-                  WHERE ARE MY TREES?
-                </Text>
-              </TouchableOpacity>
-              {/* Footer */}
-              <View style={styles.footer}>
-                <Text style={styles.footerTxt}>made possible with</Text>
-                <TouchableOpacity onPress={() => Alert.alert('About Section')}>
-                  <Image
-                    source={terra}
-                    style={{ width: 151, height: 13, marginTop: 9, resizeMode: 'contain' }}
-                  />
                 </TouchableOpacity>
               </View>
+              <Footer color='green' />
             </View>
           </TouchableWithoutFeedback>
         </ImageBackground>
@@ -145,30 +168,51 @@ export default class SettingsScreen extends React.Component {
   }
 }
 
+const { width, height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
-  splash: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'column',
-    backgroundColor: Colors.green,
+  imageBackground: {
+    height: height,
+    width: width
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
     flexDirection: 'column',
+    height: height,
+    width: width,
+    backgroundColor: 'transparent',
   },
+  containerTop: {
+    paddingLeft: '5%',
+    paddingRight: '5%',
+    paddingTop: '10%',
+    backgroundColor: 'transparent',
+  },
+  buttonBarNav: {
+    flexDirection: 'row',
+    height: '15%',
+    justifyContent: 'flex-end',
+    marginBottom: '5%',
+  },
+  navStyle: {
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  navigationIcon: {
+    color: Colors.lightgreen,
+    fontSize: 30,
+  },
+  navText: {
+    fontWeight: 'bold',
+    fontSize: 12,
+    color: Colors.lightgreen,
+  },
+
+
   input: {
     fontSize: 17,
     fontWeight: 'bold',
     color: Colors.white,
-  },
-  infoContainer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   buttonView: {
     position: 'absolute',
@@ -177,21 +221,6 @@ const styles = StyleSheet.create({
     top: 40,
     alignSelf: 'flex-end',
     alignItems: 'center',
-  },
-  footer: {
-    alignItems: 'center',
-    backgroundColor: Colors.green,
-    padding: 30,
-    alignContent: 'flex-end',
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
-    borderWidth: 1,
-    borderColor: Colors.green
-  },
-  footerTxt: {
-    fontSize: 10,
-    fontWeight: 'normal',
-    color: Colors.white,
   },
   itemStyle: {
     height: 60,
@@ -211,14 +240,6 @@ const styles = StyleSheet.create({
     marginRight: 15,
     marginLeft: 15,
   },
-  buttonStyle1: {
-    backgroundColor: Colors.darkgrey,
-    height: 60,
-    width: 60,
-    borderRadius: 120,
-    borderColor: Colors.lightgreen,
-    borderWidth: 2,
-  },
   buttonText1: {
     fontSize: 16,
     fontWeight: 'bold',
@@ -228,7 +249,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.lightgreen,
     padding: 5,
-    marginBottom: 10,
+    marginBottom: 200,
     marginHorizontal: 25,
     borderRadius: 10,
   },

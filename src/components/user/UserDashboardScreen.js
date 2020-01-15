@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
-import Colors from '../../utilities/Colors'
+import Colors from '../../assets/Colors'
 
 export default class UserDashboardScreen extends React.Component {
   render() {
@@ -18,6 +18,13 @@ export default class UserDashboardScreen extends React.Component {
           style={styles.buttonStyle1}>
           <Text style={styles.buttonText1}>
             Settings
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('fInfo')}
+          style={styles.buttonStyle1}>
+          <Text style={styles.buttonText1}>
+            Flight Info
           </Text>
         </TouchableOpacity>
       </View>
