@@ -5,7 +5,6 @@ import {
   Text,
   StyleSheet,
   Dimensions,
-  SafeAreaView,
   TouchableOpacity,
 } from 'react-native'
 
@@ -83,7 +82,7 @@ export default class CarbonEmissionsScreen extends React.Component {
     } = this.state;
 
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <View style={styles.containerTop}>
           <View style={styles.buttonBarNav}>
             {/*Navigation Buttons*/}
@@ -119,7 +118,7 @@ export default class CarbonEmissionsScreen extends React.Component {
           </TouchableOpacity>
         </View>
         <Footer color='white' />
-      </SafeAreaView>
+      </View>
     )
   }
 }

@@ -5,7 +5,6 @@ import {
   Text,
   StyleSheet,
   Dimensions,
-  SafeAreaView,
   TouchableOpacity,
 } from 'react-native'
 
@@ -138,7 +137,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
     const color = this.colorVariant()
 
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <View style={styles.containerTop}>
           <View style={styles.buttonBarNav}>
             {/*Navigation Buttons*/}
@@ -205,7 +204,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
           </TouchableOpacity>
         </View>
         <Footer color='white' />
-      </SafeAreaView>
+      </View>
     )
   }
 }

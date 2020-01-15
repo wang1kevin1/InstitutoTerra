@@ -5,7 +5,7 @@ import {
   Text,
   StyleSheet,
   Dimensions,
-  SafeAreaView,
+
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native'
@@ -175,7 +175,7 @@ export default class FlightInfoScreen extends React.Component {
 
     if (!isReady) {
       return (
-        <SafeAreaView style={styles.containerLoading}>
+        <View style={styles.containerLoading}>
           <View style={{ flexDirection: 'column', flex: 1, justifyContent: 'center' }}>
             <Ionicons name="ios-paper-plane" style={styles.loadingIcon} />
             <Text style={[styles.loadingText, { alignItems: 'center', justifyContent: 'center', marginBottom: '5%' }]}>
@@ -183,12 +183,12 @@ export default class FlightInfoScreen extends React.Component {
             </Text>
             <ActivityIndicator color={Colors.lightblue} size='large' animating={!isReady} />
           </View>
-        </SafeAreaView>
+        </View>
       )
     }
     else {
       return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
           <View style={styles.containerTop}>
             <View style={styles.buttonBarNav}>
               {/*Navigation Buttons*/}
@@ -288,7 +288,7 @@ export default class FlightInfoScreen extends React.Component {
             </TouchableOpacity>
           </View>
           <Footer color='white' />
-        </SafeAreaView>
+        </View>
       )
     }
   }

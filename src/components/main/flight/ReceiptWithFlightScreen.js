@@ -5,7 +5,6 @@ import {
   Text,
   StyleSheet,
   Dimensions,
-  SafeAreaView,
   TouchableOpacity,
   Alert
 } from 'react-native'
@@ -78,7 +77,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
     } = this.state;
 
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <View style={styles.containerTop}>
           <View style={styles.buttonBarNav}>
             {/*Navigation Buttons*/}
@@ -136,7 +135,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
           </TouchableOpacity>
         </View>
         <Footer color='white' />
-      </SafeAreaView>
+      </View>
     )
   }
 }
