@@ -1,5 +1,7 @@
 import React from 'react'
 
+import * as Font from 'expo-font';
+
 import {
   createSwitchNavigator, 
   createAppContainer,
@@ -16,8 +18,18 @@ import SettingsScreen from './src/components/auth/SettingsScreen'
 // DashboardStack
 import UserDashboardScreen from './src/components/user/UserDashboardScreen'
 
-// Main stack
+// MainStack head
 import HomeScreen from './src/components/main/HomeScreen'
+
+// FlightStack
+import FlightInfoScreen from './src/components/main/flight/FlightInfoScreen'
+import CarbonEmissionsScreen from './src/components/main/flight/CarbonEmissionsScreen'
+import CheckoutWithFlightScreen from './src/components/main/flight/CheckoutWithFlightScreen'
+import ReceiptWithFlightScreen from './src/components/main/flight/ReceiptWithFlightScreen'
+
+// NoFlightStack
+import CheckoutWithoutFlightScreen from './src/components/main/noFlight/CheckoutWithoutFlightScreen'
+import ReceiptWithoutFlightScreen from './src/components/main/noFlight/ReceiptWithoutFlightScreen'
 
 // Amplify imports and config
 import Amplify from '@aws-amplify/core'
@@ -31,9 +43,25 @@ const AuthStackNavigator = createStackNavigator({
   ForgotPassword: ForgotPasswordScreen,
 }, { headerMode: 'none' })
 
+// Flight Stack
+const FlightStackNavigator = createStackNavigator({
+  FlightInfo: FlightInfoScreen,
+  CarbonEmissions: CarbonEmissionsScreen,
+  CheckoutWithFlight: CheckoutWithFlightScreen,
+  ReceiptWithFlight: ReceiptWithFlightScreen,
+}, { headerMode: 'none' })
+
+// NoFlight Stack
+const NoFlightStackNavigator = createStackNavigator({
+  CheckoutWithoutFlight: CheckoutWithoutFlightScreen,
+  ReceiptWithoutFlight: ReceiptWithoutFlightScreen,
+}, { headerMode: 'none' })
+
 // Main stack
 const MainStackNavigator = createStackNavigator({
   Home: HomeScreen,
+  Flight: FlightStackNavigator, // FlightStack
+  NoFlight: NoFlightStackNavigator, // NoFlightStack
   UserDashboard: UserDashboardScreen, // DashboardStack
   Settings: SettingsScreen, 
   Auth: AuthStackNavigator, // AuthStackNavigator
@@ -43,6 +71,20 @@ const AppSwitchNavigator = createSwitchNavigator({
   Main: MainStackNavigator, // the MainStack
 })
 
-const App = createAppContainer(AppSwitchNavigator)
+const AppContainer = createAppContainer(AppSwitchNavigator)
 
-export default App
+export default class App extends React.Component {
+  componentDidMount = () => {
+    Font.loadAsync({
+      'Montserrat': require('./src/assets/fonts/Montserrat-Regular.ttf'),
+      'Montserrat-bold': require('./src/assets/fonts/Montserrat-Bold.ttf'),
+      'Fago-black': require('./src/assets/fonts/Fago-Black.ttf'),
+    });
+  }
+
+  render() {
+    return(
+      <AppContainer/>
+    )
+  }
+}
