@@ -130,22 +130,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    height: height,
-    width: width,
     backgroundColor: Colors.darkgrey,
+    height: height,
+    width: width
   },
   containerTop: {
-    paddingLeft: '5%',
-    paddingRight: '5%',
-    paddingTop: '10%',
-    paddingBottom: '8%',
+    paddingLeft: width * 0.05,
+    paddingRight: width * 0.05,
+    paddingTop: height * 0.06,
+    marginBottom: height * 0.10,
     backgroundColor: Colors.darkgrey,
   },
   buttonBarNav: {
     flexDirection: 'row',
-    height: '10%',
+    height: height * 0.05,
     justifyContent: 'space-between',
-    marginBottom: '5%',
+    marginBottom: height * 0.05,
   },
   smallBlueText: {
     fontFamily: 'Montserrat',
@@ -158,9 +158,9 @@ const styles = StyleSheet.create({
     color: Colors.lightblue,
   },
   midText: {
-    height: '30%',
-    marginTop: '25%',
-    marginBottom: '31%',
+    height: height * 0.20,
+    marginTop: height * 0.15,
+    marginBottom: height * 0.1725,
     alignItems: 'center',
   },
   midWhiteText: {
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   bottomGreenButton: {
     borderRadius: 10,
     backgroundColor: Colors.lightgreen,
-    height: '10%',
+    height: height * 0.08,
     justifyContent: 'center',
     alignItems: 'center',
   },

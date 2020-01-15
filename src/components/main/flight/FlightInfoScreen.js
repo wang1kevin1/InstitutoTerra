@@ -320,32 +320,32 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    height: height,
-    width: width,
     backgroundColor: Colors.white,
+    height: height,
+    width: width
   },
   containerTop: {
-    paddingLeft: '5%',
-    paddingRight: '5%',
-    paddingTop: '10%',
-    paddingBottom: '8%',
+    paddingLeft: width * 0.05,
+    paddingRight: width * 0.05,
+    paddingTop: height * 0.06,
+    marginBottom: height * 0.10,
     backgroundColor: Colors.white,
   },
   buttonBarNav: {
     flexDirection: 'row',
-    height: '10%',
+    height: height * 0.05,
     justifyContent: 'space-between',
-    marginBottom: '5%'
+    marginBottom: height * 0.05,
   },
   buttonBarTop: {
     flexDirection: 'row',
-    height: '6%',
+    height: height * 0.04,
     justifyContent: 'center',
     width: '66%',
   },
   buttonBarBottom: {
     flexDirection: 'row',
-    height: '6%',
+    height: height * 0.04,
     justifyContent: 'center',
   },
   leftGreenButton: {
@@ -373,8 +373,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   planeInfoText: {
-    paddingTop: '0%',
-    paddingBottom: '3%',
+    paddingBottom: height * 0.03,
   },
   smallBlueText: {
     marginTop: '5%',
@@ -395,7 +394,7 @@ const styles = StyleSheet.create({
   bottomGreenButton: {
     borderRadius: 10,
     backgroundColor: Colors.lightgreen,
-    height: '10%',
+    height: height * 0.08,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -405,7 +404,7 @@ const styles = StyleSheet.create({
     fontSize: 12
   },
   receiptContainer: {
-    marginBottom: '13%'
+    marginBottom: height * 0.1125
   },
   receiptTextLeft: {
     fontFamily: 'Montserrat',
@@ -420,13 +419,13 @@ const styles = StyleSheet.create({
   dashedLine: {
     width: '100%',
     height: 1,
-    marginTop: '5%',
-    marginBottom: '5%'
+    marginTop: height * 0.02,
+    marginBottom: height * 0.02
   },
   textRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: '5%',
+    marginBottom: height * 0.02,
   },
   navigationIcon: {
     color: Colors.grey,

@@ -5,7 +5,6 @@ import {
   Text,
   StyleSheet,
   Dimensions,
-  SafeAreaView,
   TouchableOpacity,
   Alert
 } from 'react-native'
@@ -64,7 +63,7 @@ export default class ReceiptWithoutFlightScreen extends React.Component {
     } = this.state;
 
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <View style={styles.containerTop}>
           <View style={styles.buttonBarNav}>
             {/*Navigation Buttons*/}
@@ -85,15 +84,6 @@ export default class ReceiptWithoutFlightScreen extends React.Component {
               <Text style={styles.receiptTextLeft}>PRICE</Text>
               <Text style={styles.receiptTextRight}>${total_cost}</Text>
             </View>
-            <View style={styles.textRow}>
-              
-            </View>
-            <View style={styles.textRow}>
-              
-            </View>
-            <View style={styles.textRow}>
-              
-            </View>
           </View>
           {/*Navigate to checkout page*/}
           <TouchableOpacity
@@ -106,7 +96,7 @@ export default class ReceiptWithoutFlightScreen extends React.Component {
           </TouchableOpacity>
         </View>
         <Footer color='white' />
-      </SafeAreaView>
+      </View>
     )
   }
 }
@@ -124,15 +114,14 @@ const styles = StyleSheet.create({
   containerTop: {
     paddingLeft: width * 0.05,
     paddingRight: width * 0.05,
-    paddingTop: height * 0.07,
-    marginBottom: height * 0.1,
+    paddingTop: height * 0.06,
+    marginBottom: height * 0.10,
     backgroundColor: Colors.white,
   },
   buttonBarNav: {
     flexDirection: 'row',
-    height: '10%',
+    height: height * 0.05,
     justifyContent: 'space-between',
-    marginBottom: '5%',
   },
   flightBlueText: {
     fontFamily: 'Montserrat',
@@ -143,19 +132,19 @@ const styles = StyleSheet.create({
     lineHeight: 30
   },
   receiptContainer: {
-    paddingTop: '50%',
-    paddingBottom: '10%',
+    paddingTop: height * 0.20,
+    paddingBottom: height * 0.325,
     justifyContent: 'center',
   },
   dashedLine: {
     width: '100%',
-    height: 0.5,
+    height: 1,
   },
   textRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: '5%',
-    marginBottom: '5%'
+    marginTop: height * 0.02,
+    marginBottom: height * 0.02
   },
   receiptTextLeft: {
     fontFamily: 'Montserrat',
@@ -174,7 +163,7 @@ const styles = StyleSheet.create({
   bottomGreenButton: {
     borderRadius: 10,
     backgroundColor: Colors.lightgreen,
-    height: '10%',
+    height: height * 0.08,
     justifyContent: 'center',
     alignItems: 'center',
   },

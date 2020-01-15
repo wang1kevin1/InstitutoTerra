@@ -147,22 +147,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    height: height,
-    width: width,
     backgroundColor: Colors.white,
+    height: height,
+    width: width
   },
   containerTop: {
-    paddingLeft: '5%',
-    paddingRight: '5%',
-    paddingTop: '10%',
-    paddingBottom: '8%',
+    paddingLeft: width * 0.05,
+    paddingRight: width * 0.05,
+    paddingTop: height * 0.06,
+    marginBottom: height * 0.10,
     backgroundColor: Colors.white,
   },
   buttonBarNav: {
     flexDirection: 'row',
-    height: '10%',
+    height: height * 0.05,
     justifyContent: 'space-between',
-    marginBottom: '5%',
   },
   flightBlueText: {
     fontFamily: 'Montserrat',
@@ -173,18 +172,19 @@ const styles = StyleSheet.create({
     lineHeight: 30
   },
   receiptContainer: {
-    paddingTop: '18%',
-    paddingBottom: '25%',
+    paddingTop: height * 0.15,
+    paddingBottom: height * 0.18,
+    justifyContent: 'center',
   },
   dashedLine: {
     width: '100%',
-    height: 0.5,
+    height: 1,
   },
   textRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: '5%',
-    marginTop: '5%'
+    marginTop: height * 0.02,
+    marginBottom: height * 0.02
   },
   receiptTextLeft: {
     fontFamily: 'Montserrat',
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   bottomGreenButton: {
     borderRadius: 10,
     backgroundColor: Colors.lightgreen,
-    height: '10%',
+    height: height * 0.08,
     justifyContent: 'center',
     alignItems: 'center',
   },

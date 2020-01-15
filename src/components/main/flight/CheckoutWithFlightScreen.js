@@ -216,22 +216,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    height: height,
-    width: width,
     backgroundColor: Colors.white,
+    height: height,
+    width: width
   },
   containerTop: {
-    paddingLeft: '5%',
-    paddingRight: '5%',
-    paddingTop: '10%',
-    paddingBottom: '8%',
+    paddingLeft: width * 0.05,
+    paddingRight: width * 0.05,
+    paddingTop: height * 0.06,
+    marginBottom: height * 0.10,
     backgroundColor: Colors.white,
   },
   buttonBarNav: {
     flexDirection: 'row',
-    height: '10%',
+    height: height * 0.05,
     justifyContent: 'space-between',
-    //marginBottom: '2%',
+    marginBottom: height * 0.03,
   },
   topText: {
     alignItems: 'center',
@@ -272,25 +272,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '35%',
+    height: height * 0.25,
   },
   iterators: {
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    height: '20%',
-    width: '10%',
+    width: width * 0.10,
+    aspectRatio: 1/1
   },
   iteratorIcon: {
     fontSize: 25,
   },
   treeCounter: {
-    marginLeft: '20%',
-    marginRight: '20%',
+    marginLeft: width * 0.20,
+    marginRight: width * 0.20,
     justifyContent: 'center',
     alignItems: 'center',
-    height: '70%',
-    width: '30%',
+    width: width * 0.30,
+    aspectRatio: 3/4,
     borderRadius: 25,
   },
   treeCountText: {
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
     fontSize: 50
   },
   receiptContainer: {
-    marginBottom: '5%'
+    marginBottom: height * 0.07
   },
   receiptTextLeft: {
     fontFamily: 'Montserrat',
@@ -314,18 +314,18 @@ const styles = StyleSheet.create({
   dashedLine: {
     width: '100%',
     height: 1,
-    marginTop: '5%',
-    marginBottom: '5%'
+    marginTop: height * 0.025,
+    marginBottom: height * 0.02
   },
   textRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: '5%',
+    marginBottom: height * 0.02,
   },
   bottomGreenButton: {
     borderRadius: 10,
     backgroundColor: Colors.lightgreen,
-    height: '10%',
+    height: height * 0.08,
     justifyContent: 'center',
     alignItems: 'center',
   },
