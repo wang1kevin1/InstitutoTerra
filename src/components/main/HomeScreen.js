@@ -13,21 +13,19 @@ import {
   ImageBackground
 } from 'react-native'
 
-import {
-  Container,
-  Item,
-  Input
-} from 'native-base'
+import { Input } from 'react-native-elements'
 
-import { NavigationEvents } from 'react-navigation';
+import { Item } from 'native-base'
 
-import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import { NavigationEvents } from 'react-navigation'
 
-import Colors from '../../assets/Colors';
+import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
-import Footer from '../utilities/Footer.js';
+import Colors from '../../assets/Colors'
 
-import Auth from '@aws-amplify/auth';
+import Footer from '../utilities/Footer.js'
+
+import Auth from '@aws-amplify/auth'
 
 export default class SettingsScreen extends React.Component {
   state = {
@@ -130,19 +128,19 @@ export default class SettingsScreen extends React.Component {
                   {/* Enter flight number */}
                   <Item style={styles.searchInput}>
                     <Input
+                      rightIcon={
+                        <Ionicons style={styles.searchIcon}
+                          name="md-arrow-forward"
+                          onPress={() => this.checkNum()} />
+                        }
                       style={styles.input}
-                      placeholder='Flight Number'
-                      placeholderTextColor={Colors.white}
-                      returnKeyType='go'
+                      label='Flight Number'
+                      labelStyle={ {color: Colors.white}}
                       autoCapitalize='none'
                       autoCorrect={false}
                       ref='flightSearch'
                       onChangeText={value => this.onChangeText('flight', value)}
                     />
-                    {/* Pass flight prop to CalculateEmissions */}
-                    <Ionicons style={styles.searchIcon}
-                      name="md-arrow-forward"
-                      onPress={() => this.checkNum()} />
                   </Item>
                 </View>
                 {/* Redirect to donation checkout */}
@@ -214,8 +212,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    fontSize: 17,
-    fontWeight: 'bold',
+    fontSize: 12,
     color: Colors.lightblue,
   },
   searchIcon: {

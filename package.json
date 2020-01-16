@@ -26,6 +26,7 @@
     "react-native-button-group": "^1.0.0",
     "react-native-confirmation-code-input": "^1.0.4",
     "react-native-dash": "0.0.11",
+    "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "~1.3.0",
     "react-native-measureme": "0.0.2",
     "react-native-reanimated": "~1.2.0",
