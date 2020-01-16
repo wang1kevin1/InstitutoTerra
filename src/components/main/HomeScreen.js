@@ -81,11 +81,11 @@ export default class SettingsScreen extends React.Component {
         return this.state.validNum;
       }).then((validNum) => {
         if (validNum) {
-          this.refs.flightSearch._root.clear();
+          flightSearch.current.clear();
           this.props.navigation.navigate('FlightInfo', { flightNum: this.state.flight })
         } else {
           Alert.alert('Please enter a valid flight number with no spaces')
-          this.refs.flightSearch._root.clear();
+          flightSearch.current.clear();
         }
       }).catch((error) => {
         console.error(error);
@@ -138,7 +138,7 @@ export default class SettingsScreen extends React.Component {
                       labelStyle={ {color: Colors.white}}
                       autoCapitalize='none'
                       autoCorrect={false}
-                      ref='flightSearch'
+                      ref={flightSearch}
                       onChangeText={value => this.onChangeText('flight', value)}
                     />
                   </Item>
@@ -160,6 +160,8 @@ export default class SettingsScreen extends React.Component {
     );
   }
 }
+
+const flightSearch = React.createRef();
 
 const { width, height } = Dimensions.get('window');
 
