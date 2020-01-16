@@ -27,7 +27,7 @@ import Footer from '../utilities/Footer.js'
 
 import Auth from '@aws-amplify/auth'
 
-export default class SettingsScreen extends React.Component {
+export default class HomeScreen extends React.Component {
   state = {
     isAuthenticated: false,
     flight: '',
