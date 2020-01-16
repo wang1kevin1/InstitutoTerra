@@ -133,7 +133,7 @@ export default class SettingsScreen extends React.Component {
                           name="md-arrow-forward"
                           onPress={() => this.checkNum()} />
                         }
-                      style={styles.input}
+                      inputStyle={styles.inputStyle}
                       label='FLIGHT NUMBER'
                       labelStyle={styles.labelStyle}
                       autoCapitalize='none'
@@ -207,14 +207,13 @@ const styles = StyleSheet.create({
     paddingBottom: height * 0.325,
   },
   searchInput: {
-    marginBottom: 20,
     backgroundColor: Colors.green,
-    borderRadius: 10,
-    borderColor: 'transparent'
+    borderRadius: 15,
+    borderColor: 'transparent',
+    padding: 10
   },
-  input: {
-    flex: 1,
-    fontSize: 20,
+  inputStyle: {
+    fontSize: 27,
     color: Colors.white,
   },
   labelStyle: {
@@ -224,7 +223,8 @@ const styles = StyleSheet.create({
   searchIcon: {
     color: Colors.white,
     fontSize: 40,
-    alignSelf: 'center'
+    paddingBottom: 14,
+    paddingRight: 5
   },
 
 
