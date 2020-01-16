@@ -134,8 +134,8 @@ export default class SettingsScreen extends React.Component {
                           onPress={() => this.checkNum()} />
                         }
                       style={styles.input}
-                      label='Flight Number'
-                      labelStyle={ {color: Colors.white}}
+                      label='FLIGHT NUMBER'
+                      labelStyle={styles.labelStyle}
                       autoCapitalize='none'
                       autoCorrect={false}
                       ref={flightSearch}
@@ -208,20 +208,23 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     marginBottom: 20,
-    backgroundColor: Colors.grey,
+    backgroundColor: Colors.green,
     borderRadius: 10,
     borderColor: 'transparent'
   },
   input: {
     flex: 1,
+    fontSize: 20,
+    color: Colors.white,
+  },
+  labelStyle: {
     fontSize: 12,
-    color: Colors.lightblue,
+    color: Colors.white,
   },
   searchIcon: {
     color: Colors.white,
-    fontSize: 20,
-    padding: 10,
-    justifyContent: 'flex-end'
+    fontSize: 40,
+    alignSelf: 'center'
   },
 
 
