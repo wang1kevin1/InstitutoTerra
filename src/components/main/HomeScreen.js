@@ -142,7 +142,7 @@ export default class HomeScreen extends React.Component {
                       rightIconContainerStyle={styles.rightIconContainerStyle}
                       errorMessage='Please enter a valid flight number'
                       errorStyle={[{ fontSize: (this.state.error == false) ? 3 : 10 }, { color: (this.state.error == false) ? 'transparent' : 'red' }]}
-                      autoCapitalize='none'
+                      autoCapitalize='characters'
                       autoCorrect={false}
                       ref={flightSearch}
                       onChangeText={value => this.onChangeText('flight', value)}
