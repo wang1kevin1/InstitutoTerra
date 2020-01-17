@@ -15,8 +15,6 @@ import {
 
 import { Input } from 'react-native-elements'
 
-import { Item } from 'native-base'
-
 import { NavigationEvents } from 'react-navigation'
 
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
@@ -31,6 +29,7 @@ export default class HomeScreen extends React.Component {
   state = {
     isAuthenticated: false,
     flight: '',
+    error: false,
   }
 
   // load background
@@ -74,17 +73,17 @@ export default class HomeScreen extends React.Component {
         })
         console.log(this.state.data);
         if (!this.state.data) {
-          this.setState({
-            validNum: false,
-          })
+          this.setState({ validNum: false })
         }
         return this.state.validNum;
       }).then((validNum) => {
         if (validNum) {
           flightSearch.current.clear();
+          this.setState({ error: false })
           this.props.navigation.navigate('FlightInfo', { flightNum: this.state.flight })
         } else {
-          Alert.alert('Please enter a valid flight number with no spaces')
+          this.setState({ error: true })
+          flightSearch.current.shake();
           flightSearch.current.clear();
         }
       }).catch((error) => {
@@ -101,6 +100,7 @@ export default class HomeScreen extends React.Component {
                 {/* Update isAuthenticated on navigation refresh */}
                 <NavigationEvents onWillFocus={() => this.checkAuth()} />
                 <View style={styles.buttonBarNav}>
+                  <Text style={styles.bigGreenText}>&#x2013;&#x2013;</Text>
                   {/* isAuthenticated: false */}
                   {!this.state.isAuthenticated &&
                     <TouchableOpacity activeOpacity={0.9}
@@ -124,33 +124,38 @@ export default class HomeScreen extends React.Component {
                     </TouchableOpacity>
                   }
                 </View>
+                <Text style={styles.bigWhiteText}>ZERO</Text>
+                <Text style={styles.bigWhiteText}>CARBON</Text>
                 <View style={styles.searchContainer}>
                   {/* Enter flight number */}
-                  <Item style={styles.searchInput}>
                     <Input
+                      containerStyle={styles.containerStyle}
+                      inputContainerStyle={styles.inputContainerStyle}
+                      inputStyle={styles.inputStyle}
+                      label='FLIGHT NUMBER'
+                      labelStyle={styles.labelStyle}
                       rightIcon={
                         <Ionicons style={styles.searchIcon}
                           name="md-arrow-forward"
                           onPress={() => this.checkNum()} />
                         }
-                      inputStyle={styles.inputStyle}
-                      label='FLIGHT NUMBER'
-                      labelStyle={styles.labelStyle}
+                      rightIconContainerStyle={styles.rightIconContainerStyle}
+                      errorMessage='Please enter a valid flight number'
+                      errorStyle={[{ fontSize: (this.state.error == false) ? 3 : 10 }, { color: (this.state.error == false) ? 'transparent' : 'red' }]}
                       autoCapitalize='none'
                       autoCorrect={false}
                       ref={flightSearch}
                       onChangeText={value => this.onChangeText('flight', value)}
                     />
-                  </Item>
                 </View>
                 {/* Redirect to donation checkout */}
                 {/* NAVIGATION FOR TESTING ONLY */}
                 <TouchableOpacity activeOpacity={0.9}
-                  onPress={() => this.props.navigation.navigate('CheckoutWithoutFlight')}
-                  style={styles.buttonStyle2}>
-                  <Text style={styles.buttonText2}>
+                  style={styles.bottomGreenButton}
+                  onPress={() => this.props.navigation.navigate('CheckoutWithoutFlight')}>
+                  <Text style={styles.buttonText}>
                     PROCEED WITH NO FLIGHT NUMBER
-                </Text>
+                  </Text>
                 </TouchableOpacity>
               </View>
               <Footer color='green' />
@@ -187,7 +192,7 @@ const styles = StyleSheet.create({
   buttonBarNav: {
     flexDirection: 'row',
     height: height * 0.05,
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
   },
   navStyle: {
     flexDirection: 'column',
@@ -202,58 +207,56 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: Colors.lightgreen,
   },
-  searchContainer: {
-    paddingTop: height * 0.20,
-    paddingBottom: height * 0.325,
+  bigGreenText: {
+    fontWeight: 'bold',
+    fontSize: 40,
+    lineHeight: 45,
+    color: Colors.lightgreen,
   },
-  searchInput: {
-    backgroundColor: Colors.green,
+  bigWhiteText: {
+    fontSize: 45,
+    color: Colors.white
+  },
+  searchContainer: {
+    paddingTop: height * 0.10,
+    paddingBottom: height * 0.05,
+  },
+  containerStyle: {
+    backgroundColor: Colors.mutedgreen,
     borderRadius: 15,
-    borderColor: 'transparent',
-    padding: 10
+    borderColor: Colors.lightgreen,
+    borderWidth: 2,
+    paddingTop: 6,
+    opacity: 0.95
+  },
+  inputContainerStyle: {
+    borderColor: Colors.white,
+    borderBottomWidth: 2
   },
   inputStyle: {
     fontSize: 27,
     color: Colors.white,
   },
   labelStyle: {
-    fontSize: 12,
+    fontSize: 10,
     color: Colors.white,
   },
   searchIcon: {
     color: Colors.white,
     fontSize: 40,
-    paddingBottom: 14,
-    paddingRight: 5
   },
-
-
-  buttonView: {
-    position: 'absolute',
-    paddingHorizontal: 30,
-    backgroundColor: 'transparent',
-    top: 40,
-    alignSelf: 'flex-end',
-    alignItems: 'center',
+  rightIconContainerStyle: {
+    paddingBottom: 3
   },
-  
-  
-  buttonText1: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: Colors.lightgreen,
-  },
-  buttonStyle2: {
-    alignItems: 'center',
-    backgroundColor: Colors.lightgreen,
-    padding: 5,
-    marginBottom: 200,
-    marginHorizontal: 25,
+  bottomGreenButton: {
     borderRadius: 10,
+    backgroundColor: Colors.lightgreen,
+    height: height * 0.04,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  buttonText2: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: Colors.grey,
-  },
+  buttonText: {
+    color: Colors.darkgrey,
+    fontSize: 12
+  }
 })
