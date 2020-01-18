@@ -100,7 +100,7 @@ export default class HomeScreen extends React.Component {
                 {/* Update isAuthenticated on navigation refresh */}
                 <NavigationEvents onWillFocus={() => this.checkAuth()} />
                 <View style={styles.buttonBarNav}>
-                  <Text style={styles.bigGreenText}>&#x2013;&#x2013;</Text>
+                  <Text style={styles.bigGreenText}>&#x2013; &#x2013;</Text>
                   {/* isAuthenticated: false */}
                   {!this.state.isAuthenticated &&
                     <TouchableOpacity activeOpacity={0.9}
