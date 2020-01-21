@@ -6,35 +6,30 @@ import {
   StyleSheet,
   Dimensions,
   Text,
-  SafeAreaView,
   KeyboardAvoidingView,
   Keyboard,
   View,
   Alert,
-  Image,
   ImageBackground
 } from 'react-native'
 
-import {
-  Container,
-  Item,
-  Input
-} from 'native-base'
+import { Input } from 'react-native-elements'
 
-import { NavigationEvents } from 'react-navigation';
+import { NavigationEvents } from 'react-navigation'
 
-import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
-import Colors from '../../assets/Colors';
+import Colors from '../../assets/Colors'
 
-import Footer from '../utilities/Footer.js';
+import Footer from '../utilities/Footer.js'
 
-import Auth from '@aws-amplify/auth';
+import Auth from '@aws-amplify/auth'
 
-export default class SettingsScreen extends React.Component {
+export default class HomeScreen extends React.Component {
   state = {
     isAuthenticated: false,
     flight: '',
+    error: false,
   }
 
   // load background
@@ -78,18 +73,18 @@ export default class SettingsScreen extends React.Component {
         })
         console.log(this.state.data);
         if (!this.state.data) {
-          this.setState({
-            validNum: false,
-          })
+          this.setState({ validNum: false })
         }
         return this.state.validNum;
       }).then((validNum) => {
         if (validNum) {
-          this.refs.flightSearch._root.clear();
+          flightSearch.current.clear();
+          this.setState({ error: false })
           this.props.navigation.navigate('FlightInfo', { flightNum: this.state.flight })
         } else {
-          Alert.alert('Please enter a valid flight number with no spaces')
-          this.refs.flightSearch._root.clear();
+          this.setState({ error: true })
+          flightSearch.current.shake();
+          flightSearch.current.clear();
         }
       }).catch((error) => {
         console.error(error);
@@ -98,7 +93,6 @@ export default class SettingsScreen extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.container}>
         <ImageBackground source={this.background} style={styles.imageBackground}>
           <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
             <View style={styles.container}>
@@ -106,6 +100,7 @@ export default class SettingsScreen extends React.Component {
                 {/* Update isAuthenticated on navigation refresh */}
                 <NavigationEvents onWillFocus={() => this.checkAuth()} />
                 <View style={styles.buttonBarNav}>
+                  <Text style={styles.bigGreenText}>&#x2013; &#x2013;</Text>
                   {/* isAuthenticated: false */}
                   {!this.state.isAuthenticated &&
                     <TouchableOpacity activeOpacity={0.9}
@@ -129,44 +124,49 @@ export default class SettingsScreen extends React.Component {
                     </TouchableOpacity>
                   }
                 </View>
-                <View style={styles.infoContainer}>
+                <Text style={styles.bigWhiteText}>ZERO</Text>
+                <Text style={styles.bigWhiteText}>CARBON</Text>
+                <View style={styles.searchContainer}>
                   {/* Enter flight number */}
-                  <View style={styles.itemStyle}>
                     <Input
-                      style={styles.input}
-                      placeholder='Flight Number'
-                      placeholderTextColor={Colors.white}
-                      returnKeyType='go'
-                      autoCapitalize='none'
+                      containerStyle={styles.containerStyle}
+                      inputContainerStyle={styles.inputContainerStyle}
+                      inputStyle={styles.inputStyle}
+                      label='FLIGHT NUMBER'
+                      labelStyle={styles.labelStyle}
+                      rightIcon={
+                        <Ionicons style={styles.searchIcon}
+                          name="md-arrow-forward"
+                          onPress={() => this.checkNum()} />
+                        }
+                      rightIconContainerStyle={styles.rightIconContainerStyle}
+                      errorMessage='Please enter a valid flight number'
+                      errorStyle={[{ fontSize: (this.state.error == false) ? 3 : 10 }, { color: (this.state.error == false) ? 'transparent' : 'red' }]}
+                      autoCapitalize='characters'
                       autoCorrect={false}
-                      secureTextEntry={false}
-                      ref='flightSearch'
+                      ref={flightSearch}
                       onChangeText={value => this.onChangeText('flight', value)}
                     />
-                    {/* Pass flight prop to CalculateEmissions */}
-                    <Ionicons style={styles.iconStyle1}
-                      name="md-arrow-forward"
-                      onPress={() => this.checkNum()} />
-                  </View>
                 </View>
                 {/* Redirect to donation checkout */}
                 {/* NAVIGATION FOR TESTING ONLY */}
                 <TouchableOpacity activeOpacity={0.9}
-                  onPress={() => this.props.navigation.navigate('CheckoutWithoutFlight')}
-                  style={styles.buttonStyle2}>
-                  <Text style={styles.buttonText2}>
+                  style={styles.bottomGreenButton}
+                  onPress={() => this.props.navigation.navigate('CheckoutWithoutFlight')}>
+                  <Text style={styles.buttonText}>
                     PROCEED WITH NO FLIGHT NUMBER
-                </Text>
+                  </Text>
                 </TouchableOpacity>
               </View>
               <Footer color='green' />
             </View>
           </TouchableWithoutFeedback>
         </ImageBackground>
-      </SafeAreaView>
     );
   }
 }
+
+const flightSearch = React.createRef();
 
 const { width, height } = Dimensions.get('window');
 
@@ -183,16 +183,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   containerTop: {
-    paddingLeft: '5%',
-    paddingRight: '5%',
-    paddingTop: '10%',
+    paddingLeft: width * 0.05,
+    paddingRight: width * 0.05,
+    paddingTop: height * 0.06,
+    marginBottom: height * 0.10,
     backgroundColor: 'transparent',
   },
   buttonBarNav: {
     flexDirection: 'row',
-    height: '15%',
-    justifyContent: 'flex-end',
-    marginBottom: '5%',
+    height: height * 0.05,
+    justifyContent: 'space-between',
   },
   navStyle: {
     flexDirection: 'column',
@@ -207,55 +207,56 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: Colors.lightgreen,
   },
-
-
-  input: {
-    fontSize: 17,
+  bigGreenText: {
     fontWeight: 'bold',
-    color: Colors.white,
-  },
-  buttonView: {
-    position: 'absolute',
-    paddingHorizontal: 30,
-    backgroundColor: 'transparent',
-    top: 40,
-    alignSelf: 'flex-end',
-    alignItems: 'center',
-  },
-  itemStyle: {
-    height: 60,
-    width: 300,
-    padding: 15,
-    borderColor: 'blue',
-    borderWidth: 2,
-    backgroundColor: Colors.grey,
-    borderRadius: 10,
-    borderColor: Colors.lightblue,
-    borderWidth: 2,
-    flexDirection: 'row'
-  },
-  iconStyle1: {
-    color: Colors.white,
-    fontSize: 30,
-    marginRight: 15,
-    marginLeft: 15,
-  },
-  buttonText1: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 40,
+    lineHeight: 45,
     color: Colors.lightgreen,
   },
-  buttonStyle2: {
-    alignItems: 'center',
-    backgroundColor: Colors.lightgreen,
-    padding: 5,
-    marginBottom: 200,
-    marginHorizontal: 25,
+  bigWhiteText: {
+    fontSize: 45,
+    color: Colors.white
+  },
+  searchContainer: {
+    paddingTop: height * 0.10,
+    paddingBottom: height * 0.05,
+  },
+  containerStyle: {
+    backgroundColor: Colors.mutedgreen,
+    borderRadius: 15,
+    borderColor: Colors.lightgreen,
+    borderWidth: 2,
+    paddingTop: 6,
+    opacity: 0.95
+  },
+  inputContainerStyle: {
+    borderColor: Colors.white,
+    borderBottomWidth: 2
+  },
+  inputStyle: {
+    fontSize: 27,
+    color: Colors.white,
+  },
+  labelStyle: {
+    fontSize: 10,
+    color: Colors.white,
+  },
+  searchIcon: {
+    color: Colors.white,
+    fontSize: 40,
+  },
+  rightIconContainerStyle: {
+    paddingBottom: 3
+  },
+  bottomGreenButton: {
     borderRadius: 10,
+    backgroundColor: Colors.lightgreen,
+    height: height * 0.04,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  buttonText2: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: Colors.grey,
-  },
+  buttonText: {
+    color: Colors.darkgrey,
+    fontSize: 12
+  }
 })

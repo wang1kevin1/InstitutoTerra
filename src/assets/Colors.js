@@ -13,7 +13,7 @@ const Colors = {
 
   green: '#648C1C',
   lightgreen: '#CAF28D',
-  mutedgreen: '#effbdd',
+  mutedgreen: '#9CA670',
 
   lightblue: '#82A2F4'
 }
