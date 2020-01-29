@@ -31,6 +31,9 @@ import ReceiptWithFlightScreen from './src/components/main/flight/ReceiptWithFli
 import CheckoutWithoutFlightScreen from './src/components/main/noFlight/CheckoutWithoutFlightScreen'
 import ReceiptWithoutFlightScreen from './src/components/main/noFlight/ReceiptWithoutFlightScreen'
 
+// PaymentStack
+import AndroidPaymentScreen from './src/components/main/payment/AndroidPaymentScreen'
+
 // Amplify imports and config
 import Amplify from '@aws-amplify/core'
 import config from './aws-exports'
@@ -62,6 +65,7 @@ const MainStackNavigator = createStackNavigator({
   Home: HomeScreen,
   Flight: FlightStackNavigator, // FlightStack
   NoFlight: NoFlightStackNavigator, // NoFlightStack
+  AndroidPay: AndroidPaymentScreen,
   UserDashboard: UserDashboardScreen, // DashboardStack
   Settings: SettingsScreen, 
   Auth: AuthStackNavigator, // AuthStackNavigator
