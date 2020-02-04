@@ -30,8 +30,8 @@ export function stripeCheckoutRedirectHTML(userID) {
         // a successful payment.
         // Instead use one of the strategies described in
         // https://stripe.com/docs/payments/checkout/fulfillment
-        successUrl: '${STRIPE.SUCCESS_URL}',
-        cancelUrl: '${STRIPE.CANCELED_URL}',
+        //successUrl: '${STRIPE.SUCCESS_URL}',
+        //cancelUrl: '${STRIPE.CANCELED_URL}',
       })
     .then(function (result) {
         if (result.error) {
