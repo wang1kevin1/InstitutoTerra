@@ -6,27 +6,37 @@ import { STRIPE } from '../../utilities/stripeSettings.js';
 
 import { stripeCheckoutRedirectHTML } from '../../utilities/stripeCheckout.js';
 
-const PurchaseProduct = () => {
+import {
+  Alert,
+} from 'react-native'
+
+export default class PurchaseProduct extends React.Component{
 
   // TODO: this should come from some service/state store
-  const user = { id: 'someID' };
+  state = {
+    user: { 
+      id: 'someID' 
+    },
+  }
 
-  const onSuccessHandler = () => { /* TODO: do something */ };
-  const onCanceledHandler = () => { /* TODO: do something */ };
+  onSuccessHandler = () => { };
+
+  onCanceledHandler = () => { this.props.navigation.navigate('Home') };
 
   // Called everytime the URL stats to load in the webview
   onLoadStart = (syntheticEvent) => {
     const { nativeEvent } = syntheticEvent;
     if (nativeEvent.url === STRIPE.SUCCESS_URL) {
-      onSuccessHandler();
+      this.onSuccessHandler();
       return;
     }
     if (nativeEvent.url === STRIPE.CANCELED_URL) {
-      onCanceledHandler();
+      this.onCanceledHandler();
     }
   };
 
-  // Render
+  render() {
+    const {user} = this.state
   if (!user) {
     return null;
   }
@@ -35,10 +45,9 @@ const PurchaseProduct = () => {
     <WebView
       originWhitelist={['*']}
       source={{ html: stripeCheckoutRedirectHTML(user.id) }}
-      onLoadStart={onLoadStart}
+      onLoadStart={this.onLoadStart}
     />
   );
+  }
   
 };
-
-export default PurchaseProduct;

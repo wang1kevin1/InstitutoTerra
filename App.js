@@ -75,6 +75,7 @@ const AppSwitchNavigator = createSwitchNavigator({
   Main: MainStackNavigator, // the MainStack
 })
 
+
 const AppContainer = createAppContainer(AppSwitchNavigator)
 
 export default class App extends React.Component {
