@@ -24,14 +24,8 @@ export function stripeCheckoutRedirectHTML(userID) {
   
     stripe.redirectToCheckout({
         items: [{sku: '${STRIPE.SKU}', quantity: 1}],
-  
-        // Do not rely on the redirect to the successUrl for fulfilling
-        // purchases, customers may not always reach the success_url after
-        // a successful payment.
-        // Instead use one of the strategies described in
-        // https://stripe.com/docs/payments/checkout/fulfillment
-        //successUrl: '${STRIPE.SUCCESS_URL}',
-        //cancelUrl: '${STRIPE.CANCELED_URL}',
+        successUrl: '${STRIPE.SUCCESS_URL}',
+        cancelUrl: '${STRIPE.CANCELED_URL}',
       })
     .then(function (result) {
         if (result.error) {
