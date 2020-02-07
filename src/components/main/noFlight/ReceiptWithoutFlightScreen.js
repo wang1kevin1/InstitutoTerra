@@ -56,6 +56,13 @@ export default class ReceiptWithoutFlightScreen extends React.Component {
     }
   }
 
+  handleStripePayment() {
+    this.props.navigation.navigate('PurchaseProduct', {
+      treeNum: this.state.treeNum,
+      })
+    }
+  }
+
   render() {
     const {
       treeNum,
@@ -88,7 +95,7 @@ export default class ReceiptWithoutFlightScreen extends React.Component {
           {/*Navigate to checkout page*/}
           <TouchableOpacity
             style={styles.bottomGreenButton}
-            onPress={() => this.props.navigation.navigate('AndroidPay')}>
+            onPress={() => this.handleStripePayment()}>
             <View style={styles.alignText}>
               <Text style={styles.buttonText}>PAY WITH </Text>
               <Text style={styles.stripeText}> stripe</Text>
