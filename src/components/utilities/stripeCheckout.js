@@ -6,7 +6,7 @@ import { STRIPE } from './stripeSettings.js';
  * @param {String} userID
  * @returns {String}
  */
-export function stripeCheckoutRedirectHTML(userID) {
+export function stripeCheckoutRedirectHTML(userID, quantity) {
   if (!userID) {
     throw new Error('Invalid userID');
   }
@@ -23,7 +23,7 @@ export function stripeCheckoutRedirectHTML(userID) {
     var stripe = Stripe('${STRIPE.PUBLIC_KEY}');
   
     stripe.redirectToCheckout({
-        items: [{sku: '${STRIPE.SKU}', quantity: 1}],
+        items: [{sku: '${STRIPE.SKU}', quantity: ${quantity}}],
         successUrl: '${STRIPE.SUCCESS_URL}',
         cancelUrl: '${STRIPE.CANCELED_URL}',
       })
