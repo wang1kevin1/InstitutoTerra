@@ -12,14 +12,20 @@ import {
 
 export default class PurchaseProduct extends React.Component{
 
-  // TODO: this should come from some service/state store
+  componentDidMount = () => {
+    //set state parameters
+    this.setState({
+      treeNum: this.props.navigation.getParam('treeNum', 'treeNum'),
+    })
+  }
+
   state = {
     user: { 
       id: 'someID' 
     },
   }
 
-  onSuccessHandler = () => { };
+  onSuccessHandler = () => { this.props.navigation.navigate('Home') };
 
   onCanceledHandler = () => { this.props.navigation.navigate('Home') };
 
@@ -36,7 +42,7 @@ export default class PurchaseProduct extends React.Component{
   };
 
   render() {
-    const {user} = this.state
+    const {user, treeNum} = this.state
   if (!user) {
     return null;
   }
@@ -44,7 +50,7 @@ export default class PurchaseProduct extends React.Component{
   return (
     <WebView
       originWhitelist={['*']}
-      source={{ html: stripeCheckoutRedirectHTML(user.id) }}
+      source={{ html: stripeCheckoutRedirectHTML(user.id, treeNum) }}
       onLoadStart={this.onLoadStart}
     />
   );
