@@ -59,8 +59,7 @@ export default class ReceiptWithoutFlightScreen extends React.Component {
   handleStripePayment() {
     this.props.navigation.navigate('PurchaseProduct', {
       treeNum: this.state.treeNum,
-      })
-    }
+    })
   }
 
   render() {
