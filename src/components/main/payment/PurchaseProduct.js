@@ -27,7 +27,7 @@ export default class PurchaseProduct extends React.Component{
 
   onSuccessHandler = () => { this.props.navigation.navigate('Home') };
 
-  onCanceledHandler = () => { this.props.navigation.navigate('Home') };
+  onCanceledHandler = () => { this.props.navigation.navigate.goBack() };
 
   // Called everytime the URL stats to load in the webview
   onLoadStart = (syntheticEvent) => {
