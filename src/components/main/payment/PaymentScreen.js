@@ -2,15 +2,11 @@ import React from 'react';
 
 import { WebView } from 'react-native-webview';
 
-import { STRIPE } from '../../utilities/stripeSettings.js';
+import { STRIPE } from './StripeSettings.js';
 
-import { stripeCheckoutRedirectHTML } from '../../utilities/stripeCheckout.js';
+import { stripeCheckoutRedirectHTML } from './StripeCheckout.js';
 
-import {
-  Alert,
-} from 'react-native'
-
-export default class PurchaseProduct extends React.Component{
+export default class PaymentScreen extends React.Component {
 
   componentDidMount = () => {
     //set state parameters
@@ -19,14 +15,10 @@ export default class PurchaseProduct extends React.Component{
     })
   }
 
-  state = {
-    user: { 
-      id: 'someID' 
-    },
-  }
-
+  // navigate when success url is returned
   onSuccessHandler = () => { this.props.navigation.navigate('Home') };
 
+  // navigate when cancelled url is returned
   onCanceledHandler = () => { this.props.navigation.goBack() };
 
   // Called everytime the URL stats to load in the webview
@@ -38,22 +30,21 @@ export default class PurchaseProduct extends React.Component{
     }
     if (nativeEvent.url === STRIPE.CANCELED_URL) {
       this.onCanceledHandler();
+      return;
     }
   };
 
   render() {
-    const {user, treeNum} = this.state
-  if (!user) {
-    return null;
+    const { treeNum } = this.state
+
+    return (
+      // Displays Script payment page as in screen web page
+      <WebView
+        originWhitelist={['*']}
+        source={{ html: stripeCheckoutRedirectHTML(treeNum) }}
+        onLoadStart={this.onLoadStart}
+      />
+    );
   }
 
-  return (
-    <WebView
-      originWhitelist={['*']}
-      source={{ html: stripeCheckoutRedirectHTML(user.id, treeNum) }}
-      onLoadStart={this.onLoadStart}
-    />
-  );
-  }
-  
 };

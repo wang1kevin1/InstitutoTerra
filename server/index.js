@@ -14,4 +14,4 @@ app.get('/cancelled', (req, res) => {
 
 const port = 3000
 
-app.listen(port, () => console.log('Server running on port 3000'))
+app.listen(port, () => console.log('Refloresta Stripe Payment server running on port 3000'))
