@@ -8,15 +8,19 @@ import { stripeCheckoutRedirectHTML } from './StripeCheckout.js';
 
 export default class PaymentScreen extends React.Component {
 
-  componentDidMount = () => {
+  componentWillMount = () => {
     //set state parameters
     this.setState({
-      treeNum: this.props.navigation.getParam('treeNum', 'treeNum'),
+      treeNum: this.props.navigation.getParam('treeNum', 'treeNum')
     })
   }
 
   // navigate when success url is returned
-  onSuccessHandler = () => { this.props.navigation.navigate('Home') };
+  onSuccessHandler = () => { 
+    this.props.navigation.navigate('ThankYou', {
+      treeNum: this.state.treeNum
+    }) 
+  };
 
   // navigate when cancelled url is returned
   onCanceledHandler = () => { this.props.navigation.goBack() };
@@ -35,13 +39,12 @@ export default class PaymentScreen extends React.Component {
   };
 
   render() {
-    const { treeNum } = this.state
 
     return (
       // Displays Script payment page as in screen web page
       <WebView
         originWhitelist={['*']}
-        source={{ html: stripeCheckoutRedirectHTML(treeNum) }}
+        source={{ html: stripeCheckoutRedirectHTML(this.state.treeNum) }}
         onLoadStart={this.onLoadStart}
       />
     );
