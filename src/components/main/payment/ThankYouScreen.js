@@ -19,7 +19,7 @@ import Footer from '../../utilities/Footer.js';
 
 import Auth from '@aws-amplify/auth';
 
-const website = 'http://www.institutoterra.org/'
+const website = 'http://www.google.com/'
 
 export default class ThankYouScreen extends React.Component {
   state = {
@@ -64,11 +64,13 @@ export default class ThankYouScreen extends React.Component {
 
   // Opens apps for users to share
   onShare = async () => {
-    const message = 'I just donated ' + this.state.treeNum + ' tree(s)! You can too at ' + website + '! #Refloresta'
+    const message = 'I just donated ' + this.state.treeNum + ' tree(s)! You can too at ' + website + '!'
     try {
       const result = await Share.share({
-        message:
-          message
+        title: '#Refloresta',
+        dialogTitle: '#Refloresta',
+        subject: '#Refloresta',
+        message: message
       });
 
       if (result.action === Share.sharedAction) {
