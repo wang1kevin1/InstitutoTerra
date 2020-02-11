@@ -1,5 +1,11 @@
 import React from 'react';
 
+import {
+  View,
+  StyleSheet,
+  Dimensions
+} from 'react-native'
+
 import { WebView } from 'react-native-webview';
 
 import { STRIPE } from './StripeSettings.js';
@@ -16,10 +22,10 @@ export default class PaymentScreen extends React.Component {
   }
 
   // navigate when success url is returned
-  onSuccessHandler = () => { 
+  onSuccessHandler = () => {
     this.props.navigation.navigate('ThankYou', {
       treeNum: this.state.treeNum
-    }) 
+    })
   };
 
   // navigate when cancelled url is returned
@@ -39,15 +45,27 @@ export default class PaymentScreen extends React.Component {
   };
 
   render() {
-
     return (
-      // Displays Script payment page as in screen web page
-      <WebView
-        originWhitelist={['*']}
-        source={{ html: stripeCheckoutRedirectHTML(this.state.treeNum) }}
-        onLoadStart={this.onLoadStart}
-      />
+      <View style={styles.container}>
+        {/* Displays Script payment page as in screen web page */}
+        <WebView
+          originWhitelist={['*']}
+          source={{ html: stripeCheckoutRedirectHTML(this.state.treeNum) }}
+          onLoadStart={this.onLoadStart}
+        />
+      </View>
     );
   }
+}
 
-};
+const { width, height } = Dimensions.get('window');
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    height: height,
+    width: width,
+    marginTop: height * 0.035,
+  }
+})

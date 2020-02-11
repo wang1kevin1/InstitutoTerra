@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain'
   },
   shareImage: {
-    width: width * 0.1,
+    width: width * 0.15,
     aspectRatio: 1/1,
     resizeMode: 'contain'
   }
