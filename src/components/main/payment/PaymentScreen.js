@@ -3,8 +3,10 @@ import React from 'react';
 import {
   View,
   StyleSheet,
-  Dimensions
+  Dimensions,
 } from 'react-native'
+
+import Constants from 'expo-constants';
 
 import { WebView } from 'react-native-webview';
 
@@ -66,6 +68,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     height: height,
     width: width,
-    marginTop: height * 0.035,
+    marginTop: Constants.statusBarHeight
   }
 })
