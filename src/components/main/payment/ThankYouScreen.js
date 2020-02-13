@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 import {
   View,
@@ -28,7 +28,9 @@ export default class ThankYouScreen extends React.Component {
   }
 
   // load background
-  componentWillMount() {
+  constructor(props) {
+    super(props)
+
     this.planet = require('../../../assets/planet.png')
     this.share = require('../../../assets/share.png')
   }

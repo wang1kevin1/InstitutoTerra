@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 import {
   TouchableOpacity,
@@ -9,7 +9,6 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   View,
-  Alert,
   ImageBackground
 } from 'react-native'
 
@@ -33,7 +32,9 @@ export default class HomeScreen extends React.Component {
   }
 
   // load background
-  componentWillMount() {
+  constructor(props) {
+    super(props)
+
     this.background = require('../../assets/background/home.png')
   }
 
