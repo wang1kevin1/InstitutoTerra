@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 
 import {
   TouchableOpacity,
@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Dimensions,
   Text,
-  KeyboardAvoidingView,
   Keyboard,
   View,
   ImageBackground
@@ -24,6 +23,14 @@ import Footer from '../utilities/Footer.js'
 
 import Auth from '@aws-amplify/auth'
 
+const images = [
+  require('../../assets/background/home/home-1.png'), 
+  require('../../assets/background/home/home-2.png'),
+  require('../../assets/background/home/home-3.png'),
+  require('../../assets/background/home/home-4.png'),
+  require('../../assets/background/home/home-5.png')
+]
+
 export default class HomeScreen extends React.Component {
   state = {
     isAuthenticated: false,
@@ -35,13 +42,23 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
 
-    this.background = require('../../assets/background/home.png')
+    
+
+    const randomNumber = Math.floor(Math.random() * 5);
+    this.background = images[randomNumber]
+
+    this.selectBackground(images)
   }
 
   onChangeText(key, value) {
     this.setState({
       [key]: value
     })
+  }
+
+  selectBackground() {
+    const randomNumber = Math.floor(Math.random() * 5);
+    this.background = images[randomNumber]
   }
 
   // Checks if a user is logged in
@@ -99,7 +116,7 @@ export default class HomeScreen extends React.Component {
             <View style={styles.container}>
               <View style={styles.containerTop}>
                 {/* Update isAuthenticated on navigation refresh */}
-                <NavigationEvents onWillFocus={() => this.checkAuth()} />
+                <NavigationEvents onWillFocus={() => {this.checkAuth(); this.selectBackground();}} />
                 <View style={styles.buttonBarNav}>
                   <Text style={styles.bigGreenText}>&#x2013; &#x2013;</Text>
                   {/* isAuthenticated: false */}
@@ -174,7 +191,8 @@ const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
   imageBackground: {
     height: height,
-    width: width
+    width: width,
+    backgroundColor: Colors.black
   },
   container: {
     flex: 1,
