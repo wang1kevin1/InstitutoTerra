@@ -4,6 +4,7 @@ import {
   View,
   StyleSheet,
   Dimensions,
+  ActivityIndicator
 } from 'react-native'
 
 import Constants from 'expo-constants';
@@ -14,12 +15,18 @@ import { STRIPE } from './StripeSettings.js';
 
 import { stripeCheckoutRedirectHTML } from './StripeCheckout.js';
 
+import Colors from '../../../assets/Colors.js';
+
 export default class PaymentScreen extends React.Component {
 
-  componentWillMount = () => {
-    //set state parameters
+  state = {
+    isReady: false,
+  }
+
+  componentDidMount() {
     this.setState({
-      treeNum: this.props.navigation.getParam('treeNum', 'treeNum')
+      treeNum: this.props.navigation.getParam('treeNum', 'treeNum'),
+      isReady: true
     })
   }
 
@@ -31,7 +38,9 @@ export default class PaymentScreen extends React.Component {
   };
 
   // navigate when cancelled url is returned
-  onCanceledHandler = () => { this.props.navigation.goBack() };
+  onCanceledHandler = () => { 
+    this.props.navigation.goBack() 
+  };
 
   // Called everytime the URL stats to load in the webview
   onLoadStart = (syntheticEvent) => {
@@ -47,14 +56,22 @@ export default class PaymentScreen extends React.Component {
   };
 
   render() {
+    const { isReady } = this.state
+
     return (
       <View style={styles.container}>
-        {/* Displays Script payment page as in screen web page */}
-        <WebView
-          originWhitelist={['*']}
-          source={{ html: stripeCheckoutRedirectHTML(this.state.treeNum) }}
-          onLoadStart={this.onLoadStart}
-        />
+        {!isReady &&
+          <View style={{ flexDirection: 'column', flex: 1, justifyContent: 'center' }}>
+            <ActivityIndicator color={Colors.lightblue} size='large' />
+          </View>
+        }
+        {isReady &&
+          <WebView
+            originWhitelist={['*']}
+            source={{ html: stripeCheckoutRedirectHTML(this.state.treeNum) }}
+            onLoadStart={this.onLoadStart}
+          />
+        }
       </View>
     );
   }
@@ -69,5 +86,13 @@ const styles = StyleSheet.create({
     height: height,
     width: width,
     marginTop: Constants.statusBarHeight
-  }
+  },
+  containerLoading: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    height: height,
+    width: width,
+    backgroundColor: Colors.white,
+  },
 })
