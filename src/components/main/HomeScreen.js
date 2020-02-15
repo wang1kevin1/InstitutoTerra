@@ -73,7 +73,18 @@ export default class HomeScreen extends React.Component {
         })
         console.log(this.state.data);
         if (!this.state.data) {
-          this.setState({ validNum: false })
+          fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIcao=${chars}&flightnumber=${nums}`,{
+            method:'GET'
+          })
+            .then((response) => response.json())
+            .then((newResponse) => {
+              this.setState({
+                data: newResponse[0],
+              })
+              if(!this.state.data){
+                this.setState({validNum: false})
+              }
+            })
         }
         return this.state.validNum;
       }).then((validNum) => {
