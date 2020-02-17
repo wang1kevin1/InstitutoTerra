@@ -33,16 +33,12 @@
     "react-native-screens": "2.0.0-alpha.12",
     "react-native-settings-list": "^1.8.0",
     "react-native-web": "^0.11.7",
-<<<<<<< HEAD
-    "react-native-webview": "^8.0.5",
-=======
     "react-native-webview": "7.4.3",
->>>>>>> 4607c4d9b8f70e54b27648aa9546130fb33674b5
     "react-navigation": "^4.0.10",
     "react-navigation-drawer": "^2.3.3",
     "react-navigation-stack": "^1.10.3",
     "react-navigation-tabs": "^2.5.6",
-    "tipsi-stripe": "^7.5.1"
+    "expo-asset": "~8.0.0"
   },
   "devDependencies": {
     "babel-preset-expo": "^8.0.0"

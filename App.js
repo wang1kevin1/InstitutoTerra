@@ -1,6 +1,10 @@
 import React from 'react'
 
-import * as Font from 'expo-font';
+import * as Font from 'expo-font'
+
+import { Asset } from 'expo-asset'
+
+import { AppLoading } from 'expo'
 
 import {
   createSwitchNavigator, 
@@ -77,21 +81,51 @@ const AppSwitchNavigator = createSwitchNavigator({
   Main: MainStackNavigator, // the MainStack
 })
 
-
 const AppContainer = createAppContainer(AppSwitchNavigator)
 
 export default class App extends React.Component {
-  componentDidMount = () => {
-    Font.loadAsync({
-      'Montserrat': require('./src/assets/fonts/Montserrat-Regular.ttf'),
-      'Montserrat-bold': require('./src/assets/fonts/Montserrat-Bold.ttf'),
-      'Fago-black': require('./src/assets/fonts/Fago-Black.ttf'),
-    });
+  state = {
+    isLoadingComplete: false,
+  }
+
+  _loadResourcesAsync = async () => {
+    return Promise.all([
+      Asset.loadAsync([
+        require('./src/assets/background/home/home-1.png'), 
+        require('./src/assets/background/home/home-2.png'),
+        require('./src/assets/background/home/home-3.png'),
+        require('./src/assets/background/home/home-4.png'),
+        require('./src/assets/background/home/home-5.png'),
+      ]),
+      Font.loadAsync({
+        'Montserrat': require('./src/assets/fonts/Montserrat-Regular.ttf'),
+        'Montserrat-bold': require('./src/assets/fonts/Montserrat-Bold.ttf'),
+        'Fago-black': require('./src/assets/fonts/Fago-Black.ttf'),
+      })
+    ])
+  };
+
+  _handleLoadingError = error => {
+    console.warn(error);
+  }
+
+  _handleFinishLoading = () => {
+    this.setState({ isLoadingComplete: true });
   }
 
   render() {
-    return(
-      <AppContainer/>
-    )
+    if (!this.state.isLoadingComplete) {
+      return (
+        <AppLoading
+          startAsync={this._loadResourcesAsync}
+          onError={this._handleLoadingError}
+          onFinish={this._handleFinishLoading}
+        />
+      )
+    } else {
+      return(
+        <AppContainer/>
+      )
+    }
   }
 }
