@@ -59,8 +59,18 @@ export default class FlightInfoScreen extends React.Component {
 
   /* Fetch route data using flight number*/
   getFlight() {
-    let chars = this.props.navigation.getParam('flightNum', 'numCode').slice(0, 2).toUpperCase();
-    let nums = this.props.navigation.getParam('flightNum', 'numCode').slice(2).toUpperCase();
+    let charsIata = this.props.navigation.getParam('flightNum', 'numCode').slice(0, 2).toUpperCase();
+    let charsIcao = this.props.navigation.getParam('flightNum', 'numCode').slice(0, 3).toUpperCase();
+    let numsIata = this.props.navigation.getParam('flightNum', 'numCode').slice(2)
+    let numsIcao = this.props.navigation.getParam('flightNum', 'numCode').slice(3)
+    if(isNaN(this.props.navigation.getParam('flightNum', 'numCode').charAt(2))){
+      return this.callIcao(charsIcao, numsIcao);
+    } else {
+      return this.callIata(charsIata, numsIata);
+    }
+  }
+
+  callIata(chars, nums){
     fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIata=${chars}&flightnumber=${nums}`, {
       method: 'GET'
     })
@@ -84,11 +94,36 @@ export default class FlightInfoScreen extends React.Component {
       });
   }
 
+  callIcao(chars, nums){
+    fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIcao=${chars}&flightnumber=${nums}`, {
+      method: 'GET'
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({
+          data: responseJson[0],
+          airlineIata: responseJson[0].airlineIata,
+          arrivalIata: responseJson[0].arrivalIata,
+          departureIata: responseJson[0].departureIata,
+          planeReg: responseJson[0].regNumber,
+          flightChars: chars,
+          flightNums: nums,
+        })
+        return [this.state.arrivalIata, this.state.departureIata, this.state.planeReg, this.state.airlineIata]
+      }).then((Codes) => {
+        this.getPortsPlanes(Codes);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   /* Fetch departure/arrival airports, airline, and airplane information */
   getPortsPlanes(Codes) {
+    if (Codes[2]){
     let arrAirportCall = fetch(`https://aviation-edge.com/v2/public/airportDatabase?key=760fd0-cefe7a&codeIataAirport=${Codes[0]}`);
     let depAirportCall = fetch(`https://aviation-edge.com/v2/public/airportDatabase?key=760fd0-cefe7a&codeIataAirport=${Codes[1]}`);
-    let planeCall = fetch(`https://aviation-edge.com/v2/public/airplaneDatabase?key=760fd0-cefe7a&numberRegistration=${Codes[2]}`);
+    let planeCall = fetch(`https://aviation-edge.com/v2/public/airplaneDatabase?key=760fd0-cefe7a&numberRegistration=${Codes[2][0]}`);
     let airlineCall = fetch(`https://aviation-edge.com/v2/public/airlineDatabase?key=760fd0-cefe7a&codeIataAirline=${Codes[3]}`)
     Promise.all([arrAirportCall, depAirportCall, planeCall, airlineCall])
       .then(values => Promise.all(values.map(value => value.json())))
@@ -115,6 +150,33 @@ export default class FlightInfoScreen extends React.Component {
       }).catch((error) => {
         console.error(error);
       });
+    } else {
+      let arrAirportCall = fetch(`https://aviation-edge.com/v2/public/airportDatabase?key=760fd0-cefe7a&codeIataAirport=${Codes[0]}`);
+      let depAirportCall = fetch(`https://aviation-edge.com/v2/public/airportDatabase?key=760fd0-cefe7a&codeIataAirport=${Codes[1]}`);
+      let airlineCall = fetch(`https://aviation-edge.com/v2/public/airlineDatabase?key=760fd0-cefe7a&codeIataAirline=${Codes[3]}`)
+        Promise.all([arrAirportCall, depAirportCall, airlineCall])
+          .then(values => Promise.all(values.map(value => value.json())))
+          .then(response => {
+            console.log(response[1][0]);
+            this.setState({
+              arrCityIata: response[0][0].codeIataCity,
+              arrLat: response[0][0].latitudeAirport,
+              arrLong: response[0][0].longitudeAirport,
+              depCityIata: response[1][0].codeIataCity,
+              depLat: response[1][0].latitudeAirport,
+              depLong: response[1][0].longitudeAirport,
+              planeModel: "N/A",
+              airlineName: response[2][0].nameAirline,
+        })
+        console.log(this.state.planeMake);
+        this.getDistance();
+        return [this.state.arrCityIata, this.state.depCityIata]
+      }).then((IataCodes) => {
+        this.getCities(IataCodes);
+      }).catch((error) => {
+        console.error(error);
+      });
+    }
   }
 
   /* Fetch arrival/departure city information */
