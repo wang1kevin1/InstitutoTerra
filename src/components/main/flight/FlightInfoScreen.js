@@ -81,7 +81,7 @@ export default class FlightInfoScreen extends React.Component {
           airlineIata: responseJson[0].airlineIata,
           arrivalIata: responseJson[0].arrivalIata,
           departureIata: responseJson[0].departureIata,
-          planeReg: responseJson[0].regNumber[0],
+          planeReg: responseJson[0].regNumber,
           flightChars: chars,
           flightNums: nums,
         })
@@ -166,6 +166,7 @@ export default class FlightInfoScreen extends React.Component {
               depLat: response[1][0].latitudeAirport,
               depLong: response[1][0].longitudeAirport,
               planeModel: "N/A",
+              planeMake: "",
               airlineName: response[2][0].nameAirline,
         })
         console.log(this.state.planeMake);

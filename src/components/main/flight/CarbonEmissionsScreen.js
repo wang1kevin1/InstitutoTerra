@@ -66,11 +66,36 @@ export default class CarbonEmissionsScreen extends React.Component {
 
   //Calculate emissions using distance and seat class
   calcEmissions() {
-    let temp = this.props.navigation.getParam('distance', 'distanceTraveled');
-    tempD = Math.round(temp);
-    tempF = tempD / 1000;
+    let dist = this.props.navigation.getParam('distance', 'distanceTraveled');
+    let seat = this.props.navigation.getParam('distance', 'distanceTraveled');
+    console.log(seat);
+    if(dist < 500){
+      dist *= .25493;
+    }else if(dist < 1000){
+      if(this.props.navigation.getParam('seatState', 'state') == 'Economy'){
+        dist *= .15573;
+      }else if(this.props.navigation.getParam('seatState', 'state') == 'Business' || this.props.navigation.getParam('seatState', 'state') == 'First Class'){
+        dist *= .2336;
+      }
+    }else{
+      if(this.props.navigation.getParam('seatState', 'state') == 'Economy'){
+        dist *= .14981;
+        console.log('Economy Long');
+        console.log(dist);
+      }else if(this.props.navigation.getParam('seatState', 'state') == 'Business'){
+        dist *= .43446;
+        console.log('Business Long');
+        console.log(dist);
+      }else if(this.props.navigation.getParam('seatState', 'state') == 'First Class'){
+        dist *= .59925;
+        console.log('First Class Long');
+        console.log(dist);
+      }
+    }
+    emmisions = Math.round(dist);
+    emmisions /= 1000;
     this.setState({
-      footprint: tempF,
+      footprint: emmisions,
     })
   }
 
@@ -98,7 +123,7 @@ export default class CarbonEmissionsScreen extends React.Component {
           <View style={styles.midText}>
             <Text style={styles.bigWhiteText}>{footprint}</Text>
             <View style={styles.alignSubScript}>
-              <Text style={styles.midWhiteText}>METRIC TONS CO</Text>
+              <Text style={styles.midWhiteText}>Metric Tons CO</Text>
               <Text style={{ fontSize: 12, lineHeight: 30, color: Colors.white }}>2</Text>
             </View>
             <Text style={styles.smallBlueText}>WE CAN FIX THIS TOGETHER</Text>
