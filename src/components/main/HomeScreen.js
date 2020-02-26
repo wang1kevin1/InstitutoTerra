@@ -74,7 +74,7 @@ export default class HomeScreen extends React.Component {
       })
   }
 
-  // Check if the inputed flight number is valid
+  // Check length of flight number and split input into easily manageable chunks
   checkNum() {
     let charsIata = this.state.flight.slice(0, 2).toUpperCase();
     let charsIcao = this.state.flight.slice(0, 3).toUpperCase();
@@ -84,6 +84,7 @@ export default class HomeScreen extends React.Component {
     let numsIcao = this.state.flight.slice(3);
     console.log(numsIata);
     console.log(numsIcao);
+    //process input as Iata or Icao depending on format
     if(isNaN(this.state.flight.charAt(2))){
       return this.icaoCall(charsIcao, numsIcao);
     } else {
@@ -91,6 +92,7 @@ export default class HomeScreen extends React.Component {
     }
   }
 
+  //Process Iata flight number
   iataCall(chars, nums){
     fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIata=${chars}&flightnumber=${nums}`, {
       method: 'GET'
@@ -121,6 +123,7 @@ export default class HomeScreen extends React.Component {
       });
   }
 
+  //Process Icao flight number
   icaoCall(chars, nums){
     fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIcao=${chars}&flightnumber=${nums}`, {
       method: 'GET'
