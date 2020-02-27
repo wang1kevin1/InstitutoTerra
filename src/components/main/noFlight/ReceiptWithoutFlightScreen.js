@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  Alert
 } from 'react-native'
 
 import { Ionicons, FontAwesome } from '@expo/vector-icons';

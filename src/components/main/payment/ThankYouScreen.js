@@ -7,7 +7,6 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
-  Alert,
   Share
 } from 'react-native'
 
