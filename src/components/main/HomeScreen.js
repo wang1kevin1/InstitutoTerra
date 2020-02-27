@@ -42,8 +42,6 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
 
-    
-
     const randomNumber = Math.floor(Math.random() * 5);
     this.background = images[randomNumber]
 
