@@ -10,7 +10,7 @@ import {
   Keyboard,
   View,
   Alert,
-  Image,
+  Dimensions,
   ActivityIndicator,
 } from 'react-native'
 
@@ -23,6 +23,8 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 
 import SettingsList from 'react-native-settings-list';
+
+import Constants from 'expo-constants';
 
 import CodeInput from 'react-native-confirmation-code-input';
 
@@ -43,8 +45,8 @@ export default class SettingsScreen extends React.Component {
     newpassword: '',
     newpassword_confirmation: '',
     hidePassword1: true,
-    hidePassword2: true
-    //language: 'English',
+    hidePassword2: true,
+    language: 'English',
   }
 
   componentDidMount() {
@@ -230,17 +232,16 @@ export default class SettingsScreen extends React.Component {
     {/* list: Settings list */ }
     if (this.state.setting == 'list') {
       return (
-        <SafeAreaView style={styles.container2}>
-          <KeyboardAvoidingView style={styles.container2} behavior='padding' enabled>
-            <TouchableWithoutFeedback style={styles.container2} onPress={Keyboard.dismiss}>
-              <View style={styles.container2}>
+        <SafeAreaView style={styles.container}>
+          <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
+            <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
+              <View style={styles.container}>
                 <View style={{ backgroundColor: '#EFEFF4', flex: 1 }}>
-                  <View style={{ borderBottomWidth: 1, backgroundColor: Colors.green, borderColor: '#c8c7cc' }}>
-                    <Text style={{ alignSelf: 'center', marginTop: 40, marginBottom: 15, fontWeight: 'bold', fontSize: 20 }}>Settings</Text>
+                  <View style={{ borderBottomWidth: 1, backgroundColor: Colors.lightgrey, borderColor: Colors.lightgrey }}>
+                    <Text style={{ alignSelf: 'center', marginTop: Constants.statusBarHeight + 15, marginBottom: 15, fontWeight: 'bold', fontSize: 20 }}>Settings</Text>
                   </View>
                   <View style={{ backgroundColor: '#EFEFF4', flex: 1 }}>
                     <SettingsList borderColor='#c8c7cc' defaultItemSize={50}>
-                      <SettingsList.Header headerStyle={{ marginTop: 15 }} />
                       <SettingsList.Item
                         icon={<Ionicons style={styles.iconStyle3} name="ios-person" />}
                         title='Name'
@@ -281,14 +282,14 @@ export default class SettingsScreen extends React.Component {
       );
     } else {
       return (
-        <SafeAreaView style={styles.container}>
-          <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
-            <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
-              <View style={styles.container}>
+        <SafeAreaView style={styles.containerSetting}>
+          <KeyboardAvoidingView style={styles.containerSetting} behavior='padding' enabled>
+            <TouchableWithoutFeedback style={styles.containerSetting} onPress={Keyboard.dismiss}>
+              <View style={styles.containerSetting}>
                 <Container style={styles.infoContainer}>
                   {/* setName: set account name */}
                   {this.state.setting == 'setName' &&
-                    <View style={styles.container}>
+                    <View style={styles.containerSetting}>
                       {/* Name */}
                       <Item style={styles.itemStyle}>
                         <Ionicons style={styles.iconStyle1} name="ios-person" />
@@ -321,7 +322,7 @@ export default class SettingsScreen extends React.Component {
                   }
                   {/* setEmail: set account email */}
                   {this.state.setting == 'setEmail' &&
-                    <View style={styles.container}>
+                    <View style={styles.containerSetting}>
                       {/* Email */}
                       <Item style={styles.itemStyle}>
                         <Ionicons style={styles.iconStyle1} name="ios-mail" />
@@ -353,7 +354,7 @@ export default class SettingsScreen extends React.Component {
                     </View>
                   }
                   {this.state.setting == 'emailCode' &&
-                    <View style={styles.container}>
+                    <View style={styles.containerSetting}>
                       {/* Verification Code message*/}
                       <Text style={styles.messageText1}>
                         Please enter your verification code:
@@ -385,7 +386,7 @@ export default class SettingsScreen extends React.Component {
                   }
                   {/* setPassword: set account password */}
                   {this.state.setting == 'setPassword' &&
-                    <View style={styles.container}>
+                    <View style={styles.containerSetting}>
                       {/* Current Password */}
                       <Item style={styles.itemStyle}>
                         <Ionicons style={styles.iconStyle1} name="ios-lock" />
@@ -461,16 +462,19 @@ export default class SettingsScreen extends React.Component {
   }
 }
 
+const { width, height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.lightgreen,
-    justifyContent: 'center',
-    flexDirection: 'column'
-  },
-  container2: {
-    flex: 1,
     backgroundColor: '#EFEFF4',
+    flexDirection: 'column',
+    height: height,
+    width: width
+  },
+  containerSetting: {
+    flex: 1,
+    backgroundColor: Colors.lightgreen,
     justifyContent: 'center',
     flexDirection: 'column'
   },

@@ -5,7 +5,8 @@ export function stripeCheckoutRedirectHTML(quantity) {
   return `
     <html>
     <!-- Load Stripe.js on your website. -->
-    <script src="https://js.stripe.com/v3"></script>
+    <script src="https://js.stripe.com/v3"
+      data-locale="auto"></script>
   
     <div id="error-message"></div>
   
