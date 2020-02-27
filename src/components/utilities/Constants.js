@@ -1,0 +1,1 @@
+export const COST = 6 // cost per tree (NEEDS CHANGE IN STRIPE DASHBOARD AS WELL)

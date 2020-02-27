@@ -16,9 +16,6 @@ import Footer from '../Footer.js';
 
 import Auth from '@aws-amplify/auth';
 
-// cost per tree
-const cost = 6;
-
 export default class CarbonEmissionsScreen extends React.Component {
   state = {
     isAuthenticated: 'false',
