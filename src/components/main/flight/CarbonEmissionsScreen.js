@@ -12,7 +12,7 @@ import { Ionicons, FontAwesome, Feather } from '@expo/vector-icons';
 
 import Colors from '../../../assets/Colors.js';
 
-import Footer from '../../utilities/Footer.js';
+import Footer from '../Footer.js';
 
 import Auth from '@aws-amplify/auth';
 

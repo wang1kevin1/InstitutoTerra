@@ -23,7 +23,7 @@ import Constants from 'expo-constants';
 
 import Colors from '../../assets/Colors';
 
-import Footer from '../utilities/Footer.js';
+import Footer from '../main/Footer.js';
 
 import Auth from '@aws-amplify/auth';
 
