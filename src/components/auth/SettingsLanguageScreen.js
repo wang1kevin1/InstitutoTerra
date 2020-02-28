@@ -47,26 +47,27 @@ export default class SettingsLanguageScreen extends React.Component {
             <View style={styles.container}>
               <View style={{ backgroundColor: '#EFEFF4', flex: 1 }}>
                 <SettingsList borderColor='#c8c7cc' defaultItemSize={50}>
+                  {/* ENGLISH */}
                   <SettingsList.Item
                     title='English'
                     onPress={() => { this.setLanguage('English') }}
                   />
+                  {/* FRENCH */}
                   <SettingsList.Item
                     title='Français'
                     onPress={() => { this.setLanguage('Français') }}
                   />
+                  {/* DUTCH */}
                   <SettingsList.Item
-                    title='Deutsch'
-                    onPress={() => { this.setLanguage('Deutsch') }}
+                    title='Nederlands'
+                    onPress={() => { this.setLanguage('Nederlands') }}
                   />
-                  <SettingsList.Item
-                    title='Español'
-                    onPress={() => { this.setLanguage('Español') }}
-                  />
+                  {/* PORTUGUESE (BRAZIL) */}
                   <SettingsList.Item
                     title='Português (Brasil)'
                     onPress={() => { this.setLanguage('Português (Brasil)') }}
                   />
+                  {/* PORTUGUESE (PORTUGAL) */}
                   <SettingsList.Item
                     title='Português (Portugal)'
                     onPress={() => { this.setLanguage('Português (Portugal)') }}
