@@ -54,6 +54,7 @@ export default class HomeScreen extends React.Component {
     })
   }
 
+  // selects a random background to be loaded
   selectBackground() {
     const randomNumber = Math.floor(Math.random() * 5);
     this.background = images[randomNumber]
@@ -74,11 +75,60 @@ export default class HomeScreen extends React.Component {
 
   // Check if the inputed flight number is valid
   checkNum() {
-    let chars = this.state.flight.slice(0, 2).toUpperCase();
-    console.log(chars);
-    let nums = this.state.flight.slice(2);
-    console.log(nums);
+    let spaceBuffer = this.state.flight.replace(/\s+/g, '');
+    this.setState({
+      flight: spaceBuffer
+    })
+    let charsIata = spaceBuffer.slice(0, 2).toUpperCase();
+    let charsIcao = spaceBuffer.slice(0, 3).toUpperCase();
+    console.log(charsIata);
+    console.log(charsIcao);
+    let numsIata = spaceBuffer.slice(2);
+    let numsIcao = spaceBuffer.slice(3);
+    console.log(numsIata);
+    console.log(numsIcao);
+    //process input as Iata or Icao depending on format
+    if(isNaN(spaceBuffer.charAt(2))){
+      return this.icaoCall(charsIcao, numsIcao);
+    } else {
+      return this.iataCall(charsIata, numsIata);
+    }
+  }
+
+  // checks for valid Iata
+  iataCall(chars, nums){
     fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIata=${chars}&flightnumber=${nums}`, {
+      method: 'GET'
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({
+          validNum: true,
+          data: responseJson[0],
+        })
+        console.log(this.state.data);
+        if (!this.state.data) {
+          this.setState({ validNum: false })
+        }
+        return this.state.validNum;
+      }).then((validNum) => {
+        if (validNum) {
+          flightSearch.current.clear();
+          this.setState({ error: false })
+          this.props.navigation.navigate('FlightInfo', { flightNum: this.state.flight })
+        } else {
+          this.setState({ error: true })
+          flightSearch.current.shake();
+          flightSearch.current.clear();
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+  }
+
+  // checks for valid Icao
+  icaoCall(chars, nums){
+    fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIcao=${chars}&flightnumber=${nums}`, {
       method: 'GET'
     })
       .then((response) => response.json())

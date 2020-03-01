@@ -63,11 +63,49 @@ export default class CarbonEmissionsScreen extends React.Component {
 
   //Calculate emissions using distance and seat class
   calcEmissions() {
-    let temp = this.props.navigation.getParam('distance', 'distanceTraveled');
-    tempD = Math.round(temp);
-    tempF = tempD / 1000;
+    let dist = this.props.navigation.getParam('distance', 'distanceTraveled');
+    let seat = this.props.navigation.getParam('distance', 'distanceTraveled');
+    console.log(seat);
+    //Short Flight
+    if(dist < 500){
+      dist *= .25493;
+    }
+    //Medium Flight
+    else if(dist < 1000){
+      //Economy seat
+      if(this.props.navigation.getParam('seatState', 'state') == 'Economy'){
+        dist *= .15573;
+      }
+      //Business seat
+      else if(this.props.navigation.getParam('seatState', 'state') == 'Business' || this.props.navigation.getParam('seatState', 'state') == 'First Class'){
+        dist *= .2336;
+      }
+    }
+    //Long Flight
+    else{
+      //Economy Seat
+      if(this.props.navigation.getParam('seatState', 'state') == 'Economy'){
+        dist *= .14981;
+        console.log('Economy Long');
+        console.log(dist);
+      }
+      //Business Seat
+      else if(this.props.navigation.getParam('seatState', 'state') == 'Business'){
+        dist *= .43446;
+        console.log('Business Long');
+        console.log(dist);
+      }
+      //First Class Seat
+      else if(this.props.navigation.getParam('seatState', 'state') == 'First Class'){
+        dist *= .59925;
+        console.log('First Class Long');
+        console.log(dist);
+      }
+    }
+    emissions = Math.round(dist);
+    emissions /= 1000;
     this.setState({
-      footprint: tempF,
+      footprint: emissions,
     })
   }
 
