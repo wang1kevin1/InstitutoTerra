@@ -76,6 +76,9 @@ export default class HomeScreen extends React.Component {
   // Check if the inputed flight number is valid
   checkNum() {
     let spaceBuffer = this.state.flight.replace(/\s+/g, '');
+    this.setState({
+      flight: spaceBuffer
+    })
     let charsIata = spaceBuffer.slice(0, 2).toUpperCase();
     let charsIcao = spaceBuffer.slice(0, 3).toUpperCase();
     console.log(charsIata);
