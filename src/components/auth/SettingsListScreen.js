@@ -1,12 +1,8 @@
 import React from 'react'
 
 import {
-  TouchableWithoutFeedback,
   StyleSheet,
   Text,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  Keyboard,
   View,
   Alert,
   Dimensions,
@@ -96,9 +92,6 @@ getLanguage = async () => {
 
   render() {
       return (
-        <SafeAreaView style={styles.container}>
-          <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
-            <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
               <View style={styles.container}>
                 {/* Update isAuthenticated on navigation refresh */}
                 <NavigationEvents onWillFocus={() => {this.getUserInfo(); this.getLanguage();}} />
@@ -142,9 +135,6 @@ getLanguage = async () => {
                 </View>
                 <Footer color='white' />
               </View>
-            </TouchableWithoutFeedback>
-          </KeyboardAvoidingView>
-        </SafeAreaView>
       );
     }
   }
