@@ -69,7 +69,7 @@ export default class FlightInfoScreen extends React.Component {
       return this.callIata(charsIata, numsIata);
     }
   }
-  //Fetch flight information using Iata flight number
+
   callIata(chars, nums){
     fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIata=${chars}&flightnumber=${nums}`, {
       method: 'GET'
@@ -93,7 +93,7 @@ export default class FlightInfoScreen extends React.Component {
         console.error(error);
       });
   }
-  // Fetch flight Information using Icao flight number
+
   callIcao(chars, nums){
     fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIcao=${chars}&flightnumber=${nums}`, {
       method: 'GET'

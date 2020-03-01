@@ -74,7 +74,7 @@ export default class HomeScreen extends React.Component {
       })
   }
 
-  // Check length of flight number and split input into easily manageable chunks
+  // Check if the inputed flight number is valid
   checkNum() {
     let spaceBuffer = this.state.flight.replace(/\s+/g, '');
     let charsIata = spaceBuffer.slice(0, 2).toUpperCase();
@@ -93,7 +93,6 @@ export default class HomeScreen extends React.Component {
     }
   }
 
-  //Process Iata flight number
   iataCall(chars, nums){
     fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIata=${chars}&flightnumber=${nums}`, {
       method: 'GET'
@@ -124,7 +123,6 @@ export default class HomeScreen extends React.Component {
       });
   }
 
-  //Process Icao flight number
   icaoCall(chars, nums){
     fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIcao=${chars}&flightnumber=${nums}`, {
       method: 'GET'
