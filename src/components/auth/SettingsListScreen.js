@@ -97,9 +97,9 @@ getLanguage = async () => {
                 <NavigationEvents onWillFocus={() => {this.getUserInfo(); this.getLanguage();}} />
                 <View style={{ backgroundColor: '#EFEFF4', flex: 1 }}>
                   <View style={{ borderBottomWidth: 1, backgroundColor: Colors.lightgrey, borderColor: Colors.lightgrey }}>
-                    <Text style={{ alignSelf: 'center', marginTop: Constants.statusBarHeight + 15, marginBottom: 15, fontWeight: 'bold', fontSize: 20 }}>Settings</Text>
+                    <Text style={{ alignSelf: 'center', marginTop: Constants.statusBarHeight + 10, marginBottom: 10, fontWeight: 'bold', fontSize: 20 }}>Settings</Text>
                   </View>
-                  <View style={{ backgroundColor: '#EFEFF4', flex: 1 }}>
+                  <View style={{ backgroundColor: '#F2F2F5', flex: 1 }}>
                     <SettingsList borderColor='#c8c7cc' defaultItemSize={50}>
                       <SettingsList.Item
                         icon={<Ionicons style={styles.iconStyle3} name="ios-person" />}
