@@ -10,7 +10,7 @@ import {
   Alert
 } from 'react-native';
 
-import Colors from '../../assets/Colors'
+import COLORS from '../../assets/Colors'
 
 const terra_greentxt = require('../../assets/footer/terra-green.png')
 
@@ -68,17 +68,17 @@ const styles = StyleSheet.create({
     width: width,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.white,
+    backgroundColor: COLORS.white,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
     borderWidth: 1,
     borderBottomWidth: 0,
-    borderColor: Colors.lightgrey,
+    borderColor: COLORS.lightgrey,
   },
   footerTxtWhite: {
     fontSize: 10,
     fontWeight: 'normal',
-    color: Colors.black,
+    color: COLORS.black,
   },
   footerGreen: {
     position: 'absolute', 
@@ -89,17 +89,17 @@ const styles = StyleSheet.create({
     width: width,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.green,
+    backgroundColor: COLORS.green,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
     borderWidth: 1,
     borderBottomWidth: 0,
-    borderColor: Colors.green,
+    borderColor: COLORS.green,
   },
   footerTxtGreen: {
     fontSize: 10,
     fontWeight: 'normal',
-    color: Colors.white,
+    color: COLORS.white,
   },
   image: {
     width: width * 0.5,

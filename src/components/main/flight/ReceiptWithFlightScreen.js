@@ -13,7 +13,7 @@ import { Ionicons, FontAwesome } from '@expo/vector-icons';
 
 import Dash from 'react-native-dash';
 
-import Colors from '../../../assets/Colors.js';
+import COLORS from '../../../assets/Colors.js';
 
 import Footer from '../Footer.js';
 
@@ -105,25 +105,25 @@ export default class ReceiptWithFlightScreen extends React.Component {
                 <Text style={styles.receiptTextRight}>{depCityName} &#10231; {arrCityName}</Text>
               }
             </View>
-            <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={0} />
+            <Dash style={styles.dashedLine} dashColor={COLORS.lightgrey} dashGap={0} />
             <View style={styles.textRow}>
               {/*Carbon Footprints*/}
               <Text style={styles.receiptTextLeft}>CARBON FOOTPRINT (METRIC TONS)</Text>
               <Text style={styles.receiptTextRight}>{footprint}</Text>
             </View>
-            <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={0} />
+            <Dash style={styles.dashedLine} dashColor={COLORS.lightgrey} dashGap={0} />
             <View style={styles.textRow}>
               {/*Total trees donated in transaction*/}
               <Text style={styles.receiptTextLeft}>TOTAL TREES</Text>
               <Text style={styles.receiptTextRight}>{treeNum}</Text>
             </View>
-            <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={0} />
+            <Dash style={styles.dashedLine} dashColor={COLORS.lightgrey} dashGap={0} />
             <View style={styles.textRow}>
               {/*Years to neutralize*/}
               <Text style={styles.receiptTextLeft}>YEARS TO NEUTRALIZE</Text>
               <Text style={styles.receiptTextRight}>{years}</Text>
             </View>
-            <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={0} />
+            <Dash style={styles.dashedLine} dashColor={COLORS.lightgrey} dashGap={0} />
             <View style={styles.textRow}>
               {/*Cost of transaction*/}
               <Text style={styles.receiptTextLeft}>PRICE</Text>
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: Colors.white,
+    backgroundColor: COLORS.white,
     height: height,
     width: width
   },
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     paddingRight: width * 0.05,
     paddingTop: height * 0.06,
     marginBottom: height * 0.10,
-    backgroundColor: Colors.white,
+    backgroundColor: COLORS.white,
   },
   buttonBarNav: {
     flexDirection: 'row',
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   flightBlueText: {
     fontFamily: 'Montserrat',
     fontSize: 14,
-    color: Colors.lightblue,
+    color: COLORS.lightblue,
     justifyContent: 'center',
     alignItems: 'center',
     lineHeight: 30
@@ -193,12 +193,12 @@ const styles = StyleSheet.create({
   },
   receiptTextLeft: {
     fontFamily: 'Montserrat',
-    color: Colors.darkgrey,
+    color: COLORS.darkgrey,
     fontSize: 12
   },
   receiptTextRight: {
     fontFamily: 'Montserrat-bold',
-    color: Colors.darkgrey,
+    color: COLORS.darkgrey,
     fontSize: 12
   },
   alignText: {
@@ -207,24 +207,24 @@ const styles = StyleSheet.create({
   },
   bottomGreenButton: {
     borderRadius: 10,
-    backgroundColor: Colors.lightgreen,
+    backgroundColor: COLORS.lightgreen,
     height: height * 0.08,
     justifyContent: 'center',
     alignItems: 'center',
   },
   buttonText: {
     fontFamily: 'Montserrat-bold',
-    color: Colors.darkgrey,
+    color: COLORS.darkgrey,
     fontSize: 12
   },
   stripeText: {
     fontFamily: 'Fago-black',
-    color: Colors.darkgrey,
+    color: COLORS.darkgrey,
     fontSize: 18,
     lineHeight: 18
   },
   navigationIcon: {
-    color: Colors.grey,
+    color: COLORS.grey,
     fontSize: 30,
   },
 });

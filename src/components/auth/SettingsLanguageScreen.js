@@ -13,7 +13,7 @@ import SettingsList from 'react-native-settings-list';
 
 import Constants from 'expo-constants';
 
-import Colors from '../../assets/Colors';
+import COLORS from '../../assets/Colors';
 
 export default class SettingsLanguageScreen extends React.Component {
   state = {
@@ -42,7 +42,7 @@ export default class SettingsLanguageScreen extends React.Component {
       <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={{ backgroundColor: '#EFEFF4', flex: 1 }}>
-            <View style={{ borderBottomWidth: 1, backgroundColor: Colors.lightgrey, borderColor: Colors.lightgrey, marginTop: Constants.statusBarHeight }}>
+            <View style={{ borderBottomWidth: 1, backgroundColor: COLORS.lightgrey, borderColor: COLORS.lightgrey, marginTop: Constants.statusBarHeight }}>
             </View>
             <View style={styles.container}>
               <View style={{ backgroundColor: '#EFEFF4', flex: 1 }}>
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   },
   containerSetting: {
     flex: 1,
-    backgroundColor: Colors.lightgreen,
+    backgroundColor: COLORS.lightgreen,
     justifyContent: 'center',
     flexDirection: 'column'
   },
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 17,
     fontWeight: 'bold',
-    color: Colors.lightblue,
+    color: COLORS.lightblue,
   },
   infoContainer: {
     position: 'absolute',
@@ -112,30 +112,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
-    backgroundColor: Colors.lightgreen,
+    backgroundColor: COLORS.lightgreen,
   },
   itemStyle: {
     marginBottom: 20,
-    backgroundColor: Colors.white,
+    backgroundColor: COLORS.white,
     borderRadius: 10,
     borderColor: 'transparent'
   },
   iconStyle1: {
-    color: Colors.lightblue,
+    color: COLORS.lightblue,
     fontSize: 30,
     marginRight: 15,
     marginLeft: 15,
     flex: 0.1
   },
   iconStyle2: {
-    color: Colors.grey,
+    color: COLORS.grey,
     fontSize: 20,
     marginRight: 15,
     marginLeft: 15,
     flex: 0.1
   },
   iconStyle3: {
-    color: Colors.lightblue,
+    color: COLORS.lightblue,
     fontSize: 30,
     marginRight: 15,
     marginLeft: 15,
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   },
   buttonStyle1: {
     alignItems: 'center',
-    backgroundColor: Colors.lightblue,
+    backgroundColor: COLORS.lightblue,
     padding: 14,
     marginBottom: 20,
     borderRadius: 10,
@@ -151,11 +151,11 @@ const styles = StyleSheet.create({
   buttonText1: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: Colors.white,
+    color: COLORS.white,
   },
   buttonStyle2: {
     alignItems: 'center',
-    backgroundColor: Colors.lightgreen,
+    backgroundColor: COLORS.lightgreen,
     padding: 5,
     marginBottom: 10,
     borderRadius: 10,
@@ -163,13 +163,13 @@ const styles = StyleSheet.create({
   buttonText2: {
     fontSize: 14,
     fontWeight: 'normal',
-    color: Colors.lightblue,
+    color: COLORS.lightblue,
   },
   messageText1: {
     marginTop: 200,
     fontSize: 18,
     fontWeight: 'bold',
-    color: Colors.darkgrey,
+    color: COLORS.darkgrey,
     alignContent: 'center'
   },
 })

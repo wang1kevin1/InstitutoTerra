@@ -1,4 +1,4 @@
-const Colors = {
+const COLORS = {
   white: '#fff',
   black: '#000',
 
@@ -18,4 +18,4 @@ const Colors = {
   lightblue: '#82A2F4'
 }
 
-export default Colors
+export default COLORS

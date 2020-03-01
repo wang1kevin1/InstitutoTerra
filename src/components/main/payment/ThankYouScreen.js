@@ -12,7 +12,7 @@ import {
 
 import { FontAwesome, Feather } from '@expo/vector-icons';
 
-import Colors from '../../../assets/Colors.js';
+import COLORS from '../../../assets/Colors.js';
 
 import Footer from '../Footer.js';
 
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: Colors.white,
+    backgroundColor: COLORS.white,
     height: height,
     width: width
   },
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     paddingRight: width * 0.05,
     paddingTop: height * 0.06,
     marginBottom: height * 0.10,
-    backgroundColor: Colors.white,
+    backgroundColor: COLORS.white,
   },
   buttonBarNav: {
     flexDirection: 'row',
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   midGreenText: {
     fontFamily: 'Montserrat-bold',
     fontSize: 16,
-    color: Colors.green,
+    color: COLORS.green,
   },
   bottomImage: {
     marginTop: height * 0.15,
@@ -161,10 +161,10 @@ const styles = StyleSheet.create({
   smallBlueText: {
     fontFamily: 'Montserrat-bold',
     fontSize: 12,
-    color: Colors.lightblue,
+    color: COLORS.lightblue,
   },
   navigationIcon: {
-    color: Colors.grey,
+    color: COLORS.grey,
     fontSize: 30,
   },
   planetImage: {

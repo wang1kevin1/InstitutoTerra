@@ -10,11 +10,13 @@ import {
 
 import { Ionicons, FontAwesome, Feather } from '@expo/vector-icons';
 
-import Colors from '../../../assets/Colors.js';
+import COLORS from '../../../assets/Colors.js';
 
 import Footer from '../Footer.js';
 
 import Auth from '@aws-amplify/auth';
+
+import * as Constants from '../../utilities/Constants.js';
 
 export default class CarbonEmissionsScreen extends React.Component {
   state = {
@@ -68,36 +70,36 @@ export default class CarbonEmissionsScreen extends React.Component {
     console.log(seat);
     //Short Flight
     if(dist < 500){
-      dist *= .25493;
+      dist *= Constants.CARBON_MULTIPLIERS.short;
     }
     //Medium Flight
     else if(dist < 1000){
       //Economy seat
       if(this.props.navigation.getParam('seatState', 'state') == 'Economy'){
-        dist *= .15573;
+        dist *= Constants.CARBON_MULTIPLIERS.medium_economy;
       }
       //Business seat
       else if(this.props.navigation.getParam('seatState', 'state') == 'Business' || this.props.navigation.getParam('seatState', 'state') == 'First Class'){
-        dist *= .2336;
+        dist *= Constants.CARBON_MULTIPLIERS.medium_business;
       }
     }
     //Long Flight
     else{
       //Economy Seat
       if(this.props.navigation.getParam('seatState', 'state') == 'Economy'){
-        dist *= .14981;
+        dist *= Constants.CARBON_MULTIPLIERS.long_economy;
         console.log('Economy Long');
         console.log(dist);
       }
       //Business Seat
       else if(this.props.navigation.getParam('seatState', 'state') == 'Business'){
-        dist *= .43446;
+        dist *= Constants.CARBON_MULTIPLIERS.long_business;
         console.log('Business Long');
         console.log(dist);
       }
       //First Class Seat
       else if(this.props.navigation.getParam('seatState', 'state') == 'First Class'){
-        dist *= .59925;
+        dist *= Constants.CARBON_MULTIPLIERS.long_first;
         console.log('First Class Long');
         console.log(dist);
       }
@@ -134,7 +136,7 @@ export default class CarbonEmissionsScreen extends React.Component {
             <Text style={styles.bigWhiteText}>{footprint}</Text>
             <View style={styles.alignSubScript}>
               <Text style={styles.midWhiteText}>METRIC TONS CO</Text>
-              <Text style={{ fontSize: 12, lineHeight: 30, color: Colors.white }}>2</Text>
+              <Text style={{ fontSize: 12, lineHeight: 30, color: COLORS.white }}>2</Text>
             </View>
             <Text style={styles.smallBlueText}>WE CAN FIX THIS TOGETHER</Text>
           </View>
@@ -164,7 +166,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: Colors.darkgrey,
+    backgroundColor: COLORS.darkgrey,
     height: height,
     width: width
   },
@@ -173,7 +175,7 @@ const styles = StyleSheet.create({
     paddingRight: width * 0.05,
     paddingTop: height * 0.06,
     marginBottom: height * 0.10,
-    backgroundColor: Colors.darkgrey,
+    backgroundColor: COLORS.darkgrey,
   },
   buttonBarNav: {
     flexDirection: 'row',
@@ -184,12 +186,12 @@ const styles = StyleSheet.create({
   smallBlueText: {
     fontFamily: 'Montserrat',
     fontSize: 12,
-    color: Colors.lightblue,
+    color: COLORS.lightblue,
   },
   bigBlueText: {
     fontFamily: 'Montserrat-bold',
     fontSize: 30,
-    color: Colors.lightblue,
+    color: COLORS.lightblue,
   },
   midText: {
     height: height * 0.20,
@@ -200,13 +202,13 @@ const styles = StyleSheet.create({
   midWhiteText: {
     fontFamily: 'Montserrat',
     fontSize: 22,
-    color: Colors.white,
+    color: COLORS.white,
     lineHeight: 25
   },
   bigWhiteText: {
     fontFamily: 'Montserrat-bold',
     fontSize: 48,
-    color: Colors.white,
+    color: COLORS.white,
   },
   alignSubScript: {
     justifyContent: 'center',
@@ -214,18 +216,18 @@ const styles = StyleSheet.create({
   },
   bottomGreenButton: {
     borderRadius: 10,
-    backgroundColor: Colors.lightgreen,
+    backgroundColor: COLORS.lightgreen,
     height: height * 0.08,
     justifyContent: 'center',
     alignItems: 'center',
   },
   buttonText: {
     fontFamily: 'Montserrat-bold',
-    color: Colors.darkgrey,
+    color: COLORS.darkgrey,
     fontSize: 12
   },
   navigationIcon: {
-    color: Colors.white,
+    color: COLORS.white,
     fontSize: 30,
   },
 });
