@@ -59,11 +59,12 @@ export default class FlightInfoScreen extends React.Component {
 
   /* Fetch route data using flight number*/
   getFlight() {
-    let charsIata = this.props.navigation.getParam('flightNum', 'numCode').slice(0, 2).toUpperCase();
-    let charsIcao = this.props.navigation.getParam('flightNum', 'numCode').slice(0, 3).toUpperCase();
-    let numsIata = this.props.navigation.getParam('flightNum', 'numCode').slice(2)
-    let numsIcao = this.props.navigation.getParam('flightNum', 'numCode').slice(3)
-    if(isNaN(this.props.navigation.getParam('flightNum', 'numCode').charAt(2))){
+    let spaceBuffer = this.props.navigation.getParam('flightNum', 'numCode').replace(/\s+/g, '');
+    let charsIata = spaceBuffer.slice(0, 2).toUpperCase();
+    let charsIcao = spaceBuffer.slice(0, 3).toUpperCase();
+    let numsIata = spaceBuffer.slice(2)
+    let numsIcao = spaceBuffer.slice(3)
+    if(isNaN(spaceBuffer.charAt(2))){
       return this.callIcao(charsIcao, numsIcao);
     } else {
       return this.callIata(charsIata, numsIata);
