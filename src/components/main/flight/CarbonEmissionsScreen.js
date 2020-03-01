@@ -95,8 +95,8 @@ export default class CarbonEmissionsScreen extends React.Component {
        
       }
     }
-    emmisions = Math.round(dist);
-    emmisions /= 1000;
+    emisions = Math.round(dist);
+    emisions /= 1000;
     this.setState({
       footprint: emmisions,
     })
@@ -126,7 +126,7 @@ export default class CarbonEmissionsScreen extends React.Component {
           <View style={styles.midText}>
             <Text style={styles.bigWhiteText}>{footprint}</Text>
             <View style={styles.alignSubScript}>
-              <Text style={styles.midWhiteText}>Metric Tons CO</Text>
+              <Text style={styles.midWhiteText}>METRICS TONS CO</Text>
               <Text style={{ fontSize: 12, lineHeight: 30, color: Colors.white }}>2</Text>
             </View>
             <Text style={styles.smallBlueText}>WE CAN FIX THIS TOGETHER</Text>

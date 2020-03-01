@@ -76,16 +76,17 @@ export default class HomeScreen extends React.Component {
 
   // Check length of flight number and split input into easily manageable chunks
   checkNum() {
-    let charsIata = this.state.flight.slice(0, 2).toUpperCase();
-    let charsIcao = this.state.flight.slice(0, 3).toUpperCase();
+    let spaceBuffer = this.state.flight.replace(/\s+/g, '');
+    let charsIata = spaceBuffer.slice(0, 2).toUpperCase();
+    let charsIcao = spaceBuffer.slice(0, 3).toUpperCase();
     console.log(charsIata);
     console.log(charsIcao);
-    let numsIata = this.state.flight.slice(2);
-    let numsIcao = this.state.flight.slice(3);
+    let numsIata = spaceBuffer.slice(2);
+    let numsIcao = spaceBuffer.slice(3);
     console.log(numsIata);
     console.log(numsIcao);
     //process input as Iata or Icao depending on format
-    if(isNaN(this.state.flight.charAt(2))){
+    if(isNaN(spaceBuffer.charAt(2))){
       return this.icaoCall(charsIcao, numsIcao);
     } else {
       return this.iataCall(charsIata, numsIata);
