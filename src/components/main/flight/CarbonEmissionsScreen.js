@@ -69,33 +69,46 @@ export default class CarbonEmissionsScreen extends React.Component {
     let dist = this.props.navigation.getParam('distance', 'distanceTraveled');
     let seat = this.props.navigation.getParam('distance', 'distanceTraveled');
     console.log(seat);
+    //Short Flight
     if(dist < 500){
       dist *= .25493;
-    }else if(dist < 1000){
+    }
+    //Medium Flight
+    else if(dist < 1000){
+      //Economy seat
       if(this.props.navigation.getParam('seatState', 'state') == 'Economy'){
         dist *= .15573;
-      }else if(this.props.navigation.getParam('seatState', 'state') == 'Business' || this.props.navigation.getParam('seatState', 'state') == 'First Class'){
+      }
+      //Business seat
+      else if(this.props.navigation.getParam('seatState', 'state') == 'Business' || this.props.navigation.getParam('seatState', 'state') == 'First Class'){
         dist *= .2336;
       }
-    }else{
+    }
+    //Long Flight
+    else{
+      //Economy Seat
       if(this.props.navigation.getParam('seatState', 'state') == 'Economy'){
         dist *= .14981;
         console.log('Economy Long');
         console.log(dist);
-      }else if(this.props.navigation.getParam('seatState', 'state') == 'Business'){
+      }
+      //Business Seat
+      else if(this.props.navigation.getParam('seatState', 'state') == 'Business'){
         dist *= .43446;
         console.log('Business Long');
         console.log(dist);
-      }else if(this.props.navigation.getParam('seatState', 'state') == 'First Class'){
+      }
+      //First Class Seat
+      else if(this.props.navigation.getParam('seatState', 'state') == 'First Class'){
         dist *= .59925;
         console.log('First Class Long');
         console.log(dist);
       }
     }
-    emisions = Math.round(dist);
-    emisions /= 1000;
+    emissions = Math.round(dist);
+    emissions /= 1000;
     this.setState({
-      footprint: emmisions,
+      footprint: emissions,
     })
   }
 
@@ -123,7 +136,7 @@ export default class CarbonEmissionsScreen extends React.Component {
           <View style={styles.midText}>
             <Text style={styles.bigWhiteText}>{footprint}</Text>
             <View style={styles.alignSubScript}>
-              <Text style={styles.midWhiteText}>METRICS TONS CO</Text>
+              <Text style={styles.midWhiteText}>METRIC TONS CO</Text>
               <Text style={{ fontSize: 12, lineHeight: 30, color: Colors.white }}>2</Text>
             </View>
             <Text style={styles.smallBlueText}>WE CAN FIX THIS TOGETHER</Text>

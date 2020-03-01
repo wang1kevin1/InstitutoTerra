@@ -42,8 +42,6 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
 
-    
-
     const randomNumber = Math.floor(Math.random() * 5);
     this.background = images[randomNumber]
 
@@ -56,6 +54,7 @@ export default class HomeScreen extends React.Component {
     })
   }
 
+  // selects a random background to be loaded
   selectBackground() {
     const randomNumber = Math.floor(Math.random() * 5);
     this.background = images[randomNumber]
@@ -93,6 +92,7 @@ export default class HomeScreen extends React.Component {
     }
   }
 
+  // checks for valid Iata
   iataCall(chars, nums){
     fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIata=${chars}&flightnumber=${nums}`, {
       method: 'GET'
@@ -123,6 +123,7 @@ export default class HomeScreen extends React.Component {
       });
   }
 
+  // checks for valid Icao
   icaoCall(chars, nums){
     fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIcao=${chars}&flightnumber=${nums}`, {
       method: 'GET'

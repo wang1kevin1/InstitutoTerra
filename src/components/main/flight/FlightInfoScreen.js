@@ -70,6 +70,7 @@ export default class FlightInfoScreen extends React.Component {
     }
   }
 
+  //Fetch flight information using Iata flight number
   callIata(chars, nums){
     fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIata=${chars}&flightnumber=${nums}`, {
       method: 'GET'
@@ -94,6 +95,7 @@ export default class FlightInfoScreen extends React.Component {
       });
   }
 
+  // Fetch flight Information using Icao flight number
   callIcao(chars, nums){
     fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIcao=${chars}&flightnumber=${nums}`, {
       method: 'GET'
@@ -150,7 +152,9 @@ export default class FlightInfoScreen extends React.Component {
       }).catch((error) => {
         console.error(error);
       });
-    } else {
+    } 
+    // if no plane info
+    else {
       let arrAirportCall = fetch(`https://aviation-edge.com/v2/public/airportDatabase?key=760fd0-cefe7a&codeIataAirport=${Codes[0]}`);
       let depAirportCall = fetch(`https://aviation-edge.com/v2/public/airportDatabase?key=760fd0-cefe7a&codeIataAirport=${Codes[1]}`);
       let airlineCall = fetch(`https://aviation-edge.com/v2/public/airlineDatabase?key=760fd0-cefe7a&codeIataAirline=${Codes[3]}`)
@@ -280,7 +284,7 @@ export default class FlightInfoScreen extends React.Component {
             <View style={styles.planeInfoText}>
               {/*Departure and arrival city & IATA*/}
               <Text style={styles.midGreyText}>{depCityName}({depCityIata}) to {arrCityName}({arrCityIata}) </Text>
-              <Text style={styles.midGreyText}>via {airlineName} {planeMake} {planeModel}</Text>
+              <Text style={styles.midGreyText}>via {airlineName}</Text>
             </View>
             <View style={styles.buttonBarBottom}>
               {/*Seat class selector*/}
