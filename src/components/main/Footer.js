@@ -10,7 +10,7 @@ import {
   Alert
 } from 'react-native';
 
-import COLORS from '../../assets/Colors'
+import COLORS from '../../assets/Colors.js'
 
 const terra_greentxt = require('../../assets/footer/terra-green.png')
 
