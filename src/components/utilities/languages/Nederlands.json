@@ -5,9 +5,9 @@
   "Home": {
     "SIGN IN": "LOG IN",
     "PROFILE": "PROFIEL",
-    "FLIGHT NUMBER": "VLUCHT NUMMER",
-    "Please enter a valid flight number": "Vul alsjeblieft een legitiem vlucht nummer in",
-    "PROCEED WITH NO FLIGHT NUMBER": "DOORGAAN ZONDER VLUCHT NUMMER"
+    "FLIGHT NUMBER": "VLUCHTNUMMER",
+    "Please enter a valid flight number": "Vul alsjeblieft een legitiem vluchtnummer in",
+    "PROCEED WITH NO FLIGHT NUMBER": "DOORGAAN ZONDER VLUCHTNUMMER"
   },
   "SignIn": {
     "Email": "Email",
@@ -79,7 +79,7 @@
     "RETRIEVING FLIGHT": "ONTVANGEN VLUCHT",
     "ONE WAY": "ENKEL",
     "ROUND TRIP": "RETOUR",
-    "FLIGHT NUMBER": "VLUCHT NUMMER",
+    "FLIGHT NUMBER": "VLUCHTNUMMER",
     "to": "naar",
     "via": "via",
     "ECONOMY": "ECONOMY",
@@ -92,7 +92,7 @@
     "CALCULATE CARBON FOOTPRINT": "BEREKEN CO2-VOETAFDRUK"
   },
   "CarbonEmissions": {
-    "FLIGHT NUMBER": "VLUCHT NUMMER",
+    "FLIGHT NUMBER": "VLUCHTNUMMER",
     "METRIC TONS": "METRIC TONS",
     "WE CAN FIX THIS TOGETHER": "WE KUNNEN DIT SAMEN OPLOSSEN",
     "PLANT TREES": "PLANT BOMEN"
