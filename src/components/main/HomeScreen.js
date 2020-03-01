@@ -19,7 +19,7 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
 import Colors from '../../assets/Colors'
 
-import Footer from '../utilities/Footer.js'
+import Footer from './Footer.js'
 
 import Auth from '@aws-amplify/auth'
 
@@ -41,8 +41,6 @@ export default class HomeScreen extends React.Component {
   // load background
   constructor(props) {
     super(props)
-
-    
 
     const randomNumber = Math.floor(Math.random() * 5);
     this.background = images[randomNumber]

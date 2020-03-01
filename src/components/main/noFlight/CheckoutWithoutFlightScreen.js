@@ -14,12 +14,11 @@ import Dash from 'react-native-dash';
 
 import Colors from '../../../assets/Colors.js';
 
-import Footer from '../../utilities/Footer.js';
+import Footer from '../Footer.js';
 
 import Auth from '@aws-amplify/auth';
 
-// cost per tree
-const cost = 6;
+import * as Constants from '../../utilities/Constants.js'
 
 export default class CheckoutWithoutFlightScreen extends React.Component {
   state = {
@@ -88,7 +87,7 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
   handleAdd() {
     this.setState({
       treeNum: this.state.treeNum + 1,
-      total_cost: this.state.total_cost + cost
+      total_cost: this.state.total_cost + Constants.COST
     })
   }
 
@@ -97,7 +96,7 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
     if (this.state.treeNum != 0) {
       this.setState({
         treeNum: this.state.treeNum - 1,
-        total_cost: this.state.total_cost - cost
+        total_cost: this.state.total_cost - Constants.COST
       })
     }
   }

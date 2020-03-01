@@ -1,0 +1,131 @@
+{
+  "Footer": {
+    "made possible with": "medemogelijk gemaakt door"
+  },
+  "Home": {
+    "SIGN IN": "LOG IN",
+    "PROFILE": "PROFIEL",
+    "FLIGHT NUMBER": "VLUCHTNUMMER",
+    "Please enter a valid flight number": "Vul alsjeblieft een legitiem vluchtnummer in",
+    "PROCEED WITH NO FLIGHT NUMBER": "DOORGAAN ZONDER VLUCHTNUMMER"
+  },
+  "SignIn": {
+    "Email": "Email",
+    "Password": "Wachtwoord",
+    "Sign In": "Log In",
+    "New User? Create an Account!": "Nieuwe Gebruiker? Maak een Account!",
+    "Forgot Password?": "Wachtwoord Vergeten?",
+    "Alerts": {
+      "Error when signing in: ": "Er is iets mis gegaan bij het inloggen: "
+    }
+  },
+  "SignUp": {
+    "Name": "Naam",
+    "Email": "Email",
+    "Password": "Wachtwoord",
+    "Confirm Password": "Bevestig Wachtwoord",
+    "Sign Up": "Aanmelden",
+    "Alerts": {
+      "Passwords do not match": "Wachtwoorden komen niet overeen",
+      "An email has been sent to confirm your sign up": "Een email is verzonden om uw aanmelding te bevestigen",
+      "Error when signing up: ": "Er is iets misgegaan bij het aanmelden: "
+    }
+  },
+  "SettingsList": {
+    "Settings": "Instellingen",
+    "Name": "Naam",
+    "Email": "Email",
+    "Password": "Wachtwoord",
+    "Language": "Taal",
+    "Sign Out": "Log Uit",
+    "Alerts": {
+      "Error getting user info: ": "Er is iets misgegaan bij het ophalen van de gebruikersinformatie: ",
+      "Are you sure you want to sign out from the app?": "Weet u zeker dat u wilt uitloggen?",
+      "Cancel": "Cancel",
+      "OK": "OK"
+    }
+  },
+  "SettingsName": {
+    "Name": "Naam",
+    "Save Changes": "Veranderingen Opslaan",
+    "Alerts": {
+      "Error changing name: ": "Er is iets misgegaan bij het veranderen van de naam: "
+    }
+  },
+  "SettingsEmail": {
+    "Email": "Email",
+    "Confirm Email": "Bevestig Email",
+    "Please enter your verification code:": "Vul uw bevestigingscode in:",
+    "Verify New Email": "Bevestig uw Nieuwe Email",
+    "Alerts": {
+      "A verification code has been sent to your new email": "Een bevestigingscode is verstuurd naar uw email",
+      "Error changing email: ": "Er is iets misgegaan bij het veranderen van uw email: ",
+      "Email changed successfully": "Email succesvol veranderd",
+      "Error verifying email: ": "Er is iets misgegaan bij het bevestigen van uw email: "
+    }
+  },
+  "SettingsPassword": {
+    "Current Password": "Huidig Wachtwoord",
+    "New Password": "Nieuw Wachtwoord",
+    "Confirm New Password": "Bevestig Nieuw Wachtwoord",
+    "Confirm Password Change": "Bevestig Wachtwoord Verandering",
+    "Alerts": {
+      "Passwords do not match": "Wachtwoorden komen niet overeen",
+      "Password changed successfully": "Wachtwoord succesvol veranderd",
+      "Error changing password: ": "Er is iets misgegaan bij het veranderen van uw wachtwoord: "
+    }
+  },
+  "FlightInfo": {
+    "RETRIEVING FLIGHT": "ONTVANGEN VLUCHT",
+    "ONE WAY": "ENKEL",
+    "ROUND TRIP": "RETOUR",
+    "FLIGHT NUMBER": "VLUCHTNUMMER",
+    "to": "naar",
+    "via": "via",
+    "ECONOMY": "ECONOMY",
+    "BUSINESS": "BUSINESS",
+    "FIRST CLASS": "FIRST CLASS",
+    "FLIGHT": "VLUCHT",
+    "DISTANCE": "AFSTAND",
+    "AIRPLANE": "VLIEGTUIG",
+    "CLASS": "CLASS",
+    "CALCULATE CARBON FOOTPRINT": "BEREKEN CO2-VOETAFDRUK"
+  },
+  "CarbonEmissions": {
+    "FLIGHT NUMBER": "VLUCHTNUMMER",
+    "METRIC TONS": "METRIC TONS",
+    "WE CAN FIX THIS TOGETHER": "WE KUNNEN DIT SAMEN OPLOSSEN",
+    "PLANT TREES": "PLANT BOMEN"
+  },
+  "CheckoutWithFlight": {
+    "FLIGHT": "VLUCHT ",
+    "METRIC TONS": "METRIC TONS",
+    "YEARS TO NEUTRALIZE": "JAREN VOORDAT HET GENEUTRALISEERD IS",
+    "TOTAL TREES": "TOTALE BOMEN",
+    "PRICE": "PRIJS",
+    "CHECKOUT": "KASSA"
+  },
+  "ReceiptWithFlight": {
+    "FLIGHT": "VLUCHT ",
+    "ROUTE": "ROUTE",
+    "CARBON FOOTPRINT (METRIC TONS)": "CO2-VOETAFDRUK (METRIC TONS)",
+    "TOTAL TREES": "TOTALE BOMEN",
+    "YEARS TO NEUTRALIZE": "JAREN OM TE NEUTRALISEREN",
+    "PRICE": "PRIJS",
+    "PAY WITH": "BETALEN MET "
+  },
+  "CheckoutWithoutFlight": {
+    "TOTAL TREES": "TOTALE BOMEN",
+    "PRICE": "PRIJS",
+    "CHECKOUT": "KASSA"
+  },
+  "ReceiptWithoutFlight": {
+    "TOTAL TREES": "TOTALE BOMEN",
+    "PRICE": "PRIJS",
+    "PAY WITH": "BETAAL MET "
+  },
+  "ThankYou": {
+    "Thank you!": "Dankuwel!",
+    "SHARE": "DELEN"
+  }
+}

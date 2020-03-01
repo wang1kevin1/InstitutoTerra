@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  Alert
 } from 'react-native'
 
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
@@ -15,7 +14,7 @@ import Dash from 'react-native-dash';
 
 import Colors from '../../../assets/Colors.js';
 
-import Footer from '../../utilities/Footer.js';
+import Footer from '../Footer.js';
 
 import Auth from '@aws-amplify/auth';
 
