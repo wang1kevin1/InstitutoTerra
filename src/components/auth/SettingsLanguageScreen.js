@@ -13,7 +13,7 @@ import SettingsList from 'react-native-settings-list';
 
 import Constants from 'expo-constants';
 
-import COLORS from '../../assets/Colors';
+import COLORS from '../../assets/Colors.js';
 
 export default class SettingsLanguageScreen extends React.Component {
   state = {

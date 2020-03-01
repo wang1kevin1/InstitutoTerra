@@ -22,7 +22,7 @@ import {
 
 import { Ionicons } from '@expo/vector-icons';
 
-import COLORS from '../../assets/Colors';
+import COLORS from '../../assets/Colors.js';
 
 import Auth from '@aws-amplify/auth';
 

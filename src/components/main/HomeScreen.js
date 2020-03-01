@@ -17,7 +17,7 @@ import { NavigationEvents } from 'react-navigation'
 
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
-import COLORS from '../../assets/Colors'
+import COLORS from '../../assets/Colors.js'
 
 import Footer from './Footer.js'
 
