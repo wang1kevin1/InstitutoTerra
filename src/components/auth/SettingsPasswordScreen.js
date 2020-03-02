@@ -26,6 +26,8 @@ import COLORS from '../../assets/Colors.js';
 
 import Auth from '@aws-amplify/auth';
 
+import i18n from 'i18n-js'
+
 export default class SettingsPasswordScreen extends React.Component {
   state = {
     isLoading: false,
@@ -63,7 +65,7 @@ export default class SettingsPasswordScreen extends React.Component {
   // checks for password match
   handleReset = () => {
     if (this.state.newpassword !== this.state.newpassword_confirmation) {
-      Alert.alert('Passwords do not match')
+      Alert.alert(i18n.t('Passwords do not match'))
     } else {
       this.changePassword()
     }
@@ -80,7 +82,7 @@ export default class SettingsPasswordScreen extends React.Component {
       })
       .then(data => {
         console.log('Password changed successfully', data)
-        Alert.alert('Password changed successfully')
+        Alert.alert(i18n.t('Password changed successfully'))
         this.setState({ isLoading: false })
         this.props.navigation.goBack()
       })
@@ -88,10 +90,10 @@ export default class SettingsPasswordScreen extends React.Component {
         this.setState({ isLoading: false })
         if (!err.message) {
           console.log('Error changing password: ', err)
-          Alert.alert('Error changing password: ', err)
+          Alert.alert(i18n.t('Error changing password: '), err)
         } else {
           console.log('Error changing password: ', err.message)
-          Alert.alert('Error changing password: ', err.message)
+          Alert.alert(i18n.t('Error changing password: '), err.message)
         }
       })
   }
@@ -109,7 +111,7 @@ export default class SettingsPasswordScreen extends React.Component {
                         <Ionicons style={styles.iconStyle1} name="ios-lock" />
                         <Input
                           style={styles.input}
-                          placeholder='Current Password'
+                          placeholder={i18n.t('Current Password')}
                           placeholderTextColor={COLORS.lightblue}
                           returnKeyType='next'
                           autoCapitalize='none'
@@ -124,7 +126,7 @@ export default class SettingsPasswordScreen extends React.Component {
                         <Ionicons style={styles.iconStyle1} name="ios-lock" />
                         <Input
                           style={styles.input}
-                          placeholder='New Password'
+                          placeholder={i18n.t('New Password')}
                           placeholderTextColor={COLORS.lightblue}
                           returnKeyType='next'
                           autoCapitalize='none'
@@ -141,7 +143,7 @@ export default class SettingsPasswordScreen extends React.Component {
                         <Ionicons style={styles.iconStyle1} name="ios-lock" />
                         <Input
                           style={styles.input}
-                          placeholder='Confirm New Password'
+                          placeholder={i18n.t('Confirm New Password')}
                           placeholderTextColor={COLORS.lightblue}
                           returnKeyType='go'
                           autoCapitalize='none'
@@ -158,7 +160,7 @@ export default class SettingsPasswordScreen extends React.Component {
                         disabled={this.state.isLoading}
                         style={styles.buttonStyle1}>
                         <Text style={styles.buttonText1}>
-                          Confirm Password Change
+                          {i18n.t('Confirm Password Change')}
                         </Text>
                       </TouchableOpacity>
                       {/* Loading ActivityIndicator */}

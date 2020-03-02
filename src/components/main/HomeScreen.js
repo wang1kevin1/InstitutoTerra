@@ -23,6 +23,8 @@ import Footer from './Footer.js'
 
 import Auth from '@aws-amplify/auth'
 
+import i18n from 'i18n-js'
+
 const images = [
   require('../../assets/background/home/home-1.png'), 
   require('../../assets/background/home/home-2.png'),
@@ -174,7 +176,7 @@ export default class HomeScreen extends React.Component {
                       style={styles.navStyle}>
                       <FontAwesome style={styles.navigationIcon} name="user-circle-o" />
                       <Text style={styles.navText}>
-                        SIGN IN
+                        {i18n.t('SIGN IN')}
                         </Text>
                     </TouchableOpacity>
                   }
@@ -185,7 +187,7 @@ export default class HomeScreen extends React.Component {
                       style={styles.navStyle}>
                       <FontAwesome style={styles.navigationIcon} name="user-circle-o" />
                       <Text style={styles.navText}>
-                        PROFILE
+                      {i18n.t('PROFILE')}
                         </Text>
                     </TouchableOpacity>
                   }
@@ -198,7 +200,7 @@ export default class HomeScreen extends React.Component {
                       containerStyle={styles.containerStyle}
                       inputContainerStyle={styles.inputContainerStyle}
                       inputStyle={styles.inputStyle}
-                      label='FLIGHT NUMBER'
+                      label={i18n.t('FLIGHT NUMBER')}
                       labelStyle={styles.labelStyle}
                       rightIcon={
                         <Ionicons style={styles.searchIcon}
@@ -206,7 +208,7 @@ export default class HomeScreen extends React.Component {
                           onPress={() => this.checkNum()} />
                         }
                       rightIconContainerStyle={styles.rightIconContainerStyle}
-                      errorMessage='Please enter a valid flight number'
+                      errorMessage={i18n.t('Please enter a valid flight number')}
                       errorStyle={[{ fontSize: (this.state.error == false) ? 3 : 10 }, { color: (this.state.error == false) ? 'transparent' : 'red' }]}
                       autoCapitalize='characters'
                       autoCorrect={false}
@@ -220,7 +222,7 @@ export default class HomeScreen extends React.Component {
                   style={styles.bottomGreenButton}
                   onPress={() => this.props.navigation.navigate('CheckoutWithoutFlight')}>
                   <Text style={styles.buttonText}>
-                    PROCEED WITH NO FLIGHT NUMBER
+                    {i18n.t('PROCEED WITH NO FLIGHT NUMBER')}
                   </Text>
                 </TouchableOpacity>
               </View>

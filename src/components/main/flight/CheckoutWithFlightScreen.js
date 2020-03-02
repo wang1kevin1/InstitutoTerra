@@ -18,6 +18,8 @@ import Footer from '../Footer.js';
 
 import Auth from '@aws-amplify/auth';
 
+import i18n from 'i18n-js'
+
 import * as Constants from '../../utilities/Constants.js'
 
 export default class CheckoutWithFlightScreen extends React.Component {
@@ -142,7 +144,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
             {/*Navigation Buttons*/}
             <Ionicons style={styles.navigationIcon} name="md-arrow-back"
               onPress={() => this.props.navigation.goBack()} />
-            <Text style={styles.midBlueText}>FLIGHT {flightChars} {flightNums}</Text>
+            <Text style={styles.midBlueText}>{i18n.t('FLIGHT')} {flightChars} {flightNums}</Text>
             <FontAwesome style={styles.navigationIcon} name="user-circle-o"
               onPress={() => this.handleUserRedirect()} />
           </View>
@@ -150,7 +152,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
             {/*CO2 footprint*/}
             <Text style={styles.bigGreyText}>{footprint}</Text>
             <View style={styles.alignSubScript}>
-              <Text style={styles.midGreyText}>METRIC TONS CO</Text>
+              <Text style={styles.midGreyText}>{i18n.t('METRIC TONS')} CO</Text>
               <Text style={{ fontSize: 10, lineHeight: 30, color: COLORS.darkgrey }}>2</Text>
             </View>
           </View>
@@ -174,7 +176,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
           </View>
           <View style={styles.bottomText}>
             {/*Years to neutralize carbon footprint*/}
-            <Text style={styles.midBlueText}>YEARS TO NEUTRALIZE</Text>
+            <Text style={styles.midBlueText}>{i18n.t('YEARS TO NEUTRALIZE')}</Text>
             {years != Infinity &&
               <Text style={styles.bigBlueText}>{years}</Text>
             }
@@ -186,12 +188,12 @@ export default class CheckoutWithFlightScreen extends React.Component {
           <View style={styles.receiptContainer}>
             <View style={styles.textRow}>
               {/*Total trees donated in transaction*/}
-              <Text style={styles.receiptTextLeft}>TOTAL TREES</Text>
+              <Text style={styles.receiptTextLeft}>{i18n.t('TOTAL TREES')}</Text>
               <Text style={styles.receiptTextRight}>{treeNum}</Text>
             </View>
             <View style={styles.textRow}>
               {/*Cost of transaction*/}
-              <Text style={styles.receiptTextLeft}>PRICE</Text>
+              <Text style={styles.receiptTextLeft}>{i18n.t('PRICE')}</Text>
               <Text style={styles.receiptTextRight}>${total_cost}</Text>
             </View>
           </View>
@@ -199,7 +201,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
           <TouchableOpacity
             style={[styles.bottomGreenButton, { backgroundColor: (this.state.treeNum == 0) ? COLORS.grey : COLORS.lightgreen }]}
             onPress={() => this.handleCheckout()}>
-            <Text style={styles.buttonText}>CHECKOUT</Text>
+            <Text style={styles.buttonText}>{i18n.t('CHECKOUT')}</Text>
           </TouchableOpacity>
         </View>
         <Footer color='white' />
