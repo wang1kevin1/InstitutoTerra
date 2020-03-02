@@ -121,7 +121,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
             <Dash style={styles.dashedLine} dashColor={COLORS.lightgrey} dashGap={0} />
             <View style={styles.textRow}>
               {/*Years to neutralize*/}
-              <Text style={styles.receiptTextLeft}>{i18n.t('YEARS TO NEUTRALIZE')}</Text>
+              <Text style={styles.receiptTextLeft}>{i18n.t('YEARS TO COMPENSATE')}</Text>
               <Text style={styles.receiptTextRight}>{years}</Text>
             </View>
             <Dash style={styles.dashedLine} dashColor={COLORS.lightgrey} dashGap={0} />
