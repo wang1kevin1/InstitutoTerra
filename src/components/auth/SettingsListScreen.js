@@ -120,12 +120,6 @@ getLanguage = async () => {
                       />
                       <SettingsList.Header headerStyle={{ marginTop: 15 }} />
                       <SettingsList.Item
-                        icon={<Ionicons style={styles.iconStyle3} name="md-globe" />}
-                        title='Language'
-                        titleInfo={this.state.language}
-                        onPress={() => this.props.navigation.navigate("SettingsLanguage")}
-                      />
-                      <SettingsList.Item
                         icon={<Ionicons style={styles.iconStyle3} name="md-exit" />}
                         title='Sign Out'
                         onPress={() => this.signOutAlert()}

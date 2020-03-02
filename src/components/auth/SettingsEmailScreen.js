@@ -26,6 +26,8 @@ import CodeInput from 'react-native-confirmation-code-input';
 
 import COLORS from '../../assets/Colors.js';
 
+import i18n from 'i18n-js'
+
 import Auth from '@aws-amplify/auth';
 
 export default class SettingsEmailScreen extends React.Component {
@@ -54,17 +56,17 @@ export default class SettingsEmailScreen extends React.Component {
       .then(data => {
         this.setState({ isLoading: false })
         console.log('Email change process started', data)
-        Alert.alert('A verification code has been sent to your new email')
+        Alert.alert(i18n.t('A verification code has been sent to your new email'))
         this.setState({ setting: 'emailCode' })
       })
       .catch(err => {
         this.setState({ isLoading: false })
         if (!err.message) {
           console.log('Error changing email: ', err)
-          Alert.alert('Error changing email: ', err)
+          Alert.alert(i18n.t('Error changing email: '), err)
         } else {
           console.log('Error changing email: ', err.message)
-          Alert.alert('Error changing email: ', err.message)
+          Alert.alert(i18n.t('Error changing email: '), err.message)
         }
       })
   }
@@ -75,16 +77,16 @@ export default class SettingsEmailScreen extends React.Component {
     await Auth.verifyCurrentUserAttributeSubmit("email", this.state.authcode)
       .then(data => {
         console.log('Email change confirmed', data)
-        Alert.alert('Email changed successfully')
+        Alert.alert(i18n.t('Email changed successfully'))
         this.props.navigation.goBack()
       })
       .catch(err => {
         if (!err.message) {
           console.log('Error verifying email: ', err)
-          Alert.alert('Error verifying email: ', err)
+          Alert.alert(i18n.t('Error verifying email: '), err)
         } else {
           console.log('Error verifying email: ', err.message)
-          Alert.alert('Error verifying email: ', err.message)
+          Alert.alert(i18n.t('Error verifying email: '), err.message)
         }
       })
   }
@@ -104,7 +106,7 @@ export default class SettingsEmailScreen extends React.Component {
                         <Ionicons style={styles.iconStyle1} name="ios-mail" />
                         <Input
                           style={styles.input}
-                          placeholder='Email'
+                          placeholder={i18n.t('Email')}
                           placeholderTextColor={COLORS.lightblue}
                           returnKeyType='go'
                           autoCapitalize='none'
@@ -118,7 +120,7 @@ export default class SettingsEmailScreen extends React.Component {
                         disabled={this.state.isLoading}
                         style={styles.buttonStyle1}>
                         <Text style={styles.buttonText1}>
-                          Confirm Email
+                          {i18n.t('Confirm Email')}
                         </Text>
                       </TouchableOpacity>
                       {/* Loading ActivityIndicator */}
@@ -133,7 +135,7 @@ export default class SettingsEmailScreen extends React.Component {
                     <View style={styles.containerSetting}>
                       {/* Verification Code message*/}
                       <Text style={styles.messageText1}>
-                        Please enter your verification code:
+                        {i18n.t('Please enter your verification code')}:
                       </Text>
                       {/* Verification Code input*/}
                       <CodeInput
@@ -155,7 +157,7 @@ export default class SettingsEmailScreen extends React.Component {
                         onPress={() => this.verifyEmail()}
                         style={styles.buttonStyle1}>
                         <Text style={styles.buttonText1}>
-                          Verify New Email
+                          {i18n.t('Verify New Email')}
                         </Text>
                       </TouchableOpacity>
                     </View>

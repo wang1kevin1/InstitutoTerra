@@ -1,131 +1,86 @@
 {
-  "Footer": {
-    "made possible with": "made possible with"
-  },
-  "Home": {
-    "SIGN IN": "SIGN IN",
-    "PROFILE": "PROFILE",
-    "FLIGHT NUMBER": "FLIGHT NUMBER",
-    "Please enter a valid flight number": "Please enter a valid flight number",
-    "PROCEED WITH NO FLIGHT NUMBER": "PROCEED WITH NO FLIGHT NUMBER"
-  },
-  "SignIn": {
-    "Email": "Email",
-    "Password": "Password",
-    "Sign In": "Sign In",
-    "New User? Create an Account!": "New User? Create an Account!",
-    "Forgot Password?": "Forgot Password?",
-    "Alerts": {
-      "Error when signing in: ": "Error when signing in: "
-    }
-  },
-  "SignUp": {
-    "Name": "Name",
-    "Email": "Email",
-    "Password": "Password",
-    "Confirm Password": "Confirm Password",
-    "Sign Up": "Sign Up",
-    "Alerts": {
-      "Passwords do not match": "Passwords do not match",
-      "An email has been sent to confirm your sign up": "An email has been sent to confirm your sign up",
-      "Error when signing up: ": "Error when signing up: "
-    }
-  },
-  "SettingsList": {
-    "Settings": "Settings",
-    "Name": "Name",
-    "Email": "Email",
-    "Password": "Password",
-    "Language": "Language",
-    "Sign Out": "Sign Out",
-    "Alerts": {
-      "Error getting user info: ": "Error getting user info: ",
-      "Are you sure you want to sign out from the app?": "Are you sure you want to sign out from the app?",
-      "Cancel": "Cancel",
-      "OK": "OK"
-    }
-  },
-  "SettingsName": {
-    "Name": "Name",
-    "Save Changes": "Save Changes",
-    "Alerts": {
-      "Error changing name: ": "Error changing name: "
-    }
-  },
-  "SettingsEmail": {
-    "Email": "Email",
-    "Confirm Email": "Confirm Email",
-    "Please enter your verification code:": "Please enter your verification code:",
-    "Verify New Email": "Verify New Email",
-    "Alerts": {
-      "A verification code has been sent to your new email": "A verification code has been sent to your new email",
-      "Error changing email: ": "Error changing email: ",
-      "Email changed successfully": "Email changed successfully",
-      "Error verifying email: ": "Error verifying email: "
-    }
-  },
-  "SettingsPassword": {
-    "Current Password": "Current Password",
-    "New Password": "New Password",
-    "Confirm New Password": "Confirm New Password",
-    "Confirm Password Change": "Confirm Password Change",
-    "Alerts": {
-      "Passwords do not match": "Passwords do not match",
-      "Password changed successfully": "Password changed successfully",
-      "Error changing password: ": "Error changing password: "
-    }
-  },
-  "FlightInfo": {
-    "RETRIEVING FLIGHT": "RETRIEVING FLIGHT",
-    "ONE WAY": "ONE WAY",
-    "ROUND TRIP": "ROUND TRIP",
-    "FLIGHT NUMBER": "FLIGHT NUMBER",
-    "to": "to",
-    "via": "via",
-    "ECONOMY": "ECONOMY",
-    "BUSINESS": "BUSINESS",
-    "FIRST CLASS": "FIRST CLASS",
-    "FLIGHT": "FLIGHT",
-    "DISTANCE": "DISTANCE",
-    "AIRPLANE": "AIRPLANE",
-    "CLASS": "CLASS",
-    "CALCULATE CARBON FOOTPRINT": "CALCULATE CARBON FOOTPRINT"
-  },
-  "CarbonEmissions": {
-    "FLIGHT NUMBER": "FLIGHT NUMBER",
-    "METRIC TONS": "METRIC TONS",
-    "WE CAN FIX THIS TOGETHER": "WE CAN FIX THIS TOGETHER",
-    "PLANT TREES": "PLANT TREES"
-  },
-  "CheckoutWithFlight": {
-    "FLIGHT": "FLIGHT ",
-    "METRIC TONS": "METRIC TONS",
-    "YEARS TO NEUTRALIZE": "YEARS TO NEUITRALIZE",
-    "TOTAL TREES": "TOTAL TREES",
-    "PRICE": "PRICE",
-    "CHECKOUT": "CHECKOUT"
-  },
-  "ReceiptWithFlight": {
-    "FLIGHT": "FLIGHT ",
-    "ROUTE": "ROUTE",
-    "CARBON FOOTPRINT (METRIC TONS)": "CARBON FOOTPRINT (METRIC TONS)",
-    "TOTAL TREES": "TOTAL TREES",
-    "YEARS TO NEUTRALIZE": "YEARS TO NEUTRALIZE",
-    "PRICE": "PRICE",
-    "PAY WITH": "PAY WITH "
-  },
-  "CheckoutWithoutFlight": {
-    "TOTAL TREES": "TOTAL TREES",
-    "PRICE": "PRICE",
-    "CHECKOUT": "CHECKOUT"
-  },
-  "ReceiptWithoutFlight": {
-    "TOTAL TREES": "TOTAL TREES",
-    "PRICE": "PRICE",
-    "PAY WITH": "PAY WITH "
-  },
-  "ThankYou": {
-    "Thank you!": "Thank you!",
-    "SHARE": "SHARE"
-  }
+  "made possible with": "made possible with",
+    
+  "SIGN IN": "SIGN IN",
+  "PROFILE": "PROFILE",
+  "FLIGHT NUMBER": "FLIGHT NUMBER",
+  "Please enter a valid flight number": "Please enter a valid flight number",
+  "PROCEED WITH NO FLIGHT NUMBER": "PROCEED WITH NO FLIGHT NUMBER",
+
+  "Email": "Email",
+  "Password": "Password",
+  "Sign In": "Sign In",
+  "New User? Create an Account!": "New User? Create an Account!",
+  "Forgot Password?": "Forgot Password?",
+  "Error when signing in: ": "Error when signing in: ",
+
+  "Name": "Name",
+  "Confirm Password": "Confirm Password",
+  "Sign Up": "Sign Up",
+  "Passwords do not match": "Passwords do not match",
+  "An email has been sent to confirm your sign up": "An email has been sent to confirm your sign up",
+  "Error when signing up: ": "Error when signing up: ",
+
+  "Settings": "Settings",
+  "Language": "Language",
+  "Sign Out": "Sign Out",
+  "Error getting user info: ": "Error getting user info: ",
+  "Are you sure you want to sign out from the app?": "Are you sure you want to sign out from the app?",
+  "Cancel": "Cancel",
+  "OK": "OK",
+
+  "Save Changes": "Save Changes",
+  "Error changing name": "Error changing name",
+
+  "Confirm Email": "Confirm Email",
+  "Please enter your verification code": "Please enter your verification code",
+  "Verify New Email": "Verify New Email",
+  "A verification code has been sent to your new email": "A verification code has been sent to your new email",
+  "Send Code": "Send Code",
+  "Resend verification code": "Resend verification code",
+  "Error while sending verification code: ": "Error while sending verification code: ",
+  "Error changing email: ": "Error changing email: ",
+  "Email changed successfully": "Email changed successfully",
+  "Error verifying email: ": "Error verifying email: ",
+
+  "Current Password": "Current Password",
+  "New Password": "New Password",
+  "Confirm New Password": "Confirm New Password",
+  "Confirm Password Change": "Confirm Password Change",
+  "Password changed successfully": "Password changed successfully",
+  "Error changing password: ": "Error changing password: ",
+  "Error while confirming the new password: ": "Error while confirming the new password: ",
+  "Reset Password": "Reset Password",
+  "Your password has been reset": "Your password has been reset",
+  "Confirm Password Reset": "Confirm Password Reset",
+
+  "RETRIEVING FLIGHT": "RETRIEVING FLIGHT",
+  "ONE WAY": "ONE WAY",
+  "ROUND TRIP": "ROUND TRIP",
+  "to": "to",
+  "via": "via",
+  "ECONOMY": "ECONOMY",
+  "BUSINESS": "BUSINESS",
+  "FIRST CLASS": "FIRST CLASS",
+  "FLIGHT": "FLIGHT",
+  "DISTANCE": "DISTANCE",
+  "AIRPLANE": "AIRPLANE",
+  "CLASS": "CLASS",
+  "CALCULATE CARBON FOOTPRINT": "CALCULATE CARBON FOOTPRINT",
+
+  "METRIC TONS": "METRIC TONS",
+  "WE CAN FIX THIS TOGETHER": "WE CAN FIX THIS TOGETHER",
+  "PLANT TREES": "PLANT TREES",
+
+  "YEARS TO NEUTRALIZE": "YEARS TO NEUITRALIZE",
+  "TOTAL TREES": "TOTAL TREES",
+  "PRICE": "PRICE",
+  "CHECKOUT": "CHECKOUT",
+
+  "ROUTE": "ROUTE",
+  "CARBON FOOTPRINT (METRIC TONS)": "CARBON FOOTPRINT (METRIC TONS)",
+  "PAY WITH": "PAY WITH",
+
+  "Thank you!": "Thank you!",
+  "SHARE": "SHARE",
 }

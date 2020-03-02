@@ -12,6 +12,8 @@ import {
 
 import COLORS from '../../assets/Colors.js'
 
+import i18n from 'i18n-js'
+
 const terra_greentxt = require('../../assets/footer/terra-green.png')
 
 const terra_whitetxt = require('../../assets/footer/terra-white.png')
@@ -28,7 +30,7 @@ class Footer extends React.Component {
     if (this.props.color == 'green') {
       return (
         <View style={styles.footerGreen}>
-          <Text style={styles.footerTxtGreen}>made possible with</Text>
+          <Text style={styles.footerTxtGreen}>{i18n.t('made possible with')}</Text>
           <TouchableOpacity onPress={() => Alert.alert('About Section')}>
             <Image
               source={terra_whitetxt}
@@ -41,7 +43,7 @@ class Footer extends React.Component {
     else {
       return (
         <View style={styles.footerWhite}>
-          <Text style={styles.footerTxtWhite}>made possible with</Text>
+          <Text style={styles.footerTxtWhite}>{i18n.t('made possible with')}</Text>
           <TouchableOpacity onPress={() => Alert.alert('About Section')}>
             <Image
               source={terra_greentxt}
