@@ -176,7 +176,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
           </View>
           <View style={styles.bottomText}>
             {/*Years to neutralize carbon footprint*/}
-            <Text style={styles.midBlueText}>{i18n.t('YEARS TO NEUTRALIZE')}</Text>
+            <Text style={styles.midBlueText}>{i18n.t('YEARS TO COMPENSATE')}</Text>
             {years != Infinity &&
               <Text style={styles.bigBlueText}>{years}</Text>
             }

@@ -5,7 +5,7 @@
   "PROFILE": "PROFILE",
   "FLIGHT NUMBER": "FLIGHT NUMBER",
   "Please enter a valid flight number": "Please enter a valid flight number",
-  "PROCEED WITH NO FLIGHT NUMBER": "PROCEED WITH NO FLIGHT NUMBER",
+  "DONATE WITH NO FLIGHT NUMBER": "DONATE WITH NO FLIGHT NUMBER",
 
   "Email": "Email",
   "Password": "Password",
@@ -30,7 +30,7 @@
   "OK": "OK",
 
   "Save Changes": "Save Changes",
-  "Error changing name": "Error changing name",
+  "Error changing name: ": "Error changing name: ",
 
   "Confirm Email": "Confirm Email",
   "Please enter your verification code": "Please enter your verification code",
@@ -72,7 +72,7 @@
   "WE CAN FIX THIS TOGETHER": "WE CAN FIX THIS TOGETHER",
   "PLANT TREES": "PLANT TREES",
 
-  "YEARS TO NEUTRALIZE": "YEARS TO NEUITRALIZE",
+  "YEARS TO COMPENSATE": "YEARS TO COMPENSATE",
   "TOTAL TREES": "TOTAL TREES",
   "PRICE": "PRICE",
   "CHECKOUT": "CHECKOUT",
@@ -82,5 +82,5 @@
   "PAY WITH": "PAY WITH",
 
   "Thank you!": "Thank you!",
-  "SHARE": "SHARE",
+  "SHARE": "SHARE"
 }
