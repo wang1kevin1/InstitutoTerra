@@ -6,7 +6,6 @@ import {
   View,
   Alert,
   Dimensions,
-  AsyncStorage
 } from 'react-native'
 
 import { NavigationEvents } from 'react-navigation'
@@ -27,7 +26,6 @@ export default class SettingsListScreen extends React.Component {
   state = {
     name: '',
     email: '',
-    language: 'English',
   }
 
   componentDidMount() {
@@ -54,19 +52,6 @@ export default class SettingsListScreen extends React.Component {
         }
       })
   }
-
-// Retrieve language settings
-getLanguage = async () => {
-  try {
-    const value = await AsyncStorage.getItem('@language')
-    if (value !== null) {
-      this.setState({ language: value })
-      console.log('Retrieved language', this.state.language)
-    }
-  } catch (e) {
-    console.log('Error retrieving language')
-  }
-}
 
   // Sign out from the app
   signOutAlert = async () => {
