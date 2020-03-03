@@ -52,6 +52,8 @@ Amplify.configure(config)
 // Language stores
 import * as English from './src/components/utilities/languages/English.json'
 import * as Nederlands from './src/components/utilities/languages/Nederlands.json'
+import * as Espanol from './src/components/utilities/languages/Espanol.json'
+import * as Portugues from './src/components/utilities/languages/Portugues.json'
 
 import * as Localization from 'expo-localization'
 
@@ -61,6 +63,8 @@ import i18n from 'i18n-js'
 i18n.translations = {
   en: English,
   nl: Nederlands,
+  es: Espanol,
+  pt: Portugues,
 }
 
 // Set the locale once at start of app.
