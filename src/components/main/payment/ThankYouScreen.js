@@ -21,11 +21,6 @@ import Auth from '@aws-amplify/auth';
 const website = 'http://www.google.com/'
 
 export default class ThankYouScreen extends React.Component {
-  state = {
-    isAuthenticated: 'false',
-
-  }
-
   // load background
   constructor(props) {
     super(props)
@@ -41,12 +36,17 @@ export default class ThankYouScreen extends React.Component {
     this.checkAuth()
   }
 
+  state = {
+    isAuthenticated: 'false',
+  }
+
   // Checks if a user is logged in
   async checkAuth() {
     await Auth.currentAuthenticatedUser({ bypassCache: true })
       .then(() => {
         console.log('A user is logged in')
         this.setState({ isAuthenticated: true })
+        this.updateUserTrees()
       })
       .catch(err => {
         console.log('Nobody is logged in')
@@ -86,7 +86,24 @@ export default class ThankYouScreen extends React.Component {
     } catch (error) {
       Console.log(error.message);
     }
-  };
+  }
+
+  // updates a user's tree count
+  async getUserTrees() {
+    const path = "/Users/object/" + this.state.userId;
+      try {
+        const apiResponse = await API.get("NotesCRUD", path);
+        console.log("response from getting note: " + apiResponse);
+        this.setState({apiResponse});
+      } catch (e) {
+        console.log(e);
+      }
+  }
+
+  // updates a user's tree count
+  async updateUserTrees() {
+
+  }
 
   render() {
       return (
