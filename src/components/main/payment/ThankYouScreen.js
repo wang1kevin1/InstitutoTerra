@@ -75,8 +75,9 @@ export default class ThankYouScreen extends React.Component {
       .then(apiResponse => {
         this.setState({ apiResponse })
         console.log("response from getting user: " + apiResponse);
-        this.setState({ TreesPlanted: apiResponse.TreesPlanted })
+        this.setState({ TreesPlanted: apiResponse.TreesPlanted + this.state.treeNum})
         console.log(this.state.TreesPlanted)
+        this.updateUserTrees()
       })
       .catch(e => {
         console.log(e);
@@ -85,7 +86,23 @@ export default class ThankYouScreen extends React.Component {
 
   // updates a user's tree count
   async updateUserTrees() {
+    let newUser = {
+      body: {
+        "UserId": this.state.UserId,
+        "TreesPlanted": this.state.TreesPlanted,
+      }
+    }
+    
+    const path = "/Users";
 
+    await API.put("ZeroCarbonREST", path, newUser)
+      .then(apiResponse => {
+        this.setState({apiResponse});
+        console.log("Response from saving user: " + apiResponse);
+      })
+      .catch(e => {
+      console.log(e);
+    })
   }
 
   // Opens apps for users to share
