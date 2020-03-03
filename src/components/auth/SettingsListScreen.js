@@ -30,7 +30,6 @@ export default class SettingsListScreen extends React.Component {
 
   componentDidMount() {
     this.getUserInfo()
-    this.getLanguage()
   }
 
   // Gets current authenticated user's info
@@ -79,7 +78,7 @@ export default class SettingsListScreen extends React.Component {
       return (
               <View style={styles.container}>
                 {/* Update isAuthenticated on navigation refresh */}
-                <NavigationEvents onWillFocus={() => {this.getUserInfo(); this.getLanguage();}} />
+                <NavigationEvents onWillFocus={() => {this.getUserInfo()}} />
                 <View style={{ backgroundColor: '#EFEFF4', flex: 1 }}>
                   <View style={{ borderBottomWidth: 1, backgroundColor: COLORS.lightgrey, borderColor: COLORS.lightgrey }}>
                     <Text style={{ alignSelf: 'center', marginTop: Constants.statusBarHeight + 10, marginBottom: 10, fontWeight: 'bold', fontSize: 20 }}>Settings</Text>
