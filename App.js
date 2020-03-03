@@ -50,6 +50,9 @@ import Amplify from '@aws-amplify/core'
 import config from './aws-exports'
 Amplify.configure(config)
 
+import awsmobile from './aws-exports'
+Amplify.configure(awsmobile)
+
 // Auth stack
 const AuthStackNavigator = createStackNavigator({
   SignIn: SignInScreen,

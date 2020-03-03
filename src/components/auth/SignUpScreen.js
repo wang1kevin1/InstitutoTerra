@@ -24,15 +24,24 @@ import COLORS from '../../assets/Colors.js'
 
 import Auth from '@aws-amplify/auth'
 
+import { API } from 'aws-amplify'
+
 export default class SignUpScreen extends React.Component {
   state = {
+    userSub: '',
     name: '',
     email: '',
     password: '',
     password_confirmation: '',
     isLoading: false,
     hidePassword1: true,
-    hidePassword2: true
+    hidePassword2: true,
+    apiResponse: null,
+    UserId: ''
+  }
+ 
+  handleChangeUserId = (event) => {
+      this.setState({UserId: event});
   }
   
   onChangeText(key, value) {
@@ -80,11 +89,14 @@ export default class SignUpScreen extends React.Component {
         name: this.state.name,
       }
     })
-    .then(() => {
-      this.setState({ isLoading: false })
-      console.log('sign up successful!')
+    .then(data => {
+      // grab user unique sub
+      console.log('sign up successful with result: ', data)
+      this.setState({data})
+      this.setState({userSub: data.userSub})
+      console.log(this.state.userSub)
       Alert.alert('An email has been sent to confirm your sign up')
-      this.props.navigation.navigate('SignIn')
+      this.saveUser()
     })
     .catch(err => {
       this.setState({ isLoading: false })
@@ -96,6 +108,28 @@ export default class SignUpScreen extends React.Component {
         Alert.alert('Error when signing up: ', err.message)
       }
     })
+  }
+
+  // adds user to Amplify database
+  async saveUser() {
+    let newUser = {
+      body: {
+        "UserId": this.state.userSub,
+        "TreesPlanted": 0,
+      }
+    }
+    const path = "/Users";
+
+    // Use the API module to save the note to the database
+    try {
+      const apiResponse = await API.put("ZeroCarbonREST", path, newUser)
+      console.log("Response from saving user: " + apiResponse);
+      this.setState({apiResponse});
+      this.setState({ isLoading: false })
+      this.props.navigation.navigate('SignIn')
+    } catch (e) {
+      console.log(e);
+    }
   }
   
   render() {
