@@ -121,15 +121,16 @@ export default class SignUpScreen extends React.Component {
     const path = "/Users";
 
     // Use the API module to save the note to the database
-    try {
-      const apiResponse = await API.put("ZeroCarbonREST", path, newUser)
-      console.log("Response from saving user: " + apiResponse);
-      this.setState({apiResponse});
-      this.setState({ isLoading: false })
-      this.props.navigation.navigate('SignIn')
-    } catch (e) {
+    await API.put("ZeroCarbonREST", path, newUser)
+      .then(apiResponse => {
+        this.setState({apiResponse});
+        console.log("Response from saving user: " + apiResponse);
+        this.setState({ isLoading: false })
+        this.props.navigation.navigate('SignIn')
+      })
+      .catch(e => {
       console.log(e);
-    }
+    })
   }
   
   render() {

@@ -1,5 +1,7 @@
 export const COST = 6 // cost per tree (NEEDS CHANGE IN STRIPE DASHBOARD AS WELL)
 
+export const WEBSITE = 'http://www.google.com/' // website used for sharing, link to app
+
 export const CARBON_MULTIPLIERS = {
   short: 0.25493,
 
