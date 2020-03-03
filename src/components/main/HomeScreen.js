@@ -222,13 +222,13 @@ export default class HomeScreen extends React.Component {
                   style={styles.bottomGreenButton}
                   onPress={() => this.props.navigation.navigate('CheckoutWithoutFlight')}>
                   <Text style={styles.buttonText}>
-                    {i18n.t('PROCEED WITH NO FLIGHT NUMBER')}
+                    {i18n.t('DONATE WITH NO FLIGHT NUMBER')}
                   </Text>
                 </TouchableOpacity>
               </View>
-              <Footer color='green' />
             </View>
           </TouchableWithoutFeedback>
+          <Footer color='green' />
         </ImageBackground>
     );
   }
