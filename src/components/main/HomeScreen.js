@@ -260,6 +260,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: height * 0.05,
     justifyContent: 'space-between',
+    backgroundColor: 'transparent',
   },
   navStyle: {
     flexDirection: 'column',
