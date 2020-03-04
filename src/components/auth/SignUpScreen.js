@@ -24,17 +24,26 @@ import COLORS from '../../assets/Colors.js'
 
 import Auth from '@aws-amplify/auth'
 
+import { API } from 'aws-amplify'
+
 import i18n from 'i18n-js'
 
 export default class SignUpScreen extends React.Component {
   state = {
+    userSub: '',
     name: '',
     email: '',
     password: '',
     password_confirmation: '',
     isLoading: false,
     hidePassword1: true,
-    hidePassword2: true
+    hidePassword2: true,
+    apiResponse: null,
+    UserId: ''
+  }
+ 
+  handleChangeUserId = (event) => {
+      this.setState({UserId: event});
   }
   
   onChangeText(key, value) {
@@ -82,11 +91,14 @@ export default class SignUpScreen extends React.Component {
         name: this.state.name,
       }
     })
-    .then(() => {
-      this.setState({ isLoading: false })
-      console.log('sign up successful!')
+    .then(data => {
+      // grab user unique sub
+      console.log('sign up successful with result: ', data)
+      this.setState({data})
+      this.setState({userSub: data.userSub})
+      console.log(this.state.userSub)
       Alert.alert(i18n.t('An email has been sent to confirm your sign up'))
-      this.props.navigation.navigate('SignIn')
+      this.saveUser()
     })
     .catch(err => {
       this.setState({ isLoading: false })
@@ -97,6 +109,29 @@ export default class SignUpScreen extends React.Component {
         console.log('Error when signing up: ', err.message)
         Alert.alert(i18n.t('Error when signing up: '), err.message)
       }
+    })
+  }
+
+  // adds user to Amplify database
+  async saveUser() {
+    let newUser = {
+      body: {
+        "UserId": this.state.userSub,
+        "TreesPlanted": 0,
+      }
+    }
+    const path = "/Users";
+
+    // Use the API module to save the note to the database
+    await API.put("ZeroCarbonREST", path, newUser)
+      .then(apiResponse => {
+        this.setState({apiResponse});
+        console.log("Response from saving user: " + apiResponse);
+        this.setState({ isLoading: false })
+        this.props.navigation.navigate('SignIn')
+      })
+      .catch(e => {
+      console.log(e);
     })
   }
   

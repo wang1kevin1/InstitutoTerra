@@ -49,6 +49,10 @@ import Amplify from '@aws-amplify/core'
 import config from './aws-exports'
 Amplify.configure(config)
 
+
+import awsmobile from './aws-exports'
+Amplify.configure(awsmobile)
+
 // Language stores
 import * as English from './src/components/utilities/languages/English.json'
 import * as Nederlands from './src/components/utilities/languages/Nederlands.json'
