@@ -12,14 +12,13 @@ import { FontAwesome, Feather } from '@expo/vector-icons';
 
 import Dash from 'react-native-dash';
 
-import Colors from '../../../assets/Colors.js';
+import COLORS from '../../../assets/Colors.js';
 
-import Footer from '../../utilities/Footer.js';
+import Footer from '../Footer.js';
 
 import Auth from '@aws-amplify/auth';
 
-// cost per tree
-const cost = 6;
+import * as Constants from '../../utilities/Constants.js'
 
 export default class CheckoutWithoutFlightScreen extends React.Component {
   state = {
@@ -27,7 +26,7 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
     data: [],
     treeNum: 0,
     total_cost: 0,
-    color: Colors.grey
+    color: COLORS.grey
   }
 
   componentDidMount = () => {
@@ -60,17 +59,17 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
   colorVariant() {
     switch (this.state.treeNum) {
       case 0:
-        return (Colors.grey)
+        return (COLORS.grey)
       case 1:
-        return (Colors.greygreen1)
+        return (COLORS.greygreen1)
       case 2:
-        return (Colors.greygreen2)
+        return (COLORS.greygreen2)
       case 3:
-        return (Colors.greygreen3)
+        return (COLORS.greygreen3)
       case 4:
-        return (Colors.greygreen4)
+        return (COLORS.greygreen4)
       default:
-        return (Colors.lightgreen)
+        return (COLORS.lightgreen)
     }
   }
 
@@ -88,7 +87,7 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
   handleAdd() {
     this.setState({
       treeNum: this.state.treeNum + 1,
-      total_cost: this.state.total_cost + cost
+      total_cost: this.state.total_cost + Constants.COST
     })
   }
 
@@ -97,7 +96,7 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
     if (this.state.treeNum != 0) {
       this.setState({
         treeNum: this.state.treeNum - 1,
-        total_cost: this.state.total_cost - cost
+        total_cost: this.state.total_cost - Constants.COST
       })
     }
   }
@@ -125,15 +124,15 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
             <Text style={styles.bigGreyText}></Text>
             <View style={styles.alignSubScript}>
               <Text style={styles.midGreyText}></Text>
-              <Text style={{ fontSize: 10, lineHeight: 30, color: Colors.darkgrey }}></Text>
+              <Text style={{ fontSize: 10, lineHeight: 30, color: COLORS.darkgrey }}></Text>
             </View>
           </View>
           <View style={styles.iterateGroup}>
             {/*Subtract tree*/}
             <TouchableOpacity
-              style={[styles.iterators, { backgroundColor: (this.state.treeNum == 0) ? Colors.grey : Colors.lightgreen }]}
+              style={[styles.iterators, { backgroundColor: (this.state.treeNum == 0) ? COLORS.grey : COLORS.lightgreen }]}
               onPress={() => this.handleRemove()}>
-              <Feather style={[styles.iteratorIcon, { color: (this.state.treeNum == 0) ? Colors.white : Colors.lightblue }]} name="minus" />
+              <Feather style={[styles.iteratorIcon, { color: (this.state.treeNum == 0) ? COLORS.white : COLORS.lightblue }]} name="minus" />
             </TouchableOpacity>
             {/*Tree counter*/}
             <View style={[styles.treeCounter, { backgroundColor: color }]}>
@@ -141,9 +140,9 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
             </View>
             {/*Add tree*/}
             <TouchableOpacity
-              style={[styles.iterators, { backgroundColor: Colors.lightgreen }]}
+              style={[styles.iterators, { backgroundColor: COLORS.lightgreen }]}
               onPress={() => this.handleAdd()}>
-              <Feather style={[styles.iteratorIcon, { color: Colors.lightblue }]} name="plus" />
+              <Feather style={[styles.iteratorIcon, { color: COLORS.lightblue }]} name="plus" />
             </TouchableOpacity>
           </View>
           <View style={styles.bottomText}>
@@ -151,7 +150,7 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
             <Text style={styles.midBlueText}></Text>
             <Text style={styles.bigBlueText}></Text>
           </View>
-          <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={5} />
+          <Dash style={styles.dashedLine} dashColor={COLORS.lightgrey} dashGap={5} />
           <View style={styles.receiptContainer}>
             <View style={styles.textRow}>
               {/*Total trees donated in transaction*/}
@@ -166,7 +165,7 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
           </View>
           {/*Navigate to checkout page*/}
           <TouchableOpacity
-            style={[styles.bottomGreenButton, { backgroundColor: (this.state.treeNum == 0) ? Colors.grey : Colors.lightgreen }]}
+            style={[styles.bottomGreenButton, { backgroundColor: (this.state.treeNum == 0) ? COLORS.grey : COLORS.lightgreen }]}
             onPress={() => this.handleCheckout()}>
             <Text style={styles.buttonText}>CHECKOUT</Text>
           </TouchableOpacity>
@@ -183,7 +182,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: Colors.white,
+    backgroundColor: COLORS.white,
     height: height,
     width: width
   },
@@ -192,7 +191,7 @@ const styles = StyleSheet.create({
     paddingRight: width * 0.05,
     paddingTop: height * 0.06,
     marginBottom: height * 0.10,
-    backgroundColor: Colors.white,
+    backgroundColor: COLORS.white,
   },
   buttonBarNav: {
     flexDirection: 'row',
@@ -213,26 +212,26 @@ const styles = StyleSheet.create({
   midBlueText: {
     fontFamily: 'Montserrat',
     fontSize: 14,
-    color: Colors.lightblue,
+    color: COLORS.lightblue,
     alignItems: 'center',
     lineHeight: 30
   },
   bigBlueText: {
     fontFamily: 'Montserrat-bold',
     fontSize: 25,
-    color: Colors.lightblue,
+    color: COLORS.lightblue,
     lineHeight: 30
   },
   midGreyText: {
     fontFamily: 'Montserrat',
     fontSize: 14,
-    color: Colors.darkgrey,
+    color: COLORS.darkgrey,
     lineHeight: 25
   },
   bigGreyText: {
     fontFamily: 'Montserrat-bold',
     fontSize: 20,
-    color: Colors.darkgrey,
+    color: COLORS.darkgrey,
     lineHeight: 25
   },
   iterateGroup: {
@@ -262,7 +261,7 @@ const styles = StyleSheet.create({
   },
   treeCountText: {
     fontFamily: 'Montserrat-bold',
-    color: Colors.white,
+    color: COLORS.white,
     fontSize: 50
   },
   receiptContainer: {
@@ -270,12 +269,12 @@ const styles = StyleSheet.create({
   },
   receiptTextLeft: {
     fontFamily: 'Montserrat',
-    color: Colors.darkgrey,
+    color: COLORS.darkgrey,
     fontSize: 12
   },
   receiptTextRight: {
     fontFamily: 'Montserrat-bold',
-    color: Colors.darkgrey,
+    color: COLORS.darkgrey,
     fontSize: 12
   },
   dashedLine: {
@@ -291,18 +290,18 @@ const styles = StyleSheet.create({
   },
   bottomGreenButton: {
     borderRadius: 10,
-    backgroundColor: Colors.lightgreen,
+    backgroundColor: COLORS.lightgreen,
     height: height * 0.08,
     justifyContent: 'center',
     alignItems: 'center',
   },
   buttonText: {
     fontFamily: 'Montserrat-bold',
-    color: Colors.darkgrey,
+    color: COLORS.darkgrey,
     fontSize: 12
   },
   navigationIcon: {
-    color: Colors.grey,
+    color: COLORS.grey,
     fontSize: 30,
   },
 });

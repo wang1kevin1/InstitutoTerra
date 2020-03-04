@@ -17,9 +17,9 @@ import { NavigationEvents } from 'react-navigation'
 
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
-import Colors from '../../assets/Colors'
+import COLORS from '../../assets/Colors.js'
 
-import Footer from '../utilities/Footer.js'
+import Footer from './Footer.js'
 
 import Auth from '@aws-amplify/auth'
 
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
   imageBackground: {
     height: height,
     width: width,
-    backgroundColor: Colors.black
+    backgroundColor: COLORS.black
   },
   container: {
     flex: 1,
@@ -266,50 +266,50 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   navigationIcon: {
-    color: Colors.lightgreen,
+    color: COLORS.lightgreen,
     fontSize: 30,
   },
   navText: {
     fontWeight: 'bold',
     fontSize: 12,
-    color: Colors.lightgreen,
+    color: COLORS.lightgreen,
   },
   bigGreenText: {
     fontWeight: 'bold',
     fontSize: 40,
     lineHeight: 45,
-    color: Colors.lightgreen,
+    color: COLORS.lightgreen,
   },
   bigWhiteText: {
     fontSize: 45,
-    color: Colors.white
+    color: COLORS.white
   },
   searchContainer: {
     paddingTop: height * 0.10,
     paddingBottom: height * 0.05,
   },
   containerStyle: {
-    backgroundColor: Colors.mutedgreen,
+    backgroundColor: COLORS.mutedgreen,
     borderRadius: 15,
-    borderColor: Colors.lightgreen,
+    borderColor: COLORS.lightgreen,
     borderWidth: 2,
     paddingTop: 6,
     opacity: 0.95
   },
   inputContainerStyle: {
-    borderColor: Colors.white,
+    borderColor: COLORS.white,
     borderBottomWidth: 2
   },
   inputStyle: {
     fontSize: 27,
-    color: Colors.white,
+    color: COLORS.white,
   },
   labelStyle: {
     fontSize: 10,
-    color: Colors.white,
+    color: COLORS.white,
   },
   searchIcon: {
-    color: Colors.white,
+    color: COLORS.white,
     fontSize: 40,
   },
   rightIconContainerStyle: {
@@ -317,13 +317,13 @@ const styles = StyleSheet.create({
   },
   bottomGreenButton: {
     borderRadius: 10,
-    backgroundColor: Colors.lightgreen,
+    backgroundColor: COLORS.lightgreen,
     height: height * 0.04,
     justifyContent: 'center',
     alignItems: 'center',
   },
   buttonText: {
-    color: Colors.darkgrey,
+    color: COLORS.darkgrey,
     fontSize: 12
   }
 })

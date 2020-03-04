@@ -13,9 +13,9 @@ import { Ionicons, FontAwesome, Feather } from '@expo/vector-icons';
 
 import Dash from 'react-native-dash';
 
-import Colors from '../../../assets/Colors.js';
+import COLORS from '../../../assets/Colors.js';
 
-import Footer from '../../utilities/Footer.js';
+import Footer from '../Footer.js';
 
 import Auth from '@aws-amplify/auth';
 
@@ -248,7 +248,7 @@ export default class FlightInfoScreen extends React.Component {
             <Text style={[styles.loadingText, { alignItems: 'center', justifyContent: 'center', marginBottom: '5%' }]}>
               RETRIEVING FLIGHT
             </Text>
-            <ActivityIndicator color={Colors.lightblue} size='large' animating={!isReady} />
+            <ActivityIndicator color={COLORS.lightblue} size='large' animating={!isReady} />
           </View>
         </View>
       )
@@ -308,7 +308,7 @@ export default class FlightInfoScreen extends React.Component {
                 </TouchableOpacity>
               </View>
             </View>
-            <Dash style={styles.dashedLine} dashColor={Colors.lightgrey} dashGap={0} />
+            <Dash style={styles.dashedLine} dashColor={COLORS.lightgrey} dashGap={0} />
             <View style={styles.receiptContainer}>
               {/*More flight information*/}
               <View style={styles.textRow}>
@@ -370,10 +370,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: height,
     width: width,
-    backgroundColor: Colors.white,
+    backgroundColor: COLORS.white,
   },
   loadingIcon: {
-    color: Colors.lightblue,
+    color: COLORS.lightblue,
     fontSize: 120,
     textAlign: 'center'
   },
@@ -381,13 +381,13 @@ const styles = StyleSheet.create({
     marginTop: '5%',
     fontFamily: 'Montserrat-bold',
     fontSize: 12,
-    color: Colors.lightblue,
+    color: COLORS.lightblue,
     textAlign: 'center'
   },
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: Colors.white,
+    backgroundColor: COLORS.white,
     height: height,
     width: width
   },
@@ -396,7 +396,7 @@ const styles = StyleSheet.create({
     paddingRight: width * 0.05,
     paddingTop: height * 0.06,
     marginBottom: height * 0.10,
-    backgroundColor: Colors.white,
+    backgroundColor: COLORS.white,
   },
   buttonBarNav: {
     flexDirection: 'row',
@@ -419,13 +419,13 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
     marginRight: 3,
-    backgroundColor: Colors.lightgreen,
+    backgroundColor: COLORS.lightgreen,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   middleGreenButton: {
-    backgroundColor: Colors.lightgreen,
+    backgroundColor: COLORS.lightgreen,
     marginRight: 3,
     flex: 1,
     justifyContent: 'center',
@@ -434,7 +434,7 @@ const styles = StyleSheet.create({
   rightGreenButton: {
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
-    backgroundColor: Colors.lightgreen,
+    backgroundColor: COLORS.lightgreen,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -446,28 +446,28 @@ const styles = StyleSheet.create({
     marginTop: '5%',
     fontFamily: 'Montserrat',
     fontSize: 12,
-    color: Colors.lightblue,
+    color: COLORS.lightblue,
   },
   bigBlueText: {
     fontFamily: 'Montserrat-bold',
     fontSize: 30,
-    color: Colors.lightblue
+    color: COLORS.lightblue
   },
   midGreyText: {
     fontFamily: 'Montserrat',
     fontSize: 15,
-    color: Colors.darkgrey,
+    color: COLORS.darkgrey,
   },
   bottomGreenButton: {
     borderRadius: 10,
-    backgroundColor: Colors.lightgreen,
+    backgroundColor: COLORS.lightgreen,
     height: height * 0.08,
     justifyContent: 'center',
     alignItems: 'center',
   },
   buttonText: {
     fontFamily: 'Montserrat-bold',
-    color: Colors.darkgrey,
+    color: COLORS.darkgrey,
     fontSize: 12
   },
   receiptContainer: {
@@ -475,12 +475,12 @@ const styles = StyleSheet.create({
   },
   receiptTextLeft: {
     fontFamily: 'Montserrat',
-    color: Colors.darkgrey,
+    color: COLORS.darkgrey,
     fontSize: 12
   },
   receiptTextRight: {
     fontFamily: 'Montserrat-bold',
-    color: Colors.darkgrey,
+    color: COLORS.darkgrey,
     fontSize: 12
   },
   dashedLine: {
@@ -495,7 +495,7 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.02,
   },
   navigationIcon: {
-    color: Colors.grey,
+    color: COLORS.grey,
     fontSize: 30,
   },
 });

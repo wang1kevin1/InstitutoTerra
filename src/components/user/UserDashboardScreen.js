@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
-import Colors from '../../assets/Colors'
+import COLORS from '../../assets/Colors.js'
 
 export default class UserDashboardScreen extends React.Component {
   render() {
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   buttonStyle1: {
     alignItems: 'center',
-    backgroundColor: Colors.lightblue,
+    backgroundColor: COLORS.lightblue,
     padding: 14,
     marginBottom: 20,
     borderRadius: 10,
@@ -54,6 +54,6 @@ const styles = StyleSheet.create({
   buttonText1: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: Colors.white,
+    color: COLORS.white,
   },
 })

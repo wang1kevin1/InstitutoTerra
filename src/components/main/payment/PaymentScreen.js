@@ -15,7 +15,7 @@ import { STRIPE } from './StripeSettings.js';
 
 import { stripeCheckoutRedirectHTML } from './StripeCheckout.js';
 
-import Colors from '../../../assets/Colors.js';
+import COLORS from '../../../assets/Colors.js';
 
 export default class PaymentScreen extends React.Component {
 
@@ -62,7 +62,7 @@ export default class PaymentScreen extends React.Component {
       <View style={styles.container}>
         {!isReady &&
           <View style={{ flexDirection: 'column', flex: 1, justifyContent: 'center' }}>
-            <ActivityIndicator color={Colors.lightblue} size='large' />
+            <ActivityIndicator color={COLORS.lightblue} size='large' />
           </View>
         }
         {isReady &&
@@ -93,6 +93,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: height,
     width: width,
-    backgroundColor: Colors.white,
+    backgroundColor: COLORS.white,
   },
 })

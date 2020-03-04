@@ -17,7 +17,13 @@ import { createStackNavigator } from 'react-navigation-stack'
 import SignUpScreen from './src/components/auth/SignUpScreen'
 import SignInScreen from './src/components/auth/SignInScreen'
 import ForgotPasswordScreen from './src/components/auth/ForgotPasswordScreen'
-import SettingsScreen from './src/components/auth/SettingsScreen'
+
+//SettingsStack
+import SettingsListScreen from './src/components/auth/SettingsListScreen'
+import SettingsNameScreen from './src/components/auth/SettingsNameScreen'
+import SettingsEmailScreen from './src/components/auth/SettingsEmailScreen'
+import SettingsPasswordScreen from './src/components/auth/SettingsPasswordScreen'
+import SettingsLanguageScreen from './src/components/auth/SettingsLanguageScreen'
 
 // DashboardStack
 import UserDashboardScreen from './src/components/user/UserDashboardScreen'
@@ -51,6 +57,16 @@ const AuthStackNavigator = createStackNavigator({
   ForgotPassword: ForgotPasswordScreen,
 }, { headerMode: 'none' })
 
+// Settings stack
+// Auth stack
+const SettingsStackNavigator = createStackNavigator({
+  SettingsList: SettingsListScreen,
+  SettingsName: SettingsNameScreen,
+  SettingsEmail: SettingsEmailScreen,
+  SettingsPassword: SettingsPasswordScreen,
+  SettingsLanguage: SettingsLanguageScreen
+}, { headerMode: 'none' })
+
 // Flight Stack
 const FlightStackNavigator = createStackNavigator({
   FlightInfo: FlightInfoScreen,
@@ -73,7 +89,7 @@ const MainStackNavigator = createStackNavigator({
   Payment: PaymentScreen,
   ThankYou: ThankYouScreen,
   UserDashboard: UserDashboardScreen, // DashboardStack
-  Settings: SettingsScreen, 
+  Settings: SettingsStackNavigator, // SettingsStack
   Auth: AuthStackNavigator, // AuthStackNavigator
 }, { headerMode: 'none' })
 
