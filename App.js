@@ -44,12 +44,12 @@ import ReceiptWithoutFlightScreen from './src/components/main/noFlight/ReceiptWi
 import PaymentScreen from './src/components/main/payment/PaymentScreen'
 import ThankYouScreen from './src/components/main/payment/ThankYouScreen'
 
-// Amplify imports and config
+// Amplify imports and config for Cognito
 import Amplify from '@aws-amplify/core'
 import config from './aws-exports'
 Amplify.configure(config)
 
-
+// Amplify imports and config for Database
 import awsmobile from './aws-exports'
 Amplify.configure(awsmobile)
 
@@ -59,8 +59,8 @@ import * as Nederlands from './src/components/utilities/languages/Nederlands.jso
 import * as Espanol from './src/components/utilities/languages/Espanol.json'
 import * as Portugues from './src/components/utilities/languages/Portugues.json'
 
+// Language localization imports
 import * as Localization from 'expo-localization'
-
 import i18n from 'i18n-js'
 
 // Set the key-value pairs for the different languages

@@ -8,9 +8,11 @@ import {
   Dimensions,
 } from 'react-native'
 
+import { Linking } from 'expo';
+
 import { NavigationEvents } from 'react-navigation'
 
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, AntDesign } from '@expo/vector-icons';
 
 import SettingsList from 'react-native-settings-list';
 
@@ -30,6 +32,16 @@ export default class SettingsListScreen extends React.Component {
 
   componentDidMount() {
     this.getUserInfo()
+  }
+
+  // Opens up email to support
+  handleSupport = () => {
+    Linking.openURL('mailto: support@refloresta.app');
+  }
+
+  // Opens up email to bug-report
+  handleBugReports = () => {
+    Linking.openURL('mailto: bug-report@refloresta.app');
   }
 
   // Gets current authenticated user's info
@@ -101,6 +113,17 @@ export default class SettingsListScreen extends React.Component {
                         icon={<Ionicons style={styles.iconStyle3} name="ios-lock" />}
                         title=' Password'
                         onPress={() => this.props.navigation.navigate("SettingsPassword")}
+                      />
+                      <SettingsList.Header headerStyle={{ marginTop: 15 }} />
+                      <SettingsList.Item
+                        icon={<AntDesign style={styles.iconStyle3} name="customerservice" />}
+                        title='Contact Us'
+                        onPress={() => this.handleSupport()}
+                      />
+                      <SettingsList.Item
+                        icon={<Ionicons style={styles.iconStyle3} name="ios-bug" />}
+                        title='Bug Report'
+                        onPress={() => this.handleBugReports()}
                       />
                       <SettingsList.Header headerStyle={{ marginTop: 15 }} />
                       <SettingsList.Item
