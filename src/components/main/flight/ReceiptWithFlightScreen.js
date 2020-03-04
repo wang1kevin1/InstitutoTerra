@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  Alert
 } from 'react-native'
 
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
@@ -18,6 +17,8 @@ import COLORS from '../../../assets/Colors.js';
 import Footer from '../Footer.js';
 
 import Auth from '@aws-amplify/auth';
+
+import i18n from 'i18n-js'
 
 export default class ReceiptWithFlightScreen extends React.Component {
   state = {
@@ -89,14 +90,14 @@ export default class ReceiptWithFlightScreen extends React.Component {
             {/*Navigation Buttons*/}
             <Ionicons style={styles.navigationIcon} name="md-arrow-back"
               onPress={() => this.props.navigation.goBack()} />
-            <Text style={styles.flightBlueText}>FLIGHT {flightChars} {flightNums}</Text>
+            <Text style={styles.flightBlueText}>{i18n.t('FLIGHT')} {flightChars} {flightNums}</Text>
             <FontAwesome style={styles.navigationIcon} name="user-circle-o"
               onPress={() => this.handleUserRedirect()} />
           </View>
           <View style={styles.receiptContainer}>
             <View style={styles.textRow}>
               {/*Route*/}
-              <Text style={styles.receiptTextLeft}>ROUTE</Text>
+              <Text style={styles.receiptTextLeft}>{i18n.t('ROUTE')}</Text>
               {/* Departure to Arrival */}
               {tripIndex == 1 &&
                 <Text style={styles.receiptTextRight}>{depCityName} &#10230; {arrCityName}</Text>
@@ -108,25 +109,25 @@ export default class ReceiptWithFlightScreen extends React.Component {
             <Dash style={styles.dashedLine} dashColor={COLORS.lightgrey} dashGap={0} />
             <View style={styles.textRow}>
               {/*Carbon Footprints*/}
-              <Text style={styles.receiptTextLeft}>CARBON FOOTPRINT (METRIC TONS)</Text>
+              <Text style={styles.receiptTextLeft}>{i18n.t('CARBON FOOTPRINT (METRIC TONS)')}</Text>
               <Text style={styles.receiptTextRight}>{footprint}</Text>
             </View>
             <Dash style={styles.dashedLine} dashColor={COLORS.lightgrey} dashGap={0} />
             <View style={styles.textRow}>
               {/*Total trees donated in transaction*/}
-              <Text style={styles.receiptTextLeft}>TOTAL TREES</Text>
+              <Text style={styles.receiptTextLeft}>{i18n.t('TOTAL TREES')}</Text>
               <Text style={styles.receiptTextRight}>{treeNum}</Text>
             </View>
             <Dash style={styles.dashedLine} dashColor={COLORS.lightgrey} dashGap={0} />
             <View style={styles.textRow}>
               {/*Years to neutralize*/}
-              <Text style={styles.receiptTextLeft}>YEARS TO NEUTRALIZE</Text>
+              <Text style={styles.receiptTextLeft}>{i18n.t('YEARS TO COMPENSATE')}</Text>
               <Text style={styles.receiptTextRight}>{years}</Text>
             </View>
             <Dash style={styles.dashedLine} dashColor={COLORS.lightgrey} dashGap={0} />
             <View style={styles.textRow}>
               {/*Cost of transaction*/}
-              <Text style={styles.receiptTextLeft}>PRICE</Text>
+              <Text style={styles.receiptTextLeft}>{i18n.t('PRICE')}</Text>
               <Text style={styles.receiptTextRight}>${total_cost}</Text>
             </View>
           </View>
@@ -135,7 +136,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
             style={styles.bottomGreenButton}
             onPress={() => this.handleStripePayment()}>
             <View style={styles.alignText}>
-              <Text style={styles.buttonText}>PAY WITH </Text>
+              <Text style={styles.buttonText}>{i18n.t('PAY WITH')} </Text>
               <Text style={styles.stripeText}> stripe</Text>
             </View>
           </TouchableOpacity>

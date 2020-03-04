@@ -16,6 +16,8 @@ import Footer from '../Footer.js';
 
 import Auth from '@aws-amplify/auth';
 
+import i18n from 'i18n-js'
+
 import * as Constants from '../../utilities/Constants.js';
 
 export default class CarbonEmissionsScreen extends React.Component {
@@ -129,16 +131,16 @@ export default class CarbonEmissionsScreen extends React.Component {
               onPress={() => this.handleUserRedirect()} />
           </View>
           {/*Flight Number*/}
-          <Text style={styles.smallBlueText}>FLIGHT NUMBER</Text>
+          <Text style={styles.smallBlueText}>{i18n.t('FLIGHT NUMBER')}</Text>
           <Text style={styles.bigBlueText}>{flightChars} {flightNums}</Text>
           {/*CO2 footprint*/}
           <View style={styles.midText}>
             <Text style={styles.bigWhiteText}>{footprint}</Text>
             <View style={styles.alignSubScript}>
-              <Text style={styles.midWhiteText}>METRIC TONS CO</Text>
+              <Text style={styles.midWhiteText}>{i18n.t('METRIC TONS')} CO</Text>
               <Text style={{ fontSize: 12, lineHeight: 30, color: COLORS.white }}>2</Text>
             </View>
-            <Text style={styles.smallBlueText}>WE CAN FIX THIS TOGETHER</Text>
+            <Text style={styles.smallBlueText}>{i18n.t('WE CAN FIX THIS TOGETHER')}</Text>
           </View>
           {/*Navigate to next screen*/}
           <TouchableOpacity
@@ -151,7 +153,7 @@ export default class CarbonEmissionsScreen extends React.Component {
               flightChars: flightChars,
               flightNums: flightNums,
             })}>
-            <Text style={styles.buttonText}>PLANT TREES</Text>
+            <Text style={styles.buttonText}>{i18n.t('PLANT TREES')}</Text>
           </TouchableOpacity>
         </View>
         <Footer color='white' />

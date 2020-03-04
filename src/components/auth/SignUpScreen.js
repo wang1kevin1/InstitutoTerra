@@ -26,6 +26,8 @@ import Auth from '@aws-amplify/auth'
 
 import { API } from 'aws-amplify'
 
+import i18n from 'i18n-js'
+
 export default class SignUpScreen extends React.Component {
   state = {
     userSub: '',
@@ -71,7 +73,7 @@ export default class SignUpScreen extends React.Component {
   // checks for password match
   handleSignUp = () => {
     if (this.state.password !== this.state.password_confirmation) {
-      Alert.alert('Passwords do not match')
+      Alert.alert(i18n.t('Passwords do not match'))
     } else {
       this.signUp()
     }
@@ -95,17 +97,17 @@ export default class SignUpScreen extends React.Component {
       this.setState({data})
       this.setState({userSub: data.userSub})
       console.log(this.state.userSub)
-      Alert.alert('An email has been sent to confirm your sign up')
+      Alert.alert(i18n.t('An email has been sent to confirm your sign up'))
       this.saveUser()
     })
     .catch(err => {
       this.setState({ isLoading: false })
       if (! err.message) {
         console.log('Error when signing up: ', err)
-        Alert.alert('Error when signing up: ', err)
+        Alert.alert(i18n.t('Error when signing up: '), err)
       } else {
         console.log('Error when signing up: ', err.message)
-        Alert.alert('Error when signing up: ', err.message)
+        Alert.alert(i18n.t('Error when signing up: '), err.message)
       }
     })
   }
@@ -148,7 +150,7 @@ export default class SignUpScreen extends React.Component {
                     <Ionicons style={styles.iconStyle1} name="ios-person" />
                     <Input
                       style={styles.input}
-                      placeholder='Name'
+                      placeholder={i18n.t('Name')}
                       placeholderTextColor={COLORS.lightblue}
                       returnKeyType='next'
                       autoCapitalize='none'
@@ -162,7 +164,7 @@ export default class SignUpScreen extends React.Component {
                     <Ionicons style={styles.iconStyle1} name="ios-mail" />
                     <Input
                       style={styles.input}
-                      placeholder='Email'
+                      placeholder={i18n.t('Email')}
                       placeholderTextColor={COLORS.lightblue}
                       returnKeyType='next'
                       autoCapitalize='none'
@@ -178,7 +180,7 @@ export default class SignUpScreen extends React.Component {
                     <Ionicons style={styles.iconStyle1} name="ios-lock" />
                     <Input
                       style={styles.input}
-                      placeholder='Password'
+                      placeholder={i18n.t('Password')}
                       placeholderTextColor={COLORS.lightblue}
                       returnKeyType='next'
                       autoCapitalize='none'
@@ -195,7 +197,7 @@ export default class SignUpScreen extends React.Component {
                     <Ionicons style={styles.iconStyle1} name="ios-lock" />
                     <Input
                       style={styles.input}
-                      placeholder='Confirm Password'
+                      placeholder={i18n.t('Confirm Password')}
                       placeholderTextColor={COLORS.lightblue}
                       returnKeyType='go'
                       autoCapitalize='none'
@@ -212,7 +214,7 @@ export default class SignUpScreen extends React.Component {
                     disabled={this.state.isLoading}
                     style={styles.buttonStyle1}>
                     <Text style={styles.buttonText1}>
-                      Sign Up
+                      {i18n.t('Sign Up')}
                     </Text>
                   </TouchableOpacity>
                   {/* Loading ActivityIndicator */}

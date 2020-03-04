@@ -23,7 +23,6 @@ import SettingsListScreen from './src/components/auth/SettingsListScreen'
 import SettingsNameScreen from './src/components/auth/SettingsNameScreen'
 import SettingsEmailScreen from './src/components/auth/SettingsEmailScreen'
 import SettingsPasswordScreen from './src/components/auth/SettingsPasswordScreen'
-import SettingsLanguageScreen from './src/components/auth/SettingsLanguageScreen'
 
 // DashboardStack
 import UserDashboardScreen from './src/components/user/UserDashboardScreen'
@@ -50,8 +49,33 @@ import Amplify from '@aws-amplify/core'
 import config from './aws-exports'
 Amplify.configure(config)
 
+
 import awsmobile from './aws-exports'
 Amplify.configure(awsmobile)
+
+// Language stores
+import * as English from './src/components/utilities/languages/English.json'
+import * as Nederlands from './src/components/utilities/languages/Nederlands.json'
+import * as Espanol from './src/components/utilities/languages/Espanol.json'
+import * as Portugues from './src/components/utilities/languages/Portugues.json'
+
+import * as Localization from 'expo-localization'
+
+import i18n from 'i18n-js'
+
+// Set the key-value pairs for the different languages
+i18n.translations = {
+  en: English,
+  nl: Nederlands,
+  es: Espanol,
+  pt: Portugues,
+}
+
+// Set the locale once at start of app.
+i18n.locale = Localization.locale;
+
+// Fallback if language missing.
+i18n.fallbacks = true;
 
 // Auth stack
 const AuthStackNavigator = createStackNavigator({
@@ -66,8 +90,7 @@ const SettingsStackNavigator = createStackNavigator({
   SettingsList: SettingsListScreen,
   SettingsName: SettingsNameScreen,
   SettingsEmail: SettingsEmailScreen,
-  SettingsPassword: SettingsPasswordScreen,
-  SettingsLanguage: SettingsLanguageScreen
+  SettingsPassword: SettingsPasswordScreen
 }, { headerMode: 'none' })
 
 // Flight Stack

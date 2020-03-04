@@ -20,6 +20,8 @@ import Auth from '@aws-amplify/auth';
 
 import { API } from 'aws-amplify'
 
+import i18n from 'i18n-js'
+
 import * as Constants from '../../utilities/Constants.js'
 
 export default class ThankYouScreen extends React.Component {
@@ -146,7 +148,7 @@ export default class ThankYouScreen extends React.Component {
                 source={this.planet}
                 style={styles.planetImage}
               />
-              <Text style={styles.midGreenText}>Thank you!</Text>
+              <Text style={styles.midGreenText}>{i18n.t('Thank you!')}</Text>
             </View>
               <TouchableOpacity
                 style={styles.bottomImage}
@@ -155,7 +157,7 @@ export default class ThankYouScreen extends React.Component {
                   source={this.share}
                   style={styles.shareImage}
                 />
-                <Text style={styles.smallBlueText}>SHARE</Text>
+                <Text style={styles.smallBlueText}>{i18n.t('SHARE')}</Text>
               </TouchableOpacity>
           </View>
           <Footer color='white' />

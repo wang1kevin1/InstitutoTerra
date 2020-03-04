@@ -6,7 +6,6 @@ import {
   View,
   Alert,
   Dimensions,
-  AsyncStorage
 } from 'react-native'
 
 import { NavigationEvents } from 'react-navigation'
@@ -27,12 +26,10 @@ export default class SettingsListScreen extends React.Component {
   state = {
     name: '',
     email: '',
-    language: 'English',
   }
 
   componentDidMount() {
     this.getUserInfo()
-    this.getLanguage()
   }
 
   // Gets current authenticated user's info
@@ -54,19 +51,6 @@ export default class SettingsListScreen extends React.Component {
         }
       })
   }
-
-// Retrieve language settings
-getLanguage = async () => {
-  try {
-    const value = await AsyncStorage.getItem('@language')
-    if (value !== null) {
-      this.setState({ language: value })
-      console.log('Retrieved language', this.state.language)
-    }
-  } catch (e) {
-    console.log('Error retrieving language')
-  }
-}
 
   // Sign out from the app
   signOutAlert = async () => {
@@ -94,7 +78,7 @@ getLanguage = async () => {
       return (
               <View style={styles.container}>
                 {/* Update isAuthenticated on navigation refresh */}
-                <NavigationEvents onWillFocus={() => {this.getUserInfo(); this.getLanguage();}} />
+                <NavigationEvents onWillFocus={() => {this.getUserInfo()}} />
                 <View style={{ backgroundColor: '#EFEFF4', flex: 1 }}>
                   <View style={{ borderBottomWidth: 1, backgroundColor: COLORS.lightgrey, borderColor: COLORS.lightgrey }}>
                     <Text style={{ alignSelf: 'center', marginTop: Constants.statusBarHeight + 10, marginBottom: 10, fontWeight: 'bold', fontSize: 20 }}>Settings</Text>
@@ -119,12 +103,6 @@ getLanguage = async () => {
                         onPress={() => this.props.navigation.navigate("SettingsPassword")}
                       />
                       <SettingsList.Header headerStyle={{ marginTop: 15 }} />
-                      <SettingsList.Item
-                        icon={<Ionicons style={styles.iconStyle3} name="md-globe" />}
-                        title='Language'
-                        titleInfo={this.state.language}
-                        onPress={() => this.props.navigation.navigate("SettingsLanguage")}
-                      />
                       <SettingsList.Item
                         icon={<Ionicons style={styles.iconStyle3} name="md-exit" />}
                         title='Sign Out'
