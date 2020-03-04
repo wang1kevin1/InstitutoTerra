@@ -30,6 +30,7 @@ import UserDashboardScreen from './src/components/user/UserDashboardScreen'
 
 // MainStack head
 import HomeScreen from './src/components/main/HomeScreen'
+import AboutScreen from './src/components/main/AboutScreen'
 
 // FlightStack
 import FlightInfoScreen from './src/components/main/flight/FlightInfoScreen'
@@ -64,7 +65,7 @@ const SettingsStackNavigator = createStackNavigator({
   SettingsName: SettingsNameScreen,
   SettingsEmail: SettingsEmailScreen,
   SettingsPassword: SettingsPasswordScreen,
-  SettingsLanguage: SettingsLanguageScreen
+  SettingsLanguage: SettingsLanguageScreen,
 }, { headerMode: 'none' })
 
 // Flight Stack
@@ -91,6 +92,7 @@ const MainStackNavigator = createStackNavigator({
   UserDashboard: UserDashboardScreen, // DashboardStack
   Settings: SettingsStackNavigator, // SettingsStack
   Auth: AuthStackNavigator, // AuthStackNavigator
+  About: AboutScreen,
 }, { headerMode: 'none' })
 
 const AppSwitchNavigator = createSwitchNavigator({

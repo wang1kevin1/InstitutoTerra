@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import COLORS from '../../assets/Colors.js'
+import { NavigationEvents } from 'react-navigation'
 
 const terra_greentxt = require('../../assets/footer/terra-green.png')
 
@@ -29,7 +30,7 @@ class Footer extends React.Component {
       return (
         <View style={styles.footerGreen}>
           <Text style={styles.footerTxtGreen}>made possible with</Text>
-          <TouchableOpacity onPress={() => Alert.alert('About Section')}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('About')}>
             <Image
               source={terra_whitetxt}
               style={styles.image}
@@ -42,7 +43,8 @@ class Footer extends React.Component {
       return (
         <View style={styles.footerWhite}>
           <Text style={styles.footerTxtWhite}>made possible with</Text>
-          <TouchableOpacity onPress={() => Alert.alert('About Section')}>
+          <TouchableOpacity activeOpacity={0.9}
+            onPress={() => this.props.navigation.navigate('About')}>
             <Image
               source={terra_greentxt}
               style={styles.image}
