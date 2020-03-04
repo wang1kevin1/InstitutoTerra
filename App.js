@@ -85,6 +85,7 @@ const NoFlightStackNavigator = createStackNavigator({
 // Main stack
 const MainStackNavigator = createStackNavigator({
   Home: HomeScreen,
+  About: AboutScreen,
   Flight: FlightStackNavigator, // FlightStack
   NoFlight: NoFlightStackNavigator, // NoFlightStack
   Payment: PaymentScreen,
@@ -92,7 +93,6 @@ const MainStackNavigator = createStackNavigator({
   UserDashboard: UserDashboardScreen, // DashboardStack
   Settings: SettingsStackNavigator, // SettingsStack
   Auth: AuthStackNavigator, // AuthStackNavigator
-  About: AboutScreen,
 }, { headerMode: 'none' })
 
 const AppSwitchNavigator = createSwitchNavigator({

@@ -202,7 +202,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
             <Text style={styles.buttonText}>CHECKOUT</Text>
           </TouchableOpacity>
         </View>
-        <Footer color='white' />
+        <Footer color='white' navigation={this.props.navigation}/>
       </View>
     )
   }

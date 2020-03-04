@@ -7,30 +7,30 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  Alert
 } from 'react-native';
 
 import COLORS from '../../assets/Colors.js'
-import { NavigationEvents } from 'react-navigation'
 
 const terra_greentxt = require('../../assets/footer/terra-green.png')
 
 const terra_whitetxt = require('../../assets/footer/terra-white.png')
 
-class Footer extends React.Component {
+export default class Footer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       color: '',
-    };
+    }
   }
 
   render() {
     if (this.props.color == 'green') {
+      console.log(this.props)
       return (
         <View style={styles.footerGreen}>
           <Text style={styles.footerTxtGreen}>made possible with</Text>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('About')}>
+          <TouchableOpacity 
+            onPress={() => this.props.navigation.navigate('About')}>
             <Image
               source={terra_whitetxt}
               style={styles.image}
@@ -43,7 +43,7 @@ class Footer extends React.Component {
       return (
         <View style={styles.footerWhite}>
           <Text style={styles.footerTxtWhite}>made possible with</Text>
-          <TouchableOpacity activeOpacity={0.9}
+          <TouchableOpacity
             onPress={() => this.props.navigation.navigate('About')}>
             <Image
               source={terra_greentxt}
@@ -55,8 +55,6 @@ class Footer extends React.Component {
     }
   }
 }
-
-export default Footer
 
 const { width, height } = Dimensions.get('window');
 

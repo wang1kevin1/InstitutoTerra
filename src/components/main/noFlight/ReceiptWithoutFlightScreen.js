@@ -100,7 +100,7 @@ export default class ReceiptWithoutFlightScreen extends React.Component {
             </View>
           </TouchableOpacity>
         </View>
-        <Footer color='white' />
+        <Footer color='white' navigation={this.props.navigation}/>
       </View>
     )
   }

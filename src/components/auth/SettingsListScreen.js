@@ -133,7 +133,7 @@ getLanguage = async () => {
                     </SettingsList>
                   </View>
                 </View>
-                <Footer color='white' />
+                <Footer color='white' navigation={this.props.navigation}/>
               </View>
       );
     }

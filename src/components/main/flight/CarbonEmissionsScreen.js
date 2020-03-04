@@ -154,7 +154,7 @@ export default class CarbonEmissionsScreen extends React.Component {
             <Text style={styles.buttonText}>PLANT TREES</Text>
           </TouchableOpacity>
         </View>
-        <Footer color='white' />
+        <Footer color='white' navigation={this.props.navigation}/>
       </View>
     )
   }

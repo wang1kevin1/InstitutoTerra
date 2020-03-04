@@ -224,7 +224,7 @@ export default class HomeScreen extends React.Component {
                   </Text>
                 </TouchableOpacity>
               </View>
-              <Footer color='green' />
+              <Footer color='green' navigation={this.props.navigation}/>
             </View>
           </TouchableWithoutFeedback>
         </ImageBackground>
