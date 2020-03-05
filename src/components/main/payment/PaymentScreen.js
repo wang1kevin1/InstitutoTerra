@@ -15,6 +15,8 @@ import { STRIPE } from './StripeSettings.js';
 
 import { stripeCheckoutRedirectHTML } from './StripeCheckout.js';
 
+import { MaterialIcons } from '@expo/vector-icons';
+
 import COLORS from '../../../assets/Colors.js';
 
 export default class PaymentScreen extends React.Component {
@@ -26,7 +28,6 @@ export default class PaymentScreen extends React.Component {
   componentDidMount() {
     this.setState({
       treeNum: this.props.navigation.getParam('treeNum', 'treeNum'),
-      isReady: true
     })
   }
 
@@ -55,23 +56,25 @@ export default class PaymentScreen extends React.Component {
     }
   };
 
-  render() {
-    const { isReady } = this.state
+  onLoad() {
+    setTimeout(() => {this.setState({isReady: true})}, 8000)
+  }
 
+  render() {
     return (
       <View style={styles.container}>
-        {!isReady &&
-          <View style={{ flexDirection: 'column', flex: 1, justifyContent: 'center' }}>
-            <ActivityIndicator color={COLORS.lightblue} size='large' />
-          </View>
-        }
-        {isReady &&
-          <WebView
-            originWhitelist={['*']}
-            source={{ html: stripeCheckoutRedirectHTML(this.state.treeNum) }}
-            onLoadStart={this.onLoadStart}
-          />
-        }
+        <WebView
+          originWhitelist={['*']}
+          source={{ html: stripeCheckoutRedirectHTML(this.state.treeNum) }}
+          onLoadStart={this.onLoadStart}
+          onLoadEnd={() => {this.onLoad()}}
+        />
+      {!this.state.isReady && (
+        <View style={styles.containerLoading}>
+          <MaterialIcons name="payment" style={styles.loadingIcon} />
+          <ActivityIndicator color={COLORS.lightblue} size='large' />
+        </View>
+      )}
       </View>
     );
   }
@@ -88,11 +91,18 @@ const styles = StyleSheet.create({
     marginTop: Constants.statusBarHeight
   },
   containerLoading: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    height: height,
-    width: width,
-    backgroundColor: COLORS.white,
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: COLORS.white,
+  },
+  loadingIcon: {
+    color: COLORS.lightblue,
+    fontSize: 120,
+    textAlign: 'center'
   },
 })
