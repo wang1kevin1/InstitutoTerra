@@ -143,6 +143,7 @@ export default class App extends React.Component {
         'Montserrat': require('./src/assets/fonts/Montserrat-Regular.ttf'),
         'Montserrat-bold': require('./src/assets/fonts/Montserrat-Bold.ttf'),
         'Fago-black': require('./src/assets/fonts/Fago-Black.ttf'),
+        'Gilroy-bold': require('./src/assets/fonts/Gilroy-Bold.ttf')
       })
     ])
   };
