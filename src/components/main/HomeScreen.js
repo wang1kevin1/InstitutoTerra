@@ -207,7 +207,9 @@ export default class HomeScreen extends React.Component {
                   </TouchableOpacity>
                 }
               </View>
-              <Text style={styles.bigWhiteText}>refloresta</Text>
+              <View style={styles.appName}>
+                <Text style={styles.bigWhiteText}>refloresta</Text>
+              </View>
               <View style={styles.searchContainer}>
                 {/* Enter flight number */}
                 <Input
@@ -276,7 +278,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: height * 0.05,
     justifyContent: 'space-between',
-    paddingBottom: height * 0.2
   },
   navStyle: {
     flexDirection: 'column',
@@ -296,6 +297,9 @@ const styles = StyleSheet.create({
     fontSize: 40,
     lineHeight: 45,
     color: COLORS.lightgreen,
+  },
+  appName: {
+    paddingTop: height * 0.2,
   },
   bigWhiteText: {
     fontSize: 50,
