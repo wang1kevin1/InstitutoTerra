@@ -38,12 +38,12 @@ export default class SettingsListScreen extends React.Component {
 
   // Opens up email to support
   handleSupport = () => {
-    Linking.openURL('mailto: support@refloresta.app');
+    Linking.openURL('mailto:support@refloresta.app');
   }
 
   // Opens up email to bug-report
   handleBugReports = () => {
-    Linking.openURL('mailto: bug-report@refloresta.app?body=' + CONSTANTS.BUG_REPORT);
+    Linking.openURL('mailto:bug-report@refloresta.app?body=' + CONSTANTS.BUG_REPORT);
   }
 
   // Gets current authenticated user's info
