@@ -18,7 +18,7 @@ import Auth from '@aws-amplify/auth';
 
 import i18n from 'i18n-js'
 
-import * as Constants from '../../utilities/Constants.js';
+import * as CONSTANTS from '../../utilities/Constants.js';
 
 export default class CarbonEmissionsScreen extends React.Component {
   state = {
@@ -72,36 +72,36 @@ export default class CarbonEmissionsScreen extends React.Component {
     console.log(seat);
     //Short Flight
     if(dist < 500){
-      dist *= Constants.CARBON_MULTIPLIERS.short;
+      dist *= CONSTANTS.CARBON_MULTIPLIERS.short;
     }
     //Medium Flight
     else if(dist < 1000){
       //Economy seat
       if(this.props.navigation.getParam('seatState', 'state') == 'Economy'){
-        dist *= Constants.CARBON_MULTIPLIERS.medium_economy;
+        dist *= CONSTANTS.CARBON_MULTIPLIERS.medium_economy;
       }
       //Business seat
       else if(this.props.navigation.getParam('seatState', 'state') == 'Business' || this.props.navigation.getParam('seatState', 'state') == 'First Class'){
-        dist *= Constants.CARBON_MULTIPLIERS.medium_business;
+        dist *= CONSTANTS.CARBON_MULTIPLIERS.medium_business;
       }
     }
     //Long Flight
     else{
       //Economy Seat
       if(this.props.navigation.getParam('seatState', 'state') == 'Economy'){
-        dist *= Constants.CARBON_MULTIPLIERS.long_economy;
+        dist *= CONSTANTS.CARBON_MULTIPLIERS.long_economy;
         console.log('Economy Long');
         console.log(dist);
       }
       //Business Seat
       else if(this.props.navigation.getParam('seatState', 'state') == 'Business'){
-        dist *= Constants.CARBON_MULTIPLIERS.long_business;
+        dist *= CONSTANTS.CARBON_MULTIPLIERS.long_business;
         console.log('Business Long');
         console.log(dist);
       }
       //First Class Seat
       else if(this.props.navigation.getParam('seatState', 'state') == 'First Class'){
-        dist *= Constants.CARBON_MULTIPLIERS.long_first;
+        dist *= CONSTANTS.CARBON_MULTIPLIERS.long_first;
         console.log('First Class Long');
         console.log(dist);
       }
