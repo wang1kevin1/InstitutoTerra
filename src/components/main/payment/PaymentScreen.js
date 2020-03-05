@@ -39,8 +39,8 @@ export default class PaymentScreen extends React.Component {
   };
 
   // navigate when cancelled url is returned
-  onCanceledHandler = () => { 
-    this.props.navigation.goBack() 
+  onCanceledHandler = () => {
+    this.props.navigation.goBack()
   };
 
   // Called everytime the URL stats to load in the webview
@@ -56,8 +56,9 @@ export default class PaymentScreen extends React.Component {
     }
   };
 
+  // Called when checkout page is done loading. 8 seconds delay to mask stripe render delay
   onLoad() {
-    setTimeout(() => {this.setState({isReady: true})}, 8000)
+    setTimeout(() => { this.setState({ isReady: true }) }, 8000)
   }
 
   render() {
@@ -67,14 +68,14 @@ export default class PaymentScreen extends React.Component {
           originWhitelist={['*']}
           source={{ html: stripeCheckoutRedirectHTML(this.state.treeNum) }}
           onLoadStart={this.onLoadStart}
-          onLoadEnd={() => {this.onLoad()}}
+          onLoad={() => { this.onLoad() }}
         />
-      {!this.state.isReady && (
-        <View style={styles.containerLoading}>
-          <MaterialIcons name="payment" style={styles.loadingIcon} />
-          <ActivityIndicator color={COLORS.lightblue} size='large' />
-        </View>
-      )}
+        {!this.state.isReady && (
+          <View style={styles.containerLoading}>
+            <MaterialIcons name="payment" style={styles.loadingIcon} />
+            <ActivityIndicator color={COLORS.lightblue} size='large' />
+          </View>
+        )}
       </View>
     );
   }
@@ -91,14 +92,14 @@ const styles = StyleSheet.create({
     marginTop: Constants.statusBarHeight
   },
   containerLoading: {
-      position: 'absolute',
-      left: 0,
-      right: 0,
-      top: 0,
-      bottom: 0,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: COLORS.white,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLORS.white,
   },
   loadingIcon: {
     color: COLORS.lightblue,
