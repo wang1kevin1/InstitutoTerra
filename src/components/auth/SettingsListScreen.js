@@ -24,6 +24,8 @@ import Footer from '../main/Footer.js';
 
 import Auth from '@aws-amplify/auth';
 
+import * as CONSTANTS from '../utilities/Constants.js'
+
 export default class SettingsListScreen extends React.Component {
   state = {
     name: '',
@@ -41,7 +43,7 @@ export default class SettingsListScreen extends React.Component {
 
   // Opens up email to bug-report
   handleBugReports = () => {
-    Linking.openURL('mailto: bug-report@refloresta.app?body=Please describe (1) the steps leading to the bug, (2) the expected result, and (3) the actual result. Any screenshots would be greatly appreciated.');
+    Linking.openURL('mailto: bug-report@refloresta.app?body=' + CONSTANTS.BUG_REPORT);
   }
 
   // Gets current authenticated user's info

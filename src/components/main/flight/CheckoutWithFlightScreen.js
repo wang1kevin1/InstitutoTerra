@@ -20,7 +20,7 @@ import Auth from '@aws-amplify/auth';
 
 import i18n from 'i18n-js'
 
-import * as Constants from '../../utilities/Constants.js'
+import * as CONSTANTS from '../../utilities/Constants.js'
 
 export default class CheckoutWithFlightScreen extends React.Component {
   state = {
@@ -105,7 +105,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
   handleAdd() {
     this.setState({
       treeNum: this.state.treeNum + 1,
-      total_cost: this.state.total_cost + Constants.COST
+      total_cost: this.state.total_cost + CONSTANTS.COST
     })
   }
 
@@ -114,7 +114,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
     if (this.state.treeNum != 0) {
       this.setState({
         treeNum: this.state.treeNum - 1,
-        total_cost: this.state.total_cost - Constants.COST
+        total_cost: this.state.total_cost - CONSTANTS.COST
       })
     }
   }

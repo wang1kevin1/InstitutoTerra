@@ -22,7 +22,7 @@ import { API } from 'aws-amplify'
 
 import i18n from 'i18n-js'
 
-import * as Constants from '../../utilities/Constants.js'
+import * as CONSTANTS from '../../utilities/Constants.js'
 
 export default class ThankYouScreen extends React.Component {
   // load background
@@ -109,7 +109,7 @@ export default class ThankYouScreen extends React.Component {
 
   // Opens apps for users to share
   onShare = async () => {
-    const message = 'I just donated ' + this.state.treeNum + ' tree(s)! You can too at ' + Constants.WEBSITE + '!'
+    const message = 'I just donated ' + this.state.treeNum + ' tree(s)! You can too at ' + CONSTANTS.WEBSITE + '!'
     try {
       const result = await Share.share({
         title: '#Refloresta',

@@ -12,3 +12,5 @@ export const CARBON_MULTIPLIERS = {
   long_business: 0.43446,
   long_first: 0.59925
 }
+
+export const BUG_REPORT = 'Please describe: (1) the steps leading up to the bug, (2) the expected result, and (3) the actual result. Any screenshots would be greatly appreciated.'
