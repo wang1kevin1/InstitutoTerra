@@ -170,82 +170,84 @@ export default class HomeScreen extends React.Component {
 
   render() {
     return (
-      <ImageBackground source={this.background} style={styles.imageBackground}>
-        <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
-          <View style={styles.container}>
-            <View style={styles.containerTop}>
-              {/* Update isAuthenticated on navigation refresh */}
-              <NavigationEvents onWillFocus={() => { this.checkAuth(); this.selectBackground(); }} />
-              <View style={styles.buttonBarNav}>
-                {/* <Text style={styles.bigGreenText}>&#x2013; &#x2013;</Text> //To be used after beta */}
-                {/* Bug Reports to be used only for beta */}
-                <TouchableOpacity activeOpacity={0.9}
-                  onPress={() => this.handleBugReports()}
-                  style={styles.navStyle}>
-                  <Ionicons style={styles.navigationIcon} name="ios-bug" />
-                </TouchableOpacity>
-                {/* isAuthenticated: false */}
-                {!this.state.isAuthenticated &&
+      <View style={styles.container}>
+        <ImageBackground source={this.background} style={styles.imageBackground}>
+          <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
+            <View style={styles.container}>
+              <View style={styles.containerTop}>
+                {/* Update isAuthenticated on navigation refresh */}
+                <NavigationEvents onWillFocus={() => { this.checkAuth(); this.selectBackground(); }} />
+                <View style={styles.buttonBarNav}>
+                  {/* <Text style={styles.bigGreenText}>&#x2013; &#x2013;</Text> //To be used after beta */}
+                  {/* Bug Reports to be used only for beta */}
                   <TouchableOpacity activeOpacity={0.9}
-                    onPress={() => this.props.navigation.navigate('SignIn')}
+                    onPress={() => this.handleBugReports()}
                     style={styles.navStyle}>
-                    <FontAwesome style={styles.navigationIcon} name="user-circle-o" />
-                    <Text style={styles.navText}>
-                      {i18n.t('SIGN IN')}
-                    </Text>
+                    <Ionicons style={styles.navigationIcon} name="ios-bug" />
                   </TouchableOpacity>
-                }
-                {/* isAuthenticated: true */}
-                {this.state.isAuthenticated &&
-                  <TouchableOpacity activeOpacity={0.9}
-                    onPress={() => this.props.navigation.navigate('UserDashboard')}
-                    style={styles.navStyle}>
-                    <FontAwesome style={styles.navigationIcon} name="user-circle-o" />
-                    <Text style={styles.navText}>
-                      {i18n.t('PROFILE')}
-                    </Text>
-                  </TouchableOpacity>
-                }
-              </View>
-              <View style={styles.appName}>
-                <Text style={styles.bigWhiteText}>refloresta</Text>
-              </View>
-              <View style={styles.searchContainer}>
-                {/* Enter flight number */}
-                <Input
-                  containerStyle={styles.containerStyle}
-                  inputContainerStyle={styles.inputContainerStyle}
-                  inputStyle={styles.inputStyle}
-                  label={i18n.t('FLIGHT NUMBER')}
-                  labelStyle={styles.labelStyle}
-                  rightIcon={
-                    <Ionicons style={styles.searchIcon}
-                      name="md-arrow-forward"
-                      onPress={() => this.checkNum()} />
+                  {/* isAuthenticated: false */}
+                  {!this.state.isAuthenticated &&
+                    <TouchableOpacity activeOpacity={0.9}
+                      onPress={() => this.props.navigation.navigate('SignIn')}
+                      style={styles.navStyle}>
+                      <FontAwesome style={styles.navigationIcon} name="user-circle-o" />
+                      <Text style={styles.navText}>
+                        {i18n.t('SIGN IN')}
+                      </Text>
+                    </TouchableOpacity>
                   }
-                  rightIconContainerStyle={styles.rightIconContainerStyle}
-                  errorMessage={i18n.t('Please enter a valid flight number')}
-                  errorStyle={[{ fontSize: (this.state.error == false) ? 3 : 10 }, { color: (this.state.error == false) ? 'transparent' : 'red' }]}
-                  autoCapitalize='characters'
-                  autoCorrect={false}
-                  ref={flightSearch}
-                  onChangeText={value => this.onChangeText('flight', value)}
-                />
+                  {/* isAuthenticated: true */}
+                  {this.state.isAuthenticated &&
+                    <TouchableOpacity activeOpacity={0.9}
+                      onPress={() => this.props.navigation.navigate('UserDashboard')}
+                      style={styles.navStyle}>
+                      <FontAwesome style={styles.navigationIcon} name="user-circle-o" />
+                      <Text style={styles.navText}>
+                        {i18n.t('PROFILE')}
+                      </Text>
+                    </TouchableOpacity>
+                  }
+                </View>
+                <View style={styles.appName}>
+                  <Text style={styles.bigWhiteText}>refloresta</Text>
+                </View>
+                <View style={styles.searchContainer}>
+                  {/* Enter flight number */}
+                  <Input
+                    containerStyle={styles.containerStyle}
+                    inputContainerStyle={styles.inputContainerStyle}
+                    inputStyle={styles.inputStyle}
+                    label={i18n.t('FLIGHT NUMBER')}
+                    labelStyle={styles.labelStyle}
+                    rightIcon={
+                      <Ionicons style={styles.searchIcon}
+                        name="md-arrow-forward"
+                        onPress={() => this.checkNum()} />
+                    }
+                    rightIconContainerStyle={styles.rightIconContainerStyle}
+                    errorMessage={i18n.t('Please enter a valid flight number')}
+                    errorStyle={[{ fontSize: (this.state.error == false) ? 3 : 10 }, { color: (this.state.error == false) ? 'transparent' : 'red' }]}
+                    autoCapitalize='characters'
+                    autoCorrect={false}
+                    ref={flightSearch}
+                    onChangeText={value => this.onChangeText('flight', value)}
+                  />
+                </View>
+                {/* Redirect to donation checkout */}
+                {/* NAVIGATION FOR TESTING ONLY */}
+                <TouchableOpacity activeOpacity={0.9}
+                  style={styles.bottomGreenButton}
+                  onPress={() => this.props.navigation.navigate('CheckoutWithoutFlight')}>
+                  <Text style={styles.buttonText}>
+                    {i18n.t('DONATE WITH NO FLIGHT NUMBER')}
+                  </Text>
+                </TouchableOpacity>
               </View>
-              {/* Redirect to donation checkout */}
-              {/* NAVIGATION FOR TESTING ONLY */}
-              <TouchableOpacity activeOpacity={0.9}
-                style={styles.bottomGreenButton}
-                onPress={() => this.props.navigation.navigate('CheckoutWithoutFlight')}>
-                <Text style={styles.buttonText}>
-                  {i18n.t('DONATE WITH NO FLIGHT NUMBER')}
-                </Text>
-              </TouchableOpacity>
             </View>
-          </View>
-        </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback>
+        </ImageBackground>
         <Footer color='green' />
-      </ImageBackground>
+      </View>
     );
   }
 }
