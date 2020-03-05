@@ -68,7 +68,7 @@ export default class HomeScreen extends React.Component {
 
   // Opens up email to bug-report
   handleBugReports = () => {
-    Linking.openURL('mailto: bug-report@refloresta.app?body=' + CONSTANTS.BUG_REPORT);
+    Linking.openURL('mailto:bug-report@refloresta.app?body=' + CONSTANTS.BUG_REPORT);
   }
 
   // Checks if a user is logged in
