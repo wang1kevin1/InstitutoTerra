@@ -39,7 +39,8 @@ export default class AboutScreen extends React.Component {
               <View style={styles.headerContainer}>
               <Text style={styles.aboutText}>ABOUT INSTITUTO TERRA</Text>
               </View>
-              <ScrollView>
+              <ScrollView
+              showsVerticalScrollIndicator = {false}>
                 <View style = {styles.mainContainer}>
                   <Image source = {require('../../assets/icon.png')} style = {styles.logo}/>
                   <Image source = {require('../../assets/terra/terra-white.png')} style = {styles.terrawhite}/>
@@ -58,15 +59,38 @@ export default class AboutScreen extends React.Component {
                     <Text style = {styles.descText}>The recovery and restoration of rural properties in the valley of the Rio Doce.</Text>
                   </View>
                 </View>
+                <Image source = {require('../../assets/background/about/about-1.png')} style = {styles.imageContainer}/>
                 <View style = {styles.darkBubbleContainer}>
                   <Text style = {styles.bubbleText}>In its 20 years of operation the Instituto Terra has successfully planted over 2.7 million trees.</Text>
                 </View>
                 <View style = {styles.textContainer}>
                   <Text style = {styles.normalText}>The revival of our ecosystem has brought back a great variety of animal species; 172
-                  species of birds, 33 species of mamals, 16 species of reptiles and 16 species of amphibians. Our vivarium has a capacity
+                  species of birds, 33 species of mammals, 16 species of reptiles and 16 species of amphibians. Our vivarium has a capacity
                   of producing 600,000 saplings a year and our laboratory guarantees us the technical knowlege to produce 297 species of
                   trees native to our region.</Text>
                 </View>
+                <Image soure = {require('../../assets/background/about/about-2.png')} style = {styles.imageContainer}/>
+                <View style = {styles.textContainer}>
+                  <Text style = {styles.normalText}>In its educational role the Institute established the goal of disseminating its
+                  ecological values, mainly through tree complementary programs.</Text>
+                </View>
+                <View style = {styles.darkBubbleContainer}>
+                  <Text style = {styles.bubbleText}>More than 82,000 students, primarily from the regions of Rio Doce, have graduated from
+                  several courses and programs offered by the Institute.</Text>
+                </View><View style = {styles.textContainer}>
+                <Text style = {styles.normalText}>The 'Terrinha' project has the goal of making students between 11 and 13 years of age
+                become conscious of ecological themes. 760 children partook in this program and will pass on the knowledge to their
+                respective classrooms, indirectly affecting over 19,000 students in the region. Since 2005, 177 young agricultural technicians
+                were trained in the recovery of decraded areas through a boarding program that lasts 1 year.</Text>
+                </View>
+                <Image source = {require('../../assets/background/about/about-3.png')} style = {styles.imageContainer}/>
+                <View style = {styles.normalText}>
+                  <Text style = {styles.normalText}>The institute has recovered 1977 springs so far, this has increased water flow and provoked
+                  a systematic improvement in the productivity of approximately 49,425 hectares of land belonging to 1044 low income families.
+                  This project has become the main focus for the Institute.</Text>
+                </View>
+              <View style = {styles.footer}>
+            </View>
               </ScrollView> 
             </View>
           </View>
@@ -81,13 +105,14 @@ const styles = StyleSheet.create({
     height: height,
     width: width,
     backgroundColor: COLORS.lightgreen,
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center'
   },
 
   backContainer: {
     backgroundColor: COLORS.green,
     top: height*.05,
+    width: width,
     height: height,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
@@ -117,7 +142,7 @@ const styles = StyleSheet.create({
   logo: {
     width: width*.4,
     height: width*.4,
-    resizeMode:'contain'
+    resizeMode:'stretch'
   },
       
   terrawhite: {
@@ -126,8 +151,16 @@ const styles = StyleSheet.create({
     resizeMode:'contain',
   },
 
+  imageContainer: {
+    borderRadius: 25,
+    width: width,
+    height: height*.4,
+    resizeMode: 'contain',
+    padding: width*.05
+  },
+
   headerBar: {
-    height: height * 0.08,
+    height: height,
     backgroundColor: COLORS.green,
   },
 
@@ -195,6 +228,12 @@ const styles = StyleSheet.create({
     padding: width*.05,
     backgroundColor: COLORS.darkgreen,
     borderRadius: 25,
+  },
+
+  footer: {
+    backgroundColor: COLORS.green,
+    width: width,
+    height: height*.1
   }
 
 })
