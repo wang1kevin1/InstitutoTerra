@@ -14,6 +14,7 @@ const COLORS = {
   green: '#648C1C',
   lightgreen: '#CAF28D',
   mutedgreen: '#9CA670',
+  darkgreen: '#557718',
 
   lightblue: '#82A2F4'
 }
