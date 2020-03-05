@@ -4,11 +4,21 @@ import {
   View,
   Text,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native'
 
 import COLORS from '../../assets/Colors.js'
+
 import Auth from '@aws-amplify/auth';
-import Footer from '../main/Footer.js'
+
+import Footer from '../main/Footer.js';
+
+import Swiper from "react-native-web-swiper";
+
+const backgrounds = [
+  require('../../assets/background/profile/profile-carbon.png'),
+  require('../../assets/background/profile/profile-trees.png')
+]
 
 
 export default class UserDashboardScreen extends React.Component {
@@ -53,6 +63,20 @@ export default class UserDashboardScreen extends React.Component {
           </Text>
         </TouchableOpacity>
         </View>
+        <View style={styles.test}>
+        <Swiper>
+          <View style={styles.slideContainer}>
+            <ImageBackground source={backgrounds[0]} style={styles.ImageBackground}>
+              <Text>Slide 1</Text>
+            </ImageBackground>
+          </View>
+          <View style={styles.slideContainer}>
+            <ImageBackground source={backgrounds[1]} style={styles.ImageBackground}>
+              <Text>Slide 2</Text>
+            </ImageBackground>
+          </View>
+        </Swiper>
+        </View>
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('fInfo')}
           style={styles.buttonStyle1}>
@@ -69,11 +93,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.lightgreen,
-    justifyContent: 'space-around',
   },
   topBar: {
     flexDirection: 'row',
     justifyContent: 'space-between'
+  },
+  slideContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: '90%',
+    height: '39%',
+    backgroundColor: COLORS.white,
+  },
+  ImageBackground: {
+    flex:1,
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent:'center',
+
   },
   textStyle: {
     fontWeight: 'bold',
@@ -81,11 +119,15 @@ const styles = StyleSheet.create({
     padding: 10,
     color: '#fff'
   },
+  test:{
+    flex: 1,
+    justifyContent: "center",
+  },
   buttonStyle1: {
     alignItems: 'center',
-    backgroundColor: COLORS.lightblue,
+    backgroundColor: COLORS.green,
     padding: 14,
-    marginBottom: 20,
+    marginBottom: 60,
     borderRadius: 10,
   },
   buttonText1: {
