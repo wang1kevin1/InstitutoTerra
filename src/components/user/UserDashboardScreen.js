@@ -7,12 +7,44 @@ import {
 } from 'react-native'
 
 import COLORS from '../../assets/Colors.js'
+import Auth from '@aws-amplify/auth';
+import Footer from '../main/Footer.js'
+
 
 export default class UserDashboardScreen extends React.Component {
+  state = {
+    name: '',
+    email: '',
+  }
+
+  componentDidMount() {
+    this.getUserInfo()
+  }
+
+  getUserInfo = async () => {
+    await Auth.currentAuthenticatedUser({ bypassCache: true })
+      .then(user => {
+        console.log(user)
+        this.setState({ user })
+        this.setState({ name: user.attributes.name })
+        this.setState({ email: user.attributes.email })
+      })
+      .catch(err => {
+        if (!err.message) {
+          console.log('Error getting user info: ', err)
+          Alert.alert('Error getting user info: ', err)
+        } else {
+          console.log('Error getting user info: ', err.message)
+          Alert.alert('Error getting user info: ', err.message)
+        }
+      })
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.textStyle}>UserDashboard</Text>
+        <View style={styles.topBar}>
+        <Text style={styles.textStyle}> Hi, {this.state.name} </Text>
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Settings')}
           style={styles.buttonStyle1}>
@@ -20,6 +52,7 @@ export default class UserDashboardScreen extends React.Component {
             Settings
           </Text>
         </TouchableOpacity>
+        </View>
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('fInfo')}
           style={styles.buttonStyle1}>
@@ -27,6 +60,7 @@ export default class UserDashboardScreen extends React.Component {
             Flight Info
           </Text>
         </TouchableOpacity>
+        <Footer color='green' />
       </View>
     )
   }
@@ -34,9 +68,12 @@ export default class UserDashboardScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#5059ae',
-    alignItems: 'center',
-    justifyContent: 'center'
+    backgroundColor: COLORS.lightgreen,
+    justifyContent: 'space-around',
+  },
+  topBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   textStyle: {
     fontWeight: 'bold',
