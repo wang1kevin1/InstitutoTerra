@@ -41,7 +41,7 @@ export default class SettingsListScreen extends React.Component {
 
   // Opens up email to bug-report
   handleBugReports = () => {
-    Linking.openURL('mailto: bug-report@refloresta.app');
+    Linking.openURL('mailto: bug-report@refloresta.app?body=Please describe (1) the steps leading to the bug, (2) the expected result, and (3) the actual result. Any screenshots would be greatly appreciated.');
   }
 
   // Gets current authenticated user's info
