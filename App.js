@@ -71,6 +71,9 @@ i18n.translations = {
   pt: Portugues,
 }
 
+// default fallback is English
+i18n.defaultLocale = 'en'
+
 // Set the locale once at start of app.
 i18n.locale = Localization.locale;
 
