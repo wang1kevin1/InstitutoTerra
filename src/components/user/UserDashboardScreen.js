@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   ImageBackground,
+  Dimensions
 } from 'react-native'
 
 import COLORS from '../../assets/Colors.js'
@@ -64,75 +65,88 @@ export default class UserDashboardScreen extends React.Component {
         </TouchableOpacity>
         </View>
         <View style={styles.test}>
-        <Swiper>
           <View style={styles.slideContainer}>
             <ImageBackground source={backgrounds[0]} style={styles.ImageBackground}>
               <Text>Slide 1</Text>
             </ImageBackground>
           </View>
-          <View style={styles.slideContainer}>
-            <ImageBackground source={backgrounds[1]} style={styles.ImageBackground}>
-              <Text>Slide 2</Text>
-            </ImageBackground>
-          </View>
-        </Swiper>
         </View>
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('fInfo')}
-          style={styles.buttonStyle1}>
-          <Text style={styles.buttonText1}>
-            Flight Info
+          onPress={() => this.props.navigation.navigate('Home')}
+          style={styles.buttonStyle2}>
+          <Text style={styles.buttonText2}>
+            Test
           </Text>
         </TouchableOpacity>
-        <Footer color='green' />
       </View>
     )
   }
 }
+const { width, height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection:"column",
     backgroundColor: COLORS.lightgreen,
+    height: height,
+    width: width
   },
   topBar: {
+    marginTop: "10%",
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height:'8%',
+    marginHorizontal: "2%",
   },
   slideContainer: {
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "stretch",
     width: '90%',
     height: '39%',
     backgroundColor: COLORS.white,
   },
   ImageBackground: {
-    flex:1,
-    width: '100%',
-    height: '100%',
     alignItems: 'center',
     justifyContent:'center',
-
+    resizeMode: "cover",
+    height: '100%'
   },
   textStyle: {
     fontWeight: 'bold',
     fontSize: 18,
-    padding: 10,
+    padding: 0,
     color: '#fff'
   },
   test:{
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
+    
   },
   buttonStyle1: {
     alignItems: 'center',
     backgroundColor: COLORS.green,
-    padding: 14,
-    marginBottom: 60,
+    padding: 0,
     borderRadius: 10,
+    alignSelf:'center',
+  },
+  buttonStyle2: {
+    alignItems: 'center',
+    backgroundColor: COLORS.green,
+    borderRadius: 10,
+    marginBottom:'20%',
   },
   buttonText1: {
     fontSize: 18,
     fontWeight: 'bold',
     color: COLORS.white,
+  },
+  buttonText2: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: COLORS.white,
+    padding: 18
   },
 })
