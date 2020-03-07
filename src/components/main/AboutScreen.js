@@ -8,7 +8,6 @@ import {
   Image,
   Text,
   Dimensions,
-  TouchableWithoutFeedback
 
 } from 'react-native'
 
@@ -114,8 +113,7 @@ const styles = StyleSheet.create({
     top: height*.05,
     width: width,
     height: height,
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
+    borderRadius: 25,
     padding: width*.03,
     flexDirection: "column"
   },
