@@ -13,6 +13,8 @@ import {
 
 import { createStackNavigator } from 'react-navigation-stack'
 
+import { fromRight, fromBottom, fromTop } from 'react-navigation-transitions'
+
 // AuthStack
 import SignUpScreen from './src/components/auth/SignUpScreen'
 import SignInScreen from './src/components/auth/SignInScreen'
@@ -29,6 +31,7 @@ import UserDashboardScreen from './src/components/user/UserDashboardScreen'
 
 // MainStack head
 import HomeScreen from './src/components/main/HomeScreen'
+import AboutScreen from './src/components/main/AboutScreen'
 
 // FlightStack
 import FlightInfoScreen from './src/components/main/flight/FlightInfoScreen'
@@ -71,11 +74,36 @@ i18n.translations = {
   pt: Portugues,
 }
 
+// default fallback is English
+i18n.defaultLocale = 'en'
+
 // Set the locale once at start of app.
 i18n.locale = Localization.locale;
 
 // Fallback if language missing.
 i18n.fallbacks = true;
+
+// handles screen transitions
+const handleCustomTransition = ({ scenes }) => {
+  const prevScene = scenes[scenes.length - 2];
+  const nextScene = scenes[scenes.length - 1];
+ 
+  // Custom transitions go there
+  if (prevScene
+    && nextScene.route.routeName === 'About') {
+    return fromBottom() // About page rolls up
+  } else if (prevScene
+    && nextScene.route.routeName === 'Auth') {
+    return fromTop() // signin page drops down
+  } else if (prevScene
+    && nextScene.route.routeName === 'UserDashboard') {
+    return fromTop() // user profile drops down
+  } else if (prevScene
+    && nextScene.route.routeName === 'Settings') {
+    return null // settings page just appears
+  }
+  return fromRight() // every other page comes in from right side
+}
 
 // Auth stack
 const AuthStackNavigator = createStackNavigator({
@@ -99,31 +127,37 @@ const FlightStackNavigator = createStackNavigator({
   CarbonEmissions: CarbonEmissionsScreen,
   CheckoutWithFlight: CheckoutWithFlightScreen,
   ReceiptWithFlight: ReceiptWithFlightScreen,
-}, { headerMode: 'none' })
+}, { 
+  headerMode: 'none',
+  transitionConfig: () => fromRight(100),
+})
 
 // NoFlight Stack
 const NoFlightStackNavigator = createStackNavigator({
   CheckoutWithoutFlight: CheckoutWithoutFlightScreen,
   ReceiptWithoutFlight: ReceiptWithoutFlightScreen,
-}, { headerMode: 'none' })
+}, { 
+  headerMode: 'none',
+  transitionConfig: () => fromRight(100),
+})
 
 // Main stack
 const MainStackNavigator = createStackNavigator({
   Home: HomeScreen,
+  About: AboutScreen,
   Flight: FlightStackNavigator, // FlightStack
   NoFlight: NoFlightStackNavigator, // NoFlightStack
   Payment: PaymentScreen,
   ThankYou: ThankYouScreen,
-  UserDashboard: UserDashboardScreen, // DashboardStack
+  UserDashboard: UserDashboardScreen, // DashboardScreen
   Settings: SettingsStackNavigator, // SettingsStack
   Auth: AuthStackNavigator, // AuthStackNavigator
-}, { headerMode: 'none' })
-
-const AppSwitchNavigator = createSwitchNavigator({
-  Main: MainStackNavigator, // the MainStack
+}, { 
+  headerMode: 'none',
+  transitionConfig: (nav) => handleCustomTransition(nav),
 })
 
-const AppContainer = createAppContainer(AppSwitchNavigator)
+const AppContainer = createAppContainer(MainStackNavigator)
 
 export default class App extends React.Component {
   state = {

@@ -246,7 +246,7 @@ export default class HomeScreen extends React.Component {
             </View>
           </TouchableWithoutFeedback>
         </ImageBackground>
-        <Footer color='green' />
+        <Footer color='green' navigation={this.props.navigation}/>
       </View>
     );
   }
@@ -280,6 +280,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: height * 0.05,
     justifyContent: 'space-between',
+    backgroundColor: 'transparent',
   },
   navStyle: {
     flexDirection: 'column',
