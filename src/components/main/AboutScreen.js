@@ -14,9 +14,11 @@ import COLORS from '../../assets/Colors.js'
 import { Ionicons } from '@expo/vector-icons';
 
 export default class AboutScreen extends React.Component {
-  // load images
+  // load images and get props
   constructor(props) {
     super(props)
+
+    this.props.navigation.getParam('color', 'color')
 
     this.icon_green = require('../../assets/icons/icon-green.png')
     this.icon_black = require('../../assets/icons/icon-black.png')
