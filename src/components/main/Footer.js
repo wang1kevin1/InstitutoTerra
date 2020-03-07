@@ -7,33 +7,46 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  Alert
 } from 'react-native';
 
 import COLORS from '../../assets/Colors.js'
 
 import i18n from 'i18n-js'
 
-const terra_greentxt = require('../../assets/footer/terra-green.png')
-
-const terra_whitetxt = require('../../assets/footer/terra-white.png')
-
-class Footer extends React.Component {
+export default class Footer extends React.Component {
   constructor(props) {
     super(props);
+    
     this.state = {
       color: '',
-    };
+    }
+
+    this.terra_green = require('../../assets/terra/terra-green.png')
+    this.terra_white = require('../../assets/terra/terra-white.png')
+  }
+
+  handleNavigation() {
+    if (this.props.color == 'green') {
+      this.props.navigation.navigate('About', {
+        color: 'green',
+      })
+    } else {
+      this.props.navigation.navigate('About', {
+        color: 'black',
+      })
+    }
   }
 
   render() {
     if (this.props.color == 'green') {
+      console.log(this.props)
       return (
         <View style={styles.footerGreen}>
           <Text style={styles.footerTxtGreen}>{i18n.t('made possible with')}</Text>
-          <TouchableOpacity onPress={() => Alert.alert('About Section')}>
+          <TouchableOpacity 
+            onPress={() => this.handleNavigation()}>
             <Image
-              source={terra_whitetxt}
+              source={this.terra_green}
               style={styles.image}
             />
           </TouchableOpacity>
@@ -44,9 +57,10 @@ class Footer extends React.Component {
       return (
         <View style={styles.footerWhite}>
           <Text style={styles.footerTxtWhite}>{i18n.t('made possible with')}</Text>
-          <TouchableOpacity onPress={() => Alert.alert('About Section')}>
+          <TouchableOpacity
+            onPress={() => this.handleNavigation()}>
             <Image
-              source={terra_greentxt}
+              source={this.terra_white}
               style={styles.image}
             />
           </TouchableOpacity>
@@ -55,8 +69,6 @@ class Footer extends React.Component {
     }
   }
 }
-
-export default Footer
 
 const { width, height } = Dimensions.get('window');
 

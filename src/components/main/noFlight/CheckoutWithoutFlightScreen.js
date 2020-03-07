@@ -172,7 +172,7 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
             <Text style={styles.buttonText}>{i18n.t('CHECKOUT')}</Text>
           </TouchableOpacity>
         </View>
-        <Footer color='white' />
+        <Footer color='white' navigation={this.props.navigation}/>
       </View>
     )
   }

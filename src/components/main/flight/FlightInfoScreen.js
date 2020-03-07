@@ -356,7 +356,7 @@ export default class FlightInfoScreen extends React.Component {
               <Text style={styles.buttonText}>{i18n.t('CALCULATE CARBON FOOTPRINT')}</Text>
             </TouchableOpacity>
           </View>
-          <Footer color='white' />
+          <Footer color='white' navigation={this.props.navigation}/>
         </View>
       )
     }

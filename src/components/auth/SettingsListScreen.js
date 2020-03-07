@@ -136,7 +136,7 @@ export default class SettingsListScreen extends React.Component {
                     </SettingsList>
                   </View>
                 </View>
-                <Footer color='white' />
+                <Footer color='white' navigation={this.props.navigation}/>
               </View>
       );
     }

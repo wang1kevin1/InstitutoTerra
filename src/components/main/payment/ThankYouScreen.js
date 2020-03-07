@@ -160,7 +160,7 @@ export default class ThankYouScreen extends React.Component {
                 <Text style={styles.smallBlueText}>{i18n.t('SHARE')}</Text>
               </TouchableOpacity>
           </View>
-          <Footer color='white' />
+          <Footer color='white' navigation={this.props.navigation}/>
         </View>
       )
     }

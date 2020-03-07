@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Refloresta",
-    "slug": "InstitutoTerra",
+    "slug": "Refloresta",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
@@ -10,7 +10,7 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/icon.png",
+    "icon": "./src/assets/logo.png",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -22,7 +22,7 @@
         "image": "./src/assets/splash/splash-hdpi.png",
         "resizeMode": "cover"
       },
-      "bundleIdentifier": "org.institutoterra.refloresta"
+      "bundleIdentifier": "app.refloresta"
     },
     "android": {
       "splash": {
@@ -34,9 +34,8 @@
         "xxxhdpi": "./src/assets/splash/splash-hdpi.png",
         "resizeMode": "cover"
       },
-      "package": "org.institutoterra.refloresta"
+      "package": "app.refloresta"
     },
-    "scheme": "refloresta",
     "description": "An app promoting the planting of trees to offset carbon emissions. http://www.institutoterra.org/eng/",
     "githubUrl": "https://github.com/wang1kevin1/InstitutoTerra.git"
   }
