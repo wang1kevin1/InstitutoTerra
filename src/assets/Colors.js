@@ -1,8 +1,9 @@
 const COLORS = {
   white: '#fff',
   black: '#000',
+  lightblack: '#212121',
 
-  darkgrey: '#3E3E3E',
+  darkgrey: '#2F2F2F',
   grey: '#9A9A9A',
   lightgrey: '#E0E0E0',
 

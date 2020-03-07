@@ -11,15 +11,26 @@ import {
 
 import COLORS from '../../assets/Colors.js'
 
-const terra_greentxt = require('../../assets/footer/terra-green.png')
-
-const terra_whitetxt = require('../../assets/footer/terra-white.png')
-
 export default class Footer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       color: '',
+    }
+
+    this.terra_green = require('../../assets/terra/terra-green.png')
+    this.terra_white = require('../../assets/terra/terra-white.png')
+  }
+
+  handleNavigation() {
+    if (this.props.color == 'green') {
+      this.props.navigation.navigate('About', {
+        color: 'green',
+      })
+    } else {
+      this.props.navigation.navigate('About', {
+        color: 'black',
+      })
     }
   }
 
@@ -30,9 +41,9 @@ export default class Footer extends React.Component {
         <View style={styles.footerGreen}>
           <Text style={styles.footerTxtGreen}>made possible with</Text>
           <TouchableOpacity 
-            onPress={() => this.props.navigation.navigate('About')}>
+            onPress={() => this.handleNavigation()}>
             <Image
-              source={terra_whitetxt}
+              source={this.terra_green}
               style={styles.image}
             />
           </TouchableOpacity>
@@ -44,9 +55,9 @@ export default class Footer extends React.Component {
         <View style={styles.footerWhite}>
           <Text style={styles.footerTxtWhite}>made possible with</Text>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('About')}>
+            onPress={() => this.handleNavigation()}>
             <Image
-              source={terra_greentxt}
+              source={this.terra_white}
               style={styles.image}
             />
           </TouchableOpacity>

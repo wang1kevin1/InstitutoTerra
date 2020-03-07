@@ -23,7 +23,6 @@ const website = 'http://www.google.com/'
 export default class ThankYouScreen extends React.Component {
   state = {
     isAuthenticated: 'false',
-
   }
 
   // load background
