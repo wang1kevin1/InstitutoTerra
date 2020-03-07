@@ -14,9 +14,11 @@ import COLORS from '../../assets/Colors.js'
 import { Ionicons } from '@expo/vector-icons';
 
 export default class AboutScreen extends React.Component {
-  // load images and get props
+  // load images and get color
   constructor(props) {
     super(props)
+
+    this.color = this.props.navigation.getParam('color', 'color')
 
     this.icon_green = require('../../assets/icons/icon-green.png')
     this.icon_black = require('../../assets/icons/icon-black.png')
@@ -32,8 +34,7 @@ export default class AboutScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={[styles.backContainer,
-        { backgroundColor: (this.props.navigation.getParam('color', 'color') == 'green') ? COLORS.green : COLORS.darkgrey }]}>
+        <View style={[styles.backContainer, { backgroundColor: (this.color == 'green') ? COLORS.green : COLORS.darkgrey }]}>
           <View style={styles.headerContainer}>
             <Text style={styles.aboutText}>ABOUT INSTITUTO TERRA</Text>
             <Ionicons style={styles.navigationIcon} name="md-close" onPress={() => this.props.navigation.goBack()} />
@@ -41,21 +42,21 @@ export default class AboutScreen extends React.Component {
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.mainContainer}>
               <Image
-                source={(this.props.navigation.getParam('color', 'color') == 'green') ? this.icon_green : this.icon_black}
+                source={(this.color == 'green') ? this.icon_green : this.icon_black}
                 style={styles.logo} />
               <Image
-                source={(this.props.navigation.getParam('color', 'color') == 'green') ? this.terra_green : this.terra_black}
+                source={(this.color == 'green') ? this.terra_green : this.terra_black}
                 style={styles.terra} />
               <View style={styles.whiteline} />
-              <Text style={(this.props.navigation.getParam('color', 'color') == 'green') ? styles.normalText : styles.greenNormalText}>
+              <Text style={(this.color == 'green') ? styles.normalText : styles.greenNormalText}>
                 Since its creation in 1998, the Instituto Terra has had three focal principles:
-                </Text>
+              </Text>
             </View>
             <View style={styles.threePrinciples}>
               <View style={styles.numbers}>
-                <Text style={(this.props.navigation.getParam('color', 'color') == 'green') ? styles.numberText : styles.greenNumberText}>1</Text>
-                <Text style={(this.props.navigation.getParam('color', 'color') == 'green') ? styles.numberText : styles.greenNumberText}>2</Text>
-                <Text style={(this.props.navigation.getParam('color', 'color') == 'green') ? styles.numberText : styles.greenNumberText}>3</Text>
+                <Text style={(this.color == 'green') ? styles.numberText : styles.greenNumberText}>1</Text>
+                <Text style={(this.color == 'green') ? styles.numberText : styles.greenNumberText}>2</Text>
+                <Text style={(this.color == 'green') ? styles.numberText : styles.greenNumberText}>3</Text>
               </View>
               <View style={styles.descriptions}>
                 <Text style={styles.descText}>The recovery and restoration of its founding seat: the RPPN Bulcão farm.</Text>
@@ -64,37 +65,42 @@ export default class AboutScreen extends React.Component {
               </View>
             </View>
             <Image source={this.about_1} style={styles.imageContainer1} />
-            <View style={[styles.bubbleContainer, { backgroundColor: (this.props.navigation.getParam('color', 'color') == 'green') ? COLORS.darkgreen : COLORS.lightblack }]}>
+            <View style={[styles.bubbleContainer, { backgroundColor: (this.color == 'green') ? COLORS.darkgreen : COLORS.lightblack }]}>
               <Text style={styles.bubbleText}>In its 20 years of operation the Instituto Terra has successfully planted over 2.7 million trees.</Text>
             </View>
             <View style={styles.textContainer}>
-              <Text style={styles.normalText}>The revival of our ecosystem has brought back a great variety of animal species; 172
-              species of birds, 33 species of mammals, 16 species of reptiles and 16 species of amphibians. Our vivarium has a capacity
-              of producing 600,000 saplings a year and our laboratory guarantees us the technical knowlege to produce 297 species of
-                trees native to our region.</Text>
+              <Text style={styles.normalText}>
+                The revival of our ecosystem has brought back a great variety of animal species; 172 species of birds, 33 species of mammals, 
+                16 species of reptiles and 16 species of amphibians. Our vivarium has a capacity of producing 600,000 saplings a year and our 
+                laboratory guarantees us the technical knowlege to produce 297 species of trees native to our region.
+              </Text>
             </View>
             <Image source={this.about_2} style={styles.imageContainer2} />
             <View style={styles.textContainer}>
-              <Text style={styles.normalText}>In its educational role the Institute established the goal of disseminating its
-                ecological values, mainly through tree complementary programs.</Text>
+              <Text style={styles.normalText}>
+                In its educational role the Institute established the goal of disseminating its ecological values, mainly through tree complementary programs.
+              </Text>
             </View>
-            <View style={[styles.bubbleContainer, { backgroundColor: (this.props.navigation.getParam('color', 'color') == 'green') ? COLORS.darkgreen : COLORS.lightblack }]}>
-              <Text style={styles.bubbleText}>More than 82,000 students, primarily from the regions of Rio Doce, have graduated from
-                several courses and programs offered by the Institute.</Text>
-            </View><View style={styles.textContainer}>
-              <Text style={styles.normalText}>The 'Terrinha' project has the goal of making students between 11 and 13 years of age
-              become conscious of ecological themes. 760 children partook in this program and will pass on the knowledge to their
-              respective classrooms, indirectly affecting over 19,000 students in the region. Since 2005, 177 young agricultural technicians
-              were trained in the recovery of decraded areas through a boarding program that lasts 1 year.</Text>
+            <View style={[styles.bubbleContainer, { backgroundColor: (this.color == 'green') ? COLORS.darkgreen : COLORS.lightblack }]}>
+              <Text style={styles.bubbleText}>
+                More than 82,000 students, primarily from the regions of Rio Doce, have graduated from several courses and programs offered by the Institute.
+              </Text>
+            </View>
+            <View style={styles.textContainer}>
+              <Text style={styles.normalText}>
+                The 'Terrinha' project has the goal of making students between 11 and 13 years of age become conscious of ecological themes. 760 children partook 
+                in this program and will pass on the knowledge to their respective classrooms, indirectly affecting over 19,000 students in the region. 
+                Since 2005, 177 young agricultural technicians were trained in the recovery of decraded areas through a boarding program that lasts 1 year.
+              </Text>
             </View>
             <Image source={this.about_3} style={styles.imageContainer3} />
             <View style={styles.normalText}>
-              <Text style={styles.normalText}>The institute has recovered 1977 springs so far, this has increased water flow and provoked
-              a systematic improvement in the productivity of approximately 49,425 hectares of land belonging to 1044 low income families.
-                This project has become the main focus for the Institute.</Text>
+              <Text style={styles.normalText}>
+                The institute has recovered 1977 springs so far, this has increased water flow and provoked a systematic improvement in the productivity of 
+                approximately 49,425 hectares of land belonging to 1044 low income families. This project has become the main focus for the Institute.
+              </Text>
             </View>
-            <View style={styles.footer}>
-            </View>
+            <View style={styles.footer}></View>
           </ScrollView>
         </View>
       </View>
@@ -163,7 +169,8 @@ const styles = StyleSheet.create({
     width: width * .9,
   },
   textContainer: {
-    padding: width * .05,
+    paddingTop: height * .03,
+    paddingBottom: height * .03,
   },
   threePrinciples: {
     flexDirection: "row",
