@@ -51,6 +51,31 @@ import Amplify from '@aws-amplify/core'
 import config from './aws-exports'
 Amplify.configure(config)
 
+// screen transitions
+import { fromRight, fromBottom, fromTop } from 'react-navigation-transitions'
+
+// handles screen transitions
+const handleCustomTransition = ({ scenes }) => {
+  const prevScene = scenes[scenes.length - 2];
+  const nextScene = scenes[scenes.length - 1];
+ 
+  // Custom transitions go there
+  if (prevScene
+    && nextScene.route.routeName === 'About') {
+    return fromBottom() // About page rolls up
+  } else if (prevScene
+    && nextScene.route.routeName === 'Auth') {
+    return fromTop() // signin page drops down
+  } else if (prevScene
+    && nextScene.route.routeName === 'UserDashboard') {
+    return fromTop() // user profile drops down
+  } else if (prevScene
+    && nextScene.route.routeName === 'Settings') {
+    return null // settings page just appears
+  }
+  return fromRight() // every other page comes in from right side
+}
+
 // Auth stack
 const AuthStackNavigator = createStackNavigator({
   SignIn: SignInScreen,
@@ -74,13 +99,19 @@ const FlightStackNavigator = createStackNavigator({
   CarbonEmissions: CarbonEmissionsScreen,
   CheckoutWithFlight: CheckoutWithFlightScreen,
   ReceiptWithFlight: ReceiptWithFlightScreen,
-}, { headerMode: 'none' })
+}, { 
+  headerMode: 'none',
+  transitionConfig: () => fromRight(100),
+})
 
 // NoFlight Stack
 const NoFlightStackNavigator = createStackNavigator({
   CheckoutWithoutFlight: CheckoutWithoutFlightScreen,
   ReceiptWithoutFlight: ReceiptWithoutFlightScreen,
-}, { headerMode: 'none' })
+}, { 
+  headerMode: 'none',
+  transitionConfig: () => fromRight(100),
+})
 
 // Main stack
 const MainStackNavigator = createStackNavigator({
@@ -93,13 +124,12 @@ const MainStackNavigator = createStackNavigator({
   UserDashboard: UserDashboardScreen, // DashboardStack
   Settings: SettingsStackNavigator, // SettingsStack
   Auth: AuthStackNavigator, // AuthStackNavigator
-}, { headerMode: 'none' })
-
-const AppSwitchNavigator = createSwitchNavigator({
-  Main: MainStackNavigator, // the MainStack
+}, { 
+  headerMode: 'none',
+  transitionConfig: (nav) => handleCustomTransition(nav),
 })
 
-const AppContainer = createAppContainer(AppSwitchNavigator)
+const AppContainer = createAppContainer(MainStackNavigator)
 
 export default class App extends React.Component {
   state = {
