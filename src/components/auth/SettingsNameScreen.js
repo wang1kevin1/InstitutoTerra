@@ -25,6 +25,8 @@ import COLORS from '../../assets/Colors.js';
 
 import Auth from '@aws-amplify/auth';
 
+import i18n from 'i18n-js'
+
 export default class SettingsNameScreen extends React.Component {
   state = {
     isLoading: false,
@@ -56,10 +58,10 @@ export default class SettingsNameScreen extends React.Component {
         this.setState({ isLoading: false })
         if (!err.message) {
           console.log('Error changing name: ', err)
-          Alert.alert('Error changing name: ', err)
+          Alert.alert(i18n.t('Error changing name: '), err)
         } else {
           console.log('Error changing name: ', err.message)
-          Alert.alert('Error changing name: ', err.message)
+          Alert.alert(i18n.t('Error changing name: '), err.message)
         }
       })
   }
@@ -77,7 +79,7 @@ export default class SettingsNameScreen extends React.Component {
                         <Ionicons style={styles.iconStyle1} name="ios-person" />
                         <Input
                           style={styles.input}
-                          placeholder='Name'
+                          placeholder={i18n.t('Name')}
                           placeholderTextColor={COLORS.lightblue}
                           returnKeyType='go'
                           autoCapitalize='none'
@@ -91,7 +93,7 @@ export default class SettingsNameScreen extends React.Component {
                         disabled={this.state.isLoading}
                         style={styles.buttonStyle1}>
                         <Text style={styles.buttonText1}>
-                          Save Changes
+                         {i18n.t('Save Changes')}
                         </Text>
                       </TouchableOpacity>
                       {/* Loading ActivityIndicator */}

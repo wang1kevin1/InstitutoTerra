@@ -18,6 +18,8 @@ import Footer from '../Footer.js';
 
 import Auth from '@aws-amplify/auth';
 
+import i18n from 'i18n-js'
+
 export default class ReceiptWithoutFlightScreen extends React.Component {
   state = {
     isAuthenticated: 'false',
@@ -80,13 +82,13 @@ export default class ReceiptWithoutFlightScreen extends React.Component {
           <View style={styles.receiptContainer}>
             <View style={styles.textRow}>
               {/*Total trees donated in transaction*/}
-              <Text style={styles.receiptTextLeft}>TOTAL TREES</Text>
+              <Text style={styles.receiptTextLeft}>{i18n.t('TOTAL TREES')}</Text>
               <Text style={styles.receiptTextRight}>{treeNum}</Text>
             </View>
             <Dash style={styles.dashedLine} dashColor={COLORS.lightgrey} dashGap={0} />
             <View style={styles.textRow}>
               {/*Cost of transaction*/}
-              <Text style={styles.receiptTextLeft}>PRICE</Text>
+              <Text style={styles.receiptTextLeft}>{i18n.t('PRICE')}</Text>
               <Text style={styles.receiptTextRight}>${total_cost}</Text>
             </View>
           </View>
@@ -95,7 +97,7 @@ export default class ReceiptWithoutFlightScreen extends React.Component {
             style={styles.bottomGreenButton}
             onPress={() => this.handleStripePayment()}>
             <View style={styles.alignText}>
-              <Text style={styles.buttonText}>PAY WITH </Text>
+              <Text style={styles.buttonText}>{i18n.t('PAY WITH')} </Text>
               <Text style={styles.stripeText}> stripe</Text>
             </View>
           </TouchableOpacity>

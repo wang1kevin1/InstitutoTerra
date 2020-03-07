@@ -11,6 +11,8 @@ import {
 
 import COLORS from '../../assets/Colors.js'
 
+import i18n from 'i18n-js'
+
 export default class Footer extends React.Component {
   constructor(props) {
     super(props);
@@ -40,7 +42,7 @@ export default class Footer extends React.Component {
       console.log(this.props)
       return (
         <View style={styles.footerGreen}>
-          <Text style={styles.footerTxtGreen}>made possible with</Text>
+          <Text style={styles.footerTxtGreen}>{i18n.t('made possible with')}</Text>
           <TouchableOpacity 
             onPress={() => this.handleNavigation()}>
             <Image
@@ -54,7 +56,7 @@ export default class Footer extends React.Component {
     else {
       return (
         <View style={styles.footerWhite}>
-          <Text style={styles.footerTxtWhite}>made possible with</Text>
+          <Text style={styles.footerTxtWhite}>{i18n.t('made possible with')}</Text>
           <TouchableOpacity
             onPress={() => this.handleNavigation()}>
             <Image

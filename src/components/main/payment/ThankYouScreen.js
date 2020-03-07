@@ -18,13 +18,13 @@ import Footer from '../Footer.js';
 
 import Auth from '@aws-amplify/auth';
 
-const website = 'http://www.google.com/'
+import { API } from 'aws-amplify'
+
+import i18n from 'i18n-js'
+
+import * as CONSTANTS from '../../utilities/Constants.js'
 
 export default class ThankYouScreen extends React.Component {
-  state = {
-    isAuthenticated: 'false',
-  }
-
   // load background
   constructor(props) {
     super(props)
@@ -40,17 +40,8 @@ export default class ThankYouScreen extends React.Component {
     this.checkAuth()
   }
 
-  // Checks if a user is logged in
-  async checkAuth() {
-    await Auth.currentAuthenticatedUser({ bypassCache: true })
-      .then(() => {
-        console.log('A user is logged in')
-        this.setState({ isAuthenticated: true })
-      })
-      .catch(err => {
-        console.log('Nobody is logged in')
-        this.setState({ isAuthenticated: false })
-      })
+  state = {
+    isAuthenticated: 'false',
   }
 
   // Sends user to sign up or dashboard depending on Auth state
@@ -62,9 +53,63 @@ export default class ThankYouScreen extends React.Component {
     }
   }
 
+  // Checks if a user is logged in
+  async checkAuth() {
+    await Auth.currentAuthenticatedUser({ bypassCache: true })
+      .then(user => {
+        console.log('A user is logged in')
+        this.setState(user)
+        this.setState({ UserId: user.attributes.sub })
+        this.setState({ isAuthenticated: true })
+        this.getUserTrees()
+      })
+      .catch(err => {
+        console.log('Nobody is logged in')
+        this.setState({ isAuthenticated: false })
+      })
+  }
+
+  // gets a user's tree count
+  async getUserTrees() {
+    const path = "/Users/object/" + this.state.UserId;
+
+    await API.get("ZeroCarbonREST", path)
+      .then(apiResponse => {
+        this.setState({ apiResponse })
+        console.log("response from getting user: " + apiResponse);
+        this.setState({ TreesPlanted: apiResponse.TreesPlanted + this.state.treeNum})
+        console.log(this.state.TreesPlanted)
+        this.updateUserTrees()
+      })
+      .catch(e => {
+        console.log(e);
+      })
+    }
+
+  // updates a user's tree count
+  async updateUserTrees() {
+    let newUser = {
+      body: {
+        "UserId": this.state.UserId,
+        "TreesPlanted": this.state.TreesPlanted,
+      }
+    }
+    
+    const path = "/Users";
+
+    await API.put("ZeroCarbonREST", path, newUser)
+      .then(apiResponse => {
+        this.setState({apiResponse});
+        console.log("Response from saving user: " + apiResponse);
+      })
+      .catch(e => {
+      console.log(e);
+    })
+  }
+
   // Opens apps for users to share
   onShare = async () => {
-    const message = 'I just donated ' + this.state.treeNum + ' tree(s)! You can too at ' + website + '!'
+    const message = 'I just donated ' + this.state.treeNum + ' tree(s)! You can too at ' + CONSTANTS.WEBSITE + '!'
     try {
       const result = await Share.share({
         title: '#Refloresta',
@@ -85,7 +130,7 @@ export default class ThankYouScreen extends React.Component {
     } catch (error) {
       Console.log(error.message);
     }
-  };
+  }
 
   render() {
       return (
@@ -103,7 +148,7 @@ export default class ThankYouScreen extends React.Component {
                 source={this.planet}
                 style={styles.planetImage}
               />
-              <Text style={styles.midGreenText}>Thank you!</Text>
+              <Text style={styles.midGreenText}>{i18n.t('Thank you!')}</Text>
             </View>
               <TouchableOpacity
                 style={styles.bottomImage}
@@ -112,7 +157,7 @@ export default class ThankYouScreen extends React.Component {
                   source={this.share}
                   style={styles.shareImage}
                 />
-                <Text style={styles.smallBlueText}>SHARE</Text>
+                <Text style={styles.smallBlueText}>{i18n.t('SHARE')}</Text>
               </TouchableOpacity>
           </View>
           <Footer color='white' navigation={this.props.navigation}/>

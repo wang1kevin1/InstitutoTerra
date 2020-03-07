@@ -25,6 +25,8 @@ import COLORS from '../../assets/Colors.js'
 
 import Auth from '@aws-amplify/auth'
 
+import i18n from 'i18n-js'
+
 export default class SignInScreen extends React.Component {
   state = {
     email: '',
@@ -53,10 +55,10 @@ export default class SignInScreen extends React.Component {
         this.setState({ isLoading: false })
         if (!err.message) {
           console.log('Error when signing in: ', err)
-          Alert.alert('Error when signing in: ', err)
+          Alert.alert(i18n.t('Error when signing in: '), err)
         } else {
           console.log('Error when signing in: ', err.message)
-          Alert.alert('Error when signing in: ', err.message)
+          Alert.alert(i18n.t('Error when signing in: '), err.message)
         }
       })
   }
@@ -76,7 +78,7 @@ export default class SignInScreen extends React.Component {
                     <Ionicons style={styles.iconStyle} name="ios-mail" />
                     <Input
                       style={styles.input}
-                      placeholder='Email'
+                      placeholder={i18n.t('Email')}
                       placeholderTextColor={COLORS.lightblue}
                       returnKeyType='next'
                       autoCapitalize='none'
@@ -91,7 +93,7 @@ export default class SignInScreen extends React.Component {
                     <Ionicons style={styles.iconStyle} name="ios-lock" />
                     <Input
                       style={styles.input}
-                      placeholder='Password'
+                      placeholder={i18n.t('Password')}
                       placeholderTextColor={COLORS.lightblue}
                       returnKeyType='go'
                       autoCapitalize='none'
@@ -107,7 +109,7 @@ export default class SignInScreen extends React.Component {
                     disabled={this.state.isLoading}
                     style={styles.buttonStyle1}>
                     <Text style={styles.buttonText1}>
-                      Sign In
+                      {i18n.t('Sign In')}
                     </Text>
                   </TouchableOpacity>
                   {/* Sign Up Text */}
@@ -115,7 +117,7 @@ export default class SignInScreen extends React.Component {
                     onPress={() => this.props.navigation.navigate('SignUp')}
                     style={styles.buttonStyle2}>
                     <Text style={styles.buttonText2}>
-                      New User? Create an Account!
+                      {i18n.t('New User? Create an Account!')}
                     </Text>
                   </TouchableOpacity>
                   {/* Forgot Password Text */}
@@ -123,7 +125,7 @@ export default class SignInScreen extends React.Component {
                     onPress={() => this.props.navigation.navigate('ForgotPassword')}
                     style={styles.buttonStyle2}>
                     <Text style={styles.buttonText2}>
-                      Forgot Password?
+                      {i18n.t('Forgot Password?')}
                     </Text>
                   </TouchableOpacity>
                   {/* Loading ActivityIndicator */}

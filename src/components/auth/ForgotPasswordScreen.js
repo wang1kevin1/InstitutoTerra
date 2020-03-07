@@ -27,6 +27,8 @@ import Auth from '@aws-amplify/auth'
 
 import CodeInput from 'react-native-confirmation-code-input';
 
+import i18n from 'i18n-js'
+
 export default class ForgetPasswordScreen extends React.Component {
   state = {
     stage: '1',
@@ -66,7 +68,7 @@ export default class ForgetPasswordScreen extends React.Component {
   // checks for password match
   handleReset = () => {
     if (this.state.password !== this.state.password_confirmation) {
-      Alert.alert('Passwords do not match')
+      Alert.alert(i18n.t('Passwords do not match'))
     } else {
       this.forgotPasswordSubmit()
     }
@@ -78,16 +80,16 @@ export default class ForgetPasswordScreen extends React.Component {
     await Auth.forgotPassword(this.state.email)
       .then(data => {
         console.log('New code sent', data)
-        Alert.alert('A verification code has been sent to your email')
+        Alert.alert(i18n.t('A verification code has been sent to your email'))
         this.setState({ stage: '2' })
       })
       .catch(err => {
         if (!err.message) {
           console.log('Error while sending verification code: ', err)
-          Alert.alert('Error while sending verification code: ', err)
+          Alert.alert(i18n.t('Error while sending verification code: '), err)
         } else {
           console.log('Error while sending verification code: ', err.message)
-          Alert.alert('Error while sending verification code: ', err.message)
+          Alert.alert(i18n.t('Error while sending verification code: '), err.message)
         }
       })
   }
@@ -101,7 +103,7 @@ export default class ForgetPasswordScreen extends React.Component {
       .then(() => {
         this.setState({ isLoading: false })
         console.log('Your password has been reset')
-        Alert.alert('Your password has been reset')
+        Alert.alert(i18n.t('Your password has been reset'))
         this.setState({ stage: '1' })
         this.props.navigation.navigate('SignIn')
       })
@@ -109,10 +111,10 @@ export default class ForgetPasswordScreen extends React.Component {
         this.setState({ isLoading: false })
         if (!err.message) {
           console.log('Error while confirming the new password: ', err)
-          Alert.alert('Error while confirming the new password: ', err)
+          Alert.alert(i18n.t('Error while confirming the new password: '), err)
         } else {
           console.log('Error while confirming the new password: ', err.message)
-          Alert.alert('Error while confirming the new password: ', err.message)
+          Alert.alert(i18n.t('Error while confirming the new password: '), err.message)
         }
       })
   }
@@ -136,7 +138,7 @@ export default class ForgetPasswordScreen extends React.Component {
                       <Ionicons name="ios-mail" style={styles.iconStyle1} />
                       <Input
                         style={styles.input}
-                        placeholder='Email'
+                        placeholder={i18n.t('Email')}
                         placeholderTextColor={COLORS.lightblue}
                         keyboardType={'email-address'}
                         returnKeyType='go'
@@ -150,7 +152,7 @@ export default class ForgetPasswordScreen extends React.Component {
                       onPress={() => this.forgotPassword()}
                       style={styles.buttonStyle1}>
                       <Text style={styles.buttonText1}>
-                        Send Code
+                        {i18n.t('Send Code')}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -160,7 +162,7 @@ export default class ForgetPasswordScreen extends React.Component {
                   <View style={styles.container}>
                     {/* Verification Code message*/}
                     <Text style={styles.messageText1}>
-                      Please enter your verification code:
+                      {i18n.t('Please enter your verification code')}:
                     </Text>
                     {/* Verification Code input*/}
                     <CodeInput
@@ -182,7 +184,7 @@ export default class ForgetPasswordScreen extends React.Component {
                       onPress={() => this.forgotPassword()}
                       style={styles.buttonStyle2}>
                       <Text style={styles.buttonText2}>
-                        Resend verification code
+                        {i18n.t('Resend verification code')}
                       </Text>
                     </TouchableOpacity>
                     {/* Confirm code input */}
@@ -190,7 +192,7 @@ export default class ForgetPasswordScreen extends React.Component {
                       onPress={() => this.setState({ stage: '3' })}
                       style={styles.buttonStyle1}>
                       <Text style={styles.buttonText1}>
-                        Reset Password
+                        {i18n.t('Reset Password')}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -203,7 +205,7 @@ export default class ForgetPasswordScreen extends React.Component {
                       <Ionicons style={styles.iconStyle1} name="ios-lock" />
                       <Input
                         style={styles.input}
-                        placeholder='Password'
+                        placeholder={i18n.t('Password')}
                         placeholderTextColor={COLORS.lightblue}
                         returnKeyType='next'
                         autoCapitalize='none'
@@ -219,7 +221,7 @@ export default class ForgetPasswordScreen extends React.Component {
                       <Ionicons style={styles.iconStyle1} name="ios-lock" />
                       <Input
                         style={styles.input}
-                        placeholder='Confirm Password'
+                        placeholder={i18n.t('Confirm Password')}
                         placeholderTextColor={COLORS.lightblue}
                         returnKeyType='go'
                         autoCapitalize='none'
@@ -236,7 +238,7 @@ export default class ForgetPasswordScreen extends React.Component {
                       disabled={this.state.isLoading}
                       style={styles.buttonStyle1}>
                       <Text style={styles.buttonText1}>
-                        Confirm Password Reset
+                        {i18n.t('Confirm Password Reset')}
                       </Text>
                     </TouchableOpacity>
                     {/* Loading ActivityIndicator */}
