@@ -33,7 +33,7 @@ export default class AboutScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: (this.color == 'green') ? COLORS.lightgreen : COLORS.white }]}>
         <View style={[styles.backContainer, { backgroundColor: (this.color == 'green') ? COLORS.green : COLORS.darkgrey }]}>
           <View style={styles.headerContainer}>
             <Text style={styles.aboutText}>ABOUT INSTITUTO TERRA</Text>
@@ -114,7 +114,6 @@ const styles = StyleSheet.create({
   container: {
     height: height,
     width: width,
-    backgroundColor: COLORS.lightgreen,
     flexDirection: 'column',
     justifyContent: 'center'
   },
