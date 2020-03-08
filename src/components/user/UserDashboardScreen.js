@@ -14,11 +14,13 @@ import Auth from '@aws-amplify/auth';
 
 import Footer from '../main/Footer.js';
 
-import Swiper from "react-native-web-swiper";
+import Carousel from 'react-native-snap-carousel';
 
-const backgrounds = [
-  require('../../assets/background/profile/profile-carbon.png'),
-  require('../../assets/background/profile/profile-trees.png')
+import { Ionicons } from '@expo/vector-icons';
+
+const slides = [
+  {image:require('../../assets/background/profile/profile-trees.png'),title: 'Total trees planted'},
+  {image:require('../../assets/background/profile/profile-carbon.png'),title: 'Carbon neutralised'}
 ]
 
 
@@ -27,6 +29,19 @@ export default class UserDashboardScreen extends React.Component {
     name: '',
     email: '',
   }
+
+  _renderItem = ({item, index}) => {
+    return (
+        <ImageBackground style={styles.ImageBackground} source={slides[index].image} imageStyle={{ borderRadius: 25 }}>
+            <Text style={styles.smallWhiteText}> {slides[index].title}</Text>
+            <Text style={styles.largeWhiteText}>##</Text>
+            <TouchableOpacity style={styles.shareButton}>
+              <Text style={styles.shareText}>SHARE</Text>
+            </TouchableOpacity>
+        </ImageBackground>
+    );
+}
+
 
   componentDidMount() {
     this.getUserInfo()
@@ -54,35 +69,44 @@ export default class UserDashboardScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <View style={styles.containerTop}>
         <View style={styles.topBar}>
-        <Text style={styles.textStyle}> Hi, {this.state.name} </Text>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Settings')}
-          style={styles.buttonStyle1}>
-          <Text style={styles.buttonText1}>
-            Settings
-          </Text>
-        </TouchableOpacity>
+        <Text style={styles.medBlueText}> Hi {this.state.name}! </Text>
+        <Ionicons style={styles.navigationIcon}
+          name="md-settings"
+          onPress={() => this.props.navigation.navigate("Settings")}
+          color={COLORS.lightblue}
+          bo
+          size={30}
+          />
         </View>
-        <View style={styles.test}>
-          <View style={styles.slideContainer}>
-            <ImageBackground source={backgrounds[0]} style={styles.ImageBackground}>
-              <Text>Slide 1</Text>
-            </ImageBackground>
-          </View>
-        </View>
+        <Carousel
+              ref={(c) => { this._carousel = c; }}
+              data={slides}
+              renderItem={this._renderItem}
+              sliderWidth={sliderWidth}
+              itemWidth={itemWidth}
+              removeClippedSubviews={false}
+            />
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Home')}
           style={styles.buttonStyle2}>
           <Text style={styles.buttonText2}>
-            Test
+            Plant Trees
           </Text>
         </TouchableOpacity>
+        </View>
+        <Footer color="green"/>
       </View>
     )
   }
 }
 const { width, height } = Dimensions.get('window');
+const sliderWidth = width;
+const itemWidth = width *.92;
+const sliderHeight = height *.4;
+const itemHeight = height *.4
+
 
 const styles = StyleSheet.create({
   container: {
@@ -93,37 +117,38 @@ const styles = StyleSheet.create({
     width: width
   },
   topBar: {
-    marginTop: "10%",
+//   marginTop: height * .05,
+    marginBottom: height * .07,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     height:'8%',
-    marginHorizontal: "2%",
+    marginHorizontal: width * .04,
   },
-  slideContainer: {
-    justifyContent: "center",
-    alignItems: "stretch",
-    width: '90%',
-    height: '39%',
-    backgroundColor: COLORS.white,
+  containerTop: {
+    paddingTop: height * 0.1,
+
   },
   ImageBackground: {
     alignItems: 'center',
-    justifyContent:'center',
+    justifyContent: 'space-around',
     resizeMode: "cover",
-    height: '100%'
+    height: height*.45,
+    borderRadius: 10,
+    marginBottom: height * .05,
+    marginHorizontal: width *.03,
   },
-  textStyle: {
+  medBlueText: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 30,
     padding: 0,
-    color: '#fff'
+    color: COLORS.lightblue
   },
   test:{
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    
+    backgroundColor: COLORS.white,
   },
   buttonStyle1: {
     alignItems: 'center',
@@ -134,19 +159,54 @@ const styles = StyleSheet.create({
   },
   buttonStyle2: {
     alignItems: 'center',
+    alignSelf: 'center',
     backgroundColor: COLORS.green,
     borderRadius: 10,
-    marginBottom:'20%',
+    height: height * .07,
+    width: width * .85,
+
+  },
+  bottomGreenButton: {
+    borderRadius: 10,
+    backgroundColor: COLORS.lightgreen,
+    height: height * 0.08,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   buttonText1: {
     fontSize: 18,
     fontWeight: 'bold',
     color: COLORS.white,
   },
-  buttonText2: {
-    fontSize: 18,
-    fontWeight: 'bold',
+  smallWhiteText:{
+    fontFamily: 'Montserrat-bold',
+    fontSize: 22,
     color: COLORS.white,
-    padding: 18
   },
+  largeWhiteText:{
+    fontWeight: 'bold',
+    fontSize: 110,
+    color: COLORS.white,
+  },
+  buttonText2: {
+    fontSize: 14,
+    fontWeight: 'normal',
+    color: COLORS.white,
+    fontFamily: 'Montserrat',
+    padding: 16
+  },
+  shareButton:{
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: height *.03,
+    width: width *.19,
+    backgroundColor: COLORS.lightgrey,
+    borderRadius: 5,
+
+  },
+  shareText: {
+    color: COLORS.darkgrey,
+    fontFamily: 'Montserrat',
+    fontSize: 12
+  }
 })

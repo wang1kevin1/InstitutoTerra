@@ -119,8 +119,10 @@ export default class CheckoutWithFlightScreen extends React.Component {
 
   //Calculate years to neutralize emission footprint
   calcYears() {
-    tempY = Math.round(this.state.footprint * 5 / this.state.treeNum);
-    return (tempY)
+    let tempY = this.state.footprint * 1000;
+    let factor = this.state.treeNum * 18;
+    tempY /= factor;
+    return (Math.round(tempY))
   }
 
   render() {
