@@ -61,6 +61,7 @@ import * as English from './src/components/utilities/languages/English.json'
 import * as Nederlands from './src/components/utilities/languages/Nederlands.json'
 import * as Espanol from './src/components/utilities/languages/Espanol.json'
 import * as Portugues from './src/components/utilities/languages/Portugues.json'
+import * as French from './src/components/utilities/languages/French.json'
 
 // Language localization imports
 import * as Localization from 'expo-localization'
@@ -72,6 +73,7 @@ i18n.translations = {
   nl: Nederlands,
   es: Espanol,
   pt: Portugues,
+  fr: French,
 }
 
 // default fallback is English
