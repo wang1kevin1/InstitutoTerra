@@ -14,36 +14,29 @@ import Auth from '@aws-amplify/auth';
 
 import Footer from '../main/Footer.js';
 
-import Carousel from 'react-native-snap-carousel';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 import { Ionicons } from '@expo/vector-icons';
-
-const slides = [
-  { image: require('../../assets/background/profile/profile-trees.png'), title: 'Total trees planted' },
-  { image: require('../../assets/background/profile/profile-carbon.png'), title: 'Carbon neutralised' }
-]
-
 
 export default class UserProfileScreen extends React.Component {
   state = {
     name: '',
     email: '',
+    activeSlide: 0,
+  }
+
+  constructor(props) {
+    super(props)
+
+    this.slides = [
+      { image: require('../../assets/background/profile/profile-trees.png'), title: 'Total trees planted' },
+      { image: require('../../assets/background/profile/profile-carbon.png'), title: 'Carbon neutralised' }
+    ]
+
   }
 
   componentDidMount() {
     this.getUserInfo()
-  }
-
-  _renderItem = ({ item, index }) => {
-    return (
-      <ImageBackground style={styles.ImageBackground} source={slides[index].image} imageStyle={{ borderRadius: 25 }}>
-        <Text style={styles.smallWhiteText}> {slides[index].title}</Text>
-        <Text style={styles.largeWhiteText}>##</Text>
-        <TouchableOpacity style={styles.shareButton}>
-          <Text style={styles.shareText}>SHARE</Text>
-        </TouchableOpacity>
-      </ImageBackground>
-    );
   }
 
   getUserInfo = async () => {
@@ -65,76 +58,99 @@ export default class UserProfileScreen extends React.Component {
       })
   }
 
+  get pagination () {
+    const { activeSlide } = this.state;
+    return (
+        <Pagination
+          dotsLength={this.slides.length}
+          activeDotIndex={activeSlide}
+          containerStyle={styles.paginationContainer}
+          dotStyle={{
+              width: 50,
+              height: 5,
+              borderRadius: 5,
+              marginHorizontal: 8,
+              backgroundColor: COLORS.lightblue
+          }}
+          inactiveDotOpacity={0.4}
+          inactiveDotScale={0.9}
+        />
+    );
+  }
+
+  _renderItem = ({ item, index }) => {
+    return (
+      <ImageBackground style={styles.ImageBackground} source={this.slides[index].image} imageStyle={{ borderRadius: 25 }}>
+        <Text style={styles.smallWhiteText}> {this.slides[index].title}</Text>
+        <Text style={styles.largeWhiteText}>##</Text>
+        <TouchableOpacity style={styles.shareButton}>
+          <Text style={styles.shareText}>SHARE</Text>
+        </TouchableOpacity>
+      </ImageBackground>
+    );
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.containerTop}>
-          <View style={styles.topBar}>
+          <View style={styles.buttonBarNav}>
             <Text style={styles.medBlueText}> Hi {this.state.name}! </Text>
             <Ionicons style={styles.navigationIcon}
               name="md-settings"
               onPress={() => this.props.navigation.navigate("Settings")}
               color={COLORS.lightblue}
-              bo
               size={30}
             />
           </View>
           <Carousel
             ref={(c) => { this._carousel = c; }}
-            data={slides}
+            data={this.slides}
             renderItem={this._renderItem}
             sliderWidth={sliderWidth}
             itemWidth={itemWidth}
             removeClippedSubviews={false}
+            onSnapToItem={(index) => this.setState({ activeSlide: index }) }
           />
+          { this.pagination }
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('Home')}
-            style={styles.buttonStyle2}>
-            <Text style={styles.buttonText2}>
+            style={styles.bottomGreenButton}>
+            <Text style={styles.buttonText}>
               Plant Trees
           </Text>
           </TouchableOpacity>
         </View>
-        <Footer color="green" />
+        <Footer color="white" />
       </View>
     )
   }
 }
 const { width, height } = Dimensions.get('window');
-const sliderWidth = width;
-const itemWidth = width * .92;
-const sliderHeight = height * .4;
-const itemHeight = height * .4
 
+const sliderWidth = width
+const itemWidth = width
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: COLORS.lightgreen,
+    backgroundColor: COLORS.darkgrey,
     height: height,
     width: width
   },
-  topBar: {
-    //marginTop: height * .05,
-    marginBottom: height * .07,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    height: '8%',
-    marginHorizontal: width * .04,
-  },
   containerTop: {
-    paddingTop: height * 0.1,
+    paddingLeft: width * 0.05,
+    paddingRight: width * 0.05,
+    paddingTop: height * 0.06,
+    marginBottom: height * 0.10,
+    backgroundColor: COLORS.darkgrey,
   },
-  ImageBackground: {
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    resizeMode: "cover",
-    height: height * .45,
-    borderRadius: 10,
-    marginBottom: height * .05,
-    marginHorizontal: width * .03,
+  buttonBarNav: {
+    flexDirection: 'row',
+    height: height * 0.07,
+    justifyContent: 'space-between',
+    marginBottom: height * 0.05,
   },
   medBlueText: {
     fontWeight: 'bold',
@@ -142,27 +158,17 @@ const styles = StyleSheet.create({
     padding: 0,
     color: COLORS.lightblue
   },
-  test: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: COLORS.white,
-  },
-  buttonStyle1: {
+  ImageBackground: {
     alignItems: 'center',
-    backgroundColor: COLORS.green,
-    padding: 0,
+    justifyContent: 'space-around',
+    resizeMode: "cover",
+    height: height * .45,
     borderRadius: 10,
-    alignSelf: 'center',
+    marginRight: width * .1,
   },
-  buttonStyle2: {
-    alignItems: 'center',
-    alignSelf: 'center',
-    backgroundColor: COLORS.green,
-    borderRadius: 10,
-    height: height * .07,
-    width: width * .85,
-
+  paginationContainer: {
+    backgroundColor: COLORS.darkgrey,
+    marginBottom: height*0.04
   },
   bottomGreenButton: {
     borderRadius: 10,
@@ -171,10 +177,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  buttonText1: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: COLORS.white,
+  buttonText: {
+    fontFamily: 'Montserrat-bold',
+    color: COLORS.darkgrey,
+    fontSize: 12
   },
   smallWhiteText: {
     fontFamily: 'Montserrat-bold',
@@ -186,21 +192,17 @@ const styles = StyleSheet.create({
     fontSize: 110,
     color: COLORS.white,
   },
-  buttonText2: {
-    fontSize: 14,
-    fontWeight: 'normal',
-    color: COLORS.white,
-    fontFamily: 'Montserrat',
-    padding: 16
+  navigationIcon: {
+    color: COLORS.lightblue,
+    fontSize: 40,
   },
   shareButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: height * .03,
-    width: width * .19,
-    backgroundColor: COLORS.lightgrey,
-    borderRadius: 5,
-
+    height: height * .04,
+    width: width * .2,
+    backgroundColor: COLORS.white,
+    borderRadius: 10,
   },
   shareText: {
     color: COLORS.darkgrey,
