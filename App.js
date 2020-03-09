@@ -25,11 +25,9 @@ import SettingsEmailScreen from './src/components/auth/SettingsEmailScreen'
 import SettingsPasswordScreen from './src/components/auth/SettingsPasswordScreen'
 import SettingsLanguageScreen from './src/components/auth/SettingsLanguageScreen'
 
-// DashboardStack
-import UserDashboardScreen from './src/components/user/UserDashboardScreen'
-
-// MainStack head
+// MainStack
 import HomeScreen from './src/components/main/HomeScreen'
+import UserProfileScreen from './src/components/user/UserProfileScreen'
 
 // FlightStack
 import FlightInfoScreen from './src/components/main/flight/FlightInfoScreen'
@@ -88,7 +86,7 @@ const MainStackNavigator = createStackNavigator({
   NoFlight: NoFlightStackNavigator, // NoFlightStack
   Payment: PaymentScreen,
   ThankYou: ThankYouScreen,
-  UserDashboard: UserDashboardScreen, // DashboardStack
+  UserProfile: UserProfileScreen, 
   Settings: SettingsStackNavigator, // SettingsStack
   Auth: AuthStackNavigator, // AuthStackNavigator
 }, { headerMode: 'none' })

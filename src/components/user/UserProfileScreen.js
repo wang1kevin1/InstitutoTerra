@@ -19,32 +19,31 @@ import Carousel from 'react-native-snap-carousel';
 import { Ionicons } from '@expo/vector-icons';
 
 const slides = [
-  {image:require('../../assets/background/profile/profile-trees.png'),title: 'Total trees planted'},
-  {image:require('../../assets/background/profile/profile-carbon.png'),title: 'Carbon neutralised'}
+  { image: require('../../assets/background/profile/profile-trees.png'), title: 'Total trees planted' },
+  { image: require('../../assets/background/profile/profile-carbon.png'), title: 'Carbon neutralised' }
 ]
 
 
-export default class UserDashboardScreen extends React.Component {
+export default class UserProfileScreen extends React.Component {
   state = {
     name: '',
     email: '',
   }
 
-  _renderItem = ({item, index}) => {
-    return (
-        <ImageBackground style={styles.ImageBackground} source={slides[index].image} imageStyle={{ borderRadius: 25 }}>
-            <Text style={styles.smallWhiteText}> {slides[index].title}</Text>
-            <Text style={styles.largeWhiteText}>##</Text>
-            <TouchableOpacity style={styles.shareButton}>
-              <Text style={styles.shareText}>SHARE</Text>
-            </TouchableOpacity>
-        </ImageBackground>
-    );
-}
-
-
   componentDidMount() {
     this.getUserInfo()
+  }
+
+  _renderItem = ({ item, index }) => {
+    return (
+      <ImageBackground style={styles.ImageBackground} source={slides[index].image} imageStyle={{ borderRadius: 25 }}>
+        <Text style={styles.smallWhiteText}> {slides[index].title}</Text>
+        <Text style={styles.largeWhiteText}>##</Text>
+        <TouchableOpacity style={styles.shareButton}>
+          <Text style={styles.shareText}>SHARE</Text>
+        </TouchableOpacity>
+      </ImageBackground>
+    );
   }
 
   getUserInfo = async () => {
@@ -70,73 +69,72 @@ export default class UserDashboardScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.containerTop}>
-        <View style={styles.topBar}>
-        <Text style={styles.medBlueText}> Hi {this.state.name}! </Text>
-        <Ionicons style={styles.navigationIcon}
-          name="md-settings"
-          onPress={() => this.props.navigation.navigate("Settings")}
-          color={COLORS.lightblue}
-          bo
-          size={30}
-          />
-        </View>
-        <Carousel
-              ref={(c) => { this._carousel = c; }}
-              data={slides}
-              renderItem={this._renderItem}
-              sliderWidth={sliderWidth}
-              itemWidth={itemWidth}
-              removeClippedSubviews={false}
+          <View style={styles.topBar}>
+            <Text style={styles.medBlueText}> Hi {this.state.name}! </Text>
+            <Ionicons style={styles.navigationIcon}
+              name="md-settings"
+              onPress={() => this.props.navigation.navigate("Settings")}
+              color={COLORS.lightblue}
+              bo
+              size={30}
             />
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Home')}
-          style={styles.buttonStyle2}>
-          <Text style={styles.buttonText2}>
-            Plant Trees
+          </View>
+          <Carousel
+            ref={(c) => { this._carousel = c; }}
+            data={slides}
+            renderItem={this._renderItem}
+            sliderWidth={sliderWidth}
+            itemWidth={itemWidth}
+            removeClippedSubviews={false}
+          />
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Home')}
+            style={styles.buttonStyle2}>
+            <Text style={styles.buttonText2}>
+              Plant Trees
           </Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
         </View>
-        <Footer color="green"/>
+        <Footer color="green" />
       </View>
     )
   }
 }
 const { width, height } = Dimensions.get('window');
 const sliderWidth = width;
-const itemWidth = width *.92;
-const sliderHeight = height *.4;
-const itemHeight = height *.4
+const itemWidth = width * .92;
+const sliderHeight = height * .4;
+const itemHeight = height * .4
 
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection:"column",
+    flexDirection: "column",
     backgroundColor: COLORS.lightgreen,
     height: height,
     width: width
   },
   topBar: {
-//   marginTop: height * .05,
+    //marginTop: height * .05,
     marginBottom: height * .07,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height:'8%',
+    height: '8%',
     marginHorizontal: width * .04,
   },
   containerTop: {
     paddingTop: height * 0.1,
-
   },
   ImageBackground: {
     alignItems: 'center',
     justifyContent: 'space-around',
     resizeMode: "cover",
-    height: height*.45,
+    height: height * .45,
     borderRadius: 10,
     marginBottom: height * .05,
-    marginHorizontal: width *.03,
+    marginHorizontal: width * .03,
   },
   medBlueText: {
     fontWeight: 'bold',
@@ -144,7 +142,7 @@ const styles = StyleSheet.create({
     padding: 0,
     color: COLORS.lightblue
   },
-  test:{
+  test: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -155,7 +153,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.green,
     padding: 0,
     borderRadius: 10,
-    alignSelf:'center',
+    alignSelf: 'center',
   },
   buttonStyle2: {
     alignItems: 'center',
@@ -178,12 +176,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: COLORS.white,
   },
-  smallWhiteText:{
+  smallWhiteText: {
     fontFamily: 'Montserrat-bold',
     fontSize: 22,
     color: COLORS.white,
   },
-  largeWhiteText:{
+  largeWhiteText: {
     fontWeight: 'bold',
     fontSize: 110,
     color: COLORS.white,
@@ -195,11 +193,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat',
     padding: 16
   },
-  shareButton:{
+  shareButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: height *.03,
-    width: width *.19,
+    height: height * .03,
+    width: width * .19,
     backgroundColor: COLORS.lightgrey,
     borderRadius: 5,
 

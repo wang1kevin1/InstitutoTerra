@@ -55,10 +55,10 @@ export default class CheckoutWithFlightScreen extends React.Component {
       })
   }
 
-  // Sends user to sign up or dashboard depending on Auth state
+  // Sends user to sign up or profile depending on Auth state
   handleUserRedirect() {
     if (this.state.isAuthenticated) {
-      this.props.navigation.navigate('UserDashboard')
+      this.props.navigation.navigate('UserProfile')
     } else {
       this.props.navigation.navigate('SignIn')
     }

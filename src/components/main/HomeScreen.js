@@ -181,7 +181,7 @@ export default class HomeScreen extends React.Component {
                   {/* isAuthenticated: true */}
                   {this.state.isAuthenticated &&
                     <TouchableOpacity activeOpacity={0.9}
-                      onPress={() => this.props.navigation.navigate('UserDashboard')}
+                      onPress={() => this.props.navigation.navigate('UserProfile')}
                       style={styles.navStyle}>
                       <FontAwesome style={styles.navigationIcon} name="user-circle-o" />
                       <Text style={styles.navText}>
