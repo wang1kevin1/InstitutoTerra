@@ -7,11 +7,12 @@ import { Asset } from 'expo-asset'
 import { AppLoading } from 'expo'
 
 import {
-  createSwitchNavigator, 
   createAppContainer,
 } from 'react-navigation'
 
 import { createStackNavigator } from 'react-navigation-stack'
+
+import { fromRight, fromBottom, fromTop } from 'react-navigation-transitions'
 
 // AuthStack
 import SignUpScreen from './src/components/auth/SignUpScreen'
@@ -23,10 +24,10 @@ import SettingsListScreen from './src/components/auth/SettingsListScreen'
 import SettingsNameScreen from './src/components/auth/SettingsNameScreen'
 import SettingsEmailScreen from './src/components/auth/SettingsEmailScreen'
 import SettingsPasswordScreen from './src/components/auth/SettingsPasswordScreen'
-import SettingsLanguageScreen from './src/components/auth/SettingsLanguageScreen'
 
 // MainStack
 import HomeScreen from './src/components/main/HomeScreen'
+import AboutScreen from './src/components/main/AboutScreen'
 import UserProfileScreen from './src/components/user/UserProfileScreen'
 
 // FlightStack
@@ -43,10 +44,65 @@ import ReceiptWithoutFlightScreen from './src/components/main/noFlight/ReceiptWi
 import PaymentScreen from './src/components/main/payment/PaymentScreen'
 import ThankYouScreen from './src/components/main/payment/ThankYouScreen'
 
-// Amplify imports and config
+// Amplify imports and config for Cognito
 import Amplify from '@aws-amplify/core'
 import config from './aws-exports'
 Amplify.configure(config)
+
+// Amplify imports and config for Database
+import awsmobile from './aws-exports'
+Amplify.configure(awsmobile)
+
+// Language stores
+import * as English from './src/components/utilities/languages/English.json'
+import * as Nederlands from './src/components/utilities/languages/Nederlands.json'
+import * as Espanol from './src/components/utilities/languages/Espanol.json'
+import * as Portugues from './src/components/utilities/languages/Portugues.json'
+import * as French from './src/components/utilities/languages/French.json'
+
+// Language localization imports
+import * as Localization from 'expo-localization'
+import i18n from 'i18n-js'
+
+// Set the key-value pairs for the different languages
+i18n.translations = {
+  en: English,
+  nl: Nederlands,
+  es: Espanol,
+  pt: Portugues,
+  fr: French,
+}
+
+// default fallback is English
+i18n.defaultLocale = 'en'
+
+// Set the locale once at start of app.
+i18n.locale = Localization.locale;
+
+// Fallback if language missing.
+i18n.fallbacks = true;
+
+// handles screen transitions
+const handleCustomTransition = ({ scenes }) => {
+  const prevScene = scenes[scenes.length - 2];
+  const nextScene = scenes[scenes.length - 1];
+ 
+  // Custom transitions go there
+  if (prevScene
+    && nextScene.route.routeName === 'About') {
+    return fromBottom() // About page rolls up
+  } else if (prevScene
+    && nextScene.route.routeName === 'Auth') {
+    return fromTop() // signin page drops down
+  } else if (prevScene
+    && nextScene.route.routeName === 'UserProfile') {
+    return fromTop() // user profile drops down
+  } else if (prevScene
+    && nextScene.route.routeName === 'Settings') {
+    return null // settings page just appears
+  }
+  return fromRight() // every other page comes in from right side
+}
 
 // Auth stack
 const AuthStackNavigator = createStackNavigator({
@@ -61,8 +117,7 @@ const SettingsStackNavigator = createStackNavigator({
   SettingsList: SettingsListScreen,
   SettingsName: SettingsNameScreen,
   SettingsEmail: SettingsEmailScreen,
-  SettingsPassword: SettingsPasswordScreen,
-  SettingsLanguage: SettingsLanguageScreen
+  SettingsPassword: SettingsPasswordScreen
 }, { headerMode: 'none' })
 
 // Flight Stack
@@ -71,17 +126,24 @@ const FlightStackNavigator = createStackNavigator({
   CarbonEmissions: CarbonEmissionsScreen,
   CheckoutWithFlight: CheckoutWithFlightScreen,
   ReceiptWithFlight: ReceiptWithFlightScreen,
-}, { headerMode: 'none' })
+}, { 
+  headerMode: 'none',
+  transitionConfig: () => fromRight(100),
+})
 
 // NoFlight Stack
 const NoFlightStackNavigator = createStackNavigator({
   CheckoutWithoutFlight: CheckoutWithoutFlightScreen,
   ReceiptWithoutFlight: ReceiptWithoutFlightScreen,
-}, { headerMode: 'none' })
+}, { 
+  headerMode: 'none',
+  transitionConfig: () => fromRight(100),
+})
 
 // Main stack
 const MainStackNavigator = createStackNavigator({
   Home: HomeScreen,
+  About: AboutScreen,
   Flight: FlightStackNavigator, // FlightStack
   NoFlight: NoFlightStackNavigator, // NoFlightStack
   Payment: PaymentScreen,
@@ -89,13 +151,12 @@ const MainStackNavigator = createStackNavigator({
   UserProfile: UserProfileScreen, 
   Settings: SettingsStackNavigator, // SettingsStack
   Auth: AuthStackNavigator, // AuthStackNavigator
-}, { headerMode: 'none' })
-
-const AppSwitchNavigator = createSwitchNavigator({
-  Main: MainStackNavigator, // the MainStack
+}, { 
+  headerMode: 'none',
+  transitionConfig: (nav) => handleCustomTransition(nav),
 })
 
-const AppContainer = createAppContainer(AppSwitchNavigator)
+const AppContainer = createAppContainer(MainStackNavigator)
 
 export default class App extends React.Component {
   state = {
@@ -115,6 +176,7 @@ export default class App extends React.Component {
         'Montserrat': require('./src/assets/fonts/Montserrat-Regular.ttf'),
         'Montserrat-bold': require('./src/assets/fonts/Montserrat-Bold.ttf'),
         'Fago-black': require('./src/assets/fonts/Fago-Black.ttf'),
+        'Gilroy-bold': require('./src/assets/fonts/Gilroy-Bold.ttf')
       })
     ])
   };

@@ -1,0 +1,17 @@
+{
+    "permissions": {
+        "auth": {
+            "ZeroCarbon": [
+                "read"
+            ]
+        },
+        "storage": {
+            "ZeroCarbonDatabase": [
+                "create",
+                "read",
+                "update",
+                "delete"
+            ]
+        }
+    }
+}

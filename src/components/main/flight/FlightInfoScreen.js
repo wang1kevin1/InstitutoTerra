@@ -19,6 +19,8 @@ import Footer from '../Footer.js';
 
 import Auth from '@aws-amplify/auth';
 
+import i18n from 'i18n-js'
+
 console.log(process.env.REACT_APP_API_KEY)
 
 export default class FlightInfoScreen extends React.Component {
@@ -246,7 +248,7 @@ export default class FlightInfoScreen extends React.Component {
           <View style={{ flexDirection: 'column', flex: 1, justifyContent: 'center' }}>
             <Ionicons name="ios-paper-plane" style={styles.loadingIcon} />
             <Text style={[styles.loadingText, { alignItems: 'center', justifyContent: 'center', marginBottom: '5%' }]}>
-              RETRIEVING FLIGHT
+              {i18n.t('RETRIEVING FLIGHT')}
             </Text>
             <ActivityIndicator color={COLORS.lightblue} size='large' animating={!isReady} />
           </View>
@@ -269,42 +271,42 @@ export default class FlightInfoScreen extends React.Component {
               <View style={[styles.leftGreenButton, { opacity: (this.state.tripIndex == 1) ? 1 : 0.5 }]}>
                 <TouchableOpacity
                   onPress={() => this.setState({ tripIndex: 1 })}>
-                  <Text style={styles.buttonText}>ONE WAY</Text>
+                  <Text style={styles.buttonText}>{i18n.t('ONE WAY')}</Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.rightGreenButton, { opacity: (this.state.tripIndex == 2) ? 1 : 0.5 }]}>
                 <TouchableOpacity
                   onPress={() => this.setState({ tripIndex: 2 })}>
-                  <Text style={styles.buttonText}>ROUNDTRIP</Text>
+                  <Text style={styles.buttonText}>{i18n.t('ROUND TRIP')}</Text>
                 </TouchableOpacity>
               </View>
             </View>
             {/*Flight Number*/}
-            <Text style={styles.smallBlueText}>FLIGHT NUMBER</Text>
+            <Text style={styles.smallBlueText}>{i18n.t('FLIGHT NUMBER')}</Text>
             <Text style={styles.bigBlueText}>{flightChars} {flightNums}</Text>
             <View style={styles.planeInfoText}>
               {/*Departure and arrival city & IATA*/}
-              <Text style={styles.midGreyText}>{depCityName}({depCityIata}) to {arrCityName}({arrCityIata}) </Text>
-              <Text style={styles.midGreyText}>via {airlineName}</Text>
+              <Text style={styles.midGreyText}>{depCityName}({depCityIata}) {i18n.t('to')} {arrCityName}({arrCityIata}) </Text>
+              <Text style={styles.midGreyText}>{i18n.t('via')} {airlineName}</Text>
             </View>
             <View style={styles.buttonBarBottom}>
               {/*Seat class selector*/}
               <View style={[styles.leftGreenButton, { opacity: (this.state.seatIndex == 'Economy') ? 1 : 0.5 }]}>
                 <TouchableOpacity
                   onPress={() => this.setState({ seatIndex: 'Economy' })}>
-                  <Text style={styles.buttonText}>ECONOMY</Text>
+                  <Text style={styles.buttonText}>{i18n.t('ECONOMY')}</Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.middleGreenButton, { opacity: (this.state.seatIndex == 'Business') ? 1 : 0.5 }]}>
                 <TouchableOpacity
                   onPress={() => this.setState({ seatIndex: 'Business' })}>
-                  <Text style={styles.buttonText}>BUSINESS</Text>
+                  <Text style={styles.buttonText}>{i18n.t('BUSINESS')}</Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.rightGreenButton, { opacity: (this.state.seatIndex == 'First Class') ? 1 : 0.5 }]}>
                 <TouchableOpacity
                   onPress={() => this.setState({ seatIndex: 'First Class' })}>
-                  <Text style={styles.buttonText}>FIRST CLASS</Text>
+                  <Text style={styles.buttonText}>{i18n.t('FIRST CLASS')}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -312,7 +314,7 @@ export default class FlightInfoScreen extends React.Component {
             <View style={styles.receiptContainer}>
               {/*More flight information*/}
               <View style={styles.textRow}>
-                <Text style={styles.receiptTextLeft}>FLIGHT</Text>
+                <Text style={styles.receiptTextLeft}>{i18n.t('FLIGHT')}</Text>
                 {/* Departure to Arrival */}
                 {tripIndex == 1 &&
                   <Text style={styles.receiptTextRight}>{depCityName} &#10230; {arrCityName}</Text>
@@ -322,17 +324,17 @@ export default class FlightInfoScreen extends React.Component {
                 }
               </View>
               <View style={styles.textRow}>
-                <Text style={styles.receiptTextLeft}>DISTANCE</Text>
+                <Text style={styles.receiptTextLeft}>{i18n.t('DISTANCE')}</Text>
                 {/*Distance of flight*/}
                 <Text style={styles.receiptTextRight}>{distanceTraveled * this.state.tripIndex} km</Text>
               </View>
               <View style={styles.textRow}>
-                <Text style={styles.receiptTextLeft}>AIRPLANE</Text>
+                <Text style={styles.receiptTextLeft}>{i18n.t('AIRPLANE')}</Text>
                 {/*Type of plane*/}
                 <Text style={styles.receiptTextRight}>{planeMake} {planeModel}</Text>
               </View>
               <View style={styles.textRow}>
-                <Text style={styles.receiptTextLeft}>CLASS</Text>
+                <Text style={styles.receiptTextLeft}>{i18n.t('CLASS')}</Text>
                 {/*Class of seat*/}
                 <Text style={styles.receiptTextRight}>{seatIndex}</Text>
               </View>
@@ -351,10 +353,10 @@ export default class FlightInfoScreen extends React.Component {
                 flightChars: flightChars,
                 flightNums: flightNums,
               })}>
-              <Text style={styles.buttonText}>CALCULATE CARBON FOOTPRINT</Text>
+              <Text style={styles.buttonText}>{i18n.t('CALCULATE CARBON FOOTPRINT')}</Text>
             </TouchableOpacity>
           </View>
-          <Footer color='white' />
+          <Footer color='white' navigation={this.props.navigation}/>
         </View>
       )
     }

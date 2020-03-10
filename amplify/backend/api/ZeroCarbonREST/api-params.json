@@ -1,0 +1,34 @@
+{
+    "paths": [
+        {
+            "name": "/Users",
+            "lambdaFunction": "UserDataCRUD",
+            "privacy": {
+                "open": true
+            }
+        }
+    ],
+    "resourceName": "ZeroCarbonREST",
+    "apiName": "ZeroCarbonREST",
+    "functionArns": [
+        {
+            "lambdaFunction": "UserDataCRUD"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "amplify-institutoterra-terra-120225-authRole",
+        "unAuthRoleName": "amplify-institutoterra-terra-120225-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "UserDataCRUD",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

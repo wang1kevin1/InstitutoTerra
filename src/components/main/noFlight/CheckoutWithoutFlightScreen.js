@@ -18,7 +18,9 @@ import Footer from '../Footer.js';
 
 import Auth from '@aws-amplify/auth';
 
-import * as Constants from '../../utilities/Constants.js'
+import i18n from 'i18n-js'
+
+import * as CONSTANTS from '../../utilities/Constants.js'
 
 export default class CheckoutWithoutFlightScreen extends React.Component {
   state = {
@@ -87,7 +89,7 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
   handleAdd() {
     this.setState({
       treeNum: this.state.treeNum + 1,
-      total_cost: this.state.total_cost + Constants.COST
+      total_cost: this.state.total_cost + CONSTANTS.COST
     })
   }
 
@@ -96,7 +98,7 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
     if (this.state.treeNum != 0) {
       this.setState({
         treeNum: this.state.treeNum - 1,
-        total_cost: this.state.total_cost - Constants.COST
+        total_cost: this.state.total_cost - CONSTANTS.COST
       })
     }
   }
@@ -154,12 +156,12 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
           <View style={styles.receiptContainer}>
             <View style={styles.textRow}>
               {/*Total trees donated in transaction*/}
-              <Text style={styles.receiptTextLeft}>TOTAL TREES:</Text>
+              <Text style={styles.receiptTextLeft}>{i18n.t('TOTAL TREES')}:</Text>
               <Text style={styles.receiptTextRight}>{treeNum}</Text>
             </View>
             <View style={styles.textRow}>
               {/*Cost of transaction*/}
-              <Text style={styles.receiptTextLeft}>PRICE:</Text>
+              <Text style={styles.receiptTextLeft}>{i18n.t('PRICE')}:</Text>
               <Text style={styles.receiptTextRight}>${total_cost}</Text>
             </View>
           </View>
@@ -167,10 +169,10 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
           <TouchableOpacity
             style={[styles.bottomGreenButton, { backgroundColor: (this.state.treeNum == 0) ? COLORS.grey : COLORS.lightgreen }]}
             onPress={() => this.handleCheckout()}>
-            <Text style={styles.buttonText}>CHECKOUT</Text>
+            <Text style={styles.buttonText}>{i18n.t('CHECKOUT')}</Text>
           </TouchableOpacity>
         </View>
-        <Footer color='white' />
+        <Footer color='white' navigation={this.props.navigation}/>
       </View>
     )
   }
