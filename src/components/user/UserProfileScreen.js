@@ -5,12 +5,12 @@ import {
   Text,
   TouchableOpacity,
   ImageBackground,
-  Dimensions
+  Dimensions,
+  ActivityIndicator,
+  Share
 } from 'react-native'
 
 import COLORS from '../../assets/Colors.js'
-
-import Auth from '@aws-amplify/auth';
 
 import Footer from '../main/Footer.js';
 
@@ -18,46 +18,73 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 import { Ionicons } from '@expo/vector-icons';
 
+import Auth from '@aws-amplify/auth';
+
+import { API } from 'aws-amplify'
+
+import i18n from 'i18n-js'
+
+import * as CONSTANTS from '../utilities/Constants.js'
+
 export default class UserProfileScreen extends React.Component {
   state = {
     name: '',
     email: '',
     activeSlide: 0,
+    loading: true,
+    CarbonCompensated: 0 //temp for now
   }
 
   constructor(props) {
     super(props)
 
     this.slides = [
-      { image: require('../../assets/background/profile/profile-trees.png'), title: 'Total trees planted' },
-      { image: require('../../assets/background/profile/profile-carbon.png'), title: 'Carbon neutralised' }
+      { image: require('../../assets/background/profile/profile-trees.png'), title: i18n.t('TOTAL TREES PLANTED') },
+      { image: require('../../assets/background/profile/profile-carbon.png'), title: i18n.t('CARBON COMPENSATED') }
     ]
-
   }
 
   componentDidMount() {
     this.getUserInfo()
   }
 
+  // gets user's name and email
   getUserInfo = async () => {
     await Auth.currentAuthenticatedUser({ bypassCache: true })
       .then(user => {
         console.log(user)
         this.setState({ user })
         this.setState({ name: user.attributes.name })
-        this.setState({ email: user.attributes.email })
+        this.setState({ UserId: user.attributes.sub })
+        this.getUserTrees()
       })
       .catch(err => {
         if (!err.message) {
           console.log('Error getting user info: ', err)
-          Alert.alert('Error getting user info: ', err)
         } else {
           console.log('Error getting user info: ', err.message)
-          Alert.alert('Error getting user info: ', err.message)
         }
       })
   }
 
+  // gets a user's tree count
+  async getUserTrees() {
+    const path = "/Users/object/" + this.state.UserId;
+
+    await API.get("ZeroCarbonREST", path)
+      .then(apiResponse => {
+        this.setState({ apiResponse })
+        console.log("response from getting user: " + apiResponse);
+        this.setState({ TreesPlanted: apiResponse.TreesPlanted })
+        console.log(this.state.TreesPlanted)
+        this.setState({loading: false})
+      })
+      .catch(e => {
+        console.log(e);
+      })
+    }
+
+  //gets index of currently shown carousel screen
   get pagination () {
     const { activeSlide } = this.state;
     return (
@@ -78,13 +105,53 @@ export default class UserProfileScreen extends React.Component {
     );
   }
 
+  // Opens apps for users to share
+  onShare = async () => {
+    if (this.state.activeSlide == 0) {
+      this.message = 'I\'ve donated ' + this.state.TreesPlanted + ' tree(s)! You can help at ' + CONSTANTS.WEBSITE + '!'
+    } else {
+      this.message = 'I\'ve helped compensate for ' + this.state.CarbonCompensated + ' metric tons of CO2! You can help at ' + CONSTANTS.WEBSITE + '!'
+    }
+    try {
+      const result = await Share.share({
+        title: '#Refloresta',
+        dialogTitle: '#Refloresta',
+        subject: '#Refloresta',
+        message: this.message
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      Console.log(error.message);
+    }
+  }
+
+  // renders carousel
   _renderItem = ({ item, index }) => {
     return (
       <ImageBackground style={styles.ImageBackground} source={this.slides[index].image} imageStyle={{ borderRadius: 25 }}>
         <Text style={styles.smallWhiteText}> {this.slides[index].title}</Text>
-        <Text style={styles.largeWhiteText}>##</Text>
-        <TouchableOpacity style={styles.shareButton}>
-          <Text style={styles.shareText}>SHARE</Text>
+        {this.state.loading &&
+          <View style={styles.dataContainer}>
+            <ActivityIndicator color={COLORS.white} size='large' />
+          </View>
+        }
+        {!this.state.loading &&
+          <View style={styles.dataContainer}>
+            <Text style={styles.largeWhiteText}>{(this.state.activeSlide == 0) ? this.state.TreesPlanted : 0}</Text>
+          </View>
+        }
+        <TouchableOpacity style={styles.shareButton}
+          onPress={() => this.onShare()}>
+          <Text style={styles.shareText}>{i18n.t('SHARE')}</Text>
         </TouchableOpacity>
       </ImageBackground>
     );
@@ -95,7 +162,7 @@ export default class UserProfileScreen extends React.Component {
       <View style={styles.container}>
         <View style={styles.containerTop}>
           <View style={styles.buttonBarNav}>
-            <Text style={styles.medBlueText}> Hi {this.state.name}! </Text>
+            <Text style={styles.medBlueText}> {i18n.t('Hi')} {this.state.name}! </Text>
             <Ionicons style={styles.navigationIcon}
               name="md-settings"
               onPress={() => this.props.navigation.navigate("Settings")}
@@ -117,11 +184,11 @@ export default class UserProfileScreen extends React.Component {
             onPress={() => this.props.navigation.navigate('Home')}
             style={styles.bottomGreenButton}>
             <Text style={styles.buttonText}>
-              Plant Trees
+              {i18n.t('PLANT TREES')}
           </Text>
           </TouchableOpacity>
         </View>
-        <Footer color="white" />
+        <Footer color="white" navigation={this.props.navigation}/>
       </View>
     )
   }
@@ -165,6 +232,11 @@ const styles = StyleSheet.create({
     height: height * .45,
     borderRadius: 10,
     marginRight: width * .1,
+  },
+  dataContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: height * .1,
   },
   paginationContainer: {
     backgroundColor: COLORS.darkgrey,

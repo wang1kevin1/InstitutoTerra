@@ -69,7 +69,7 @@ export default class ThankYouScreen extends React.Component {
       })
   }
 
-  // gets a user's tree count
+  // gets a user's tree count and adds new trees
   async getUserTrees() {
     const path = "/Users/object/" + this.state.UserId;
 
