@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
   dataContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: height * .1,
+    height: height * .2,
   },
   paginationContainer: {
     backgroundColor: COLORS.darkgrey,
