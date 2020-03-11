@@ -44,10 +44,10 @@ export default class ThankYouScreen extends React.Component {
     isAuthenticated: 'false',
   }
 
-  // Sends user to sign up or dashboard depending on Auth state
+  // Sends user to sign up or profile depending on Auth state
   handleUserRedirect() {
     if (this.state.isAuthenticated) {
-      this.props.navigation.navigate('UserDashboard')
+      this.props.navigation.navigate('UserProfile')
     } else {
       this.props.navigation.navigate('SignIn')
     }
@@ -69,7 +69,7 @@ export default class ThankYouScreen extends React.Component {
       })
   }
 
-  // gets a user's tree count
+  // gets a user's tree count and adds new trees
   async getUserTrees() {
     const path = "/Users/object/" + this.state.UserId;
 

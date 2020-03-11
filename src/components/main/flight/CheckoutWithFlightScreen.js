@@ -57,10 +57,10 @@ export default class CheckoutWithFlightScreen extends React.Component {
       })
   }
 
-  // Sends user to sign up or dashboard depending on Auth state
+  // Sends user to sign up or profile depending on Auth state
   handleUserRedirect() {
     if (this.state.isAuthenticated) {
-      this.props.navigation.navigate('UserDashboard')
+      this.props.navigation.navigate('UserProfile')
     } else {
       this.props.navigation.navigate('SignIn')
     }
@@ -121,8 +121,10 @@ export default class CheckoutWithFlightScreen extends React.Component {
 
   //Calculate years to neutralize emission footprint
   calcYears() {
-    tempY = Math.round(this.state.footprint * 5 / this.state.treeNum);
-    return (tempY)
+    let tempY = this.state.footprint * 1000;
+    let factor = this.state.treeNum * 18;
+    tempY /= factor;
+    return (Math.round(tempY))
   }
 
   render() {

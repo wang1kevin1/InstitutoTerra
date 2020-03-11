@@ -7,7 +7,6 @@ import { Asset } from 'expo-asset'
 import { AppLoading } from 'expo'
 
 import {
-  createSwitchNavigator, 
   createAppContainer,
 } from 'react-navigation'
 
@@ -26,12 +25,10 @@ import SettingsNameScreen from './src/components/auth/SettingsNameScreen'
 import SettingsEmailScreen from './src/components/auth/SettingsEmailScreen'
 import SettingsPasswordScreen from './src/components/auth/SettingsPasswordScreen'
 
-// DashboardStack
-import UserDashboardScreen from './src/components/user/UserDashboardScreen'
-
-// MainStack head
+// MainStack
 import HomeScreen from './src/components/main/HomeScreen'
 import AboutScreen from './src/components/main/AboutScreen'
+import UserProfileScreen from './src/components/user/UserProfileScreen'
 
 // FlightStack
 import FlightInfoScreen from './src/components/main/flight/FlightInfoScreen'
@@ -98,7 +95,7 @@ const handleCustomTransition = ({ scenes }) => {
     && nextScene.route.routeName === 'Auth') {
     return fromTop() // signin page drops down
   } else if (prevScene
-    && nextScene.route.routeName === 'UserDashboard') {
+    && nextScene.route.routeName === 'UserProfile') {
     return fromTop() // user profile drops down
   } else if (prevScene
     && nextScene.route.routeName === 'Settings') {
@@ -151,7 +148,7 @@ const MainStackNavigator = createStackNavigator({
   NoFlight: NoFlightStackNavigator, // NoFlightStack
   Payment: PaymentScreen,
   ThankYou: ThankYouScreen,
-  UserDashboard: UserDashboardScreen, // DashboardScreen
+  UserProfile: UserProfileScreen, 
   Settings: SettingsStackNavigator, // SettingsStack
   Auth: AuthStackNavigator, // AuthStackNavigator
 }, { 
