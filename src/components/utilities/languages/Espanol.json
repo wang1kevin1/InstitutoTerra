@@ -36,6 +36,7 @@
   "Please enter your verification code": "Por favor introduzca su código de verificación",
   "Verify New Email": "Verificar Nuevo Email",
   "A verification code has been sent to your new email": "Se ha enviado un código de verificación a su nuevo email",
+  "A verification code has been sent to your email": "Se ha enviado un código de verificación a su email",
   "Send Code": "Enviar Código",
   "Resend verification code": "Reenviar código de verificación",
   "Error while sending verification code: ": "Error al enviar código de verificación: ",
