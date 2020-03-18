@@ -50,11 +50,12 @@ export default class UserProfileScreen extends React.Component {
 
   // gets user's name and email
   getUserInfo = async () => {
+    
     await Auth.currentAuthenticatedUser({ bypassCache: true })
       .then(user => {
         console.log(user)
         this.setState({ user })
-        this.setState({ name: user.attributes.name })
+        this.setState({ name: user.attributes.name.split(' ')[0] })
         this.setState({ UserId: user.attributes.sub })
         this.getUserTrees()
       })
