@@ -16,6 +16,7 @@ const COLORS = {
   lightgreen: '#CAF28D',
   mutedgreen: '#9CA670',
   darkgreen: '#557718',
+  forestgreen: '#2F6443',
 
   lightblue: '#82A2F4'
 }

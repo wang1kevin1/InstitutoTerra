@@ -23,6 +23,8 @@ import COLORS from '../../assets/Colors.js'
 
 import Footer from './Footer.js'
 
+import MenuBar from './MenuBar.js'
+
 import Auth from '@aws-amplify/auth'
 
 import i18n from 'i18n-js'
@@ -247,6 +249,7 @@ export default class HomeScreen extends React.Component {
           </TouchableWithoutFeedback>
         </ImageBackground>
         <Footer color='green' navigation={this.props.navigation}/>
+        <MenuBar color='green'/>
       </View>
     );
   }
