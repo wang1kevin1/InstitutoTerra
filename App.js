@@ -117,7 +117,7 @@ const SettingsStackNavigator = createStackNavigator({
   SettingsList: SettingsListScreen,
   SettingsName: SettingsNameScreen,
   SettingsEmail: SettingsEmailScreen,
-  SettingsPassword: SettingsPasswordScreen
+  SettingsPassword: SettingsPasswordScreen,
 }, { headerMode: 'none' })
 
 // Flight Stack
@@ -176,7 +176,8 @@ export default class App extends React.Component {
         'Montserrat': require('./src/assets/fonts/Montserrat-Regular.ttf'),
         'Montserrat-bold': require('./src/assets/fonts/Montserrat-Bold.ttf'),
         'Fago-black': require('./src/assets/fonts/Fago-Black.ttf'),
-        'Gilroy-bold': require('./src/assets/fonts/Gilroy-Bold.ttf')
+        'Gilroy-bold': require('./src/assets/fonts/Gilroy-Bold.ttf'),
+        'Poppins': require('./src/assets/fonts/Poppins-Medium.ttf')
       })
     ])
   };
