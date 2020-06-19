@@ -18,7 +18,9 @@ const COLORS = {
   darkgreen: '#557718',
   forestgreen: '#2F6443',
 
-  lightblue: '#82A2F4'
+  lightblue: '#82A2F4',
+
+  sandy: '#FFFCDC',
 }
 
 export default COLORS
