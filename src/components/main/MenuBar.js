@@ -27,11 +27,11 @@ export default class MenuBar extends React.Component {
           error: false,
         }
       
-       this.voltar = require('../../assets/voltar.png')
-       this.inicio = require('../../assets/inicio.png')
-       this.rfrt = require('../../assets/rfrt.png')
-       this.login = require('../../assets/login.png')
-       this.logo = require('../../assets/sidelogo.png')
+       this.voltar = require('../../assets/icons/ic_back.png')
+       this.inicio = require('../../assets/icons/ic_home.png')
+       this.rfrt = require('../../assets/logos/logo_reloresta_vertical.png')
+       this.login = require('../../assets/icons/ic_profile.png')
+       this.logo = require('../../assets/logos/logo_IT_vertical.png')
 
     }
 
@@ -172,26 +172,26 @@ const styles = StyleSheet.create ({
     },
 
     menurfrt: {
-      width: width*.18,
-      height: width*.32, 
+      width: width*.13,
+      height: width*.26, 
       resizeMode: 'stretch',
       padding: width*.05
     },
 
     login: {
-      width: width*.07,
-      height: width*.07,
+      width: width*.06,
+      height: width*.06,
       resizeMode: 'stretch'
     },
 
     house: {
-      width: width*.08,
-      height: width*.07,
+      width: width*.07,
+      height: width*.06,
       resizeMode: 'stretch'
     },
 
     exit: {
-      width: width*.07,
+      width: width*.06,
       height: width*.07,
       resizeMode: 'stretch'
     },
