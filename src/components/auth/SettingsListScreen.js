@@ -20,7 +20,7 @@ import Constants from 'expo-constants';
 
 import COLORS from '../../assets/Colors.js';
 
-import Footer from '../main/Footer.js';
+import MenuBar from '../main/MenuBar.js';
 
 import Auth from '@aws-amplify/auth';
 
@@ -136,7 +136,7 @@ export default class SettingsListScreen extends React.Component {
                     </SettingsList>
                   </View>
                 </View>
-                <Footer color='white' navigation={this.props.navigation}/>
+                <MenuBar color='white' navigation={this.props.navigation}/>
               </View>
       );
     }

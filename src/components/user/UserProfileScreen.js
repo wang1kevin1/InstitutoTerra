@@ -12,7 +12,7 @@ import {
 
 import COLORS from '../../assets/Colors.js'
 
-import Footer from '../main/Footer.js';
+import MenuBar from '../main/MenuBar.js';
 
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
@@ -189,7 +189,7 @@ export default class UserProfileScreen extends React.Component {
           </Text>
           </TouchableOpacity>
         </View>
-        <Footer color="white" navigation={this.props.navigation}/>
+        <MenuBar color="white" navigation={this.props.navigation}/>
       </View>
     )
   }
