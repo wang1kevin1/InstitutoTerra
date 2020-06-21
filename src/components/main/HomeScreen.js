@@ -21,8 +21,6 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
 import COLORS from '../../assets/Colors.js'
 
-import Footer from './Footer.js'
-
 import MenuBar from './MenuBar.js'
 
 import Auth from '@aws-amplify/auth'
@@ -248,8 +246,7 @@ export default class HomeScreen extends React.Component {
             </View>
           </TouchableWithoutFeedback>
         </ImageBackground>
-        <Footer color='green' navigation={this.props.navigation}/>
-        <MenuBar color='green'/>
+        <MenuBar color='green' navigation = {this.props.navigation}/>
       </View>
     );
   }

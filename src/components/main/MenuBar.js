@@ -87,7 +87,9 @@ export default class MenuBar extends React.Component {
                 </View>
               </TouchableOpacity>
             }
-            <TouchableOpacity activeOpacity = {0.9}>
+            <TouchableOpacity activeOpacity = {0.9}
+              onPress={()=>this.props.navigation.navigate('Home')}
+              style = {styles.navstyle}>
               <View style = {styles.iconContainer}>
                 <Image
                   source = {this.inicio}
@@ -98,14 +100,14 @@ export default class MenuBar extends React.Component {
               </View>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity = {0.9}>
-            <View style={styles.iconContainer}>
-            <Image
-              source = {this.voltar}
-              style = {styles.exit} />
-            <Text style = {styles.menutext}>
-              voltar
-            </Text>
-            </View>
+              <View style={styles.iconContainer}>
+                <Image
+                  source = {this.voltar}
+                  style = {styles.exit} />
+                <Text style = {styles.menutext}>
+                  voltar
+                </Text>
+              </View>
             </TouchableOpacity>
           </View>
           <View style={styles.clearSpace}/>

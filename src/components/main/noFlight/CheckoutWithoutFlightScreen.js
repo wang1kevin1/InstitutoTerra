@@ -14,7 +14,7 @@ import Dash from 'react-native-dash';
 
 import COLORS from '../../../assets/Colors.js';
 
-import Footer from '../Footer.js';
+import MenuBar from '../MenuBar.js';
 
 import Auth from '@aws-amplify/auth';
 
@@ -172,7 +172,7 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
             <Text style={styles.buttonText}>{i18n.t('CHECKOUT')}</Text>
           </TouchableOpacity>
         </View>
-        <Footer color='white' navigation={this.props.navigation}/>
+        <MenuBar color='white' navigation={this.props.navigation}/>
       </View>
     )
   }
