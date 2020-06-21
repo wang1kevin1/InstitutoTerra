@@ -99,7 +99,9 @@ export default class MenuBar extends React.Component {
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity = {0.9}>
+            <TouchableOpacity activeOpacity = {0.9}
+              onPress={()=>this.props.navigation.goBack()}
+              style = {styles.navstyle}>
               <View style={styles.iconContainer}>
                 <Image
                   source = {this.voltar}
