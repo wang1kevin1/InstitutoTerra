@@ -122,7 +122,7 @@ export default class MenuBar extends React.Component {
 
 }
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('screen');
 
 const styles = StyleSheet.create ({
 
@@ -160,6 +160,7 @@ const styles = StyleSheet.create ({
       backgroundColor: 'transparent',
       height: height*.2,
       width: width*.25,
+      marginBottom: height*.05,
       flex: 1,
     },
 

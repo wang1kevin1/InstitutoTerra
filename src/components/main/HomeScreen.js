@@ -254,7 +254,7 @@ export default class HomeScreen extends React.Component {
 
 const flightSearch = React.createRef();
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
   imageBackground: {
