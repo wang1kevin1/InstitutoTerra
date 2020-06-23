@@ -22,16 +22,14 @@ export default class MenuBar extends React.Component {
         super(props);
         
         this.state = {
-          color: '',
           isAuthenticated: false,
-          error: false,
         }
       
-       this.voltar = require('../../assets/icons/ic_back.png')
-       this.inicio = require('../../assets/icons/ic_home.png')
-       this.rfrt = require('../../assets/logos/logo_reloresta_vertical.png')
+       this.back = require('../../assets/icons/ic_back.png')
+       this.home = require('../../assets/icons/ic_home.png')
+       this.reflorestaLogo = require('../../assets/logos/logo_reloresta_vertical.png')
        this.login = require('../../assets/icons/ic_profile.png')
-       this.logo = require('../../assets/logos/logo_IT_vertical.png')
+       this.institutoTerraLogo = require('../../assets/logos/logo_IT_vertical.png')
 
     }
 
@@ -54,8 +52,8 @@ export default class MenuBar extends React.Component {
           <View style={styles.topContainer}>
             <View style={styles.greenSpacer}/>
             <Image
-              source = {this.rfrt}
-              style = {styles.menurfrt} />
+              source = {this.reflorestaLogo}
+              style = {styles.reflorestaLogoContainer} />
             <NavigationEvents onWillFocus={() => { this.checkAuth()}}/>
             {/* isAuthenticated: false */}
             { !this.state.isAuthenticated && 
@@ -92,10 +90,10 @@ export default class MenuBar extends React.Component {
               style = {styles.navstyle}>
               <View style = {styles.iconContainer}>
                 <Image
-                  source = {this.inicio}
+                  source = {this.home}
                   style = {styles.house} />
                 <Text style = {styles.menutext}>
-                  início
+                  home
                 </Text>
               </View>
             </TouchableOpacity>
@@ -104,10 +102,10 @@ export default class MenuBar extends React.Component {
               style = {styles.navstyle}>
               <View style={styles.iconContainer}>
                 <Image
-                  source = {this.voltar}
+                  source = {this.back}
                   style = {styles.exit} />
                 <Text style = {styles.menutext}>
-                  voltar
+                  back
                 </Text>
               </View>
             </TouchableOpacity>
@@ -115,8 +113,8 @@ export default class MenuBar extends React.Component {
           <View style={styles.clearSpace}/>
           <View style={styles.bottomContainer}>
             <Image
-            source = {this.logo}
-            style = {styles.sidelogo}/>
+            source = {this.institutoTerraLogo}
+            style = {styles.institutoTerraLogoContainer}/>
           </View>
         </View>
       )
@@ -171,7 +169,7 @@ const styles = StyleSheet.create ({
       height: height*.03
     },
 
-    menurfrt: {
+    reflorestaLogoContainer: {
       width: width*.13,
       height: width*.26, 
       resizeMode: 'stretch',
@@ -209,7 +207,7 @@ const styles = StyleSheet.create ({
       backgroundColor: 'transparent',
     },
 
-    sidelogo: {
+    institutoTerraLogoContainer: {
       width: width*.1,
       height: height*.2,
       resizeMode: 'contain'

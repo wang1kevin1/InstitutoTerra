@@ -206,7 +206,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
             <Text style={styles.buttonText}>{i18n.t('CHECKOUT')}</Text>
           </TouchableOpacity>
         </View>
-        <MenuBar color='white' navigation={this.props.navigation}/>
+        <MenuBar navigation={this.props.navigation}/>
       </View>
     )
   }
