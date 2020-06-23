@@ -246,7 +246,7 @@ export default class HomeScreen extends React.Component {
             </View>
           </TouchableWithoutFeedback>
         </ImageBackground>
-        <MenuBar color='green' navigation = {this.props.navigation}/>
+        <MenuBar navigation = {this.props.navigation}/>
       </View>
     );
   }

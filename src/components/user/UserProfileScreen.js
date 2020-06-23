@@ -189,7 +189,7 @@ export default class UserProfileScreen extends React.Component {
           </Text>
           </TouchableOpacity>
         </View>
-        <MenuBar color="white" navigation={this.props.navigation}/>
+        <MenuBar navigation={this.props.navigation}/>
       </View>
     )
   }

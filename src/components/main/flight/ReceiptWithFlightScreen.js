@@ -141,7 +141,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
             </View>
           </TouchableOpacity>
         </View>
-        <MenuBar color='white' navigation={this.props.navigation}/>
+        <MenuBar navigation={this.props.navigation}/>
       </View>
     )
   }
