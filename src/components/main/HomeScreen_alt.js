@@ -201,10 +201,7 @@ export default class HomeScreen extends React.Component {
 
                   <View style={styles.bottomText}> 
                     <Text style={styles.smallWhiteText}>Insira o número de vôo para iniciar ou</Text>
-                    <Text style={styles.linkWhiteText}>
-                        doe sem número de vôo   <FontAwesome name='chevron-right'  style={styles.chevronIcon} />
-                        <FontAwesome name='chevron-right'  style={styles.chevronIcon} />
-                    </Text>
+                    <Text style={styles.linkWhiteText}>doe sem número de vôo</Text>
                   </View>
 
 
@@ -272,47 +269,44 @@ const styles = StyleSheet.create({
     padding: 0,
     marginTop: height * .125,
     marginBottom: height * 0.05,
-    marginLeft: height * .15,
-    marginRight: height * .00625,
+    marginLeft: height * .145,
+    marginRight: height * .0125,
     backgroundColor: 'transparent'
   },
   appIntro: {
     paddingTop: height * .1,
   },
   topText: {
-    marginBottom: 5
+    marginBottom: height * .00625
   },
   bottomText: {
-    marginTop: 10
+    marginTop: height * .00625
   },
   largeWhiteText: {
-    fontSize: 30,
+    fontSize: 28,
     lineHeight: 40,
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-bold',
     textAlign: 'left',
-    fontWeight: '900',
-    color: COLORS.white
+    color: COLORS.sandy
   },
   mediumWhiteText: {
-    fontSize: 30,
+    fontSize: 28,
     lineHeight: 40,
     fontFamily: 'Montserrat',
     textAlign: "left",
-    fontWeight: "300", 
-    color: COLORS.white,
+    color: COLORS.sandy,
   },
   smallWhiteText: {
-    fontSize: 16,
+    fontSize: 14,
     textAlign: "left",
     fontFamily: 'Montserrat',
-    fontWeight: "300", 
-    color: COLORS.white
+    color: COLORS.sandy
   },
   linkWhiteText: {
-    fontSize: 16,
+    fontSize: 14,
     textDecorationLine: "underline",
-    fontFamily: 'Montserrat',
-    color: COLORS.white,
+    fontFamily: 'Montserrat-bold',
+    color: COLORS.sandy
   },
   searchContainer: {
     marginTop: height * .08,
