@@ -23,8 +23,6 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
 import COLORS from '../../assets/Colors.js'
 
-// import Footer from './Footer.js'
-
 import MenuBar from './MenuBar.js'
 
 import Auth from '@aws-amplify/auth'
@@ -129,17 +127,13 @@ export default class HomeScreen extends React.Component {
       }).then((validNum) => {
 
         if (validNum) {
-
           flightSearch.current.clear();
           this.setState({ error: false })
           this.props.navigation.navigate('FlightInfo', { flightNum: this.state.flight })
-
         } else {
-
           this.setState({ error: true })
           flightSearch.current.shake();
           flightSearch.current.clear();
-
         }
 
       }).catch((error) => {
@@ -164,19 +158,17 @@ export default class HomeScreen extends React.Component {
         }
         return this.state.validNum;
       }).then((validNum) => {
-        if (validNum) {
 
+        if (validNum) {
           flightSearch.current.clear();
           this.setState({ error: false })
           this.props.navigation.navigate('FlightInfo', { flightNum: this.state.flight })
-
         } else {
-
           this.setState({ error: true })
           flightSearch.current.shake();
           flightSearch.current.clear();
-
         }
+
       }).catch((error) => {
         console.error(error);
       });
@@ -190,9 +182,10 @@ export default class HomeScreen extends React.Component {
             <View style={styles.container}>
               <View style={styles.containerTop}>
                 
+                {/* Intro Text Body View */}
                 <View style={styles.appIntro}>
 
-                  <View style={styles.topText}>
+                  <View>
                     <Text style={styles.largeWhiteText}>A cada $6 uma</Text>
                     <Text style={styles.largeWhiteText}>árvore é plantada.</Text>
                   </View>
@@ -202,10 +195,14 @@ export default class HomeScreen extends React.Component {
                   </Text>
 
                   <View style={styles.bottomText}> 
-                    <Text style={styles.smallWhiteText}>Insira o número de vôo para iniciar ou</Text>
-                    <Text style={styles.linkWhiteText}>doe sem número de vôo</Text>
-                  </View>
+                    <Text style={styles.smallWhiteText}>
+                      Insira o número de vôo para iniciar ou 
+                    </Text>
 
+                    <Text style={styles.linkWhiteText}> 
+                      doe sem número de vôo.
+                    </Text>
+                  </View>
 
                 </View>
 
@@ -227,7 +224,7 @@ export default class HomeScreen extends React.Component {
 
                     errorMessage={i18n.t('Please enter a valid flight number')}
                     errorStyle={[
-                      { fontSize: (this.state.error == false) ? 3 : 10 }, 
+                      { fontSize: (this.state.error == false) ? moderateScale(3) : moderateScale(10)}, 
                       { color: (this.state.error == false) ? 'transparent' : 'red' }
                     ]}
 
@@ -236,11 +233,11 @@ export default class HomeScreen extends React.Component {
                     ref={flightSearch}
                     onChangeText={value => this.onChangeText('flight', value)}
                   />
-
+                  
                 </View>
-                
               </View>
             </View>
+
           </TouchableWithoutFeedback>
         </ImageBackground>
         <MenuBar navigation = {this.props.navigation}/>
@@ -264,35 +261,32 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     height: height,
     width: width,
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent'
   },
   containerTop: {
     padding: 0,
-    marginTop: height * .125,
-    marginBottom: height * 0.05,
-    marginLeft: height * .145,
-    marginRight: height * .0125,
+    marginTop: scale(5),
+    marginBottom: scale(100),
+    marginLeft: scale(120),
+    marginRight: scale(15),
     backgroundColor: 'transparent'
   },
   appIntro: {
-    paddingTop: height * .1,
-  },
-  topText: {
-    marginBottom: height * .00625
+    paddingTop: scale(50),
   },
   bottomText: {
-    marginTop: height * .00625
+    marginTop: scale(20)
   },
   largeWhiteText: {
-    fontSize: scale(24),
-    lineHeight: scale(40),
-    fontFamily: 'Montserrat-bold',
+    fontSize: scale(20),
+    lineHeight: scale(30),
     textAlign: 'left',
+    fontFamily: 'Montserrat-bold',
     color: COLORS.sandy
   },
   mediumWhiteText: {
-    fontSize: scale(24),
-    lineHeight: scale(40),
+    fontSize: scale(20),
+    lineHeight: scale(30),
     fontFamily: 'Montserrat',
     textAlign: "left",
     color: COLORS.sandy,
@@ -310,7 +304,7 @@ const styles = StyleSheet.create({
     color: COLORS.sandy
   },
   searchContainer: {
-    marginTop: height * .08,
+    marginTop: scale(35)
   },
   containerStyle: {
     opacity: 0.95,
