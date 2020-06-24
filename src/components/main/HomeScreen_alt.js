@@ -272,8 +272,8 @@ const styles = StyleSheet.create({
     padding: 0,
     marginTop: height * .125,
     marginBottom: height * 0.05,
-    marginLeft: height * .07,
-    marginRight: height * .05,
+    marginLeft: height * .15,
+    marginRight: height * .00625,
     backgroundColor: 'transparent'
   },
   appIntro: {
