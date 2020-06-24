@@ -26,7 +26,7 @@ import SettingsEmailScreen from './src/components/auth/SettingsEmailScreen'
 import SettingsPasswordScreen from './src/components/auth/SettingsPasswordScreen'
 
 // MainStack
-import HomeScreen from './src/components/main/HomeScreen'
+import HomeScreen from './src/components/main/HomeScreen_alt'
 import AboutScreen from './src/components/main/AboutScreen'
 import UserProfileScreen from './src/components/user/UserProfileScreen'
 
@@ -166,11 +166,7 @@ export default class App extends React.Component {
   _loadResourcesAsync = async () => {
     return Promise.all([
       Asset.loadAsync([
-        require('./src/assets/background/home/home-1.png'), 
-        require('./src/assets/background/home/home-2.png'),
-        require('./src/assets/background/home/home-3.png'),
-        require('./src/assets/background/home/home-4.png'),
-        require('./src/assets/background/home/home-5.png'),
+        require('./src/assets/background/home/bg_home.png')
       ]),
       Font.loadAsync({
         'Montserrat': require('./src/assets/fonts/Montserrat-Regular.ttf'),

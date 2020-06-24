@@ -21,7 +21,7 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
 import COLORS from '../../assets/Colors.js'
 
-import Footer from './Footer.js'
+// import Footer from './Footer.js'
 
 import MenuBar from './MenuBar.js'
 
@@ -30,8 +30,6 @@ import Auth from '@aws-amplify/auth'
 import i18n from 'i18n-js'
 
 import * as CONSTANTS from '../utilities/Constants.js'
-import { nominalTypeHack } from 'prop-types';
-import { Row } from 'native-base';
 
 const background_image = require('../../assets/background/home/bg_home.png')
 
@@ -247,7 +245,7 @@ export default class HomeScreen extends React.Component {
             </View>
           </TouchableWithoutFeedback>
         </ImageBackground>
-        <Footer color='green' navigation={this.props.navigation}/>
+        <MenuBar navigation = {this.props.navigation}/>
       </View>
     );
   }
@@ -290,7 +288,7 @@ const styles = StyleSheet.create({
   largeWhiteText: {
     fontSize: 30,
     lineHeight: 40,
-    fontFamily: 'Montserrat-Regular',
+    fontFamily: 'Montserrat',
     textAlign: 'left',
     fontWeight: '900',
     color: COLORS.white
