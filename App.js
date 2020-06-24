@@ -26,7 +26,7 @@ import SettingsEmailScreen from './src/components/auth/SettingsEmailScreen'
 import SettingsPasswordScreen from './src/components/auth/SettingsPasswordScreen'
 
 // MainStack
-import HomeScreen from './src/components/main/HomeScreen_alt'
+import HomeScreen from './src/components/main/HomeScreen'
 import AboutScreen from './src/components/main/AboutScreen'
 import UserProfileScreen from './src/components/user/UserProfileScreen'
 

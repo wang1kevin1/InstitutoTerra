@@ -13,13 +13,17 @@ import {
 
 import { Linking } from 'expo';
 
-import { Input } from 'react-native-elements'
+import { Input, normalize } from 'react-native-elements'
 
 import { NavigationEvents } from 'react-navigation'
+
+import PixelRatio from 'react-native'
 
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
 import COLORS from '../../assets/Colors.js'
+
+// import Footer from './Footer.js'
 
 import MenuBar from './MenuBar.js'
 
@@ -29,13 +33,7 @@ import i18n from 'i18n-js'
 
 import * as CONSTANTS from '../utilities/Constants.js'
 
-const images = [
-  require('../../assets/background/home/home-1.png'),
-  require('../../assets/background/home/home-2.png'),
-  require('../../assets/background/home/home-3.png'),
-  require('../../assets/background/home/home-4.png'),
-  require('../../assets/background/home/home-5.png')
-]
+const background_image = require('../../assets/background/home/bg_home.png')
 
 export default class HomeScreen extends React.Component {
   state = {
@@ -47,11 +45,7 @@ export default class HomeScreen extends React.Component {
   // load background
   constructor(props) {
     super(props)
-
-    const randomNumber = Math.floor(Math.random() * 5);
-    this.background = images[randomNumber]
-
-    this.selectBackground(images)
+    this.selectBackground()
   }
 
   onChangeText(key, value) {
@@ -62,8 +56,7 @@ export default class HomeScreen extends React.Component {
 
   // selects a random background to be loaded
   selectBackground() {
-    const randomNumber = Math.floor(Math.random() * 5);
-    this.background = images[randomNumber]
+    this.background = background_image
   }
 
   // Opens up email to bug-report
@@ -87,17 +80,23 @@ export default class HomeScreen extends React.Component {
   // Check if the inputed flight number is valid
   checkNum() {
     let spaceBuffer = this.state.flight.replace(/\s+/g, '');
+
     this.setState({
       flight: spaceBuffer
     })
+
     let charsIata = spaceBuffer.slice(0, 2).toUpperCase();
     let charsIcao = spaceBuffer.slice(0, 3).toUpperCase();
+
     console.log(charsIata);
     console.log(charsIcao);
+
     let numsIata = spaceBuffer.slice(2);
     let numsIcao = spaceBuffer.slice(3);
+
     console.log(numsIata);
     console.log(numsIcao);
+
     //process input as Iata or Icao depending on format
     if (isNaN(spaceBuffer.charAt(2))) {
       return this.icaoCall(charsIcao, numsIcao);
@@ -113,25 +112,36 @@ export default class HomeScreen extends React.Component {
     })
       .then((response) => response.json())
       .then((responseJson) => {
+
         this.setState({
           validNum: true,
           data: responseJson[0],
         })
+
         console.log(this.state.data);
+
         if (!this.state.data) {
           this.setState({ validNum: false })
         }
+
         return this.state.validNum;
+
       }).then((validNum) => {
+
         if (validNum) {
+
           flightSearch.current.clear();
           this.setState({ error: false })
           this.props.navigation.navigate('FlightInfo', { flightNum: this.state.flight })
+
         } else {
+
           this.setState({ error: true })
           flightSearch.current.shake();
           flightSearch.current.clear();
+
         }
+
       }).catch((error) => {
         console.error(error);
       });
@@ -155,13 +165,17 @@ export default class HomeScreen extends React.Component {
         return this.state.validNum;
       }).then((validNum) => {
         if (validNum) {
+
           flightSearch.current.clear();
           this.setState({ error: false })
           this.props.navigation.navigate('FlightInfo', { flightNum: this.state.flight })
+
         } else {
+
           this.setState({ error: true })
           flightSearch.current.shake();
           flightSearch.current.clear();
+
         }
       }).catch((error) => {
         console.error(error);
@@ -175,73 +189,56 @@ export default class HomeScreen extends React.Component {
           <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
             <View style={styles.container}>
               <View style={styles.containerTop}>
-                {/* Update isAuthenticated on navigation refresh */}
-                <NavigationEvents onWillFocus={() => { this.checkAuth(); this.selectBackground(); }} />
-                <View style={styles.buttonBarNav}>
-                  {/* <Text style={styles.bigGreenText}>&#x2013; &#x2013;</Text> //To be used after beta */}
-                  {/* Bug Reports to be used only for beta */}
-                  <TouchableOpacity activeOpacity={0.9}
-                    onPress={() => this.handleBugReports()}
-                    style={styles.navStyle}>
-                    <Ionicons style={styles.navigationIcon} name="ios-bug" />
-                  </TouchableOpacity>
-                  {/* isAuthenticated: false */}
-                  {!this.state.isAuthenticated &&
-                    <TouchableOpacity activeOpacity={0.9}
-                      onPress={() => this.props.navigation.navigate('SignIn')}
-                      style={styles.navStyle}>
-                      <FontAwesome style={styles.navigationIcon} name="user-circle-o" />
-                      <Text style={styles.navText}>
-                        {i18n.t('SIGN IN')}
-                      </Text>
-                    </TouchableOpacity>
-                  }
-                  {/* isAuthenticated: true */}
-                  {this.state.isAuthenticated &&
-                    <TouchableOpacity activeOpacity={0.9}
-                      onPress={() => this.props.navigation.navigate('UserProfile')}
-                      style={styles.navStyle}>
-                      <FontAwesome style={styles.navigationIcon} name="user-circle-o" />
-                      <Text style={styles.navText}>
-                        {i18n.t('PROFILE')}
-                      </Text>
-                    </TouchableOpacity>
-                  }
+                
+                <View style={styles.appIntro}>
+
+                  <View style={styles.topText}>
+                    <Text style={styles.largeWhiteText}>A cada $6 uma</Text>
+                    <Text style={styles.largeWhiteText}>árvore é plantada.</Text>
+                  </View>
+
+                  <Text style={styles.mediumWhiteText}>
+                      {`Faça sua doação e ajude a recuperar a Mata Atlântica da Fazenda do Bulcão.`}
+                  </Text>
+
+                  <View style={styles.bottomText}> 
+                    <Text style={styles.smallWhiteText}>Insira o número de vôo para iniciar ou</Text>
+                    <Text style={styles.linkWhiteText}>doe sem número de vôo</Text>
+                  </View>
+
+
                 </View>
-                <View style={styles.appName}>
-                  <Text style={styles.bigWhiteText}>refloresta</Text>
-                </View>
+
                 <View style={styles.searchContainer}>
                   {/* Enter flight number */}
                   <Input
                     containerStyle={styles.containerStyle}
                     inputContainerStyle={styles.inputContainerStyle}
                     inputStyle={styles.inputStyle}
-                    label={i18n.t('FLIGHT NUMBER')}
-                    labelStyle={styles.labelStyle}
+
                     rightIcon={
                       <Ionicons style={styles.searchIcon}
                         name="md-arrow-forward"
-                        onPress={() => this.checkNum()} />
+                        onPress={
+                          () => this.checkNum(),
+                          () => this.props.navigation.navigate('CheckoutWithoutFlight')
+                        } />
                     }
-                    rightIconContainerStyle={styles.rightIconContainerStyle}
+
                     errorMessage={i18n.t('Please enter a valid flight number')}
-                    errorStyle={[{ fontSize: (this.state.error == false) ? 3 : 10 }, { color: (this.state.error == false) ? 'transparent' : 'red' }]}
+                    errorStyle={[
+                      { fontSize: (this.state.error == false) ? 3 : 10 }, 
+                      { color: (this.state.error == false) ? 'transparent' : 'red' }
+                    ]}
+
                     autoCapitalize='characters'
                     autoCorrect={false}
                     ref={flightSearch}
                     onChangeText={value => this.onChangeText('flight', value)}
                   />
+
                 </View>
-                {/* Redirect to donation checkout */}
-                {/* NAVIGATION FOR TESTING ONLY */}
-                <TouchableOpacity activeOpacity={0.9}
-                  style={styles.bottomGreenButton}
-                  onPress={() => this.props.navigation.navigate('CheckoutWithoutFlight')}>
-                  <Text style={styles.buttonText}>
-                    {i18n.t('DONATE WITH NO FLIGHT NUMBER')}
-                  </Text>
-                </TouchableOpacity>
+                
               </View>
             </View>
           </TouchableWithoutFeedback>
@@ -254,13 +251,13 @@ export default class HomeScreen extends React.Component {
 
 const flightSearch = React.createRef();
 
-const { width, height } = Dimensions.get('screen');
+const { width, height} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   imageBackground: {
     height: height,
     width: width,
-    backgroundColor: COLORS.black
+    backgroundColor: COLORS.black,
   },
   container: {
     flex: 1,
@@ -270,86 +267,81 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   containerTop: {
-    paddingLeft: width * 0.05,
-    paddingRight: width * 0.05,
-    paddingTop: height * 0.06,
-    marginBottom: height * 0.10,
-    backgroundColor: 'transparent',
+    padding: 0,
+    marginTop: height * .125,
+    marginBottom: height * 0.05,
+    marginLeft: height * .145,
+    marginRight: height * .0125,
+    backgroundColor: 'transparent'
   },
-  buttonBarNav: {
-    flexDirection: 'row',
-    height: height * 0.05,
-    justifyContent: 'space-between',
-    backgroundColor: 'transparent',
+  appIntro: {
+    paddingTop: height * .1,
   },
-  navStyle: {
-    flexDirection: 'column',
-    alignItems: 'center'
+  topText: {
+    marginBottom: height * .00625
   },
-  navigationIcon: {
-    color: COLORS.lightgreen,
-    fontSize: 30,
+  bottomText: {
+    marginTop: height * .00625
   },
-  navText: {
-    fontWeight: 'bold',
-    fontSize: 12,
-    color: COLORS.lightgreen,
+  largeWhiteText: {
+    fontSize: 28,
+    lineHeight: 40,
+    fontFamily: 'Montserrat-bold',
+    textAlign: 'left',
+    color: COLORS.sandy
   },
-  bigGreenText: {
-    fontWeight: 'bold',
-    fontSize: 40,
-    lineHeight: 45,
-    color: COLORS.lightgreen,
+  mediumWhiteText: {
+    fontSize: 28,
+    lineHeight: 40,
+    fontFamily: 'Montserrat',
+    textAlign: "left",
+    color: COLORS.sandy,
   },
-  appName: {
-    paddingTop: height * 0.2,
+  smallWhiteText: {
+    fontSize: 14,
+    textAlign: "left",
+    fontFamily: 'Montserrat',
+    color: COLORS.sandy
   },
-  bigWhiteText: {
-    fontSize: 50,
-    fontFamily: 'Gilroy-bold',
-    color: COLORS.white,
-    textAlign: 'center'
+  linkWhiteText: {
+    fontSize: 14,
+    textDecorationLine: "underline",
+    fontFamily: 'Montserrat-bold',
+    color: COLORS.sandy
   },
   searchContainer: {
-    paddingTop: height * 0.02,
-    paddingBottom: height * 0.03,
+    marginTop: height * .08,
   },
   containerStyle: {
-    backgroundColor: COLORS.mutedgreen,
+    opacity: 0.95,
+    paddingTop: 15,
+    borderWidth: 4,
     borderRadius: 15,
-    borderColor: COLORS.lightgreen,
-    borderWidth: 2,
-    paddingTop: 6,
-    opacity: 0.95
+    borderColor: COLORS.sandy,
+    backgroundColor: 'transparent',
   },
   inputContainerStyle: {
-    borderColor: COLORS.white,
-    borderBottomWidth: 2
+    borderColor: 'transparent',
   },
   inputStyle: {
-    fontSize: 27,
-    color: COLORS.white,
+    fontSize: 50,
+    fontWeight: '900',
+    textAlignVertical: 'center',
+    color: COLORS.sandy
   },
   labelStyle: {
-    fontSize: 10,
-    color: COLORS.white,
+    fontSize: 20,
+    color: COLORS.sandy,
   },
   searchIcon: {
-    color: COLORS.white,
-    fontSize: 40,
+    fontSize: 35,
+    textAlign: 'center',
+    color: COLORS.sandy
   },
-  rightIconContainerStyle: {
-    paddingBottom: 3
+  chevronIcon: {
+    fontSize: 10,
+    textDecorationLine: 'none',
+    textAlignVertical: 'center',
+    color: COLORS.sandy
   },
-  bottomGreenButton: {
-    borderRadius: 10,
-    backgroundColor: COLORS.lightgreen,
-    height: height * 0.04,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: COLORS.darkgrey,
-    fontSize: 12
-  }
 })
