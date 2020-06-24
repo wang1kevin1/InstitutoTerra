@@ -17,7 +17,7 @@ import { Input, normalize } from 'react-native-elements'
 
 import { NavigationEvents } from 'react-navigation'
 
-import PixelRatio from 'react-native'
+import {scale, verticalScale, moderateScale} from 'react-native-size-matters'
 
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
@@ -284,27 +284,27 @@ const styles = StyleSheet.create({
     marginTop: height * .00625
   },
   largeWhiteText: {
-    fontSize: 28,
-    lineHeight: 40,
+    fontSize: scale(24),
+    lineHeight: scale(40),
     fontFamily: 'Montserrat-bold',
     textAlign: 'left',
     color: COLORS.sandy
   },
   mediumWhiteText: {
-    fontSize: 28,
-    lineHeight: 40,
+    fontSize: scale(24),
+    lineHeight: scale(40),
     fontFamily: 'Montserrat',
     textAlign: "left",
     color: COLORS.sandy,
   },
   smallWhiteText: {
-    fontSize: 14,
+    fontSize: scale(14),
     textAlign: "left",
     fontFamily: 'Montserrat',
     color: COLORS.sandy
   },
   linkWhiteText: {
-    fontSize: 14,
+    fontSize: scale(14),
     textDecorationLine: "underline",
     fontFamily: 'Montserrat-bold',
     color: COLORS.sandy
@@ -314,9 +314,9 @@ const styles = StyleSheet.create({
   },
   containerStyle: {
     opacity: 0.95,
-    paddingTop: 15,
-    borderWidth: 4,
-    borderRadius: 15,
+    paddingTop: scale(15),
+    borderWidth: scale(4),
+    borderRadius: scale(15),
     borderColor: COLORS.sandy,
     backgroundColor: 'transparent',
   },
@@ -324,22 +324,22 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
   },
   inputStyle: {
-    fontSize: 50,
+    fontSize: scale(50),
     fontWeight: '900',
     textAlignVertical: 'center',
     color: COLORS.sandy
   },
   labelStyle: {
-    fontSize: 20,
+    fontSize: scale(20),
     color: COLORS.sandy,
   },
   searchIcon: {
-    fontSize: 35,
+    fontSize: scale(35),
     textAlign: 'center',
     color: COLORS.sandy
   },
   chevronIcon: {
-    fontSize: 10,
+    fontSize: scale(10),
     textDecorationLine: 'none',
     textAlignVertical: 'center',
     color: COLORS.sandy
