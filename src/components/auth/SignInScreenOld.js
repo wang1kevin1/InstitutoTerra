@@ -11,7 +11,6 @@ import {
   Keyboard,
   Alert,
   ActivityIndicator,
-  Dimensions,
 } from 'react-native'
 
 import {
@@ -20,13 +19,11 @@ import {
   Input
 } from 'native-base'
 
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons';
 
 import COLORS from '../../assets/Colors.js'
 
 import Auth from '@aws-amplify/auth'
-
-import MenuBar from '../main/MenuBar'
 
 import i18n from 'i18n-js'
 
@@ -73,6 +70,7 @@ export default class SignInScreen extends React.Component {
           <TouchableWithoutFeedback
             style={styles.container}
             onPress={Keyboard.dismiss}>
+            <View style={styles.container}>
               <Container style={styles.infoContainer}>
                 <View style={styles.container}>
                   {/* Email */}
@@ -138,32 +136,20 @@ export default class SignInScreen extends React.Component {
                   }
                 </View>
               </Container>
+            </View>
           </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
-        <MenuBar navigation = {this.props.navigation}/>
       </SafeAreaView>
     )
   }
 }
-
-const { width, height } = Dimensions.get('screen');
-
 const styles = StyleSheet.create({
-
-  backgroundContainer: {
-    width: width,
-    height: height,
-    backgroundColor: COLORS.sandy,
-    justifyContent: 'flex-end'
-  },
-
   container: {
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: COLORS.sandy,
     justifyContent: 'center',
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
-
   input: {
     flex: 1,
     fontSize: 17,
@@ -171,15 +157,14 @@ const styles = StyleSheet.create({
     color: COLORS.lightblue,
   },
   infoContainer: {
-    width: width*.75,
     position: 'absolute',
-    left: width*.25,
+    left: 0,
     right: 0,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
-    backgroundColor: 'yellow',
+    backgroundColor: COLORS.lightgreen,
   },
   itemStyle: {
     marginBottom: 20,

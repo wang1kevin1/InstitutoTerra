@@ -98,7 +98,7 @@ export default class MenuBar extends React.Component {
               </View>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity = {0.9}
-              onPress={()=>this.props.navigation.goBack()}
+              onPress={()=> this.props.navigation.goBack()}
               style = {styles.navstyle}>
               <View style={styles.iconContainer}>
                 <Image
@@ -122,7 +122,7 @@ export default class MenuBar extends React.Component {
 
 }
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('screen');
 
 const styles = StyleSheet.create ({
 
