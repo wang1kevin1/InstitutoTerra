@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     borderWidth: 4,
     borderRadius: 15,
-    borderColor: COLORS.white,
+    borderColor: COLORS.sandy,
     backgroundColor: 'transparent',
   },
   inputContainerStyle: {
@@ -326,21 +326,21 @@ const styles = StyleSheet.create({
     fontSize: 50,
     fontWeight: '900',
     textAlignVertical: 'center',
-    color: COLORS.white
+    color: COLORS.sandy
   },
   labelStyle: {
     fontSize: 20,
-    color: COLORS.white,
+    color: COLORS.sandy,
   },
   searchIcon: {
     fontSize: 35,
     textAlign: 'center',
-    color: COLORS.white
+    color: COLORS.sandy
   },
   chevronIcon: {
     fontSize: 10,
     textDecorationLine: 'none',
     textAlignVertical: 'center',
-    color: COLORS.white
+    color: COLORS.sandy
   },
 })
