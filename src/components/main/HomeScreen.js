@@ -1,7 +1,6 @@
 import React from "react";
 
 import {
-    TouchableOpacity,
     TouchableWithoutFeedback,
     StyleSheet,
     Dimensions,
@@ -9,17 +8,15 @@ import {
     Keyboard,
     View,
     ImageBackground,
+    KeyboardAvoidingView,
+    Platform,
 } from "react-native";
 
-import { Linking } from "expo";
-
-import { Input, normalize } from "react-native-elements";
-
-import { NavigationEvents } from "react-navigation";
+import { Input } from "react-native-elements";
 
 import { scale, verticalScale, moderateScale } from "react-native-size-matters";
 
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 import COLORS from "../../assets/Colors.js";
 
@@ -29,13 +26,10 @@ import Auth from "@aws-amplify/auth";
 
 import i18n from "i18n-js";
 
-import * as CONSTANTS from "../utilities/Constants.js";
-
 const background_image = require("../../assets/background/home/bg_home.png");
 
 export default class HomeScreen extends React.Component {
     state = {
-        isAuthenticated: false,
         flight: "",
         error: false,
     };
@@ -43,7 +37,7 @@ export default class HomeScreen extends React.Component {
     // load background
     constructor(props) {
         super(props);
-        this.selectBackground();
+        this.background = background_image;
     }
 
     onChangeText(key, value) {
@@ -52,17 +46,8 @@ export default class HomeScreen extends React.Component {
         });
     }
 
-    // selects a random background to be loaded
-    selectBackground() {
-        this.background = background_image;
-    }
-
     // Opens up email to bug-report
-    handleBugReports = () => {
-        Linking.openURL(
-            "mailto:bug-report@refloresta.app?body=" + CONSTANTS.BUG_REPORT
-        );
-    };
+    handleBugReports = () => {};
 
     // Checks if a user is logged in
     async checkAuth() {
@@ -191,14 +176,22 @@ export default class HomeScreen extends React.Component {
                     source={this.background}
                     style={styles.imageBackground}
                 >
-                    <TouchableWithoutFeedback
+                    <KeyboardAvoidingView
+                        behavior={
+                            Platform.OS == "ios" || Platform.OS == "android"
+                                ? "padding"
+                                : "height"
+                        }
                         style={styles.container}
-                        onPress={Keyboard.dismiss}
+                        enabled="false"
                     >
-                        <View style={styles.container}>
-                            <View style={styles.containerTop}>
-                                {/* Intro Text Body View */}
-                                <View style={styles.appIntro}>
+                        <TouchableWithoutFeedback
+                            style={styles.container}
+                            onPress={Keyboard.dismiss}
+                        >
+                            <View style={styles.inner}>
+                                <View style={styles.containerTop}>
+                                    {/* Intro Text Body View */}
                                     <View>
                                         <Text
                                             style={styles.largeWhiteText}
@@ -206,14 +199,12 @@ export default class HomeScreen extends React.Component {
                                         >
                                             A cada $6 uma árvore é plantada.
                                         </Text>
-                                    </View>
 
-                                    <Text style={styles.mediumWhiteText}>
-                                        Faça sua doação e ajude a recuperar a
-                                        Mata Atlântica da Fazenda do Bulcão.
-                                    </Text>
-
-                                    <View style={styles.bottomText}>
+                                        <Text style={styles.mediumWhiteText}>
+                                            Faça sua doação e ajude a recuperar
+                                            a Mata Atlântica da Fazenda do
+                                            Bulcão.
+                                        </Text>
                                         <Text
                                             style={styles.smallWhiteText}
                                             numberOfLines={2}
@@ -227,59 +218,67 @@ export default class HomeScreen extends React.Component {
                                             numberOfLines={1}
                                         >
                                             doe sem número de vôo.
+                                            <Text style={styles.chevronIcon}>
+                                                {"   >>"}
+                                            </Text>
                                         </Text>
                                     </View>
-                                </View>
 
-                                <View style={styles.searchContainer}>
-                                    {/* Enter flight number */}
-                                    <Input
-                                        containerStyle={styles.containerStyle}
-                                        inputContainerStyle={
-                                            styles.inputContainerStyle
-                                        }
-                                        inputStyle={styles.inputStyle}
-                                        rightIcon={
-                                            <Ionicons
-                                                style={styles.searchIcon}
-                                                name="md-arrow-forward"
-                                                onPress={
-                                                    (() => this.checkNum(),
-                                                    () =>
+                                    <View style={styles.searchContainer}>
+                                        {/* Enter flight number */}
+                                        <Input
+                                            containerStyle={
+                                                styles.containerStyle
+                                            }
+                                            inputContainerStyle={
+                                                styles.inputContainerStyle
+                                            }
+                                            inputStyle={styles.inputStyle}
+                                            rightIcon={
+                                                <Ionicons
+                                                    style={styles.searchIcon}
+                                                    name="md-arrow-forward"
+                                                    onPress={() =>
                                                         this.props.navigation.navigate(
                                                             "CheckoutWithoutFlight"
-                                                        ))
-                                                }
-                                            />
-                                        }
-                                        errorMessage={i18n.t(
-                                            "Please enter a valid flight number"
-                                        )}
-                                        errorStyle={[
-                                            {
-                                                fontSize:
-                                                    this.state.error == false
-                                                        ? scale(3)
-                                                        : scale(10),
-                                            },
-                                            {
-                                                color:
-                                                    this.state.error == false
-                                                        ? "transparent"
-                                                        : "red",
-                                            },
-                                        ]}
-                                        autoCapitalize="characters"
-                                        autoCorrect={false}
-                                        ref={flightSearch}
-                                        onChangeText={(value) =>
-                                            this.onChangeText("flight", value)
-                                        }
-                                    />
+                                                        )
+                                                    }
+                                                />
+                                            }
+                                            errorMessage={i18n.t(
+                                                "Please enter a valid flight number"
+                                            )}
+                                            errorStyle={[
+                                                {
+                                                    fontSize:
+                                                        this.state.error ==
+                                                        false
+                                                            ? scale(3)
+                                                            : scale(10),
+                                                },
+                                                {
+                                                    color:
+                                                        this.state.error ==
+                                                        false
+                                                            ? "transparent"
+                                                            : "red",
+                                                },
+                                            ]}
+                                            autoCapitalize="characters"
+                                            autoCorrect={false}
+                                            ref={flightSearch}
+                                            onChangeText={(value) =>
+                                                this.onChangeText(
+                                                    "flight",
+                                                    value
+                                                )
+                                            }
+                                        />
+                                    </View>
                                 </View>
                             </View>
-                        </View>
-                    </TouchableWithoutFeedback>
+                        </TouchableWithoutFeedback>
+                    </KeyboardAvoidingView>
                 </ImageBackground>
                 <MenuBar navigation={this.props.navigation} />
             </View>
@@ -289,7 +288,7 @@ export default class HomeScreen extends React.Component {
 
 const flightSearch = React.createRef();
 
-const { width, height } = Dimensions.get("window");
+const { width, height } = Dimensions.get("screen");
 
 const styles = StyleSheet.create({
     imageBackground: {
@@ -299,47 +298,46 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        flexDirection: "column",
-        paddingRight: Math.round(scale(10)),
         backgroundColor: "transparent",
+    },
+    inner: {
+        flex: 1,
+        justifyContent: "space-around",
     },
     containerTop: {
-        marginTop: Math.round(verticalScale(120)),
-        marginBottom: Math.round(verticalScale(100)),
-        marginLeft: Math.round(scale(105)),
+        marginLeft: Math.round(moderateScale(130, 0.125)),
+        marginRight: Math.round(moderateScale(20, 0.125)),
         backgroundColor: "transparent",
-    },
-    bottomText: {
-        marginTop: Math.round(verticalScale(15)),
     },
     largeWhiteText: {
         width: "100%",
-        fontSize: Math.round(moderateScale(24, 0.125)),
-        lineHeight: Math.round(verticalScale(40)),
+        fontSize: Math.round(moderateScale(20, 0.05)),
+        lineHeight: Math.round(verticalScale(25)),
         textAlign: "left",
-        fontFamily: "Montserrat-bold",
+        fontFamily: "Poppins-bold",
         color: COLORS.sandy,
     },
     mediumWhiteText: {
         width: "100%",
-        fontSize: Math.round(scale(21, 0.00125)),
-        lineHeight: Math.round(verticalScale(40)),
-        fontFamily: "Montserrat",
+        fontSize: Math.round(scale(20, 0.00125)),
+        lineHeight: Math.round(verticalScale(25)),
+        fontFamily: "Poppins-light",
         textAlign: "left",
         color: COLORS.sandy,
     },
     smallWhiteText: {
         width: "100%",
-        fontSize: Math.round(scale(12, 0.00625)),
+        fontSize: Math.round(scale(8, 0.625)),
         textAlign: "left",
-        fontFamily: "Montserrat",
+        fontFamily: "Poppins-light",
+        paddingTop: Math.round(verticalScale(15)),
         color: COLORS.sandy,
     },
     linkWhiteText: {
         width: "100%",
-        fontSize: Math.round(scale(12, 0.00625)),
+        fontSize: Math.round(scale(8, 0.625)),
         textDecorationLine: "underline",
-        fontFamily: "Montserrat-bold",
+        fontFamily: "Poppins-bold",
         color: COLORS.sandy,
     },
     searchContainer: {
@@ -372,8 +370,7 @@ const styles = StyleSheet.create({
         color: COLORS.sandy,
     },
     chevronIcon: {
-        fontSize: Math.round(scale(10)),
-        textDecorationLine: "none",
+        textDecorationColor: "transparent",
         textAlignVertical: "center",
         color: COLORS.sandy,
     },
