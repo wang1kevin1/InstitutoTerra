@@ -22,8 +22,6 @@ import COLORS from "../../assets/Colors.js";
 
 import MenuBar from "./MenuBar.js";
 
-import Auth from "@aws-amplify/auth";
-
 import i18n from "i18n-js";
 
 const background_image = require("../../assets/background/home/bg_home.png");
