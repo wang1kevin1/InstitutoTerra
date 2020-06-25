@@ -138,7 +138,7 @@ export default class HomeScreen extends React.Component {
                         enabled="false"
                     >
                         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                            <View style={styles.innerContainer}>
+                            <View>
                                 <View style={styles.textContainer}>
                                     {/* Intro Text Body View */}
                                     <View>
@@ -255,17 +255,13 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        flexDirection: "row",
+        flexDirection: "column",
+        justifyContent: "space-evenly",
         alignItems: "center",
-        alignContent: "center",
         backgroundColor: "transparent",
     },
-    innerContainer: {
-        flex: 1,
-        flexDirection: "column",
-    },
     textContainer: {
-        marginLeft: Math.round(moderateScale(110, 0.0125)),
+        marginLeft: Math.round(moderateScale(120, 0.0125)),
         backgroundColor: "transparent",
     },
     largeWhiteText: {
