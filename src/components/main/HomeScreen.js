@@ -202,21 +202,15 @@ export default class HomeScreen extends React.Component {
                                     <View>
                                         <Text
                                             style={styles.largeWhiteText}
-                                            numberofLines={1}
+                                            numberofLines={2}
                                         >
-                                            A cada $6 uma
-                                        </Text>
-                                        <Text
-                                            style={styles.largeWhiteText}
-                                            numberofLines={1}
-                                        >
-                                            árvore é plantada.
+                                            A cada $6 uma árvore é plantada.
                                         </Text>
                                     </View>
 
                                     <Text
                                         style={styles.mediumWhiteText}
-                                        numberofLines={1}
+                                        numberofLines={5}
                                     >
                                         Faça sua doação e ajude a recuperar a
                                         Mata Atlântica da Fazenda do Bulcão.
@@ -225,7 +219,7 @@ export default class HomeScreen extends React.Component {
                                     <View style={styles.bottomText}>
                                         <Text
                                             style={styles.smallWhiteText}
-                                            numberOfLines={1}
+                                            numberOfLines={2}
                                         >
                                             Insira o número de vôo para iniciar
                                             ou
@@ -268,8 +262,8 @@ export default class HomeScreen extends React.Component {
                                             {
                                                 fontSize:
                                                     this.state.error == false
-                                                        ? moderateScale(3)
-                                                        : moderateScale(10),
+                                                        ? scale(3)
+                                                        : scale(10),
                                             },
                                             {
                                                 color:
@@ -302,63 +296,61 @@ const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
     imageBackground: {
-        height: scale(height),
-        width: scale(width),
+        height: Math.round(scale(height)),
+        width: width,
         backgroundColor: COLORS.black,
     },
     container: {
         flex: 1,
         flexDirection: "column",
-        height: height,
-        width: width,
+        paddingRight: Math.round(scale(10)),
         backgroundColor: "transparent",
     },
     containerTop: {
-        marginTop: Math.round(scale(100)),
-        marginBottom: Math.round(scale(100)),
+        marginTop: Math.round(verticalScale(120)),
+        marginBottom: Math.round(verticalScale(100)),
         marginLeft: Math.round(scale(105)),
-        marginRight: Math.round(scale(5)),
         backgroundColor: "transparent",
     },
     bottomText: {
-        marginTop: Math.round(scale(15)),
+        marginTop: Math.round(verticalScale(15)),
     },
     largeWhiteText: {
         width: "100%",
-        fontSize: Math.round(scale(24)),
-        lineHeight: Math.round(scale(35)),
+        fontSize: Math.round(moderateScale(24, 0.125)),
+        lineHeight: Math.round(verticalScale(40)),
         textAlign: "left",
         fontFamily: "Montserrat-bold",
         color: COLORS.sandy,
     },
     mediumWhiteText: {
         width: "100%",
-        fontSize: Math.round(scale(24)),
-        lineHeight: Math.round(scale(35)),
+        fontSize: Math.round(scale(24, 0.0125)),
+        lineHeight: Math.round(verticalScale(40)),
         fontFamily: "Montserrat",
         textAlign: "left",
         color: COLORS.sandy,
     },
     smallWhiteText: {
         width: "100%",
-        fontSize: Math.round(scale(12)),
+        fontSize: Math.round(scale(12, 0.00625)),
         textAlign: "left",
         fontFamily: "Montserrat",
         color: COLORS.sandy,
     },
     linkWhiteText: {
         width: "100%",
-        fontSize: Math.round(scale(14)),
+        fontSize: Math.round(scale(12, 0.00625)),
         textDecorationLine: "underline",
         fontFamily: "Montserrat-bold",
         color: COLORS.sandy,
     },
     searchContainer: {
-        marginTop: Math.round(scale(35)),
+        marginTop: Math.round(verticalScale(35)),
     },
     containerStyle: {
         opacity: 0.95,
-        paddingTop: Math.round(scale(15)),
+        paddingTop: Math.round(verticalScale(15)),
         borderWidth: Math.round(scale(3)),
         borderRadius: Math.round(scale(15)),
         borderColor: COLORS.sandy,
@@ -368,7 +360,7 @@ const styles = StyleSheet.create({
         borderColor: "transparent",
     },
     inputStyle: {
-        fontSize: Math.round(scale(30)),
+        fontSize: Math.round(moderateScale(30, 0.0125)),
         fontWeight: "900",
         textAlignVertical: "center",
         color: COLORS.sandy,
