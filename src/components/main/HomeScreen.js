@@ -302,8 +302,8 @@ const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
     imageBackground: {
-        height: height,
-        width: width,
+        height: scale(height),
+        width: scale(width),
         backgroundColor: COLORS.black,
     },
     container: {
