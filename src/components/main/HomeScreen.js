@@ -46,50 +46,6 @@ export default class HomeScreen extends React.Component {
         });
     }
 
-    // Opens up email to bug-report
-    handleBugReports = () => {};
-
-    // Checks if a user is logged in
-    async checkAuth() {
-        await Auth.currentAuthenticatedUser({ bypassCache: true })
-            .then(() => {
-                console.log("A user is logged in");
-                this.setState({ isAuthenticated: true });
-            })
-            .catch((err) => {
-                console.log("Nobody is logged in");
-                this.setState({ isAuthenticated: false });
-            });
-    }
-
-    // Check if the inputed flight number is valid
-    checkNum() {
-        let spaceBuffer = this.state.flight.replace(/\s+/g, "");
-
-        this.setState({
-            flight: spaceBuffer,
-        });
-
-        let charsIata = spaceBuffer.slice(0, 2).toUpperCase();
-        let charsIcao = spaceBuffer.slice(0, 3).toUpperCase();
-
-        console.log(charsIata);
-        console.log(charsIcao);
-
-        let numsIata = spaceBuffer.slice(2);
-        let numsIcao = spaceBuffer.slice(3);
-
-        console.log(numsIata);
-        console.log(numsIcao);
-
-        //process input as Iata or Icao depending on format
-        if (isNaN(spaceBuffer.charAt(2))) {
-            return this.icaoCall(charsIcao, numsIcao);
-        } else {
-            return this.iataCall(charsIata, numsIata);
-        }
-    }
-
     // checks for valid Iata
     iataCall(chars, nums) {
         fetch(
@@ -181,12 +137,9 @@ export default class HomeScreen extends React.Component {
                         style={styles.container}
                         enabled="false"
                     >
-                        <TouchableWithoutFeedback
-                            style={styles.container}
-                            onPress={Keyboard.dismiss}
-                        >
-                            <View style={styles.inner}>
-                                <View style={styles.containerTop}>
+                        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                            <View style={styles.innerContainer}>
+                                <View style={styles.textContainer}>
                                     {/* Intro Text Body View */}
                                     <View>
                                         <Text
@@ -302,20 +255,21 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        alignContent: "center",
         backgroundColor: "transparent",
     },
-    inner: {
+    innerContainer: {
         flex: 1,
-        justifyContent: "center",
+        flexDirection: "column",
     },
-    containerTop: {
-        marginLeft: Math.round(moderateScale(120, 0.125)),
-        marginRight: Math.round(moderateScale(20, 0.0625)),
+    textContainer: {
+        marginLeft: Math.round(moderateScale(110, 0.0125)),
         backgroundColor: "transparent",
     },
     largeWhiteText: {
         fontSize: Math.round(moderateScale(20, 0.05)),
-        textAlign: "left",
         fontFamily: "Poppins-bold",
         color: COLORS.sandy,
     },
@@ -323,32 +277,31 @@ const styles = StyleSheet.create({
         color: COLORS.sandy,
         fontSize: Math.round(scale(18, 0.00125)),
         fontFamily: "Poppins-light",
-        textAlign: "left",
     },
     smallWhiteText: {
         color: COLORS.sandy,
         fontSize: Math.round(scale(9, 0.625)),
-        textAlign: "left",
         fontFamily: "Poppins-light",
     },
     linkWhiteText: {
         color: COLORS.sandy,
         fontSize: Math.round(scale(9, 0.625)),
-        textDecorationLine: "underline",
         fontFamily: "Poppins-bold",
+        textDecorationLine: "underline",
     },
     searchContainer: {
         marginTop: Math.round(verticalScale(35)),
     },
     containerStyle: {
         opacity: 0.95,
-        backgroundColor: "transparent",
         borderColor: COLORS.sandy,
+        backgroundColor: "transparent",
         borderWidth: Math.round(scale(3)),
         borderRadius: Math.round(scale(15)),
     },
     inputContainerStyle: {
-        borderColor: "transparent",
+        paddingTop: verticalScale(15),
+        borderBottomColor: "transparent",
     },
     inputStyle: {
         color: COLORS.sandy,
@@ -361,12 +314,12 @@ const styles = StyleSheet.create({
     },
     searchIcon: {
         color: COLORS.sandy,
-        fontSize: Math.round(scale(35)),
         textAlign: "center",
+        fontSize: Math.round(scale(35)),
     },
     chevronIcon: {
         color: COLORS.sandy,
-        textDecorationColor: "transparent",
         textAlignVertical: "center",
+        textDecorationColor: "transparent",
     },
 });
