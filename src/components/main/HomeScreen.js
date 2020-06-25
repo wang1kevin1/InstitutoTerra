@@ -208,10 +208,7 @@ export default class HomeScreen extends React.Component {
                                         </Text>
                                     </View>
 
-                                    <Text
-                                        style={styles.mediumWhiteText}
-                                        numberofLines={5}
-                                    >
+                                    <Text style={styles.mediumWhiteText}>
                                         Faça sua doação e ajude a recuperar a
                                         Mata Atlântica da Fazenda do Bulcão.
                                     </Text>
@@ -325,7 +322,7 @@ const styles = StyleSheet.create({
     },
     mediumWhiteText: {
         width: "100%",
-        fontSize: Math.round(scale(24, 0.0125)),
+        fontSize: Math.round(scale(21, 0.00125)),
         lineHeight: Math.round(verticalScale(40)),
         fontFamily: "Montserrat",
         textAlign: "left",
