@@ -16,7 +16,7 @@ import { Input } from "react-native-elements";
 
 import { scale, verticalScale, moderateScale } from "react-native-size-matters";
 
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import COLORS from "../../assets/Colors.js";
 
@@ -177,11 +177,7 @@ export default class HomeScreen extends React.Component {
                     style={styles.imageBackground}
                 >
                     <KeyboardAvoidingView
-                        behavior={
-                            Platform.OS == "ios" || Platform.OS == "android"
-                                ? "padding"
-                                : "height"
-                        }
+                        behavior={Platform.OS == "ios" ? "padding" : "height"}
                         style={styles.container}
                         enabled="false"
                     >
@@ -195,9 +191,16 @@ export default class HomeScreen extends React.Component {
                                     <View>
                                         <Text
                                             style={styles.largeWhiteText}
-                                            numberofLines={2}
+                                            numberofLines={1}
                                         >
-                                            A cada $6 uma árvore é plantada.
+                                            A cada $6 uma
+                                        </Text>
+
+                                        <Text
+                                            style={styles.largeWhiteText}
+                                            numberofLines={1}
+                                        >
+                                            árvore é plantada.
                                         </Text>
 
                                         <Text style={styles.mediumWhiteText}>
@@ -217,10 +220,11 @@ export default class HomeScreen extends React.Component {
                                             style={styles.linkWhiteText}
                                             numberOfLines={1}
                                         >
-                                            doe sem número de vôo.
-                                            <Text style={styles.chevronIcon}>
-                                                {"   >>"}
-                                            </Text>
+                                            doe sem número de vôo{" "}
+                                            <MaterialCommunityIcons
+                                                name="chevron-double-right"
+                                                style={styles.chevronIcon}
+                                            ></MaterialCommunityIcons>
                                         </Text>
                                     </View>
 
@@ -302,76 +306,67 @@ const styles = StyleSheet.create({
     },
     inner: {
         flex: 1,
-        justifyContent: "space-around",
+        justifyContent: "center",
     },
     containerTop: {
-        marginLeft: Math.round(moderateScale(130, 0.125)),
-        marginRight: Math.round(moderateScale(20, 0.125)),
+        marginLeft: Math.round(moderateScale(120, 0.125)),
+        marginRight: Math.round(moderateScale(20, 0.0625)),
         backgroundColor: "transparent",
     },
     largeWhiteText: {
-        width: "100%",
         fontSize: Math.round(moderateScale(20, 0.05)),
-        lineHeight: Math.round(verticalScale(25)),
         textAlign: "left",
         fontFamily: "Poppins-bold",
         color: COLORS.sandy,
     },
     mediumWhiteText: {
-        width: "100%",
-        fontSize: Math.round(scale(20, 0.00125)),
-        lineHeight: Math.round(verticalScale(25)),
+        color: COLORS.sandy,
+        fontSize: Math.round(scale(18, 0.00125)),
         fontFamily: "Poppins-light",
         textAlign: "left",
-        color: COLORS.sandy,
     },
     smallWhiteText: {
-        width: "100%",
-        fontSize: Math.round(scale(8, 0.625)),
+        color: COLORS.sandy,
+        fontSize: Math.round(scale(9, 0.625)),
         textAlign: "left",
         fontFamily: "Poppins-light",
-        paddingTop: Math.round(verticalScale(15)),
-        color: COLORS.sandy,
     },
     linkWhiteText: {
-        width: "100%",
-        fontSize: Math.round(scale(8, 0.625)),
+        color: COLORS.sandy,
+        fontSize: Math.round(scale(9, 0.625)),
         textDecorationLine: "underline",
         fontFamily: "Poppins-bold",
-        color: COLORS.sandy,
     },
     searchContainer: {
         marginTop: Math.round(verticalScale(35)),
     },
     containerStyle: {
         opacity: 0.95,
-        paddingTop: Math.round(verticalScale(15)),
+        backgroundColor: "transparent",
+        borderColor: COLORS.sandy,
         borderWidth: Math.round(scale(3)),
         borderRadius: Math.round(scale(15)),
-        borderColor: COLORS.sandy,
-        backgroundColor: "transparent",
     },
     inputContainerStyle: {
         borderColor: "transparent",
     },
     inputStyle: {
-        fontSize: Math.round(moderateScale(30, 0.0125)),
-        fontWeight: "900",
-        textAlignVertical: "center",
         color: COLORS.sandy,
+        fontFamily: "Poppins-bold",
+        fontSize: Math.round(moderateScale(30, 0.0125)),
     },
     labelStyle: {
-        fontSize: Math.round(scale(20)),
         color: COLORS.sandy,
+        fontSize: Math.round(scale(20)),
     },
     searchIcon: {
+        color: COLORS.sandy,
         fontSize: Math.round(scale(35)),
         textAlign: "center",
-        color: COLORS.sandy,
     },
     chevronIcon: {
+        color: COLORS.sandy,
         textDecorationColor: "transparent",
         textAlignVertical: "center",
-        color: COLORS.sandy,
     },
 });
