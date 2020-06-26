@@ -223,11 +223,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-
     backgroundColor: "transparent",
   },
   textContainer: {
-    marginLeft: Math.round(moderateScale(130, 0.0625)),
+    marginLeft: Math.round(moderateScale(120, 0.625)),
     marginRight: Math.round(moderateScale(5, 0.0625)),
     backgroundColor: "transparent",
   },
