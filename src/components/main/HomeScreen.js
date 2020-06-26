@@ -135,12 +135,8 @@ export default class HomeScreen extends React.Component {
               <View style={styles.textContainer}>
                 {/* Intro Text Body View */}
                 <View>
-                  <Text style={styles.largeWhiteText} numberofLines={1}>
-                    A cada $6 uma
-                  </Text>
-
-                  <Text style={styles.largeWhiteText} numberofLines={1}>
-                    árvore é plantada.
+                  <Text style={styles.largeWhiteText} numberofLines={2}>
+                    A cada $6 uma árvore é plantada.
                   </Text>
 
                   <Text style={styles.mediumWhiteText}>
@@ -227,7 +223,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginLeft: Math.round(moderateScale(120, 0.625)),
-    marginRight: Math.round(moderateScale(5, 0.0625)),
+    marginRight: Math.round(moderateScale(10, 0.0625)),
     backgroundColor: "transparent",
   },
   largeWhiteText: {
