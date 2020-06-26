@@ -38,11 +38,7 @@ export default class HomeScreen extends React.Component {
         this.background = background_image;
     }
 
-    onChangeText(key, value) {
-        this.setState({
-            [key]: value,
-        });
-    }
+    onChangeText(key, value) {this.setState({[key]: value,});}
 
     // checks for valid Iata
     iataCall(chars, nums) {
@@ -140,17 +136,11 @@ export default class HomeScreen extends React.Component {
                                 <View style={styles.textContainer}>
                                     {/* Intro Text Body View */}
                                     <View>
-                                        <Text
-                                            style={styles.largeWhiteText}
-                                            numberofLines={1}
-                                        >
+                                        <Text style={styles.largeWhiteText} numberofLines={1}>
                                             A cada $6 uma
                                         </Text>
 
-                                        <Text
-                                            style={styles.largeWhiteText}
-                                            numberofLines={1}
-                                        >
+                                        <Text style={styles.largeWhiteText} numberofLines={1}>
                                             árvore é plantada.
                                         </Text>
 
@@ -159,22 +149,21 @@ export default class HomeScreen extends React.Component {
                                             a Mata Atlântica da Fazenda do
                                             Bulcão.
                                         </Text>
-                                        <Text
-                                            style={styles.smallWhiteText}
-                                            numberOfLines={2}
-                                        >
-                                            Insira o número de vôo para iniciar
-                                            ou
+
+                                        <Text style={styles.smallWhiteText} numberOfLines={2}>
+                                            Insira o número de vôo para iniciar ou
                                         </Text>
 
-                                        <Text
-                                            style={styles.linkWhiteText}
-                                            numberOfLines={1}
-                                        >
+                                        <Text style={styles.linkWhiteText} numberOfLines={1}>
                                             doe sem número de vôo{" "}
                                             <MaterialCommunityIcons
                                                 name="chevron-double-right"
                                                 style={styles.chevronIcon}
+                                                onPress={() =>
+                                                    this.props.navigation.navigate(
+                                                        "CheckoutWithoutFlight"
+                                                    )
+                                                }
                                             ></MaterialCommunityIcons>
                                         </Text>
                                     </View>
@@ -182,12 +171,8 @@ export default class HomeScreen extends React.Component {
                                     <View style={styles.searchContainer}>
                                         {/* Enter flight number */}
                                         <Input
-                                            containerStyle={
-                                                styles.containerStyle
-                                            }
-                                            inputContainerStyle={
-                                                styles.inputContainerStyle
-                                            }
+                                            containerStyle={styles.containerStyle}
+                                            inputContainerStyle={styles.inputContainerStyle}
                                             inputStyle={styles.inputStyle}
                                             rightIcon={
                                                 <Ionicons
@@ -200,24 +185,10 @@ export default class HomeScreen extends React.Component {
                                                     }
                                                 />
                                             }
-                                            errorMessage={i18n.t(
-                                                "Please enter a valid flight number"
-                                            )}
+                                            errorMessage={i18n.t("Please enter a valid flight number")}
                                             errorStyle={[
-                                                {
-                                                    fontSize:
-                                                        this.state.error ==
-                                                        false
-                                                            ? scale(3)
-                                                            : scale(10),
-                                                },
-                                                {
-                                                    color:
-                                                        this.state.error ==
-                                                        false
-                                                            ? "transparent"
-                                                            : "red",
-                                                },
+                                                {fontSize: this.state.error == false ? scale(3) : scale(10)},
+                                                {color: this.state.error == false ? "transparent" : "red",},
                                             ]}
                                             autoCapitalize="characters"
                                             autoCorrect={false}
