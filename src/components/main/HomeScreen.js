@@ -42,6 +42,28 @@ export default class HomeScreen extends React.Component {
     this.setState({ [key]: value });
   }
 
+  // Check if the inputed flight number is valid
+  checkNum() {
+    let spaceBuffer = this.state.flight.replace(/\s+/g, "");
+    this.setState({
+      flight: spaceBuffer,
+    });
+    let charsIata = spaceBuffer.slice(0, 2).toUpperCase();
+    let charsIcao = spaceBuffer.slice(0, 3).toUpperCase();
+    console.log(charsIata);
+    console.log(charsIcao);
+    let numsIata = spaceBuffer.slice(2);
+    let numsIcao = spaceBuffer.slice(3);
+    console.log(numsIata);
+    console.log(numsIcao);
+    //process input as Iata or Icao depending on format
+    if (isNaN(spaceBuffer.charAt(2))) {
+      return this.icaoCall(charsIcao, numsIcao);
+    } else {
+      return this.iataCall(charsIata, numsIata);
+    }
+  }
+
   // checks for valid Iata
   iataCall(chars, nums) {
     fetch(
@@ -135,7 +157,7 @@ export default class HomeScreen extends React.Component {
               <View style={styles.textContainer}>
                 {/* Intro Text Body View */}
                 <View>
-                  <Text style={styles.largeWhiteText} numberofLines={2}>
+                  <Text style={styles.largeWhiteText}>
                     A cada $6 uma árvore é plantada.
                   </Text>
 
@@ -144,11 +166,11 @@ export default class HomeScreen extends React.Component {
                     Fazenda do Bulcão.
                   </Text>
 
-                  <Text style={styles.smallWhiteText} numberOfLines={2}>
+                  <Text style={styles.smallWhiteText}>
                     Insira o número de vôo para iniciar ou
                   </Text>
 
-                  <Text style={styles.linkWhiteText} numberOfLines={1}>
+                  <Text style={styles.linkWhiteText}>
                     doe sem número de vôo{" "}
                     <MaterialCommunityIcons
                       name="chevron-double-right"
@@ -169,11 +191,7 @@ export default class HomeScreen extends React.Component {
                       <Ionicons
                         style={styles.searchIcon}
                         name="md-arrow-forward"
-                        onPress={() =>
-                          this.props.navigation.navigate(
-                            "CheckoutWithoutFlight"
-                          )
-                        }
+                        onPress={() => this.checkNum()}
                       />
                     }
                     errorMessage={i18n.t("Please enter a valid flight number")}
@@ -184,7 +202,9 @@ export default class HomeScreen extends React.Component {
                       },
                       {
                         color:
-                          this.state.error == false ? "transparent" : "red",
+                          this.state.error == false
+                            ? "transparent"
+                            : COLORS.sandy,
                       },
                     ]}
                     autoCapitalize="characters"

@@ -64,11 +64,11 @@ import i18n from "i18n-js";
 
 // Set the key-value pairs for the different languages
 i18n.translations = {
-    en: English,
-    nl: Nederlands,
-    es: Espanol,
-    pt: Portugues,
-    fr: French,
+  en: English,
+  nl: Nederlands,
+  es: Espanol,
+  pt: Portugues,
+  fr: French,
 };
 
 // default fallback is English
@@ -82,132 +82,130 @@ i18n.fallbacks = true;
 
 // handles screen transitions
 const handleCustomTransition = ({ scenes }) => {
-    const prevScene = scenes[scenes.length - 2];
-    const nextScene = scenes[scenes.length - 1];
+  const prevScene = scenes[scenes.length - 2];
+  const nextScene = scenes[scenes.length - 1];
 
-    // Custom transitions go there
-    if (prevScene && nextScene.route.routeName === "About") {
-        return fromBottom(); // About page rolls up
-    } else if (prevScene && nextScene.route.routeName === "Auth") {
-        return fromTop(); // signin page drops down
-    } else if (prevScene && nextScene.route.routeName === "UserProfile") {
-        return fromTop(); // user profile drops down
-    } else if (prevScene && nextScene.route.routeName === "Settings") {
-        return null; // settings page just appears
-    }
-    return fromRight(); // every other page comes in from right side
+  // Custom transitions go there
+  if (prevScene && nextScene.route.routeName === "About") {
+    return fromBottom(); // About page rolls up
+  } else if (prevScene && nextScene.route.routeName === "Auth") {
+    return fromTop(); // signin page drops down
+  } else if (prevScene && nextScene.route.routeName === "UserProfile") {
+    return fromTop(); // user profile drops down
+  } else if (prevScene && nextScene.route.routeName === "Settings") {
+    return null; // settings page just appears
+  }
+  return fromRight(); // every other page comes in from right side
 };
 
 // Auth stack
 const AuthStackNavigator = createStackNavigator(
-    {
-        SignIn: SignInScreen,
-        SignUp: SignUpScreen,
-        ForgotPassword: ForgotPasswordScreen,
-    },
-    { headerMode: "none" }
+  {
+    SignIn: SignInScreen,
+    SignUp: SignUpScreen,
+    ForgotPassword: ForgotPasswordScreen,
+  },
+  { headerMode: "none" }
 );
 
 // Settings stack
 // Auth stack
 const SettingsStackNavigator = createStackNavigator(
-    {
-        SettingsList: SettingsListScreen,
-        SettingsName: SettingsNameScreen,
-        SettingsEmail: SettingsEmailScreen,
-        SettingsPassword: SettingsPasswordScreen,
-    },
-    { headerMode: "none" }
+  {
+    SettingsList: SettingsListScreen,
+    SettingsName: SettingsNameScreen,
+    SettingsEmail: SettingsEmailScreen,
+    SettingsPassword: SettingsPasswordScreen,
+  },
+  { headerMode: "none" }
 );
 
 // Flight Stack
 const FlightStackNavigator = createStackNavigator(
-    {
-        FlightInfo: FlightInfoScreen,
-        CarbonEmissions: CarbonEmissionsScreen,
-        CheckoutWithFlight: CheckoutWithFlightScreen,
-        ReceiptWithFlight: ReceiptWithFlightScreen,
-    },
-    {
-        headerMode: "none",
-        transitionConfig: () => fromRight(100),
-    }
+  {
+    FlightInfo: FlightInfoScreen,
+    CarbonEmissions: CarbonEmissionsScreen,
+    CheckoutWithFlight: CheckoutWithFlightScreen,
+    ReceiptWithFlight: ReceiptWithFlightScreen,
+  },
+  {
+    headerMode: "none",
+    transitionConfig: () => fromRight(100),
+  }
 );
 
 // NoFlight Stack
 const NoFlightStackNavigator = createStackNavigator(
-    {
-        CheckoutWithoutFlight: CheckoutWithoutFlightScreen,
-        ReceiptWithoutFlight: ReceiptWithoutFlightScreen,
-    },
-    {
-        headerMode: "none",
-        transitionConfig: () => fromRight(100),
-    }
+  {
+    CheckoutWithoutFlight: CheckoutWithoutFlightScreen,
+    ReceiptWithoutFlight: ReceiptWithoutFlightScreen,
+  },
+  {
+    headerMode: "none",
+    transitionConfig: () => fromRight(100),
+  }
 );
 
 // Main stack
 const MainStackNavigator = createStackNavigator(
-    {
-        Home: HomeScreen,
-        About: AboutScreen,
-        Flight: FlightStackNavigator, // FlightStack
-        NoFlight: NoFlightStackNavigator, // NoFlightStack
-        Payment: PaymentScreen,
-        ThankYou: ThankYouScreen,
-        UserProfile: UserProfileScreen,
-        Settings: SettingsStackNavigator, // SettingsStack
-        Auth: AuthStackNavigator, // AuthStackNavigator
-    },
-    {
-        headerMode: "none",
-        transitionConfig: (nav) => handleCustomTransition(nav),
-    }
+  {
+    Home: HomeScreen,
+    About: AboutScreen,
+    Flight: FlightStackNavigator, // FlightStack
+    NoFlight: NoFlightStackNavigator, // NoFlightStack
+    Payment: PaymentScreen,
+    ThankYou: ThankYouScreen,
+    UserProfile: UserProfileScreen,
+    Settings: SettingsStackNavigator, // SettingsStack
+    Auth: AuthStackNavigator, // AuthStackNavigator
+  },
+  {
+    headerMode: "none",
+    transitionConfig: (nav) => handleCustomTransition(nav),
+  }
 );
 
 const AppContainer = createAppContainer(MainStackNavigator);
 
 export default class App extends React.Component {
-    state = {
-        isLoadingComplete: false,
-    };
+  state = {
+    isLoadingComplete: false,
+  };
 
-    _loadResourcesAsync = async () => {
-        return Promise.all([
-            Asset.loadAsync([
-                require("./src/assets/background/home/bg_home.png"),
-            ]),
-            Font.loadAsync({
-                Montserrat: require("./src/assets/fonts/Montserrat-Regular.ttf"),
-                "Montserrat-bold": require("./src/assets/fonts/Montserrat-Bold.ttf"),
-                "Fago-black": require("./src/assets/fonts/Fago-Black.ttf"),
-                "Gilroy-bold": require("./src/assets/fonts/Gilroy-Bold.ttf"),
-                Poppins: require("./src/assets/fonts/Poppins-Medium.ttf"),
-                "Poppins-bold": require("./src/assets/fonts/Poppins-Bold.ttf"),
-                "Poppins-light": require("./src/assets/fonts/Poppins-Light.ttf"),
-            }),
-        ]);
-    };
+  _loadResourcesAsync = async () => {
+    return Promise.all([
+      Asset.loadAsync([require("./src/assets/background/home/bg_home.png")]),
+      Font.loadAsync({
+        Montserrat: require("./src/assets/fonts/Montserrat-Regular.ttf"),
+        "Montserrat-bold": require("./src/assets/fonts/Montserrat-Bold.ttf"),
+        "Fago-black": require("./src/assets/fonts/Fago-Black.ttf"),
+        "Gilroy-bold": require("./src/assets/fonts/Gilroy-Bold.ttf"),
+        Poppins: require("./src/assets/fonts/Poppins-Medium.ttf"),
+        "Poppins-bold": require("./src/assets/fonts/Poppins-Bold.ttf"),
+        "Poppins-light": require("./src/assets/fonts/Poppins-Light.ttf"),
+      }),
+    ]);
+  };
 
-    _handleLoadingError = (error) => {
-        console.warn(error);
-    };
+  _handleLoadingError = (error) => {
+    console.warn(error);
+  };
 
-    _handleFinishLoading = () => {
-        this.setState({ isLoadingComplete: true });
-    };
+  _handleFinishLoading = () => {
+    this.setState({ isLoadingComplete: true });
+  };
 
-    render() {
-        if (!this.state.isLoadingComplete) {
-            return (
-                <AppLoading
-                    startAsync={this._loadResourcesAsync}
-                    onError={this._handleLoadingError}
-                    onFinish={this._handleFinishLoading}
-                />
-            );
-        } else {
-            return <AppContainer />;
-        }
+  render() {
+    if (!this.state.isLoadingComplete) {
+      return (
+        <AppLoading
+          startAsync={this._loadResourcesAsync}
+          onError={this._handleLoadingError}
+          onFinish={this._handleFinishLoading}
+        />
+      );
+    } else {
+      return <AppContainer />;
     }
+  }
 }
