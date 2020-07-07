@@ -36,6 +36,11 @@
       },
       "package": "app.refloresta"
     },
+    "androidNavigationBar": {
+      "visible": "sticky-immersive",
+      "barStyle": "light-content",
+      "backgroundColor": "#000000"
+    },
     "description": "An app promoting the planting of trees to offset carbon emissions. http://www.institutoterra.org/eng/",
     "githubUrl": "https://github.com/wang1kevin1/InstitutoTerra.git"
   }
