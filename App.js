@@ -13,7 +13,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import { fromRight, fromBottom, fromTop } from "react-navigation-transitions";
 
 // AuthStack
-import SignUpScreen from "./src/components/auth/SignUpScreen";
+import SignUpScreen from "./src/components/auth/SignUpScreen_DEP";
 import SignInScreen from "./src/components/auth/SignInScreen";
 import ForgotPasswordScreen from "./src/components/auth/ForgotPasswordScreen";
 
