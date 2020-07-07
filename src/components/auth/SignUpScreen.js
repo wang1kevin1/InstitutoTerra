@@ -127,10 +127,14 @@ export default class SignUpScreen extends React.Component {
           style={styles.keyboardView}
           behavior={Platform.OS == "ios" ? "padding" : null}
           enabled="false">
-          <View style={styles.backDrop}>
-            <View style={styles.container}></View>
+          <SafeAreaView style={styles.backDrop}>
+            <View style={styles.container}>
+              <View style={styles.introContainer}>
+                <Text style={styles.header}>Olá!</Text>
+              </View>
+            </View>
             <MenuBar navigation={this.props.navigation} />
-          </View>
+          </SafeAreaView>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     );
@@ -140,21 +144,32 @@ export default class SignUpScreen extends React.Component {
 const { width, height } = Dimensions.get("screen");
 
 const styles = StyleSheet.create({
-  backDrop: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    height: Math.round(scale(height)),
-    width: width,
-    backgroundColor: COLORS.signUpBkg,
-  },
   keyboardView: {
     flex: 1,
     flexDirection: "column",
     backgroundColor: "transparent",
   },
+  backDrop: {
+    flex: 1,
+    flexDirection: "row",
+    height: Math.round(scale(height)),
+    width: width,
+    backgroundColor: COLORS.signUpBkg,
+  },
   container: {
     flex: 1,
-    backgroundColor: "black",
+    flexDirection: "column",
+    backgroundColor: "transparent",
+  },
+  introContainer: {
+    flex: Math.round(verticalScale(0.1)),
+    marginTop: Math.round(moderateScale(10, 0.0625)),
+    marginLeft: Math.round(moderateScale(100, 0.625)),
+    marginRight: Math.round(moderateScale(10, 0.0625)),
+  },
+  header: {
+    fontSize: Math.round(moderateScale(50, 0.05)),
+    fontFamily: "Poppins-bold",
+    color: COLORS.forestgreen,
   },
 });
