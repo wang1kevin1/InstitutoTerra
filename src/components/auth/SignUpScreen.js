@@ -4,6 +4,7 @@ import {
   TouchableWithoutFeedback,
   StyleSheet,
   Text,
+  Dimensions,
   SafeAreaView,
   KeyboardAvoidingView,
   Keyboard,
@@ -11,10 +12,12 @@ import {
   Alert,
   ActivityIndicator,
 } from "react-native";
+import { scale, verticalScale, moderateScale } from "react-native-size-matters";
 import { Container, Item, Input } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../assets/Colors.js";
 import Auth from "@aws-amplify/auth";
+import MenuBar from "../main/MenuBar.js";
 import { API } from "aws-amplify";
 import i18n from "i18n-js";
 
@@ -26,8 +29,8 @@ export default class SignUpScreen extends React.Component {
     password: "",
     password_confirmation: "",
     isLoading: false,
-    // hidePassword1: true,
-    // hidePassword2: true,
+    hidePassword1: true,
+    hidePassword2: true,
     apiResponse: null,
     UserId: "",
   };
@@ -119,21 +122,39 @@ export default class SignUpScreen extends React.Component {
 
   render() {
     return (
-      <SafeAreaView>
-        <KeyboardAvoidingView>
-          <TouchableWithoutFeedback>
-            <View styles={styles.container}></View>
-          </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback>
+        <KeyboardAvoidingView
+          style={styles.keyboardView}
+          behavior={Platform.OS == "ios" ? "padding" : null}
+          enabled="false">
+          <View style={styles.backDrop}>
+            <View style={styles.container}></View>
+            <MenuBar navigation={this.props.navigation} />
+          </View>
         </KeyboardAvoidingView>
-      </SafeAreaView>
+      </TouchableWithoutFeedback>
     );
   }
 }
 
+const { width, height } = Dimensions.get("screen");
+
 const styles = StyleSheet.create({
-  container: {
+  backDrop: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    height: Math.round(scale(height)),
+    width: width,
+    backgroundColor: COLORS.signUpBkg,
+  },
+  keyboardView: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: COLORS.white,
+    backgroundColor: "transparent",
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "black",
   },
 });
