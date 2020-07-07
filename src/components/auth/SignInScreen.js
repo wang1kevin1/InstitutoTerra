@@ -29,6 +29,7 @@ import Auth from '@aws-amplify/auth'
 import MenuBar from '../main/MenuBar'
 
 import i18n from 'i18n-js'
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 export default class SignInScreen extends React.Component {
   state = {
@@ -69,19 +70,17 @@ export default class SignInScreen extends React.Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
           <TouchableWithoutFeedback
             style={styles.container}
             onPress={Keyboard.dismiss}>
               <Container style={styles.infoContainer}>
-                <View style={styles.container}>
+                <View style={styles.container1}>
                   {/* Email */}
                   <Item style={styles.itemStyle}>
-                    <Ionicons style={styles.iconStyle} name="ios-mail" />
                     <Input
                       style={styles.input}
-                      placeholder={i18n.t('Email')}
-                      placeholderTextColor={COLORS.lightblue}
+                      placeholder={"E-mail"}
+                      placeholderTextColor={COLORS.forestgreen}
                       returnKeyType='next'
                       autoCapitalize='none'
                       autoCorrect={false}
@@ -92,11 +91,10 @@ export default class SignInScreen extends React.Component {
                   </Item>
                   {/* Password */}
                   <Item style={styles.itemStyle}>
-                    <Ionicons style={styles.iconStyle} name="ios-lock" />
                     <Input
                       style={styles.input}
-                      placeholder={i18n.t('Password')}
-                      placeholderTextColor={COLORS.lightblue}
+                      placeholder={"Senha"}
+                      placeholderTextColor={COLORS.forestgreen}
                       returnKeyType='go'
                       autoCapitalize='none'
                       autoCorrect={false}
@@ -105,41 +103,44 @@ export default class SignInScreen extends React.Component {
                       onChangeText={value => this.onChangeText('password', value)}
                     />
                   </Item>
+                  {/* Sign Up Text */}
+                  <Text style={styles.buttonText2}>Novo usuário?{" "}
+                    <Text 
+                      onPress={() => this.props.navigation.navigate('SignUp')}
+                      style={styles.buttonText2link}>Crie uma conta 
+                    </Text>
+                    {" "}»
+                  </Text>
+                  {/* Forgot Password Text */}
+                  <Text style={styles.buttonText2}>Esqueceu sua senha?{" "}
+                    <Text
+                      onPress={() => this.props.navigation.navigate('ForgotPassword')}
+                      style={styles.buttonText2link}>Recupere aqui
+                    </Text>
+                    {" "}»
+                  </Text>
+                  {/* Loading ActivityIndicator */}
+                </View>  
+                <KeyboardAvoidingView style={styles.container2} behavior='position' enabled>
                   {/* Sign In Button */}
                   <TouchableOpacity
                     onPress={() => this.signIn()}
                     disabled={this.state.isLoading}
                     style={styles.buttonStyle1}>
+                  {!this.state.isLoading &&
                     <Text style={styles.buttonText1}>
-                      {i18n.t('Sign In')}
+                      Entrar
                     </Text>
-                  </TouchableOpacity>
-                  {/* Sign Up Text */}
-                  <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('SignUp')}
-                    style={styles.buttonStyle2}>
-                    <Text style={styles.buttonText2}>
-                      {i18n.t('New User? Create an Account!')}
-                    </Text>
-                  </TouchableOpacity>
-                  {/* Forgot Password Text */}
-                  <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('ForgotPassword')}
-                    style={styles.buttonStyle2}>
-                    <Text style={styles.buttonText2}>
-                      {i18n.t('Forgot Password?')}
-                    </Text>
-                  </TouchableOpacity>
-                  {/* Loading ActivityIndicator */}
+                  }
                   {this.state.isLoading &&
                     <View>
-                      <ActivityIndicator color={COLORS.lightblue} size='large' animating={this.state.isLoading} />
+                      <ActivityIndicator color={COLORS.sandy} size='large' animating={this.state.isLoading} />
                     </View>
                   }
-                </View>
+                  </TouchableOpacity>
+                </KeyboardAvoidingView>
               </Container>
           </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
         <MenuBar navigation = {this.props.navigation}/>
       </SafeAreaView>
     )
@@ -159,63 +160,81 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: COLORS.sandy,
     justifyContent: 'center',
+    flexDirection: 'column',
+  },
+
+  container1: {
+    flex: 2,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    flexDirection: 'column',
+    paddingHorizontal: 5,
+  },
+
+  container2: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    justifyContent: 'flex-end',
     flexDirection: 'column',
   },
 
   input: {
     flex: 1,
-    fontSize: 17,
-    fontWeight: 'bold',
-    color: COLORS.lightblue,
+    fontSize: 22,
+    fontWeight: 'normal',
+    color: COLORS.forestgreen,
   },
+
   infoContainer: {
     width: width*.75,
     position: 'absolute',
     left: width*.25,
     right: 0,
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 30,
-    backgroundColor: 'yellow',
+    paddingHorizontal: 10,
+    backgroundColor: 'transparent',
   },
   itemStyle: {
     marginBottom: 20,
-    backgroundColor: COLORS.white,
-    borderRadius: 10,
-    borderColor: 'transparent'
+    backgroundColor: 'transparent',
+    borderBottomColor: COLORS.forestgreen,
+    borderBottomWidth: 1,
   },
-  iconStyle: {
-    color: COLORS.lightblue,
-    fontSize: 30,
-    marginRight: 15,
-    marginLeft: 15,
-    flex: 0.1
-  },
+
   buttonStyle1: {
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: COLORS.forestgreen,
-    padding: 14,
-    marginBottom: 20,
+    width: width*.65,
+    height: width*.2,
     borderRadius: 10,
+    marginBottom: 30,
   },
+
   buttonText1: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: 'bold',
+    fontFamily: 'Poppins',
     color: COLORS.white,
   },
-  buttonStyle2: {
-    alignItems: 'center',
-    backgroundColor: COLORS.lightgreen,
-    padding: 5,
-    marginBottom: 10,
-    borderRadius: 10,
-  },
+
   buttonText2: {
     fontSize: 14,
     fontWeight: 'normal',
-    color: COLORS.lightblue,
+    color: COLORS.forestgreen,
+    fontFamily: 'Poppins',
+    marginBottom: 5,
   },
+
+  buttonText2link: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    textDecorationLine: 'underline',
+    color: COLORS.forestgreen,
+  }
 })
