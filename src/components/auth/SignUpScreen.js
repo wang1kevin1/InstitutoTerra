@@ -4,7 +4,6 @@ import {
   TouchableWithoutFeedback,
   StyleSheet,
   Text,
-  Dimensions,
   SafeAreaView,
   KeyboardAvoidingView,
   Keyboard,
@@ -132,6 +131,7 @@ export default class SignUpScreen extends React.Component {
               <View style={styles.introContainer}>
                 <Text style={styles.header}>Olá!</Text>
               </View>
+              <View style={styles.formContainer}></View>
             </View>
             <MenuBar navigation={this.props.navigation} />
           </SafeAreaView>
@@ -140,8 +140,6 @@ export default class SignUpScreen extends React.Component {
     );
   }
 }
-
-const { width, height } = Dimensions.get("screen");
 
 const styles = StyleSheet.create({
   keyboardView: {
@@ -164,6 +162,9 @@ const styles = StyleSheet.create({
     marginTop: Math.round(moderateScale(10, 0.0625)),
     marginLeft: Math.round(moderateScale(100, 0.625)),
     marginRight: Math.round(moderateScale(10, 0.0625)),
+  },
+  formContainer: {
+    flex: Math.round(verticalScale(0.9)),
   },
   header: {
     fontSize: Math.round(moderateScale(50, 0.05)),
