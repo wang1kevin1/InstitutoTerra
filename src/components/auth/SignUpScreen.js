@@ -1,4 +1,16 @@
-import { Alert, Keyboard, KeyboardAvoidingView } from "react-native";
+import React from "react";
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Keyboard,
+  View,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
 import { Container, Item, Input } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../assets/Colors.js";
@@ -14,8 +26,8 @@ export default class SignUpScreen extends React.Component {
     password: "",
     password_confirmation: "",
     isLoading: false,
-    hidePassword1: true,
-    hidePassword2: true,
+    // hidePassword1: true,
+    // hidePassword2: true,
     apiResponse: null,
     UserId: "",
   };
@@ -65,17 +77,17 @@ export default class SignUpScreen extends React.Component {
         // console.log("sign up successful with result:", data);
         this.setState({ data });
         this.setState({ userSub: data.userSub });
-        console.log(this.state.userSub);
+        // console.log(this.state.userSub);
         Alert.alert(i18n.t("An email has been sent to confirm your sign up"));
         this.saveUser();
       })
       .catch((err) => {
         this.setState({ isLoading: false });
         if (!err.message) {
-          console.log("Error when signing up: ", err);
+          // console.log("Error when signing up: ", err);
           Alert.alert(i18n.t("Error when signing up: "), err);
         } else {
-          console.log("Error when signing up: ", err.message);
+          // console.log("Error when signing up: ", err.message);
           Alert.alert(i18n.t("Error when signing up: "), err.message);
         }
       });
@@ -89,13 +101,14 @@ export default class SignUpScreen extends React.Component {
         TreesPlanted: 0,
       },
     };
+
     const path = "/Users";
 
     // Use the API module to save the note to the database
     await API.put("ZeroCarbonREST", path, newUser)
       .then((apiResponse) => {
         this.setState({ apiResponse });
-        console.log("Response from saving user: " + apiResponse);
+        // console.log("Response from saving user: " + apiResponse);
         this.setState({ isLoading: false });
         this.props.navigation.navigate("SignIn");
       })
@@ -109,7 +122,7 @@ export default class SignUpScreen extends React.Component {
       <SafeAreaView>
         <KeyboardAvoidingView>
           <TouchableWithoutFeedback>
-            <View></View>
+            <View styles={styles.container}></View>
           </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
       </SafeAreaView>
@@ -120,5 +133,7 @@ export default class SignUpScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "column",
+    backgroundColor: COLORS.white,
   },
 });
