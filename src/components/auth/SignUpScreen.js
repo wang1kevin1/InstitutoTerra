@@ -152,8 +152,6 @@ const styles = StyleSheet.create({
   backDrop: {
     flex: 1,
     flexDirection: "row",
-    height: Math.round(scale(height)),
-    width: width,
     backgroundColor: COLORS.signUpBkg,
   },
   container: {
