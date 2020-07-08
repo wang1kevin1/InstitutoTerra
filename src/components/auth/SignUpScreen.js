@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   container: {
-    marginTop: Math.round(verticalScale(60)),
+    marginTop: Math.round(verticalScale(40)),
     marginLeft: Math.round(moderateScale(105, 0.625)),
     marginRight: Math.round(moderateScale(30, 0.0625)),
   },
