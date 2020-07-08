@@ -137,7 +137,7 @@ export default class SignUpScreen extends React.Component {
               <Form style={styles.formContainer}>
                 <Item style={styles.itemStyle}>
                   <Input
-                    placeholder="Full Name"
+                    placeholder={i18n.t("Name")}
                     placeholderTextColor={COLORS.forestgreen}
                     returnKeyType="next"
                     autoCapitalize="none"
@@ -150,7 +150,7 @@ export default class SignUpScreen extends React.Component {
                 </Item>
                 <Item style={styles.itemStyle}>
                   <Input
-                    placeholder="Email"
+                    placeholder={i18n.t("Email")}
                     placeholderTextColor={COLORS.forestgreen}
                     returnKeyType="next"
                     autoCapitalize="none"
@@ -165,7 +165,7 @@ export default class SignUpScreen extends React.Component {
                 </Item>
                 <Item style={styles.itemStyle}>
                   <Input
-                    placeholder="Password"
+                    placeholder={i18n.t("Password")}
                     placeholderTextColor={COLORS.forestgreen}
                     returnKeyType="next"
                     autoCapitalize="none"
@@ -191,7 +191,7 @@ export default class SignUpScreen extends React.Component {
                 </Item>
                 <Item style={styles.itemStyle}>
                   <Input
-                    placeholder="Confirm Password"
+                    placeholder={i18n.t("Confirm Password")}
                     placeholderTextColor={COLORS.forestgreen}
                     returnKeyType="go"
                     autoCapitalize="none"
@@ -203,6 +203,25 @@ export default class SignUpScreen extends React.Component {
                     }
                   />
                 </Item>
+
+                {/* SignUp Button */}
+                <TouchableOpacity
+                  onPress={() => this.handleSignUp()}
+                  disabled={this.state.isLoading}
+                  style={styles.submitButton}>
+                  <Text style={styles.submitLabel}>{i18n.t("Sign Up")}</Text>
+                </TouchableOpacity>
+
+                {/* Loading ActivityIndicator */}
+                {this.state.isLoading && (
+                  <View>
+                    <ActivityIndicator
+                      color="#499c69"
+                      size="large"
+                      animating={this.state.isLoading}
+                    />
+                  </View>
+                )}
               </Form>
             </View>
           </KeyboardAvoidingView>
@@ -230,9 +249,9 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   container: {
-    marginTop: Math.round(verticalScale(50)),
-    marginLeft: Math.round(moderateScale(110, 0.625)),
-    marginRight: Math.round(moderateScale(20, 0.0625)),
+    marginTop: Math.round(verticalScale(60)),
+    marginLeft: Math.round(moderateScale(105, 0.625)),
+    marginRight: Math.round(moderateScale(30, 0.0625)),
   },
   formContainer: {
     marginTop: Math.round(verticalScale(10)),
@@ -260,5 +279,17 @@ const styles = StyleSheet.create({
   hideIcon: {
     color: "#499c69",
     fontSize: Math.round(moderateScale(30, 0.00125)),
+  },
+  submitButton: {
+    alignItems: "center",
+    borderRadius: 10,
+    marginTop: Math.round(verticalScale(40)),
+    padding: Math.round(verticalScale(10)),
+    backgroundColor: COLORS.forestgreen,
+  },
+  submitLabel: {
+    color: COLORS.sandy,
+    fontSize: Math.round(moderateScale(25, 0.05)),
+    fontFamily: "Poppins-bold",
   },
 });
