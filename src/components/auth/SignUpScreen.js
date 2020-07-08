@@ -121,8 +121,8 @@ export default class SignUpScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.backDrop}>
-        <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.backDrop}>
           <KeyboardAvoidingView
             style={styles.keyboardView}
             behavior={Platform.OS == "ios" ? "position" : null}
@@ -198,9 +198,9 @@ export default class SignUpScreen extends React.Component {
               </Form>
             </View>
           </KeyboardAvoidingView>
-        </TouchableWithoutFeedback>
-        <MenuBar navigation={this.props.navigation} />
-      </View>
+          <MenuBar navigation={this.props.navigation} />
+        </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
