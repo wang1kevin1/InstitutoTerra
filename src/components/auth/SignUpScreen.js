@@ -132,7 +132,8 @@ export default class SignUpScreen extends React.Component {
         <View style={styles.backDrop}>
           <KeyboardAvoidingView
             style={styles.keyboardView}
-            behavior={Platform.OS == "ios" ? "position" : null}
+            behavior={Platform.OS == "ios" ? "position" : "position"}
+            keyboardVerticalOffset={Platform.select({ ios: 0, android: 20 })}
             enabled="false">
             <View style={styles.container}>
               <Text style={styles.header}>Olá!</Text>
