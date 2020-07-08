@@ -179,12 +179,20 @@ export default class SignUpScreen extends React.Component {
                       this.onChangeText("password", value)
                     }
                   />
+                  <Ionicons
+                    style={
+                      this.state.hidePassword == false
+                        ? styles.showIcon
+                        : styles.hideIcon
+                    }
+                    name="ios-eye"
+                    onPress={() => this.handleHidePassword()}
+                  />
                 </Item>
                 <Item style={styles.itemStyle}>
                   <Input
                     placeholder="Confirm Password"
                     placeholderTextColor={COLORS.forestgreen}
-                    style={styles.input}
                     returnKeyType="go"
                     autoCapitalize="none"
                     autoCorrect={false}
@@ -244,5 +252,13 @@ const styles = StyleSheet.create({
     color: COLORS.forestgreen,
     fontSize: Math.round(scale(20, 0.00125)),
     fontFamily: "Poppins-light",
+  },
+  showIcon: {
+    color: COLORS.forestgreen,
+    fontSize: Math.round(moderateScale(30, 0.00125)),
+  },
+  hideIcon: {
+    color: "#499c69",
+    fontSize: Math.round(moderateScale(30, 0.00125)),
   },
 });
