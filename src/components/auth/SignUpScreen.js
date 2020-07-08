@@ -55,7 +55,14 @@ export default class SignUpScreen extends React.Component {
 
   // checks for password match
   handleSignUp = () => {
-    if (this.state.password !== this.state.password_confirmation) {
+    if (
+      this.state.email == "" ||
+      this.state.name == "" ||
+      this.state.password == "" ||
+      this.state.password_confirmation == ""
+    ) {
+      Alert.alert("One or more fields are empty, please try again.");
+    } else if (this.state.password !== this.state.password_confirmation) {
       Alert.alert(i18n.t("Passwords do not match"));
     } else {
       this.signUp();
@@ -137,7 +144,7 @@ export default class SignUpScreen extends React.Component {
               <Form style={styles.formContainer}>
                 <Item style={styles.itemStyle}>
                   <Input
-                    placeholder={i18n.t("Name")}
+                    placeholder="Name"
                     placeholderTextColor={COLORS.forestgreen}
                     returnKeyType="next"
                     autoCapitalize="none"
