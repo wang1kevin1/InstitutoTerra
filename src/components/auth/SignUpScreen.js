@@ -4,6 +4,7 @@ import {
   TouchableWithoutFeedback,
   StyleSheet,
   Text,
+  Dimensions,
   SafeAreaView,
   KeyboardAvoidingView,
   Keyboard,
@@ -12,7 +13,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { scale, verticalScale, moderateScale } from "react-native-size-matters";
-import { Container, Item, Input } from "native-base";
+import { Form, Item, Input, Label } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../assets/Colors.js";
 import Auth from "@aws-amplify/auth";
@@ -28,8 +29,7 @@ export default class SignUpScreen extends React.Component {
     password: "",
     password_confirmation: "",
     isLoading: false,
-    hidePassword1: true,
-    hidePassword2: true,
+    hidePassword: true,
     apiResponse: null,
     UserId: "",
   };
@@ -121,54 +121,128 @@ export default class SignUpScreen extends React.Component {
 
   render() {
     return (
-      <TouchableWithoutFeedback>
-        <KeyboardAvoidingView
-          style={styles.keyboardView}
-          behavior={Platform.OS == "ios" ? "padding" : null}
-          enabled="false">
-          <SafeAreaView style={styles.backDrop}>
+      <View style={styles.backDrop}>
+        <TouchableWithoutFeedback>
+          <KeyboardAvoidingView
+            style={styles.keyboardView}
+            behavior={Platform.OS == "ios" ? "position" : null}
+            enabled="false">
             <View style={styles.container}>
-              <View style={styles.introContainer}>
-                <Text style={styles.header}>Olá!</Text>
-              </View>
-              <View style={styles.formContainer}></View>
+              <Text style={styles.header}>Olá!</Text>
+              <Text style={styles.paragraph}>
+                Excepteur commodo deserunt eu ad labore labore qui ullamco
+                cillum consectetur incididunt eiusmod Lorem. Sunt do ipsum id
+                officia officia.
+              </Text>
+              <Form style={styles.formContainer}>
+                <Item style={styles.itemStyle}>
+                  <Input
+                    placeholder="Full Name"
+                    placeholderTextColor={COLORS.forestgreen}
+                    returnKeyType="next"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    onSubmitEditing={(event) => {
+                      this.refs.SecondInput._root.focus();
+                    }}
+                    onChangeText={(value) => this.onChangeText("name", value)}
+                  />
+                </Item>
+                <Item style={styles.itemStyle}>
+                  <Input
+                    placeholder="Email"
+                    placeholderTextColor={COLORS.forestgreen}
+                    returnKeyType="next"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    keyboardType={"email-address"}
+                    ref="SecondInput"
+                    onSubmitEditing={(event) => {
+                      this.refs.ThirdInput._root.focus();
+                    }}
+                    onChangeText={(value) => this.onChangeText("email", value)}
+                  />
+                </Item>
+                <Item style={styles.itemStyle}>
+                  <Input
+                    placeholder="Password"
+                    placeholderTextColor={COLORS.forestgreen}
+                    returnKeyType="next"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    secureTextEntry={this.state.hidePassword}
+                    ref="ThirdInput"
+                    onSubmitEditing={(event) => {
+                      this.refs.FourthInput._root.focus();
+                    }}
+                    onChangeText={(value) =>
+                      this.onChangeText("password", value)
+                    }
+                  />
+                </Item>
+                <Item style={styles.itemStyle}>
+                  <Input
+                    placeholder="Confirm Password"
+                    placeholderTextColor={COLORS.forestgreen}
+                    style={styles.input}
+                    returnKeyType="go"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    secureTextEntry={this.state.hidePassword}
+                    ref="FourthInput"
+                    onChangeText={(value) =>
+                      this.onChangeText("password_confirmation", value)
+                    }
+                  />
+                </Item>
+              </Form>
             </View>
-            <MenuBar navigation={this.props.navigation} />
-          </SafeAreaView>
-        </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
+          </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
+        <MenuBar navigation={this.props.navigation} />
+      </View>
     );
   }
 }
 
+const { width, height } = Dimensions.get("screen");
+
 const styles = StyleSheet.create({
+  backDrop: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "flex-start",
+    height: Math.round(scale(height)),
+    width: width,
+    backgroundColor: COLORS.signUpBkg,
+  },
   keyboardView: {
     flex: 1,
     flexDirection: "column",
     backgroundColor: "transparent",
   },
-  backDrop: {
-    flex: 1,
-    flexDirection: "row",
-    backgroundColor: COLORS.signUpBkg,
-  },
   container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: "transparent",
-  },
-  introContainer: {
-    flex: Math.round(verticalScale(0.1)),
-    marginTop: Math.round(moderateScale(10, 0.0625)),
-    marginLeft: Math.round(moderateScale(100, 0.625)),
-    marginRight: Math.round(moderateScale(10, 0.0625)),
+    marginTop: Math.round(verticalScale(50)),
+    marginLeft: Math.round(moderateScale(110, 0.625)),
+    marginRight: Math.round(moderateScale(20, 0.0625)),
   },
   formContainer: {
-    flex: Math.round(verticalScale(0.9)),
+    marginTop: Math.round(verticalScale(10)),
+  },
+  itemStyle: {
+    marginLeft: 0,
+    marginBottom: Math.round(verticalScale(10)),
+    borderColor: COLORS.forestgreen,
+    borderWidth: Math.round(moderateScale(10, 0.0625)),
   },
   header: {
+    color: COLORS.forestgreen,
     fontSize: Math.round(moderateScale(50, 0.05)),
     fontFamily: "Poppins-bold",
+  },
+  paragraph: {
     color: COLORS.forestgreen,
+    fontSize: Math.round(scale(20, 0.00125)),
+    fontFamily: "Poppins-light",
   },
 });
