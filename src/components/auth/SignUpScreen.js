@@ -151,8 +151,9 @@ export default class SignUpScreen extends React.Component {
               <Form style={styles.formContainer}>
                 <Item style={styles.itemStyle}>
                   <Input
+                    style={styles.inputStyle}
                     placeholder="Name"
-                    placeholderTextColor={COLORS.forestgreen}
+                    placeholderTextColor={COLORS.opaqueForestGreen}
                     returnKeyType="next"
                     autoCapitalize="none"
                     autoCorrect={false}
@@ -164,8 +165,9 @@ export default class SignUpScreen extends React.Component {
                 </Item>
                 <Item style={styles.itemStyle}>
                   <Input
+                    style={styles.inputStyle}
                     placeholder={i18n.t("Email")}
-                    placeholderTextColor={COLORS.forestgreen}
+                    placeholderTextColor={COLORS.opaqueForestGreen}
                     returnKeyType="next"
                     autoCapitalize="none"
                     autoCorrect={false}
@@ -179,8 +181,9 @@ export default class SignUpScreen extends React.Component {
                 </Item>
                 <Item style={styles.itemStyle}>
                   <Input
+                    style={styles.inputStyle}
                     placeholder={i18n.t("Password")}
-                    placeholderTextColor={COLORS.forestgreen}
+                    placeholderTextColor={COLORS.opaqueForestGreen}
                     returnKeyType="next"
                     autoCapitalize="none"
                     autoCorrect={false}
@@ -204,20 +207,12 @@ export default class SignUpScreen extends React.Component {
                       style={styles.showHideIcon}
                     />
                   </TouchableOpacity>
-                  {/* <Ionicons
-                    style={
-                      this.state.hidePassword == false
-                        ? styles.showIcon
-                        : styles.hideIcon
-                    }
-                    name="ios-eye"
-                    onPress={() => this.handleHidePassword()}
-                  /> */}
                 </Item>
                 <Item style={styles.itemStyle}>
                   <Input
+                    style={styles.inputStyle}
                     placeholder={i18n.t("Confirm Password")}
-                    placeholderTextColor={COLORS.forestgreen}
+                    placeholderTextColor={COLORS.opaqueForestGreen}
                     returnKeyType="go"
                     autoCapitalize="none"
                     autoCorrect={false}
@@ -234,13 +229,15 @@ export default class SignUpScreen extends React.Component {
                   onPress={() => this.handleSignUp()}
                   disabled={this.state.isLoading}
                   style={styles.submitButton}>
-                  <Text style={styles.submitLabel}>{i18n.t("Sign Up")}</Text>
-
-                  {/* Loading ActivityIndicator */}
+                  {/* Not Loading Hide ActivityIndicator */}
+                  {!this.state.isLoading && (
+                    <Text style={styles.submitLabel}>{i18n.t("Sign Up")}</Text>
+                  )}
+                  {/* Show Loading ActivityIndicator */}
                   {this.state.isLoading && (
-                    <View>
+                    <View styles={styles.loading}>
                       <ActivityIndicator
-                        color="#499c69"
+                        color={COLORS.sandy}
                         size="large"
                         animating={this.state.isLoading}
                       />
@@ -278,15 +275,6 @@ const styles = StyleSheet.create({
     marginLeft: Math.round(moderateScale(105, 0.625)),
     marginRight: Math.round(moderateScale(30, 0.0625)),
   },
-  formContainer: {
-    marginTop: Math.round(verticalScale(10)),
-  },
-  itemStyle: {
-    marginLeft: 0,
-    marginBottom: Math.round(verticalScale(10)),
-    borderColor: COLORS.forestgreen,
-    borderWidth: Math.round(moderateScale(10, 0.0625)),
-  },
   header: {
     color: COLORS.forestgreen,
     fontSize: Math.round(moderateScale(45, 0.05)),
@@ -297,8 +285,21 @@ const styles = StyleSheet.create({
     fontSize: Math.round(scale(19, 0.0125)),
     fontFamily: "Poppins-light",
   },
+  formContainer: {
+    marginTop: Math.round(verticalScale(10)),
+  },
+  itemStyle: {
+    marginLeft: 0,
+    marginBottom: Math.round(verticalScale(10)),
+    borderColor: COLORS.forestgreen,
+    borderWidth: Math.round(moderateScale(10, 0.0625)),
+  },
+  inputStyle: {
+    color: COLORS.forestgreen,
+    fontFamily: "Poppins",
+  },
   showHideIcon: {
-    height: verticalScale(20),
+    height: verticalScale(15),
     resizeMode: "contain",
   },
   submitButton: {
@@ -308,9 +309,19 @@ const styles = StyleSheet.create({
     padding: Math.round(verticalScale(10)),
     backgroundColor: COLORS.forestgreen,
   },
+  loading: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   submitLabel: {
     color: COLORS.sandy,
-    fontSize: Math.round(moderateScale(25, 0.05)),
+    fontSize: Math.round(moderateScale(20, 0.05)),
+    padding: Math.round(moderateScale(10, 0.0125)),
     fontFamily: "Poppins-bold",
   },
 });

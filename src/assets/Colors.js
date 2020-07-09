@@ -18,11 +18,12 @@ const COLORS = {
   mutedgreen: "#9CA670",
   darkgreen: "#557718",
   forestgreen: "#2F6443",
+  opaqueForestGreen: "rgba(47, 100, 67, 0.3)",
 
   lightblue: "#82A2F4",
 
   sandy: "#FFFCDC",
-  lightSandy: "rgb(255, 253, 223)",
+  lightSandy: "#FFFDDF",
 };
 
 export default COLORS;
