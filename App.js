@@ -174,7 +174,11 @@ export default class App extends React.Component {
 
   _loadResourcesAsync = async () => {
     return Promise.all([
-      Asset.loadAsync([require("./src/assets/background/home/bg_home.png")]),
+      Asset.loadAsync([
+        require("./src/assets/background/home/bg_home.png"),
+        require("./src/assets/icons/ic_hide_text.png"),
+        require("./src/assets/icons/ic_show_text.png"),
+      ]),
       Font.loadAsync({
         Montserrat: require("./src/assets/fonts/Montserrat-Regular.ttf"),
         "Montserrat-bold": require("./src/assets/fonts/Montserrat-Bold.ttf"),

@@ -11,6 +11,7 @@ import {
   View,
   Alert,
   ActivityIndicator,
+  Image,
 } from "react-native";
 import { scale, verticalScale, moderateScale } from "react-native-size-matters";
 import { Form, Item, Input, Label } from "native-base";
@@ -20,6 +21,11 @@ import Auth from "@aws-amplify/auth";
 import MenuBar from "../main/MenuBar.js";
 import { API } from "aws-amplify";
 import i18n from "i18n-js";
+
+const show_hide_icons = [
+  require("../../assets/icons/ic_hide_text.png"),
+  require("../../assets/icons/ic_show_text.png"),
+];
 
 export default class SignUpScreen extends React.Component {
   state = {
@@ -187,7 +193,18 @@ export default class SignUpScreen extends React.Component {
                       this.onChangeText("password", value)
                     }
                   />
-                  <Ionicons
+
+                  <TouchableOpacity onPress={() => this.handleHidePassword()}>
+                    <Image
+                      source={
+                        this.state.hidePassword == false
+                          ? show_hide_icons[0]
+                          : show_hide_icons[1]
+                      }
+                      style={styles.showHideIcon}
+                    />
+                  </TouchableOpacity>
+                  {/* <Ionicons
                     style={
                       this.state.hidePassword == false
                         ? styles.showIcon
@@ -195,7 +212,7 @@ export default class SignUpScreen extends React.Component {
                     }
                     name="ios-eye"
                     onPress={() => this.handleHidePassword()}
-                  />
+                  /> */}
                 </Item>
                 <Item style={styles.itemStyle}>
                   <Input
@@ -218,18 +235,18 @@ export default class SignUpScreen extends React.Component {
                   disabled={this.state.isLoading}
                   style={styles.submitButton}>
                   <Text style={styles.submitLabel}>{i18n.t("Sign Up")}</Text>
-                </TouchableOpacity>
 
-                {/* Loading ActivityIndicator */}
-                {this.state.isLoading && (
-                  <View>
-                    <ActivityIndicator
-                      color="#499c69"
-                      size="large"
-                      animating={this.state.isLoading}
-                    />
-                  </View>
-                )}
+                  {/* Loading ActivityIndicator */}
+                  {this.state.isLoading && (
+                    <View>
+                      <ActivityIndicator
+                        color="#499c69"
+                        size="large"
+                        animating={this.state.isLoading}
+                      />
+                    </View>
+                  )}
+                </TouchableOpacity>
               </Form>
             </View>
           </KeyboardAvoidingView>
@@ -249,7 +266,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     height: Math.round(scale(height)),
     width: width,
-    backgroundColor: COLORS.signUpBkg,
+    backgroundColor: COLORS.lightSandy,
   },
   keyboardView: {
     flex: 1,
@@ -272,21 +289,17 @@ const styles = StyleSheet.create({
   },
   header: {
     color: COLORS.forestgreen,
-    fontSize: Math.round(moderateScale(50, 0.05)),
+    fontSize: Math.round(moderateScale(45, 0.05)),
     fontFamily: "Poppins-bold",
   },
   paragraph: {
     color: COLORS.forestgreen,
-    fontSize: Math.round(scale(20, 0.00125)),
+    fontSize: Math.round(scale(19, 0.0125)),
     fontFamily: "Poppins-light",
   },
-  showIcon: {
-    color: COLORS.forestgreen,
-    fontSize: Math.round(moderateScale(30, 0.00125)),
-  },
-  hideIcon: {
-    color: "#499c69",
-    fontSize: Math.round(moderateScale(30, 0.00125)),
+  showHideIcon: {
+    height: verticalScale(20),
+    resizeMode: "contain",
   },
   submitButton: {
     alignItems: "center",

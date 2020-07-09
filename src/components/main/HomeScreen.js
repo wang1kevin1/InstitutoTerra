@@ -234,7 +234,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: Math.round(scale(height)),
     width: width,
-    backgroundColor: COLORS.black,
   },
   container: {
     flex: 1,

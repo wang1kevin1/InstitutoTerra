@@ -22,7 +22,7 @@ const COLORS = {
   lightblue: "#82A2F4",
 
   sandy: "#FFFCDC",
-  signUpBkg: "rgb(255, 253, 223)",
+  lightSandy: "rgb(255, 253, 223)",
 };
 
 export default COLORS;
