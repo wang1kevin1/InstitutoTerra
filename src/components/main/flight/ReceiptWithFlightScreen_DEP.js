@@ -30,6 +30,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
     //set state parameters
     this.setState({
       tripIndex: this.props.navigation.getParam("tripIndex", "tripIndex"),
+      distance: this.props.navigation.getParam("distance", "distanceTraveled"),
       depCityName: this.props.navigation.getParam(
         "depCityName",
         "departureCity"

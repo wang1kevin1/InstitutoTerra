@@ -26,12 +26,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
   componentDidMount = () => {
     //set state parameters
     this.setState({
-      tripIndex: this.props.navigation.getParam("tripIndex", "tripIndex"),
-      depCityName: this.props.navigation.getParam(
-        "depCityName",
-        "departureCity"
-      ),
-      arrCityName: this.props.navigation.getParam("arrCityName", "arrivalCity"),
+      distance: this.props.navigation.getParam("distance", "distanceTraveled"),
       footprint: this.props.navigation.getParam("footprint", "carbonEmissions"),
       treeNum: this.props.navigation.getParam("treeNum", "treeNum"),
       years: this.props.navigation.getParam("years", "years"),
@@ -72,9 +67,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
 
   render() {
     const {
-      tripIndex,
-      depCityName,
-      arrCityName,
+      distance,
       footprint,
       treeNum,
       years,
@@ -105,7 +98,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
                   <Text style={styles.itemTitle}>Flight Distance (km)</Text>
                 </Left>
                 <Right>
-                  <Text style={styles.itemValue}></Text>
+                  <Text style={styles.itemValue}>{distance}</Text>
                 </Right>
               </ListItem>
               {/* List Item 2 */}
@@ -154,27 +147,27 @@ export default class ReceiptWithFlightScreen extends React.Component {
                 </Right>
               </ListItem>
             </List>
+            {/* SignUp Button */}
+            <TouchableOpacity
+              onPress={() => this.handleStripePayment()}
+              disabled={this.state.isLoading}
+              style={styles.submitButton}>
+              {/* Not Loading Hide ActivityIndicator */}
+              {!this.state.isLoading && (
+                <Text style={styles.submitLabel}>Pay With Stripe</Text>
+              )}
+              {/* Show Loading ActivityIndicator */}
+              {this.state.isLoading && (
+                <View styles={styles.loading}>
+                  <ActivityIndicator
+                    color={COLORS.sandy}
+                    size="large"
+                    animating={this.state.isLoading}
+                  />
+                </View>
+              )}
+            </TouchableOpacity>
           </View>
-          {/* SignUp Button */}
-          <TouchableOpacity
-            onPress={() => this.handleStripePayment()}
-            disabled={this.state.isLoading}
-            style={styles.submitButton}>
-            {/* Not Loading Hide ActivityIndicator */}
-            {!this.state.isLoading && (
-              <Text style={styles.submitLabel}>Pay With Stripe</Text>
-            )}
-            {/* Show Loading ActivityIndicator */}
-            {this.state.isLoading && (
-              <View styles={styles.loading}>
-                <ActivityIndicator
-                  color={COLORS.sandy}
-                  size="large"
-                  animating={this.state.isLoading}
-                />
-              </View>
-            )}
-          </TouchableOpacity>
         </View>
         <MenuBar navigation={this.props.navigation} />
       </SafeAreaView>
@@ -231,18 +224,19 @@ const styles = StyleSheet.create({
   },
   itemTitle: {
     color: COLORS.forestgreen,
-    fontSize: Math.round(moderateScale(13, 0.125)),
+    fontSize: Math.round(moderateScale(11, 0.125)),
     fontFamily: "Poppins",
   },
   itemValue: {
     color: COLORS.forestgreen,
-    fontSize: Math.round(moderateScale(13, 0.125)),
+    fontSize: Math.round(moderateScale(11, 0.125)),
     fontFamily: "Poppins-bold",
   },
   submitButton: {
     alignItems: "center",
     borderRadius: 10,
     padding: Math.round(verticalScale(10)),
+    marginTop: Math.round(verticalScale(20)),
     backgroundColor: COLORS.forestgreen,
   },
   loading: {
