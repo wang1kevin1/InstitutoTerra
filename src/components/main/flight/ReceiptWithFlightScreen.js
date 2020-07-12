@@ -19,7 +19,6 @@ const leaf = require("../../../assets/images/img_receipt_leaf_nobg.png");
 
 export default class ReceiptWithFlightScreen extends React.Component {
   state = {
-    isAuthenticated: "false",
     data: [],
   };
 
@@ -34,30 +33,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
       flightChars: this.props.navigation.getParam("flightChars", "chars"),
       flightNums: this.props.navigation.getParam("flightNums", "nums"),
     });
-    this.checkAuth();
   };
-
-  // Checks if a user is logged in
-  async checkAuth() {
-    await Auth.currentAuthenticatedUser({ bypassCache: true })
-      .then(() => {
-        console.log("A user is logged in");
-        this.setState({ isAuthenticated: true });
-      })
-      .catch((err) => {
-        console.log("Nobody is logged in");
-        this.setState({ isAuthenticated: false });
-      });
-  }
-
-  // Sends user to sign up or profile depending on Auth state
-  handleUserRedirect() {
-    if (this.state.isAuthenticated) {
-      this.props.navigation.navigate("UserProfile");
-    } else {
-      this.props.navigation.navigate("SignIn");
-    }
-  }
 
   handleStripePayment() {
     this.props.navigation.navigate("Payment", {
@@ -92,7 +68,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
           </View>
           <View style={styles.bottomInnerView}>
             <List>
-              {/* List Item 1 */}
+              {/* Flight Distance */}
               <ListItem>
                 <Left>
                   <Text style={styles.itemTitle}>Flight Distance (km)</Text>
@@ -101,25 +77,18 @@ export default class ReceiptWithFlightScreen extends React.Component {
                   <Text style={styles.itemValue}>{distance}</Text>
                 </Right>
               </ListItem>
-              {/* List Item 2 */}
+              {/* Carbon FootPrint */}
               <ListItem>
                 <Left>
                   <Text style={styles.itemTitle}>
-                    Tons of CO
-                    <Text
-                      style={{
-                        fontSize: moderateScale(7, 0.125),
-                        lineHeight: 1,
-                      }}>
-                      2
-                    </Text>
+                    Carbon Footprint (Metric Tons)
                   </Text>
                 </Left>
                 <Right>
                   <Text style={styles.itemValue}>{footprint}</Text>
                 </Right>
               </ListItem>
-              {/* List Item 3 */}
+              {/* Number of planted Trees */}
               <ListItem>
                 <Left>
                   <Text style={styles.itemTitle}>Planted Trees</Text>
@@ -128,7 +97,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
                   <Text style={styles.itemValue}>{treeNum}</Text>
                 </Right>
               </ListItem>
-              {/* List Item 4 */}
+              {/* Years To Compensation*/}
               <ListItem>
                 <Left>
                   <Text style={styles.itemTitle}>Years to Compensate</Text>
@@ -137,7 +106,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
                   <Text style={styles.itemValue}>{years}</Text>
                 </Right>
               </ListItem>
-              {/* List Item 5 */}
+              {/* Donation Amount */}
               <ListItem>
                 <Left>
                   <Text style={styles.itemTitle}>Donation Amount</Text>
@@ -147,25 +116,12 @@ export default class ReceiptWithFlightScreen extends React.Component {
                 </Right>
               </ListItem>
             </List>
-            {/* SignUp Button */}
+            {/* Pay With Stripe Button */}
             <TouchableOpacity
               onPress={() => this.handleStripePayment()}
               disabled={this.state.isLoading}
               style={styles.submitButton}>
-              {/* Not Loading Hide ActivityIndicator */}
-              {!this.state.isLoading && (
-                <Text style={styles.submitLabel}>Pay With Stripe</Text>
-              )}
-              {/* Show Loading ActivityIndicator */}
-              {this.state.isLoading && (
-                <View styles={styles.loading}>
-                  <ActivityIndicator
-                    color={COLORS.sandy}
-                    size="large"
-                    animating={this.state.isLoading}
-                  />
-                </View>
-              )}
+              <Text style={styles.submitLabel}>Pay With Stripe</Text>
             </TouchableOpacity>
           </View>
         </View>
