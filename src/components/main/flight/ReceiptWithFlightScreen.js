@@ -15,7 +15,7 @@ import MenuBar from "../MenuBar.js";
 import Auth from "@aws-amplify/auth";
 import i18n from "i18n-js";
 
-const leaf = require("../../../assets/images/img_receipt_leaf_nobg.png");
+const leaf = require("../../../assets/images/img_receipt_leaf.png");
 
 export default class ReceiptWithFlightScreen extends React.Component {
   state = {
@@ -81,7 +81,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
               <ListItem>
                 <Left>
                   <Text style={styles.itemTitle}>
-                    Carbon Footprint (Metric Tons)
+                    Carbon Footprint{"\n"}(Metric Tons)
                   </Text>
                 </Left>
                 <Right>
