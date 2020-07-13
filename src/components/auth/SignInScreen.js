@@ -44,12 +44,19 @@ export default class SignInScreen extends React.Component {
     })
   }
 
+  handleSignIn = () => {
+    if((this.state.email.trim()=='') || (this.state.password.trim()==''))
+      Alert.alert("One more fields are empty");
+    else 
+      this.signIn();
+  }
+
   // Sign in users with Auth
   async signIn() {
     const { email, password } = this.state
     Keyboard.dismiss()
-    this.setState({ isLoading: true })
-    await Auth.signIn(email, password)
+      this.setState({ isLoading: true })
+      await Auth.signIn(email, password)
       .then(user => {
         this.setState({ user })
         this.setState({ isLoading: false })
@@ -124,7 +131,7 @@ export default class SignInScreen extends React.Component {
                 <KeyboardAvoidingView style={styles.container2} behavior='position' enabled>
                   {/* Sign In Button */}
                   <TouchableOpacity
-                    onPress={() => this.signIn()}
+                    onPress={()=>this.handleSignIn()}
                     disabled={this.state.isLoading}
                     style={styles.buttonStyle1}>
                   {!this.state.isLoading &&
@@ -183,7 +190,7 @@ const styles = StyleSheet.create({
 
   input: {
     flex: 1,
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 'normal',
     color: COLORS.forestgreen,
   },
