@@ -178,7 +178,7 @@ export default class CheckoutWithoutFlightScreen extends React.Component {
   }
 }
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
   container: {

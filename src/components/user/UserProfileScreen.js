@@ -194,7 +194,7 @@ export default class UserProfileScreen extends React.Component {
     )
   }
 }
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('screen');
 
 const sliderWidth = width
 const itemWidth = width
