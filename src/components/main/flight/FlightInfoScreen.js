@@ -7,23 +7,16 @@ import {
   Dimensions,
   TouchableOpacity,
   ActivityIndicator,
+  SafeAreaView,
 } from "react-native";
 
+import { verticalScale, moderateScale } from "react-native-size-matters";
 import { Ionicons, FontAwesome, Feather } from "@expo/vector-icons";
-
 import * as CONSTANTS from "../../utilities/Constants.js";
-
-import Dash from "react-native-dash";
-
 import COLORS from "../../../assets/Colors.js";
-
-import MenuBar from "../MenuBar.js";
-
 import Auth from "@aws-amplify/auth";
-
+import MenuBar from "../MenuBar.js";
 import i18n from "i18n-js";
-
-console.log(process.env.REACT_APP_API_KEY);
 
 export default class FlightInfoScreen extends React.Component {
   state = {
@@ -285,13 +278,13 @@ export default class FlightInfoScreen extends React.Component {
     //Medium Flight
     else if (dist < 1000) {
       //Economy seat
-      if (this.props.navigation.getParam("seatState", "state") == "Economy") {
+      if (this.state.seatIndex == "Economy") {
         dist *= CONSTANTS.CARBON_MULTIPLIERS.medium_economy;
       }
       //Business seat
       else if (
-        this.props.navigation.getParam("seatState", "state") == "Business" ||
-        this.props.navigation.getParam("seatState", "state") == "First Class"
+        this.state.seatIndex == "Business" ||
+        this.state.seatIndex == "First Class"
       ) {
         dist *= CONSTANTS.CARBON_MULTIPLIERS.medium_business;
       }
@@ -299,29 +292,25 @@ export default class FlightInfoScreen extends React.Component {
     //Long Flight
     else {
       //Economy Seat
-      if (this.props.navigation.getParam("seatState", "state") == "Economy") {
+      if (this.state.seatIndex == "Economy") {
         dist *= CONSTANTS.CARBON_MULTIPLIERS.long_economy;
         console.log("Economy Long");
         console.log(dist);
       }
       //Business Seat
-      else if (
-        this.props.navigation.getParam("seatState", "state") == "Business"
-      ) {
+      else if (this.state.seatIndex == "Business") {
         dist *= CONSTANTS.CARBON_MULTIPLIERS.long_business;
         console.log("Business Long");
         console.log(dist);
       }
       //First Class Seat
-      else if (
-        this.props.navigation.getParam("seatState", "state") == "First Class"
-      ) {
+      else if (this.state.seatIndex == "First Class") {
         dist *= CONSTANTS.CARBON_MULTIPLIERS.long_first;
         console.log("First Class Long");
         console.log(dist);
       }
     }
-    emissions = Math.round(dist);
+    var emissions = Math.round(dist);
     emissions /= 1000;
     return emissions;
   }
@@ -345,328 +334,71 @@ export default class FlightInfoScreen extends React.Component {
 
     const carbonEmissions = this.calcEmissions();
 
-    if (!isReady) {
-      return (
-        <View style={styles.containerLoading}>
-          <View
-            style={{
-              flexDirection: "column",
-              flex: 1,
-              justifyContent: "center",
-            }}>
-            <Ionicons name="ios-paper-plane" style={styles.loadingIcon} />
-            <Text
-              style={[
-                styles.loadingText,
-                {
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginBottom: "5%",
-                },
-              ]}>
-              {i18n.t("RETRIEVING FLIGHT")}
-            </Text>
-            <ActivityIndicator
-              color={COLORS.lightblue}
-              size="large"
-              animating={!isReady}
-            />
+    return (
+      <SafeAreaView style={styles.backDrop}>
+        <View style={styles.innerView}>
+          <View style={styles.topInnerView}>
+            <Text>Hello</Text>
           </View>
-        </View>
-      );
-    } else {
-      return (
-        <View style={styles.container}>
-          <View style={styles.containerTop}>
-            <View style={styles.buttonBarNav}>
-              {/*Navigation Buttons*/}
-              <Feather
-                style={styles.navigationIcon}
-                name="home"
-                onPress={() => this.props.navigation.navigate("Home")}
-              />
-              <FontAwesome
-                style={styles.navigationIcon}
-                name="user-circle-o"
-                onPress={() => this.handleUserRedirect()}
-              />
-            </View>
-            <View style={styles.buttonBarTop}>
-              {/*Route Option Buttons*/}
-              <View
-                style={[
-                  styles.leftGreenButton,
-                  { opacity: this.state.tripIndex == 1 ? 1 : 0.5 },
-                ]}>
-                <TouchableOpacity
-                  onPress={() => this.setState({ tripIndex: 1 })}>
-                  <Text style={styles.buttonText}>{i18n.t("ONE WAY")}</Text>
-                </TouchableOpacity>
-              </View>
-              <View
-                style={[
-                  styles.rightGreenButton,
-                  { opacity: this.state.tripIndex == 2 ? 1 : 0.5 },
-                ]}>
-                <TouchableOpacity
-                  onPress={() => this.setState({ tripIndex: 2 })}>
-                  <Text style={styles.buttonText}>{i18n.t("ROUND TRIP")}</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-            {/*Flight Number*/}
-            <Text style={styles.smallBlueText}>{i18n.t("FLIGHT NUMBER")}</Text>
-            <Text style={styles.bigBlueText}>
-              {flightChars} {flightNums}
-            </Text>
-            <View style={styles.planeInfoText}>
-              {/*Departure and arrival city & IATA*/}
-              <Text style={styles.midGreyText}>
-                {depCityName}({depCityIata}) {i18n.t("to")} {arrCityName}(
-                {arrCityIata}){" "}
-              </Text>
-              <Text style={styles.midGreyText}>
-                {i18n.t("via")} {airlineName}
-              </Text>
-            </View>
-            <View style={styles.buttonBarBottom}>
-              {/*Seat class selector*/}
-              <View
-                style={[
-                  styles.leftGreenButton,
-                  { opacity: this.state.seatIndex == "Economy" ? 1 : 0.5 },
-                ]}>
-                <TouchableOpacity
-                  onPress={() => this.setState({ seatIndex: "Economy" })}>
-                  <Text style={styles.buttonText}>{i18n.t("ECONOMY")}</Text>
-                </TouchableOpacity>
-              </View>
-              <View
-                style={[
-                  styles.middleGreenButton,
-                  { opacity: this.state.seatIndex == "Business" ? 1 : 0.5 },
-                ]}>
-                <TouchableOpacity
-                  onPress={() => this.setState({ seatIndex: "Business" })}>
-                  <Text style={styles.buttonText}>{i18n.t("BUSINESS")}</Text>
-                </TouchableOpacity>
-              </View>
-              <View
-                style={[
-                  styles.rightGreenButton,
-                  { opacity: this.state.seatIndex == "First Class" ? 1 : 0.5 },
-                ]}>
-                <TouchableOpacity
-                  onPress={() => this.setState({ seatIndex: "First Class" })}>
-                  <Text style={styles.buttonText}>{i18n.t("FIRST CLASS")}</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <Dash
-              style={styles.dashedLine}
-              dashColor={COLORS.lightgrey}
-              dashGap={0}
-            />
-            <View style={styles.receiptContainer}>
-              {/*More flight information*/}
-              <View style={styles.textRow}>
-                <Text style={styles.receiptTextLeft}>{i18n.t("FLIGHT")}</Text>
-                {/* Departure to Arrival */}
-                {tripIndex == 1 && (
-                  <Text style={styles.receiptTextRight}>
-                    {depCityName} &#10230; {arrCityName}
-                  </Text>
-                )}
-                {tripIndex == 2 && (
-                  <Text style={styles.receiptTextRight}>
-                    {depCityName} &#10231; {arrCityName}
-                  </Text>
-                )}
-              </View>
-              <View style={styles.textRow}>
-                <Text style={styles.receiptTextLeft}>{i18n.t("DISTANCE")}</Text>
-                {/*Distance of flight*/}
-                <Text style={styles.receiptTextRight}>
-                  {distanceTraveled * this.state.tripIndex} km
-                </Text>
-              </View>
-              <View style={styles.textRow}>
-                <Text style={styles.receiptTextLeft}>{i18n.t("AIRPLANE")}</Text>
-                {/*Type of plane*/}
-                <Text style={styles.receiptTextRight}>
-                  {planeMake} {planeModel}
-                </Text>
-              </View>
-              <View style={styles.textRow}>
-                <Text style={styles.receiptTextLeft}>{i18n.t("CLASS")}</Text>
-                {/*Class of seat*/}
-                <Text style={styles.receiptTextRight}>{seatIndex}</Text>
-              </View>
-            </View>
-            {/*Navigate to next screen*/}
+
+          {/* Tabs */}
+          <View style={styles.midInnerView}>
+            {/* Economy */}
             <TouchableOpacity
-              style={styles.bottomGreenButton}
-              onPress={() =>
-                this.props.navigation.navigate("CheckoutWithFlight", {
-                  tripIndex: tripIndex,
-                  depCityName: depCityName,
-                  arrCityName: arrCityName,
-                  distance: distanceTraveled * this.state.tripIndex,
-                  footprint: carbonEmissions,
-                  planeMake: planeMake,
-                  planeModel: planeModel,
-                  seatState: seatIndex,
-                  flightChars: flightChars,
-                  flightNums: flightNums,
-                })
-              }>
-              <Text style={styles.buttonText}>
-                {i18n.t("CALCULATE CARBON FOOTPRINT")}
-              </Text>
+              onPress={() => this.setState({ seatIndex: "Economy" })}>
+              <Text>{"ECONOMY".toUpperCase()}</Text>
+            </TouchableOpacity>
+
+            {/* Bussiness */}
+            <TouchableOpacity
+              onPress={() => this.setState({ seatIndex: "Business" })}>
+              <Text>{"Business".toUpperCase()}</Text>
+            </TouchableOpacity>
+
+            {/* First Class  */}
+            <TouchableOpacity
+              onPress={() => this.setState({ seatIndex: "First Class" })}>
+              <Text>{"FIRSTCLASS".toUpperCase()}</Text>
             </TouchableOpacity>
           </View>
-          <MenuBar navigation={this.props.navigation} />
+          <View style={styles.bottomInnerView}>
+            <Text>Hello</Text>
+          </View>
         </View>
-      );
-    }
+        <MenuBar navigation={this.props.navigation} />
+      </SafeAreaView>
+    );
   }
 }
 
-const { width, height } = Dimensions.get("screen");
-
 const styles = StyleSheet.create({
-  containerLoading: {
+  backDrop: {
+    flex: 1,
+    flexDirection: "row",
+    backgroundColor: COLORS.sandy,
+  },
+  innerView: {
     flex: 1,
     flexDirection: "column",
-    justifyContent: "center",
-    height: height,
-    width: width,
-    backgroundColor: COLORS.white,
+    marginLeft: Math.round(moderateScale(105, 0.625)),
+    marginRight: Math.round(moderateScale(20, 0.0625)),
+    marginBottom: Math.round(moderateScale(15, 0.0625)),
+    marginTop: Math.round(moderateScale(20, 0.0625)),
   },
-  loadingIcon: {
-    color: COLORS.lightblue,
-    fontSize: 120,
-    textAlign: "center",
+  topInnerView: {
+    flex: 4 / 10,
+    backgroundColor: "red",
   },
-  loadingText: {
-    marginTop: "5%",
-    fontFamily: "Montserrat-bold",
-    fontSize: 12,
-    color: COLORS.lightblue,
-    textAlign: "center",
-  },
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: COLORS.white,
-    height: height,
-    width: width,
-  },
-  containerTop: {
-    paddingLeft: width * 0.05,
-    paddingRight: width * 0.05,
-    paddingTop: height * 0.06,
-    marginBottom: height * 0.1,
-    backgroundColor: COLORS.white,
-  },
-  buttonBarNav: {
+  midInnerView: {
+    flex: 1 / 15,
     flexDirection: "row",
-    height: height * 0.05,
-    justifyContent: "space-between",
-    marginBottom: height * 0.05,
-  },
-  buttonBarTop: {
-    flexDirection: "row",
-    height: height * 0.04,
-    justifyContent: "center",
-    width: "66%",
-  },
-  buttonBarBottom: {
-    flexDirection: "row",
-    height: height * 0.04,
-    justifyContent: "center",
-  },
-  leftGreenButton: {
-    borderTopLeftRadius: 5,
-    borderBottomLeftRadius: 5,
-    marginRight: 3,
-    backgroundColor: COLORS.lightgreen,
-    flex: 1,
-    justifyContent: "center",
     alignItems: "center",
-  },
-  middleGreenButton: {
-    backgroundColor: COLORS.lightgreen,
-    marginRight: 3,
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  rightGreenButton: {
-    borderTopRightRadius: 5,
-    borderBottomRightRadius: 5,
-    backgroundColor: COLORS.lightgreen,
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  planeInfoText: {
-    paddingBottom: height * 0.03,
-  },
-  smallBlueText: {
-    marginTop: "5%",
-    fontFamily: "Montserrat",
-    fontSize: 12,
-    color: COLORS.lightblue,
-  },
-  bigBlueText: {
-    fontFamily: "Montserrat-bold",
-    fontSize: 30,
-    color: COLORS.lightblue,
-  },
-  midGreyText: {
-    fontFamily: "Montserrat",
-    fontSize: 15,
-    color: COLORS.darkgrey,
-  },
-  bottomGreenButton: {
+    justifyContent: "space-evenly",
     borderRadius: 10,
-    backgroundColor: COLORS.lightgreen,
-    height: height * 0.08,
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: "blue",
   },
-  buttonText: {
-    fontFamily: "Montserrat-bold",
-    color: COLORS.darkgrey,
-    fontSize: 12,
-  },
-  receiptContainer: {
-    marginBottom: height * 0.1125,
-  },
-  receiptTextLeft: {
-    fontFamily: "Montserrat",
-    color: COLORS.darkgrey,
-    fontSize: 12,
-  },
-  receiptTextRight: {
-    fontFamily: "Montserrat-bold",
-    color: COLORS.darkgrey,
-    fontSize: 12,
-  },
-  dashedLine: {
-    width: "100%",
-    height: 1,
-    marginTop: height * 0.02,
-    marginBottom: height * 0.02,
-  },
-  textRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: height * 0.02,
-  },
-  navigationIcon: {
-    color: COLORS.grey,
-    fontSize: 30,
+  bottomInnerView: {
+    flex: 5 / 10,
+    backgroundColor: "green",
   },
 });
