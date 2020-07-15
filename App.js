@@ -30,7 +30,6 @@ import UserProfileScreen from "./src/components/user/UserProfileScreen";
 
 // FlightStack
 import FlightInfoScreen from "./src/components/main/flight/FlightInfoScreen";
-import CarbonEmissionsScreen from "./src/components/main/flight/CarbonEmissionsScreen";
 import CheckoutWithFlightScreen from "./src/components/main/flight/CheckoutWithFlightScreen";
 import ReceiptWithFlightScreen from "./src/components/main/flight/ReceiptWithFlightScreen";
 
@@ -124,7 +123,6 @@ const SettingsStackNavigator = createStackNavigator(
 const FlightStackNavigator = createStackNavigator(
   {
     FlightInfo: FlightInfoScreen,
-    CarbonEmissions: CarbonEmissionsScreen,
     CheckoutWithFlight: CheckoutWithFlightScreen,
     ReceiptWithFlight: ReceiptWithFlightScreen,
   },
