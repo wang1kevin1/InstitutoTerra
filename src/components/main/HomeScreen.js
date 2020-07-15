@@ -145,6 +145,7 @@ export default class HomeScreen extends React.Component {
 
   render() {
     return (
+      <View style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : null}
@@ -175,6 +176,7 @@ export default class HomeScreen extends React.Component {
                     <MaterialCommunityIcons
                       name="chevron-double-right"
                       style={styles.chevronIcon}
+                      onPress={() => this.props.navigation.navigate("CheckoutWithoutFlight")}
                     />
                   </Text>
                 </View>
@@ -213,11 +215,10 @@ export default class HomeScreen extends React.Component {
               </View>
             </View>
           </ImageBackground>
-          <MenuBar navigation={this.props.navigation} />      
-            <MenuBar navigation={this.props.navigation} />
-          <MenuBar navigation={this.props.navigation} />      
         </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+        <MenuBar navigation={this.props.navigation}/>      
+      </View>
     );
   }
 }
