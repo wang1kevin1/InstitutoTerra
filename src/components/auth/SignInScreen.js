@@ -20,7 +20,7 @@ import {
   Input
 } from 'native-base'
 
-import { Ionicons } from '@expo/vector-icons'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import COLORS from '../../assets/Colors.js'
 
@@ -29,7 +29,8 @@ import Auth from '@aws-amplify/auth'
 import MenuBar from '../main/MenuBar'
 
 import i18n from 'i18n-js'
-import { BorderlessButton } from 'react-native-gesture-handler';
+
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 
 export default class SignInScreen extends React.Component {
   state = {
@@ -116,7 +117,8 @@ export default class SignInScreen extends React.Component {
                       onPress={() => this.props.navigation.navigate('SignUp')}
                       style={styles.buttonText2link}>Crie uma conta 
                     </Text>
-                    {" "}»
+                    {" "}
+                    <MaterialCommunityIcons name = 'chevron-double-right'/>
                   </Text>
                   {/* Forgot Password Text */}
                   <Text style={styles.buttonText2}>Esqueceu sua senha?{" "}
@@ -124,7 +126,8 @@ export default class SignInScreen extends React.Component {
                       onPress={() => this.props.navigation.navigate('ForgotPassword')}
                       style={styles.buttonText2link}>Recupere aqui
                     </Text>
-                    {" "}»
+                    {" "}
+                    <MaterialCommunityIcons name = 'chevron-double-right'/>
                   </Text>
                   {/* Loading ActivityIndicator */}
                 </View>  
@@ -178,7 +181,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     flexDirection: 'column',
-    paddingHorizontal: 5,
+    paddingHorizontal: Math.round(moderateScale(5, 0.625)),
   },
 
   container2: {
@@ -190,7 +193,7 @@ const styles = StyleSheet.create({
 
   input: {
     flex: 1,
-    fontSize: 20,
+    fontSize: Math.round(scale(18, 0.00125)),
     fontWeight: 'normal',
     color: COLORS.forestgreen,
   },
@@ -203,11 +206,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: Math.round(moderateScale(10, 0.625)),
     backgroundColor: 'transparent',
   },
   itemStyle: {
-    marginBottom: 20,
+    marginBottom: Math.round(verticalScale(20)),
     backgroundColor: 'transparent',
     borderBottomColor: COLORS.forestgreen,
     borderBottomWidth: 1,
@@ -220,26 +223,26 @@ const styles = StyleSheet.create({
     width: width*.65,
     height: width*.2,
     borderRadius: 10,
-    marginBottom: 30,
+    marginBottom: Math.round(verticalScale(30)),
   },
 
   buttonText1: {
-    fontSize: 22,
+    fontSize: Math.round(scale(20, 0.00125)),
     fontWeight: 'bold',
     fontFamily: 'Poppins',
     color: COLORS.white,
   },
 
   buttonText2: {
-    fontSize: 14,
+    fontSize: Math.round(scale(12, 0.00125)),
     fontWeight: 'normal',
     color: COLORS.forestgreen,
     fontFamily: 'Poppins',
-    marginBottom: 5,
+    marginBottom: Math.round(verticalScale(5)),
   },
 
   buttonText2link: {
-    fontSize: 14,
+    fontSize: Math.round(scale(12, 0.00125)),
     fontWeight: 'bold',
     textDecorationLine: 'underline',
     color: COLORS.forestgreen,
