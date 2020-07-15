@@ -213,6 +213,7 @@ const styles = StyleSheet.create({
     fontSize: Math.round(scale(18, 0.00125)),
     fontWeight: 'normal',
     color: COLORS.forestgreen,
+    fontFamily: 'Poppins'
   },
 
   infoContainer: {
