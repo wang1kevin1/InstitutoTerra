@@ -332,6 +332,22 @@ export default class FlightInfoScreen extends React.Component {
     });
   }
 
+  handleTabStyle(clss) {
+    let style =
+      this.state.seatIndex == clss
+        ? styles.tabButtonActive
+        : styles.tabButtonInActive;
+    return style;
+  }
+
+  handleTabText(clss) {
+    let style =
+      this.state.seatIndex == clss
+        ? styles.tabTextActive
+        : styles.tabTextInActive;
+    return style;
+  }
+
   handleActiveSeat() {
     if (this.state.seatActive) {
       this.setState({ seatActive: false });
@@ -386,39 +402,27 @@ export default class FlightInfoScreen extends React.Component {
               <View style={styles.midInnerView}>
                 {/* Economy */}
                 <TouchableOpacity
-                  style={
-                    this.state.seatIndex == "Economy"
-                      ? styles.tabButtonActive
-                      : styles.tabButtonInActive
-                  }
+                  style={this.handleTabStyle("Economy")}
                   onPress={() => this.handleFlightClass("Economy")}>
-                  <Text style={styles.tabTextActive}>
+                  <Text style={this.handleTabText("Economy")}>
                     {"Economy".toUpperCase()}
                   </Text>
                 </TouchableOpacity>
 
                 {/* Business */}
                 <TouchableOpacity
-                  style={
-                    this.state.seatIndex == "Business"
-                      ? styles.tabButtonActive
-                      : styles.tabButtonInActive
-                  }
+                  style={this.handleTabStyle("Business")}
                   onPress={() => this.handleFlightClass("Business")}>
-                  <Text style={styles.tabTextActive}>
+                  <Text style={this.handleTabText("Business")}>
                     {"Business".toUpperCase()}
                   </Text>
                 </TouchableOpacity>
 
                 {/* First Class  */}
                 <TouchableOpacity
-                  style={
-                    this.state.seatIndex == "First"
-                      ? styles.tabButtonActive
-                      : styles.tabButtonInActive
-                  }
+                  style={this.handleTabStyle("First")}
                   onPress={() => this.handleFlightClass("First")}>
-                  <Text style={styles.tabTextActive}>
+                  <Text style={this.handleTabText("First")}>
                     {"First".toUpperCase()}
                   </Text>
                 </TouchableOpacity>
