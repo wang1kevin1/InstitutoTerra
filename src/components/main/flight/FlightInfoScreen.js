@@ -7,16 +7,20 @@ import {
   Dimensions,
   TouchableOpacity,
   ActivityIndicator,
+  ImageBackground,
   SafeAreaView,
 } from "react-native";
 
-import { verticalScale, moderateScale } from "react-native-size-matters";
+import { scale, verticalScale, moderateScale } from "react-native-size-matters";
 import { Ionicons, FontAwesome, Feather } from "@expo/vector-icons";
+import { Button, Segment } from "native-base";
 import * as CONSTANTS from "../../utilities/Constants.js";
 import COLORS from "../../../assets/Colors.js";
 import Auth from "@aws-amplify/auth";
 import MenuBar from "../MenuBar.js";
 import i18n from "i18n-js";
+
+const background_image = require("../../../assets/background/flightInfo/bg_flightInfo.png");
 
 export default class FlightInfoScreen extends React.Component {
   state = {
@@ -27,6 +31,11 @@ export default class FlightInfoScreen extends React.Component {
     tripIndex: 1,
   };
 
+  constructor(props) {
+    super(props);
+    this.background = background_image;
+  }
+
   componentDidMount = () => {
     this.checkAuth();
     this.getFlight();
@@ -36,11 +45,11 @@ export default class FlightInfoScreen extends React.Component {
   async checkAuth() {
     await Auth.currentAuthenticatedUser({ bypassCache: true })
       .then(() => {
-        console.log("A user is logged in");
+        // console.log("A user is logged in");
         this.setState({ isAuthenticated: true });
       })
       .catch((err) => {
-        console.log("Nobody is logged in");
+        // console.log("Nobody is logged in");
         this.setState({ isAuthenticated: false });
       });
   }
@@ -154,8 +163,9 @@ export default class FlightInfoScreen extends React.Component {
       Promise.all([arrAirportCall, depAirportCall, planeCall, airlineCall])
         .then((values) => Promise.all(values.map((value) => value.json())))
         .then((response) => {
-          console.log(response[2][0]);
-          console.log(response[1][0]);
+          // console.log(response[2][0]);
+          // console.log(response[1][0]);
+          console.log(`Response 0: \n${response}`);
           let makeArray = response[2][0].productionLine.split(" ");
           this.setState({
             arrCityIata: response[0][0].codeIataCity,
@@ -168,7 +178,7 @@ export default class FlightInfoScreen extends React.Component {
             planeMake: makeArray[0],
             airlineName: response[3][0].nameAirline,
           });
-          console.log(this.state.planeMake);
+          // console.log(this.state.planeMake);
           this.getDistance();
           return [this.state.arrCityIata, this.state.depCityIata];
         })
@@ -193,7 +203,8 @@ export default class FlightInfoScreen extends React.Component {
       Promise.all([arrAirportCall, depAirportCall, airlineCall])
         .then((values) => Promise.all(values.map((value) => value.json())))
         .then((response) => {
-          console.log(response[1][0]);
+          // console.log(response[1][0]);
+          // console.log(`Response 1: \n${response}`);
           this.setState({
             arrCityIata: response[0][0].codeIataCity,
             arrLat: response[0][0].latitudeAirport,
@@ -205,7 +216,7 @@ export default class FlightInfoScreen extends React.Component {
             planeMake: "",
             airlineName: response[2][0].nameAirline,
           });
-          console.log(this.state.planeMake);
+          // console.log(this.state.planeMake);
           this.getDistance();
           return [this.state.arrCityIata, this.state.depCityIata];
         })
@@ -254,13 +265,13 @@ export default class FlightInfoScreen extends React.Component {
         Math.sin(longDiff / 2) *
         Math.cos(latArr) *
         Math.cos(latDep);
-    console.log(a);
+    // console.log(a);
 
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    console.log(c);
+    // console.log(c);
     let d = earthRad * c;
     d = d.toFixed(2);
-    console.log(d);
+    // console.log(d);
     this.setState({
       distanceTraveled: d,
     });
@@ -270,7 +281,7 @@ export default class FlightInfoScreen extends React.Component {
   calcEmissions() {
     let dist = this.state.distanceTraveled;
     let seat = this.state.distanceTraveled;
-    console.log(seat);
+    // console.log(seat);
     //Short Flight
     if (dist < 500) {
       dist *= CONSTANTS.CARBON_MULTIPLIERS.short;
@@ -294,25 +305,39 @@ export default class FlightInfoScreen extends React.Component {
       //Economy Seat
       if (this.state.seatIndex == "Economy") {
         dist *= CONSTANTS.CARBON_MULTIPLIERS.long_economy;
-        console.log("Economy Long");
-        console.log(dist);
+        // console.log("Economy Long");
+        // console.log(dist);
       }
       //Business Seat
       else if (this.state.seatIndex == "Business") {
         dist *= CONSTANTS.CARBON_MULTIPLIERS.long_business;
-        console.log("Business Long");
-        console.log(dist);
+        // console.log("Business Long");
+        // console.log(dist);
       }
       //First Class Seat
       else if (this.state.seatIndex == "First Class") {
         dist *= CONSTANTS.CARBON_MULTIPLIERS.long_first;
-        console.log("First Class Long");
-        console.log(dist);
+        // console.log("First Class Long");
+        // console.log(dist);
       }
     }
     var emissions = Math.round(dist);
     emissions /= 1000;
     return emissions;
+  }
+
+  handleFlightClass(clss) {
+    this.setState({
+      seatIndex: clss,
+    });
+  }
+
+  handleActiveSeat() {
+    if (this.state.seatActive) {
+      this.setState({ seatActive: false });
+    } else {
+      this.setState({ seatActive: true });
+    }
   }
 
   render() {
@@ -321,6 +346,8 @@ export default class FlightInfoScreen extends React.Component {
       flightChars,
       flightNums,
       tripIndex,
+      arrivalIata,
+      departureIata,
       arrCityName,
       depCityName,
       arrCityIata,
@@ -334,48 +361,90 @@ export default class FlightInfoScreen extends React.Component {
 
     const carbonEmissions = this.calcEmissions();
 
-    return (
-      <SafeAreaView style={styles.backDrop}>
-        <View style={styles.innerView}>
-          <View style={styles.topInnerView}>
-            <Text>Hello</Text>
-          </View>
+    if (!isReady) {
+      return <Text>Loading</Text>;
+    } else {
+      return (
+        <ImageBackground
+          source={this.background}
+          style={styles.background_image}>
+          <SafeAreaView style={styles.backDrop}>
+            <View style={styles.innerView}>
+              <View style={styles.topInnerView}>
+                <Text>Flight Number</Text>
+                <Text>
+                  {flightChars}
+                  {flightNums}
+                </Text>
+                <Text>
+                  {depCityName} ({depCityIata}) to {arrCityName} ({arrCityIata}){" "}
+                  via {airlineName}{" "}
+                </Text>
+              </View>
 
-          {/* Tabs */}
-          <View style={styles.midInnerView}>
-            {/* Economy */}
-            <TouchableOpacity
-              onPress={() => this.setState({ seatIndex: "Economy" })}>
-              <Text>{"ECONOMY".toUpperCase()}</Text>
-            </TouchableOpacity>
+              {/* Tabs */}
+              <View style={styles.midInnerView}>
+                {/* Economy */}
+                <TouchableOpacity
+                  style={
+                    this.state.seatIndex == "Economy"
+                      ? styles.tabButtonActive
+                      : styles.tabButtonInActive
+                  }
+                  onPress={() => this.handleFlightClass("Economy")}>
+                  <Text style={styles.tabTextActive}>
+                    {"Economy".toUpperCase()}
+                  </Text>
+                </TouchableOpacity>
 
-            {/* Bussiness */}
-            <TouchableOpacity
-              onPress={() => this.setState({ seatIndex: "Business" })}>
-              <Text>{"Business".toUpperCase()}</Text>
-            </TouchableOpacity>
+                {/* Business */}
+                <TouchableOpacity
+                  style={
+                    this.state.seatIndex == "Business"
+                      ? styles.tabButtonActive
+                      : styles.tabButtonInActive
+                  }
+                  onPress={() => this.handleFlightClass("Business")}>
+                  <Text style={styles.tabTextActive}>
+                    {"Business".toUpperCase()}
+                  </Text>
+                </TouchableOpacity>
 
-            {/* First Class  */}
-            <TouchableOpacity
-              onPress={() => this.setState({ seatIndex: "First Class" })}>
-              <Text>{"FIRSTCLASS".toUpperCase()}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.bottomInnerView}>
-            <Text>Hello</Text>
-          </View>
-        </View>
-        <MenuBar navigation={this.props.navigation} />
-      </SafeAreaView>
-    );
+                {/* First Class  */}
+                <TouchableOpacity
+                  style={
+                    this.state.seatIndex == "First"
+                      ? styles.tabButtonActive
+                      : styles.tabButtonInActive
+                  }
+                  onPress={() => this.handleFlightClass("First")}>
+                  <Text style={styles.tabTextActive}>
+                    {"First".toUpperCase()}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.bottomInnerView}>
+                <Text>Hello</Text>
+              </View>
+            </View>
+            <MenuBar navigation={this.props.navigation} />
+          </SafeAreaView>
+        </ImageBackground>
+      );
+    }
   }
 }
 
 const styles = StyleSheet.create({
+  background_image: {
+    flex: 1,
+    backgroundColor: COLORS.black,
+  },
   backDrop: {
     flex: 1,
     flexDirection: "row",
-    backgroundColor: COLORS.sandy,
+    backgroundColor: "transparent",
   },
   innerView: {
     flex: 1,
@@ -390,12 +459,34 @@ const styles = StyleSheet.create({
     backgroundColor: "red",
   },
   midInnerView: {
-    flex: 1 / 15,
+    flex: 1 / 20,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-evenly",
     borderRadius: 10,
-    backgroundColor: "blue",
+    backgroundColor: COLORS.lightSandy,
+  },
+  tabTextActive: {
+    color: COLORS.forestgreen,
+    textAlign: "center",
+    fontSize: Math.round(moderateScale(12, 0.3)),
+  },
+  tabButtonActive: {
+    flex: 1,
+    height: "100%",
+    justifyContent: "center",
+    backgroundColor: COLORS.opaqueForestGreen,
+  },
+  tabTextInActive: {
+    color: COLORS.opaqueForestGreen,
+    textAlign: "center",
+    fontSize: Math.round(moderateScale(12, 0.3)),
+  },
+  tabButtonInActive: {
+    flex: 1,
+    height: "100%",
+    justifyContent: "center",
+    backgroundColor: "transparent",
   },
   bottomInnerView: {
     flex: 5 / 10,
