@@ -171,13 +171,12 @@ export default class HomeScreen extends React.Component {
                       style={styles.linkWhiteText}
                       onPress={() => this.props.navigation.navigate("CheckoutWithoutFlight")}>
                       doe sem número de vôo
-                    </Text>
-                    {" "}
                     <MaterialCommunityIcons
                       name="chevron-double-right"
                       style={styles.chevronIcon}
-                      onPress={() => this.props.navigation.navigate("CheckoutWithoutFlight")}
-                    />
+                      />
+                  </Text>
+                  
                   </Text>
                 </View>
                 <View style={styles.searchContainer}>

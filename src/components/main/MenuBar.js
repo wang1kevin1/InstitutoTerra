@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     container: {
         position: "absolute",
         left: 0,
-        bottom: 0,
+        top: 0,
         height: height,
         width: width * 0.25,
         alignItems: "center",
