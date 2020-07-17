@@ -1,80 +1,49 @@
-import React from 'react'
-
+import React from "react";
 import {
   View,
   Text,
   StyleSheet,
-  Dimensions,
   TouchableOpacity,
-} from 'react-native'
+  Keyboard,
+  Image,
+  SafeAreaView,
+} from "react-native";
+import { verticalScale, moderateScale } from "react-native-size-matters";
+import { List, ListItem, Left, Right } from "native-base";
+import COLORS from "../../../assets/Colors.js";
+import MenuBar from "../MenuBar.js";
+import Auth from "@aws-amplify/auth";
+import i18n from "i18n-js";
 
-import { Ionicons, FontAwesome } from '@expo/vector-icons';
-
-import Dash from 'react-native-dash';
-
-import COLORS from '../../../assets/Colors.js';
-
-import MenuBar from '../MenuBar.js';
-
-import Auth from '@aws-amplify/auth';
-
-import i18n from 'i18n-js'
+const leaf = require("../../../assets/images/img_receipt_leaf.png");
 
 export default class ReceiptWithFlightScreen extends React.Component {
   state = {
-    isAuthenticated: 'false',
     data: [],
-  }
+  };
 
   componentDidMount = () => {
     //set state parameters
     this.setState({
-      tripIndex: this.props.navigation.getParam('tripIndex', 'tripIndex'),
-      depCityName: this.props.navigation.getParam('depCityName', 'departureCity'),
-      arrCityName: this.props.navigation.getParam('arrCityName', 'arrivalCity'),
-      footprint: this.props.navigation.getParam('footprint', 'carbonEmissions'),
-      treeNum: this.props.navigation.getParam('treeNum', 'treeNum'),
-      years: this.props.navigation.getParam('years', 'years'),
-      total_cost: this.props.navigation.getParam('total_cost', 'total_cost'),
-      flightChars: this.props.navigation.getParam('flightChars', 'chars'),
-      flightNums: this.props.navigation.getParam('flightNums', 'nums'),
-    })
-    this.checkAuth()
-  }
-
-  // Checks if a user is logged in
-  async checkAuth() {
-    await Auth.currentAuthenticatedUser({ bypassCache: true })
-      .then(() => {
-        console.log('A user is logged in')
-        this.setState({ isAuthenticated: true })
-      })
-      .catch(err => {
-        console.log('Nobody is logged in')
-        this.setState({ isAuthenticated: false })
-      })
-  }
-
-  // Sends user to sign up or profile depending on Auth state
-  handleUserRedirect() {
-    if (this.state.isAuthenticated) {
-      this.props.navigation.navigate('UserProfile')
-    } else {
-      this.props.navigation.navigate('SignIn')
-    }
-  }
+      distance: this.props.navigation.getParam("distance", "distanceTraveled"),
+      footprint: this.props.navigation.getParam("footprint", "carbonEmissions"),
+      treeNum: this.props.navigation.getParam("treeNum", "treeNum"),
+      years: this.props.navigation.getParam("years", "years"),
+      total_cost: this.props.navigation.getParam("total_cost", "total_cost"),
+      flightChars: this.props.navigation.getParam("flightChars", "chars"),
+      flightNums: this.props.navigation.getParam("flightNums", "nums"),
+    });
+  };
 
   handleStripePayment() {
-    this.props.navigation.navigate('Payment', {
+    this.props.navigation.navigate("Payment", {
       treeNum: this.state.treeNum,
-    })
+    });
   }
 
   render() {
     const {
-      tripIndex,
-      depCityName,
-      arrCityName,
+      distance,
       footprint,
       treeNum,
       years,
@@ -82,151 +51,163 @@ export default class ReceiptWithFlightScreen extends React.Component {
       flightChars,
       flightNums,
     } = this.state;
-
     return (
-      <View style={styles.container}>
-        <View style={styles.containerTop}>
-          <View style={styles.buttonBarNav}>
-            {/*Navigation Buttons*/}
-            <Ionicons style={styles.navigationIcon} name="md-arrow-back"
-              onPress={() => this.props.navigation.goBack()} />
-            <Text style={styles.flightBlueText}>{i18n.t('FLIGHT')} {flightChars} {flightNums}</Text>
-            <FontAwesome style={styles.navigationIcon} name="user-circle-o"
-              onPress={() => this.handleUserRedirect()} />
+      <SafeAreaView style={styles.backDrop}>
+        <View style={styles.innerView}>
+          <View style={styles.topInnerView}>
+            <Text style={styles.flightNumberLabel}>
+              Flight Number {""}
+              <Text style={{ fontFamily: "Poppins-bold" }}>
+                {flightChars} {flightNums}
+              </Text>
+            </Text>
+            <Text style={styles.header}>
+              The first step was taken. The rest is up to us!
+            </Text>
+            <Image source={leaf} style={styles.leaf_img} />
           </View>
-          <View style={styles.receiptContainer}>
-            <View style={styles.textRow}>
-              {/*Route*/}
-              <Text style={styles.receiptTextLeft}>{i18n.t('ROUTE')}</Text>
-              {/* Departure to Arrival */}
-              {tripIndex == 1 &&
-                <Text style={styles.receiptTextRight}>{depCityName} &#10230; {arrCityName}</Text>
-              }
-              {tripIndex == 2 &&
-                <Text style={styles.receiptTextRight}>{depCityName} &#10231; {arrCityName}</Text>
-              }
-            </View>
-            <Dash style={styles.dashedLine} dashColor={COLORS.lightgrey} dashGap={0} />
-            <View style={styles.textRow}>
-              {/*Carbon Footprints*/}
-              <Text style={styles.receiptTextLeft}>{i18n.t('CARBON FOOTPRINT (METRIC TONS)')}</Text>
-              <Text style={styles.receiptTextRight}>{footprint}</Text>
-            </View>
-            <Dash style={styles.dashedLine} dashColor={COLORS.lightgrey} dashGap={0} />
-            <View style={styles.textRow}>
-              {/*Total trees donated in transaction*/}
-              <Text style={styles.receiptTextLeft}>{i18n.t('TOTAL TREES')}</Text>
-              <Text style={styles.receiptTextRight}>{treeNum}</Text>
-            </View>
-            <Dash style={styles.dashedLine} dashColor={COLORS.lightgrey} dashGap={0} />
-            <View style={styles.textRow}>
-              {/*Years to neutralize*/}
-              <Text style={styles.receiptTextLeft}>{i18n.t('YEARS TO COMPENSATE')}</Text>
-              <Text style={styles.receiptTextRight}>{years}</Text>
-            </View>
-            <Dash style={styles.dashedLine} dashColor={COLORS.lightgrey} dashGap={0} />
-            <View style={styles.textRow}>
-              {/*Cost of transaction*/}
-              <Text style={styles.receiptTextLeft}>{i18n.t('PRICE')}</Text>
-              <Text style={styles.receiptTextRight}>${total_cost}</Text>
-            </View>
+          <View style={styles.bottomInnerView}>
+            <List>
+              {/* Flight Distance */}
+              <ListItem>
+                <Left>
+                  <Text style={styles.itemTitle}>Flight Distance (km)</Text>
+                </Left>
+                <Right>
+                  <Text style={styles.itemValue}>{distance}</Text>
+                </Right>
+              </ListItem>
+              {/* Carbon FootPrint */}
+              <ListItem>
+                <Left>
+                  <Text style={styles.itemTitle}>
+                    Carbon Footprint{"\n"}(Metric Tons)
+                  </Text>
+                </Left>
+                <Right>
+                  <Text style={styles.itemValue}>{footprint}</Text>
+                </Right>
+              </ListItem>
+              {/* Number of planted Trees */}
+              <ListItem>
+                <Left>
+                  <Text style={styles.itemTitle}>Planted Trees</Text>
+                </Left>
+                <Right>
+                  <Text style={styles.itemValue}>{treeNum}</Text>
+                </Right>
+              </ListItem>
+              {/* Years To Compensation*/}
+              <ListItem>
+                <Left>
+                  <Text style={styles.itemTitle}>Years to Compensate</Text>
+                </Left>
+                <Right>
+                  <Text style={styles.itemValue}>{years}</Text>
+                </Right>
+              </ListItem>
+              {/* Donation Amount */}
+              <ListItem>
+                <Left>
+                  <Text style={styles.itemTitle}>Donation Amount</Text>
+                </Left>
+                <Right>
+                  <Text style={styles.itemValue}>${total_cost}</Text>
+                </Right>
+              </ListItem>
+            </List>
+            {/* Pay With Stripe Button */}
+            <TouchableOpacity
+              onPress={() => this.handleStripePayment()}
+              disabled={this.state.isLoading}
+              style={styles.submitButton}>
+              <Text style={styles.submitLabel}>Pay With Stripe</Text>
+            </TouchableOpacity>
           </View>
-          {/*Navigate to checkout page*/}
-          <TouchableOpacity
-            style={styles.bottomGreenButton}
-            onPress={() => this.handleStripePayment()}>
-            <View style={styles.alignText}>
-              <Text style={styles.buttonText}>{i18n.t('PAY WITH')} </Text>
-              <Text style={styles.stripeText}> stripe</Text>
-            </View>
-          </TouchableOpacity>
         </View>
-        <MenuBar navigation={this.props.navigation}/>
-      </View>
-    )
+        <MenuBar navigation={this.props.navigation} />
+      </SafeAreaView>
+    );
   }
 }
 
-const { width, height } = Dimensions.get('screen');
-
 const styles = StyleSheet.create({
-  container: {
+  backDrop: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: COLORS.white,
-    height: height,
-    width: width
+    flexDirection: "row",
+    backgroundColor: COLORS.sandy,
   },
-  containerTop: {
-    paddingLeft: width * 0.05,
-    paddingRight: width * 0.05,
-    paddingTop: height * 0.06,
-    marginBottom: height * 0.10,
-    backgroundColor: COLORS.white,
+  innerView: {
+    flex: 1,
+    flexDirection: "column",
+    marginLeft: Math.round(moderateScale(105, 0.625)),
+    marginRight: Math.round(moderateScale(20, 0.0625)),
+    marginBottom: Math.round(moderateScale(15, 0.0625)),
+    marginTop: Math.round(moderateScale(20, 0.0625)),
   },
-  buttonBarNav: {
-    flexDirection: 'row',
-    height: height * 0.05,
-    justifyContent: 'space-between',
+  topInnerView: {
+    flex: 1 / 2,
+    marginBottom: verticalScale(10),
   },
-  flightBlueText: {
-    fontFamily: 'Montserrat',
-    fontSize: 14,
-    color: COLORS.lightblue,
-    justifyContent: 'center',
-    alignItems: 'center',
-    lineHeight: 30
+  bottomInnerView: {
+    flex: 1 / 2,
+    marginTop: verticalScale(30),
   },
-  receiptContainer: {
-    paddingTop: height * 0.15,
-    paddingBottom: height * 0.18,
-    justifyContent: 'center',
+  flightNumberLabel: {
+    color: COLORS.forestgreen,
+    textAlign: "center",
+    fontFamily: "Poppins",
+    fontSize: Math.round(moderateScale(16, 0.0625)),
   },
-  dashedLine: {
-    width: '100%',
-    height: 1,
+  header: {
+    color: COLORS.forestgreen,
+    textAlign: "center",
+    fontFamily: "Poppins-bold",
+    fontSize: Math.round(moderateScale(18, 0.0625)),
+    marginTop: Math.round(verticalScale(20)),
   },
-  textRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: height * 0.02,
-    marginBottom: height * 0.02
+  leaf_img: {
+    width: "100%",
+    height: 250,
+    resizeMode: "contain",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 30,
+    },
+    shadowOpacity: 0.53,
+    shadowRadius: 20,
   },
-  receiptTextLeft: {
-    fontFamily: 'Montserrat',
-    color: COLORS.darkgrey,
-    fontSize: 12
+  itemTitle: {
+    color: COLORS.forestgreen,
+    fontSize: Math.round(moderateScale(11, 0.125)),
+    fontFamily: "Poppins",
   },
-  receiptTextRight: {
-    fontFamily: 'Montserrat-bold',
-    color: COLORS.darkgrey,
-    fontSize: 12
+  itemValue: {
+    color: COLORS.forestgreen,
+    fontSize: Math.round(moderateScale(11, 0.125)),
+    fontFamily: "Poppins-bold",
   },
-  alignText: {
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  bottomGreenButton: {
+  submitButton: {
+    alignItems: "center",
     borderRadius: 10,
-    backgroundColor: COLORS.lightgreen,
-    height: height * 0.08,
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: Math.round(verticalScale(10)),
+    marginTop: Math.round(verticalScale(20)),
+    backgroundColor: COLORS.forestgreen,
   },
-  buttonText: {
-    fontFamily: 'Montserrat-bold',
-    color: COLORS.darkgrey,
-    fontSize: 12
+  loading: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
   },
-  stripeText: {
-    fontFamily: 'Fago-black',
-    color: COLORS.darkgrey,
-    fontSize: 18,
-    lineHeight: 18
-  },
-  navigationIcon: {
-    color: COLORS.grey,
-    fontSize: 30,
+  submitLabel: {
+    color: COLORS.sandy,
+    fontSize: Math.round(moderateScale(20, 0.05)),
+    padding: Math.round(moderateScale(10, 0.0125)),
+    fontFamily: "Poppins-bold",
   },
 });
-
