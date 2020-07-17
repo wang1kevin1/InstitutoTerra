@@ -168,15 +168,15 @@ const styles = StyleSheet.create({
   },
   leaf_img: {
     width: "100%",
-    height: 250,
+    height: verticalScale(250),
     resizeMode: "contain",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 30,
+      height: verticalScale(30),
     },
     shadowOpacity: 0.53,
-    shadowRadius: 20,
+    shadowRadius: verticalScale(20),
   },
   itemTitle: {
     color: COLORS.forestgreen,

@@ -3,8 +3,10 @@ import React from "react";
 import {
   View,
   Text,
+  Image,
   StyleSheet,
   Dimensions,
+  Switch,
   TouchableOpacity,
   ActivityIndicator,
   ImageBackground,
@@ -13,7 +15,6 @@ import {
 
 import { scale, verticalScale, moderateScale } from "react-native-size-matters";
 import { Ionicons, FontAwesome, Feather } from "@expo/vector-icons";
-import { Button, Segment } from "native-base";
 import * as CONSTANTS from "../../utilities/Constants.js";
 import COLORS from "../../../assets/Colors.js";
 import Auth from "@aws-amplify/auth";
@@ -21,6 +22,7 @@ import MenuBar from "../MenuBar.js";
 import i18n from "i18n-js";
 
 const background_image = require("../../../assets/background/flightInfo/bg_flightInfo.png");
+const plane_image = require("../../../assets/icons/ic_plane.png");
 
 export default class FlightInfoScreen extends React.Component {
   state = {
@@ -28,7 +30,7 @@ export default class FlightInfoScreen extends React.Component {
     iata: "",
     isReady: false,
     seatIndex: "Economy",
-    tripIndex: 1,
+    tripIndex: true,
   };
 
   constructor(props) {
@@ -171,9 +173,11 @@ export default class FlightInfoScreen extends React.Component {
             arrCityIata: response[0][0].codeIataCity,
             arrLat: response[0][0].latitudeAirport,
             arrLong: response[0][0].longitudeAirport,
+            arrAirportName: response[0][0].nameAirport,
             depCityIata: response[1][0].codeIataCity,
             depLat: response[1][0].latitudeAirport,
             depLong: response[1][0].longitudeAirport,
+            depAirportName: response[1][0].nameAirport,
             planeModel: response[2][0].planeModel,
             planeMake: makeArray[0],
             airlineName: response[3][0].nameAirline,
@@ -348,11 +352,11 @@ export default class FlightInfoScreen extends React.Component {
     return style;
   }
 
-  handleActiveSeat() {
-    if (this.state.seatActive) {
-      this.setState({ seatActive: false });
+  handleTripIndex() {
+    if (this.state.tripIndex) {
+      this.setState({ tripIndex: false });
     } else {
-      this.setState({ seatActive: true });
+      this.setState({ tripIndex: true });
     }
   }
 
@@ -364,6 +368,8 @@ export default class FlightInfoScreen extends React.Component {
       tripIndex,
       arrivalIata,
       departureIata,
+      arrAirportName,
+      depAirportName,
       arrCityName,
       depCityName,
       arrCityIata,
@@ -386,16 +392,53 @@ export default class FlightInfoScreen extends React.Component {
           style={styles.background_image}>
           <SafeAreaView style={styles.backDrop}>
             <View style={styles.innerView}>
+              {/* Flight Information */}
               <View style={styles.topInnerView}>
-                <Text>Flight Number</Text>
-                <Text>
-                  {flightChars}
-                  {flightNums}
-                </Text>
-                <Text>
-                  {depCityName} ({depCityIata}) to {arrCityName} ({arrCityIata}){" "}
-                  via {airlineName}{" "}
-                </Text>
+                <View>
+                  <Text style={styles.flightNumberLabel}>Flight Number</Text>
+                  <Text style={styles.flightNumberText}>
+                    {flightChars}
+                    {flightNums}
+                  </Text>
+                  <Text style={styles.flightInfoText}>
+                    {depCityName} ({depCityIata}) to {arrCityName} (
+                    {arrCityIata}) via {airlineName}{" "}
+                  </Text>
+                </View>
+
+                {/* Arrival Departure */}
+                <View style={styles.itineraryView}>
+                  <View style={styles.itineraryViewItem}>
+                    <Text style={styles.itineraryLabel}>{depAirportName}</Text>
+                    <Text style={styles.dataText}>{departureIata}</Text>
+                  </View>
+                  <Ionicons name={"ios-airplane"} style={styles.plane_icon} />
+                  <View style={styles.itineraryViewItem}>
+                    <View style={styles.fixFlex}>
+                      <Text style={styles.itineraryLabel}>
+                        {arrAirportName}
+                      </Text>
+                      <Text style={styles.dataText}>{arrivalIata}</Text>
+                    </View>
+                  </View>
+                </View>
+
+                {/* One Way or Two WAy*/}
+                <View style={styles.seatIndexView}>
+                  <View style={styles.seatIndexViewItem}>
+                    <Text style={styles.seatIndexLabel}>One Way</Text>
+                  </View>
+
+                  <Switch
+                    style={styles.seatIndexSwitch}
+                    onChange={() => this.handleTripIndex()}
+                    value={this.state.tripIndex}
+                  />
+
+                  <View style={styles.seatIndexViewItem}>
+                    <Text style={styles.seatIndexLabel}>Two Way</Text>
+                  </View>
+                </View>
               </View>
 
               {/* Tabs */}
@@ -428,8 +471,21 @@ export default class FlightInfoScreen extends React.Component {
                 </TouchableOpacity>
               </View>
 
+              {/* Distance and Carbon Emission */}
               <View style={styles.bottomInnerView}>
-                <Text>Hello</Text>
+                {/* Flight Distance */}
+                <Text style={styles.label}>Distance</Text>
+                <Text style={styles.dataText}>
+                  {distanceTraveled}{" "}
+                  <Text style={styles.unit_label}>{"km".toLowerCase()}</Text>
+                </Text>
+
+                {/* Carbon Emissions */}
+                <Text style={styles.label}>Carbon Emissions</Text>
+                <Text style={styles.dataText}>
+                  {carbonEmissions}{" "}
+                  <Text style={styles.unit_label}>Tons of CO2</Text>
+                </Text>
               </View>
             </View>
             <MenuBar navigation={this.props.navigation} />
@@ -458,12 +514,73 @@ const styles = StyleSheet.create({
     marginBottom: Math.round(moderateScale(15, 0.0625)),
     marginTop: Math.round(moderateScale(20, 0.0625)),
   },
+
+  // Top Inner View
   topInnerView: {
-    flex: 4 / 10,
+    flex: 1,
+    flexDirection: "column",
     backgroundColor: "red",
   },
+
+  flightNumberLabel: {
+    color: COLORS.lightSandy,
+    fontFamily: "Poppins",
+    fontSize: Math.round(moderateScale(16, 0.0625)),
+  },
+  flightNumberText: {
+    color: COLORS.lightSandy,
+    fontFamily: "Poppins-bold",
+    fontSize: Math.round(moderateScale(40, 0.0625)),
+  },
+  flightInfoText: {
+    color: COLORS.lightSandy,
+    fontFamily: "Poppins",
+    fontSize: Math.round(moderateScale(16, 0.0625)),
+  },
+
+  // itinerary View
+  itineraryView: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    marginTop: verticalScale(30),
+  },
+  itineraryLabel: {
+    color: COLORS.lightSandy,
+    textAlign: "center",
+    fontSize: Math.round(moderateScale(12, 0.0625)),
+  },
+  itineraryViewItem: {
+    flex: 1,
+    flexDirection: "column",
+  },
+  plane_icon: {
+    flex: 1,
+    textAlign: "center",
+    color: COLORS.lightSandy,
+    fontSize: Math.round(moderateScale(40, 0.0625)),
+  },
+  // Seat Index View
+  seatIndexView: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    marginTop: verticalScale(30),
+  },
+  setIndexViewItem: {
+    flex: 1,
+    flexDirection: "column",
+  },
+  seatIndexSwitch: {},
+  seatIndexLabel: {
+    color: COLORS.lightSandy,
+    fontSize: Math.round(moderateScale(12, 0.0625)),
+  },
+  // Mid Inner View
   midInnerView: {
-    flex: 1 / 20,
+    flex: 1 / 6,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-evenly",
@@ -473,17 +590,19 @@ const styles = StyleSheet.create({
   tabTextActive: {
     color: COLORS.forestgreen,
     textAlign: "center",
+    fontFamily: "Poppins",
     fontSize: Math.round(moderateScale(12, 0.3)),
   },
   tabButtonActive: {
     flex: 1,
     height: "100%",
     justifyContent: "center",
-    backgroundColor: COLORS.opaqueForestGreen,
+    backgroundColor: COLORS.opaqueGreyForestGreen,
   },
   tabTextInActive: {
     color: COLORS.opaqueForestGreen,
     textAlign: "center",
+    fontFamily: "Poppins",
     fontSize: Math.round(moderateScale(12, 0.3)),
   },
   tabButtonInActive: {
@@ -492,8 +611,26 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "transparent",
   },
+
+  // Bottom Inner View
   bottomInnerView: {
-    flex: 5 / 10,
-    backgroundColor: "green",
+    flex: 1,
+    marginTop: verticalScale(30),
+    // backgroundColor: "green",
+  },
+  label: {
+    color: COLORS.lightSandy,
+    fontFamily: "Poppins",
+    fontSize: Math.round(moderateScale(14, 0.0625)),
+  },
+  dataText: {
+    color: COLORS.lightSandy,
+    fontFamily: "Poppins",
+    fontSize: Math.round(moderateScale(40, 0.0625)),
+  },
+  unit_label: {
+    color: COLORS.lightSandy,
+    fontFamily: "Poppins",
+    fontSize: Math.round(moderateScale(18, 0.0625)),
   },
 });
