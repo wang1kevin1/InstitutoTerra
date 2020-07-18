@@ -33,6 +33,8 @@ import i18n from 'i18n-js'
 
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 
+import { Header } from 'react-native/Libraries/NewAppScreen'
+
 export default class SignInScreen extends React.Component {
   state = {
     email: '',
@@ -74,11 +76,12 @@ export default class SignInScreen extends React.Component {
           Alert.alert(i18n.t('Error when signing in: '), err.message)
         }
       })
-  }
-
-  render() {
-    return (
-      <SafeAreaView style={styles.container}>
+    }
+    
+    render() {
+      return (
+        <SafeAreaView style={styles.container}>
+        <MenuBar navigation={this.props.navigation}/>
         <TouchableWithoutFeedback
           style={styles.container}
           onPress={Keyboard.dismiss}>
@@ -96,7 +99,7 @@ export default class SignInScreen extends React.Component {
                   keyboardType={'email-address'}
                   onSubmitEditing={(event) => { this.refs.SecondInput._root.focus() }}
                   onChangeText={value => this.onChangeText('email', value)}
-                />
+                  />
               </Item>
               {/* Password */}
               <Item style={styles.itemStyle}>
@@ -110,7 +113,7 @@ export default class SignInScreen extends React.Component {
                   secureTextEntry={true}
                   ref='SecondInput'
                   onChangeText={value => this.onChangeText('password', value)}
-                />
+                  />
               </Item>
               {/* Sign Up Text */}
               <Text style={styles.buttonText2}>Novo usuário?{" "}
@@ -122,7 +125,7 @@ export default class SignInScreen extends React.Component {
                   <MaterialCommunityIcons
                     color={COLORS.forestgreen}
                     name='chevron-double-right'
-                  />
+                    />
                 </Text>
                 {" "}
               </Text>
@@ -136,13 +139,13 @@ export default class SignInScreen extends React.Component {
                   <MaterialCommunityIcons
                     name='chevron-double-right'
                     color={COLORS.forestgreen}
-                  />
+                    />
                 </Text>
                 {" "}
               </Text>
               {/* Loading ActivityIndicator */}
             </View>
-            <KeyboardAvoidingView
+              <KeyboardAvoidingView
               keyboardVerticalOffset={offset}
               style={styles.container2}
               behavior={Platform.OS == "ios" ? "position" : null}
@@ -164,21 +167,21 @@ export default class SignInScreen extends React.Component {
                 }
               </TouchableOpacity>
             </KeyboardAvoidingView>
-          </Container>
+          </Container>          
         </TouchableWithoutFeedback>
-        <MenuBar navigation={this.props.navigation} />
       </SafeAreaView>
     )
   }
 }
 
-const offset = (Platform.OS == 'android') ? -200 : 0;
+const offset = (Platform.OS == 'android') ? 200 : 0;
 
 const { width, height } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
 
   backgroundContainer: {
+    minHeight: Math.round(Dimensions.get('window').height),
     width: width,
     height: height,
     backgroundColor: COLORS.sandy,
@@ -205,7 +208,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
     justifyContent: 'flex-end',
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
 
   input: {
@@ -226,6 +229,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: Math.round(moderateScale(10, 0.625)),
     backgroundColor: 'transparent',
+    top: 0,
   },
   itemStyle: {
     marginBottom: Math.round(verticalScale(20)),
@@ -241,7 +245,7 @@ const styles = StyleSheet.create({
     width: width * .65,
     height: width * .2,
     borderRadius: 10,
-    marginBottom: Math.round(verticalScale(30)),
+    marginBottom: Math.round(verticalScale(30))
   },
 
   buttonText1: {
@@ -264,9 +268,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textDecorationLine: 'underline',
     color: COLORS.forestgreen,
-  },
-
-  textButton: {
-    backgroundColor: 'red'
   }
+
 })
