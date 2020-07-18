@@ -408,7 +408,9 @@ export default class FlightInfoScreen extends React.Component {
                 <View style={styles.itineraryView}>
                   <View style={styles.itineraryViewItem}>
                     <Text style={styles.itineraryLabel}>{depAirportName}</Text>
-                    <Text style={styles.dataText}>{departureIata}</Text>
+                    <Text style={styles.itineraryAirportCode}>
+                      {departureIata}
+                    </Text>
                   </View>
 
                   <View style={styles.plane_icon_view}>
@@ -420,7 +422,9 @@ export default class FlightInfoScreen extends React.Component {
                       <Text style={styles.itineraryLabel}>
                         {arrAirportName}
                       </Text>
-                      <Text style={styles.dataText}>{arrivalIata}</Text>
+                      <Text style={styles.itineraryAirportCode}>
+                        {arrivalIata}
+                      </Text>
                     </View>
                   </View>
                 </View>
@@ -431,15 +435,17 @@ export default class FlightInfoScreen extends React.Component {
                     <Text style={styles.seatIndexLabel}>One Way</Text>
                   </View>
 
-                  <Switch
-                    onChange={() => this.handleTripIndex()}
-                    value={this.state.tripIndex}
-                    trackColor={{
-                      false: "transparent",
-                      true: COLORS.sandy,
-                    }}
-                    thumbColor={COLORS.forestgreen}
-                  />
+                  <View style={styles.switchView}>
+                    <Switch
+                      onChange={() => this.handleTripIndex()}
+                      value={this.state.tripIndex}
+                      trackColor={{
+                        false: "transparent",
+                        true: COLORS.sandy,
+                      }}
+                      thumbColor={COLORS.forestgreen}
+                    />
+                  </View>
 
                   <View style={styles.seatIndexViewItem}>
                     <Text style={styles.seatIndexLabel}>Two Way</Text>
@@ -483,7 +489,7 @@ export default class FlightInfoScreen extends React.Component {
                 <View>
                   <Text style={styles.label}>Distance</Text>
                   <Text style={styles.dataText}>
-                    {distanceTraveled}{" "}
+                    {distanceTraveled}
                     <Text style={styles.unit_label}>{"km".toLowerCase()}</Text>
                   </Text>
                 </View>
@@ -531,32 +537,32 @@ export default class FlightInfoScreen extends React.Component {
 
 const styles = StyleSheet.create({
   background_image: {
-    flex: 1,
+    alignSelf: "center",
     backgroundColor: COLORS.black,
   },
   backDrop: {
-    flex: 1,
     backgroundColor: "transparent",
   },
-
   // Content Wrapper
   innerView: {
     flex: 1,
     flexDirection: "column",
     marginLeft: Math.round(moderateScale(105, 0.625)),
     marginRight: Math.round(moderateScale(20, 0.0625)),
-    marginBottom: Math.round(moderateScale(15, 0.0625)),
-    marginTop: Math.round(moderateScale(20, 0.0625)),
+    marginBottom: Math.round(moderateScale(5, 0.0625)),
+    marginTop: Math.round(moderateScale(5, 0.0625)),
   },
 
   // Top Inner View
   topInnerView: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "red",
+    flexDirection: "column",
+    paddingBottom: Math.round(verticalScale(20)),
+    // backgroundColor: "black",
   },
   flightView: {
-    backgroundColor: "black",
+    // backgroundColor: "red",
   },
   flightNumberLabel: {
     color: COLORS.lightSandy,
@@ -578,50 +584,63 @@ const styles = StyleSheet.create({
   itineraryView: {
     flex: 1,
     flexDirection: "row",
+    alignItems: "center",
     // backgroundColor: "pink",
+  },
+  plane_icon_view: {
+    flex: 1 / 3,
+    // backgroundColor: "black",
   },
   plane_icon: {
     color: COLORS.lightSandy,
+    textAlign: "center",
     fontSize: Math.round(moderateScale(35, 0.0625)),
-  },
-  plane_icon_view: {
-    flex: 1 / 2,
-    alignSelf: "center",
-    flexDirection: "column",
-    // backgroundColor: "black",
   },
   itineraryViewItem: {
     flex: 1,
-    flexShrink: 1,
     flexDirection: "column",
     // backgroundColor: "blue",
   },
   itineraryLabel: {
     color: COLORS.lightSandy,
+    textAlign: "center",
     fontSize: Math.round(moderateScale(14, 0.0625)),
   },
-
+  itineraryAirportCode: {
+    color: COLORS.lightSandy,
+    fontFamily: "Poppins",
+    textAlign: "center",
+    fontSize: Math.round(moderateScale(40, 0.0625)),
+  },
   // Seat Index View
   seatIndexView: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-around",
+    // backgroundColor: "pink",
+  },
+  switchView: {
+    flex: 1,
+    alignItems: "center",
+    flexDirection: "column",
+    // backgroundColor: "red",
+  },
+  seatIndexViewItem: {
+    flex: 1,
+    flexDirection: "column",
+    // backgroundColor: "blue",
   },
   seatIndexLabel: {
     color: COLORS.lightSandy,
+    textAlign: "center",
     fontSize: Math.round(moderateScale(14, 0.0625)),
   },
-
   // Mid Inner View
   midInnerView: {
-    flex: 1 / 6,
+    flex: 1 / 8,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-evenly",
     borderRadius: 10,
     backgroundColor: COLORS.lightSandy,
-    marginTop: Math.round(verticalScale(30)),
-    marginBottom: Math.round(verticalScale(30)),
   },
   tabTextActive: {
     color: COLORS.forestgreen,
@@ -672,7 +691,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10,
     padding: Math.round(verticalScale(10)),
-    backgroundColor: COLORS.forestgreen,
+    backgroundColor: COLORS.lightSandy,
   },
   loading: {
     position: "absolute",
@@ -684,7 +703,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   submitLabel: {
-    color: COLORS.sandy,
+    color: COLORS.forestgreen,
     fontSize: Math.round(moderateScale(20, 0.05)),
     padding: Math.round(moderateScale(10, 0.0125)),
     fontFamily: "Poppins-bold",
