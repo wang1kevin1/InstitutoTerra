@@ -410,7 +410,11 @@ export default class FlightInfoScreen extends React.Component {
                     <Text style={styles.itineraryLabel}>{depAirportName}</Text>
                     <Text style={styles.dataText}>{departureIata}</Text>
                   </View>
-                  <Ionicons name={"ios-airplane"} style={styles.plane_icon} />
+
+                  <View style={styles.plane_icon_view}>
+                    <Ionicons name={"ios-airplane"} style={styles.plane_icon} />
+                  </View>
+
                   <View style={styles.itineraryViewItem}>
                     <View style={styles.fixFlex}>
                       <Text style={styles.itineraryLabel}>
@@ -476,18 +480,45 @@ export default class FlightInfoScreen extends React.Component {
               {/* Distance and Carbon Emission */}
               <View style={styles.bottomInnerView}>
                 {/* Flight Distance */}
-                <Text style={styles.label}>Distance</Text>
-                <Text style={styles.dataText}>
-                  {distanceTraveled}{" "}
-                  <Text style={styles.unit_label}>{"km".toLowerCase()}</Text>
-                </Text>
+                <View>
+                  <Text style={styles.label}>Distance</Text>
+                  <Text style={styles.dataText}>
+                    {distanceTraveled}{" "}
+                    <Text style={styles.unit_label}>{"km".toLowerCase()}</Text>
+                  </Text>
+                </View>
 
                 {/* Carbon Emissions */}
-                <Text style={styles.label}>Carbon Emissions</Text>
-                <Text style={styles.dataText}>
-                  {carbonEmissions}{" "}
-                  <Text style={styles.unit_label}>tons of CO2</Text>
-                </Text>
+                <View>
+                  <Text style={styles.label}>Carbon Emissions</Text>
+                  <Text style={styles.dataText}>
+                    {carbonEmissions}{" "}
+                    <Text style={styles.unit_label}>tons of CO2</Text>
+                  </Text>
+                </View>
+
+                {/* Proceed to Checkout */}
+                <View>
+                  <TouchableOpacity
+                    style={styles.submitButton}
+                    disabled={this.state.isLoading}
+                    onPress={() =>
+                      this.props.navigation.navigate("CheckoutWithFlight", {
+                        tripIndex: tripIndex,
+                        depCityName: depCityName,
+                        arrCityName: arrCityName,
+                        distance: distanceTraveled * this.state.tripIndex,
+                        footprint: carbonEmissions,
+                        planeMake: planeMake,
+                        planeModel: planeModel,
+                        seatState: seatIndex,
+                        flightChars: flightChars,
+                        flightNums: flightNums,
+                      })
+                    }>
+                    <Text style={styles.submitLabel}>Plant Trees</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
             <MenuBar navigation={this.props.navigation} />
@@ -505,8 +536,6 @@ const styles = StyleSheet.create({
   },
   backDrop: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-evenly",
     backgroundColor: "transparent",
   },
 
@@ -523,13 +552,11 @@ const styles = StyleSheet.create({
   // Top Inner View
   topInnerView: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-evenly",
-    // backgroundColor: "red",
+    alignItems: "center",
+    backgroundColor: "red",
   },
   flightView: {
-    flex: 1.5,
-    flexDirection: "column",
+    backgroundColor: "black",
   },
   flightNumberLabel: {
     color: COLORS.lightSandy,
@@ -549,39 +576,42 @@ const styles = StyleSheet.create({
 
   // itinerary View
   itineraryView: {
-    flex: 2,
-    flexGrow: 1,
+    flex: 1,
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-evenly",
+    // backgroundColor: "pink",
   },
-  itineraryLabel: {
+  plane_icon: {
     color: COLORS.lightSandy,
-    textAlign: "center",
-    fontSize: Math.round(moderateScale(14, 0.0625)),
+    fontSize: Math.round(moderateScale(35, 0.0625)),
+  },
+  plane_icon_view: {
+    flex: 1 / 2,
+    alignSelf: "center",
+    flexDirection: "column",
+    // backgroundColor: "black",
   },
   itineraryViewItem: {
     flex: 1,
+    flexShrink: 1,
     flexDirection: "column",
+    // backgroundColor: "blue",
   },
-  plane_icon: {
-    flex: 1,
-    textAlign: "center",
+  itineraryLabel: {
     color: COLORS.lightSandy,
-    fontSize: Math.round(moderateScale(40, 0.0625)),
+    fontSize: Math.round(moderateScale(14, 0.0625)),
   },
+
   // Seat Index View
   seatIndexView: {
-    flex: 1 / 6,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-evenly",
+    justifyContent: "space-around",
   },
   seatIndexLabel: {
     color: COLORS.lightSandy,
-    textAlign: "center",
     fontSize: Math.round(moderateScale(14, 0.0625)),
   },
+
   // Mid Inner View
   midInnerView: {
     flex: 1 / 6,
@@ -637,5 +667,26 @@ const styles = StyleSheet.create({
     color: COLORS.lightSandy,
     fontFamily: "Poppins",
     fontSize: Math.round(moderateScale(18, 0.0625)),
+  },
+  submitButton: {
+    alignItems: "center",
+    borderRadius: 10,
+    padding: Math.round(verticalScale(10)),
+    backgroundColor: COLORS.forestgreen,
+  },
+  loading: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  submitLabel: {
+    color: COLORS.sandy,
+    fontSize: Math.round(moderateScale(20, 0.05)),
+    padding: Math.round(moderateScale(10, 0.0125)),
+    fontFamily: "Poppins-bold",
   },
 });
