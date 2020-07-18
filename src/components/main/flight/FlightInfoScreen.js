@@ -353,11 +353,9 @@ export default class FlightInfoScreen extends React.Component {
   }
 
   handleTripIndex() {
-    if (this.state.tripIndex) {
-      this.setState({ tripIndex: false });
-    } else {
-      this.setState({ tripIndex: true });
-    }
+    this.state.tripIndex
+      ? this.setState({ tripIndex: false })
+      : this.setState({ tripIndex: true });
   }
 
   render() {
@@ -394,7 +392,7 @@ export default class FlightInfoScreen extends React.Component {
             <View style={styles.innerView}>
               {/* Flight Information */}
               <View style={styles.topInnerView}>
-                <View>
+                <View style={styles.flightView}>
                   <Text style={styles.flightNumberLabel}>Flight Number</Text>
                   <Text style={styles.flightNumberText}>
                     {flightChars}
@@ -430,9 +428,13 @@ export default class FlightInfoScreen extends React.Component {
                   </View>
 
                   <Switch
-                    style={styles.seatIndexSwitch}
                     onChange={() => this.handleTripIndex()}
                     value={this.state.tripIndex}
+                    trackColor={{
+                      false: "transparent",
+                      true: COLORS.sandy,
+                    }}
+                    thumbColor={COLORS.forestgreen}
                   />
 
                   <View style={styles.seatIndexViewItem}>
@@ -484,7 +486,7 @@ export default class FlightInfoScreen extends React.Component {
                 <Text style={styles.label}>Carbon Emissions</Text>
                 <Text style={styles.dataText}>
                   {carbonEmissions}{" "}
-                  <Text style={styles.unit_label}>Tons of CO2</Text>
+                  <Text style={styles.unit_label}>tons of CO2</Text>
                 </Text>
               </View>
             </View>
@@ -504,8 +506,11 @@ const styles = StyleSheet.create({
   backDrop: {
     flex: 1,
     flexDirection: "row",
+    justifyContent: "space-evenly",
     backgroundColor: "transparent",
   },
+
+  // Content Wrapper
   innerView: {
     flex: 1,
     flexDirection: "column",
@@ -519,9 +524,13 @@ const styles = StyleSheet.create({
   topInnerView: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: "red",
+    justifyContent: "space-evenly",
+    // backgroundColor: "red",
   },
-
+  flightView: {
+    flex: 1.5,
+    flexDirection: "column",
+  },
   flightNumberLabel: {
     color: COLORS.lightSandy,
     fontFamily: "Poppins",
@@ -540,16 +549,16 @@ const styles = StyleSheet.create({
 
   // itinerary View
   itineraryView: {
-    flex: 1,
+    flex: 2,
+    flexGrow: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-evenly",
-    marginTop: verticalScale(30),
   },
   itineraryLabel: {
     color: COLORS.lightSandy,
     textAlign: "center",
-    fontSize: Math.round(moderateScale(12, 0.0625)),
+    fontSize: Math.round(moderateScale(14, 0.0625)),
   },
   itineraryViewItem: {
     flex: 1,
@@ -563,20 +572,15 @@ const styles = StyleSheet.create({
   },
   // Seat Index View
   seatIndexView: {
-    flex: 1,
+    flex: 1 / 6,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-evenly",
-    marginTop: verticalScale(30),
   },
-  setIndexViewItem: {
-    flex: 1,
-    flexDirection: "column",
-  },
-  seatIndexSwitch: {},
   seatIndexLabel: {
     color: COLORS.lightSandy,
-    fontSize: Math.round(moderateScale(12, 0.0625)),
+    textAlign: "center",
+    fontSize: Math.round(moderateScale(14, 0.0625)),
   },
   // Mid Inner View
   midInnerView: {
@@ -586,6 +590,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     borderRadius: 10,
     backgroundColor: COLORS.lightSandy,
+    marginTop: Math.round(verticalScale(30)),
+    marginBottom: Math.round(verticalScale(30)),
   },
   tabTextActive: {
     color: COLORS.forestgreen,
@@ -615,7 +621,6 @@ const styles = StyleSheet.create({
   // Bottom Inner View
   bottomInnerView: {
     flex: 1,
-    marginTop: verticalScale(30),
     // backgroundColor: "green",
   },
   label: {
