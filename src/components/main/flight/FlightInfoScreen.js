@@ -383,7 +383,25 @@ export default class FlightInfoScreen extends React.Component {
     const carbonEmissions = this.calcEmissions();
 
     if (!isReady) {
-      return <Text>Loading</Text>;
+      return (
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "column",
+            alignSelf: "center",
+            justifyContent: "center",
+          }}>
+          <Text
+            style={{
+              color: COLORS.forestgreen,
+              textAlign: "center",
+              fontFamily: "Poppins-bold",
+              fontSize: Math.round(moderateScale(30, 0.0625)),
+            }}>
+            Insert Loading Screen Here :)
+          </Text>
+        </View>
+      );
     } else {
       return (
         <ImageBackground
