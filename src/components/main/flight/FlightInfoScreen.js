@@ -3,18 +3,15 @@ import React from "react";
 import {
   View,
   Text,
-  Image,
   StyleSheet,
-  Dimensions,
   Switch,
   TouchableOpacity,
-  ActivityIndicator,
   ImageBackground,
   SafeAreaView,
 } from "react-native";
 
-import { scale, verticalScale, moderateScale } from "react-native-size-matters";
-import { Ionicons, FontAwesome, Feather } from "@expo/vector-icons";
+import { verticalScale, moderateScale } from "react-native-size-matters";
+import { Ionicons } from "@expo/vector-icons";
 import * as CONSTANTS from "../../utilities/Constants.js";
 import COLORS from "../../../assets/Colors.js";
 import Auth from "@aws-amplify/auth";
@@ -30,7 +27,7 @@ export default class FlightInfoScreen extends React.Component {
     iata: "",
     isReady: false,
     seatIndex: "Economy",
-    tripIndex: true,
+    tripIndex: false,
   };
 
   constructor(props) {
@@ -167,7 +164,7 @@ export default class FlightInfoScreen extends React.Component {
         .then((response) => {
           // console.log(response[2][0]);
           // console.log(response[1][0]);
-          console.log(`Response 0: \n${response}`);
+          // console.log(`Response 0: \n${response}`);
           let makeArray = response[2][0].productionLine.split(" ");
           this.setState({
             arrCityIata: response[0][0].codeIataCity,
@@ -353,9 +350,13 @@ export default class FlightInfoScreen extends React.Component {
   }
 
   handleTripIndex() {
-    this.state.tripIndex
-      ? this.setState({ tripIndex: false })
-      : this.setState({ tripIndex: true });
+    if (this.state.tripIndex) {
+      this.setState({ tripIndex: false });
+      this.setState({ distanceTraveled: this.state.distanceTraveled / 2 });
+    } else {
+      this.setState({ tripIndex: true });
+      this.setState({ distanceTraveled: this.state.distanceTraveled * 2 });
+    }
   }
 
   render() {
@@ -486,7 +487,7 @@ export default class FlightInfoScreen extends React.Component {
               {/* Distance and Carbon Emission */}
               <View style={styles.bottomInnerView}>
                 {/* Flight Distance */}
-                <View>
+                <View style={styles.dataView}>
                   <Text style={styles.label}>Distance</Text>
                   <Text style={styles.dataText}>
                     {distanceTraveled}
@@ -495,7 +496,7 @@ export default class FlightInfoScreen extends React.Component {
                 </View>
 
                 {/* Carbon Emissions */}
-                <View>
+                <View style={styles.dataView}>
                   <Text style={styles.label}>Carbon Emissions</Text>
                   <Text style={styles.dataText}>
                     {carbonEmissions}{" "}
@@ -504,7 +505,7 @@ export default class FlightInfoScreen extends React.Component {
                 </View>
 
                 {/* Proceed to Checkout */}
-                <View>
+                <View style={styles.navigationView}>
                   <TouchableOpacity
                     style={styles.submitButton}
                     disabled={this.state.isLoading}
@@ -513,7 +514,7 @@ export default class FlightInfoScreen extends React.Component {
                         tripIndex: tripIndex,
                         depCityName: depCityName,
                         arrCityName: arrCityName,
-                        distance: distanceTraveled * this.state.tripIndex,
+                        distance: distanceTraveled,
                         footprint: carbonEmissions,
                         planeMake: planeMake,
                         planeModel: planeModel,
@@ -537,10 +538,11 @@ export default class FlightInfoScreen extends React.Component {
 
 const styles = StyleSheet.create({
   background_image: {
-    alignSelf: "center",
+    flex: 1,
     backgroundColor: COLORS.black,
   },
   backDrop: {
+    flex: 1,
     backgroundColor: "transparent",
   },
   // Content Wrapper
@@ -556,12 +558,13 @@ const styles = StyleSheet.create({
   // Top Inner View
   topInnerView: {
     flex: 1,
-    alignItems: "center",
+    // alignItems: "center",
     flexDirection: "column",
-    paddingBottom: Math.round(verticalScale(20)),
+    paddingBottom: Math.round(verticalScale(15)),
     // backgroundColor: "black",
   },
   flightView: {
+    flex: 1,
     // backgroundColor: "red",
   },
   flightNumberLabel: {
@@ -614,6 +617,7 @@ const styles = StyleSheet.create({
   },
   // Seat Index View
   seatIndexView: {
+    flex: 1 / 3,
     flexDirection: "row",
     alignItems: "center",
     // backgroundColor: "pink",
@@ -636,7 +640,7 @@ const styles = StyleSheet.create({
   },
   // Mid Inner View
   midInnerView: {
-    flex: 1 / 8,
+    flex: 1 / 9,
     flexDirection: "row",
     alignItems: "center",
     borderRadius: 10,
@@ -670,6 +674,7 @@ const styles = StyleSheet.create({
   // Bottom Inner View
   bottomInnerView: {
     flex: 1,
+    paddingTop: Math.round(verticalScale(15)),
     // backgroundColor: "green",
   },
   label: {
@@ -687,20 +692,19 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins",
     fontSize: Math.round(moderateScale(18, 0.0625)),
   },
+  dataView: {
+    flex: 1,
+    paddingBottom: Math.round(verticalScale(10)),
+  },
+  navigationView: {
+    flex: 1,
+    // backgroundColor: "black",
+  },
   submitButton: {
     alignItems: "center",
     borderRadius: 10,
     padding: Math.round(verticalScale(10)),
     backgroundColor: COLORS.lightSandy,
-  },
-  loading: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    alignItems: "center",
-    justifyContent: "center",
   },
   submitLabel: {
     color: COLORS.forestgreen,
