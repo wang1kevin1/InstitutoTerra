@@ -23,7 +23,6 @@ const plane_image = require("../../../assets/icons/ic_plane.png");
 
 export default class FlightInfoScreen extends React.Component {
   state = {
-    isAuthenticated: "false",
     iata: "",
     isReady: false,
     seatIndex: "Economy",
@@ -36,31 +35,8 @@ export default class FlightInfoScreen extends React.Component {
   }
 
   componentDidMount = () => {
-    this.checkAuth();
     this.getFlight();
   };
-
-  // Checks if a user is logged in
-  async checkAuth() {
-    await Auth.currentAuthenticatedUser({ bypassCache: true })
-      .then(() => {
-        // console.log("A user is logged in");
-        this.setState({ isAuthenticated: true });
-      })
-      .catch((err) => {
-        // console.log("Nobody is logged in");
-        this.setState({ isAuthenticated: false });
-      });
-  }
-
-  // Sends user to sign up or profile depending on Auth state
-  handleUserRedirect() {
-    if (this.state.isAuthenticated) {
-      this.props.navigation.navigate("UserProfile");
-    } else {
-      this.props.navigation.navigate("SignIn");
-    }
-  }
 
   /* Fetch route data using flight number*/
   getFlight() {
@@ -407,7 +383,7 @@ export default class FlightInfoScreen extends React.Component {
         <ImageBackground
           source={this.background}
           style={styles.background_image}>
-          <SafeAreaView style={styles.backDrop}>
+          <View style={styles.backDrop}>
             <View style={styles.innerView}>
               {/* Flight Information */}
               <View style={styles.topInnerView}>
@@ -456,13 +432,15 @@ export default class FlightInfoScreen extends React.Component {
 
                   <View style={styles.switchView}>
                     <Switch
-                      onChange={() => this.handleTripIndex()}
-                      value={this.state.tripIndex}
                       trackColor={{
-                        false: "transparent",
+                        false: COLORS.sandy,
                         true: COLORS.sandy,
                       }}
+                      onValueChange={() => this.handleTripIndex()}
+                      value={this.state.tripIndex}
                       thumbColor={COLORS.forestgreen}
+                      ios_backgroundColor={COLORS.sandy}
+                      style={{ transform: [{ scaleX: 1.1 }, { scaleY: 1.1 }] }}
                     />
                   </View>
 
@@ -547,7 +525,7 @@ export default class FlightInfoScreen extends React.Component {
               </View>
             </View>
             <MenuBar navigation={this.props.navigation} />
-          </SafeAreaView>
+          </View>
         </ImageBackground>
       );
     }
@@ -569,21 +547,18 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     marginLeft: Math.round(moderateScale(105, 0.625)),
     marginRight: Math.round(moderateScale(20, 0.0625)),
-    marginBottom: Math.round(moderateScale(5, 0.0625)),
-    marginTop: Math.round(moderateScale(5, 0.0625)),
+    marginBottom: Math.round(moderateScale(30, 0.0625)),
+    marginTop: Math.round(moderateScale(80, 0.0625)),
   },
 
   // Top Inner View
   topInnerView: {
     flex: 1,
-    // alignItems: "center",
     flexDirection: "column",
     paddingBottom: Math.round(verticalScale(15)),
-    // backgroundColor: "black",
   },
   flightView: {
-    flex: 1,
-    // backgroundColor: "red",
+    flex: 0.6,
   },
   flightNumberLabel: {
     color: COLORS.lightSandy,
@@ -603,14 +578,12 @@ const styles = StyleSheet.create({
 
   // itinerary View
   itineraryView: {
-    flex: 1,
+    flex: 1 / 3,
     flexDirection: "row",
     alignItems: "center",
-    // backgroundColor: "pink",
   },
   plane_icon_view: {
-    flex: 1 / 3,
-    // backgroundColor: "black",
+    flex: 1,
   },
   plane_icon: {
     color: COLORS.lightSandy,
@@ -620,7 +593,6 @@ const styles = StyleSheet.create({
   itineraryViewItem: {
     flex: 1,
     flexDirection: "column",
-    // backgroundColor: "blue",
   },
   itineraryLabel: {
     color: COLORS.lightSandy,
@@ -635,21 +607,18 @@ const styles = StyleSheet.create({
   },
   // Seat Index View
   seatIndexView: {
-    flex: 1 / 3,
+    flex: 0.3,
     flexDirection: "row",
     alignItems: "center",
-    // backgroundColor: "pink",
   },
   switchView: {
     flex: 1,
     alignItems: "center",
     flexDirection: "column",
-    // backgroundColor: "red",
   },
   seatIndexViewItem: {
     flex: 1,
     flexDirection: "column",
-    // backgroundColor: "blue",
   },
   seatIndexLabel: {
     color: COLORS.lightSandy,
@@ -663,6 +632,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10,
     backgroundColor: COLORS.lightSandy,
+    marginBottom: Math.round(verticalScale(30)),
   },
   tabTextActive: {
     color: COLORS.forestgreen,
@@ -692,8 +662,6 @@ const styles = StyleSheet.create({
   // Bottom Inner View
   bottomInnerView: {
     flex: 1,
-    paddingTop: Math.round(verticalScale(15)),
-    // backgroundColor: "green",
   },
   label: {
     color: COLORS.lightSandy,
@@ -712,11 +680,9 @@ const styles = StyleSheet.create({
   },
   dataView: {
     flex: 1,
-    paddingBottom: Math.round(verticalScale(10)),
   },
   navigationView: {
     flex: 1,
-    // backgroundColor: "black",
   },
   submitButton: {
     alignItems: "center",

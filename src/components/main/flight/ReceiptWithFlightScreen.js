@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     marginLeft: Math.round(moderateScale(105, 0.625)),
     marginRight: Math.round(moderateScale(20, 0.0625)),
     marginBottom: Math.round(moderateScale(30, 0.0625)),
-    marginTop: Math.round(moderateScale(10, 0.0625)),
+    marginTop: Math.round(moderateScale(70, 0.0625)),
   },
   topInnerView: {
     flex: 1,
@@ -157,7 +157,8 @@ const styles = StyleSheet.create({
     color: COLORS.forestgreen,
     textAlign: "center",
     fontFamily: "Poppins",
-    fontSize: Math.round(moderateScale(16, 0.0625)),
+    fontSize: Math.round(moderateScale(17, 0.0625)),
+    marginBottom: Math.round(verticalScale(5)),
   },
   header: {
     color: COLORS.forestgreen,
@@ -180,12 +181,12 @@ const styles = StyleSheet.create({
   },
   itemTitle: {
     color: COLORS.forestgreen,
-    fontSize: Math.round(moderateScale(11, 0.125)),
+    fontSize: Math.round(moderateScale(12, 0.125)),
     fontFamily: "Poppins",
   },
   itemValue: {
     color: COLORS.forestgreen,
-    fontSize: Math.round(moderateScale(11, 0.125)),
+    fontSize: Math.round(moderateScale(12, 0.125)),
     fontFamily: "Poppins-bold",
   },
   submitButton: {
