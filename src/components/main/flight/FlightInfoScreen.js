@@ -399,24 +399,39 @@ export default class FlightInfoScreen extends React.Component {
                   </Text>
                 </View>
 
-                {/* Arrival Departure */}
+                {/* Arrival Departure  Airport Names*/}
                 <View style={styles.itineraryView}>
                   <View style={styles.itineraryViewItem}>
-                    <Text style={styles.itineraryLabel}>{depAirportName}</Text>
+                    <View>
+                      <Text style={styles.itineraryLabel}>
+                        {depAirportName}
+                      </Text>
+                    </View>
+                  </View>
+
+                  <View style={styles.plane_icon_view}></View>
+
+                  <View style={styles.itineraryViewItem}>
+                    <View>
+                      <Text style={styles.itineraryLabel}>
+                        {arrAirportName}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+
+                {/* Arrival Departure Airport Iata Codes*/}
+                <View style={styles.itineraryView}>
+                  <View style={styles.itineraryViewItem}>
                     <Text style={styles.itineraryAirportCode}>
                       {departureIata}
                     </Text>
                   </View>
 
-                  <View style={styles.plane_icon_view}>
-                    <Ionicons name={"ios-airplane"} style={styles.plane_icon} />
-                  </View>
+                  <Ionicons name={"ios-airplane"} style={styles.plane_icon} />
 
                   <View style={styles.itineraryViewItem}>
-                    <View style={styles.fixFlex}>
-                      <Text style={styles.itineraryLabel}>
-                        {arrAirportName}
-                      </Text>
+                    <View>
                       <Text style={styles.itineraryAirportCode}>
                         {arrivalIata}
                       </Text>
@@ -424,7 +439,7 @@ export default class FlightInfoScreen extends React.Component {
                   </View>
                 </View>
 
-                {/* One Way or Two WAy*/}
+                {/* One Way or Two Way*/}
                 <View style={styles.seatIndexView}>
                   <View style={styles.seatIndexViewItem}>
                     <Text style={styles.seatIndexLabel}>One Way</Text>
@@ -451,7 +466,7 @@ export default class FlightInfoScreen extends React.Component {
               </View>
 
               {/* Tabs */}
-              <View style={styles.midInnerView}>
+              <View style={styles.tabView}>
                 {/* Economy */}
                 <TouchableOpacity
                   style={this.handleTabStyle("Economy")}
@@ -553,12 +568,12 @@ const styles = StyleSheet.create({
 
   // Top Inner View
   topInnerView: {
-    flex: 1,
     flexDirection: "column",
-    paddingBottom: Math.round(verticalScale(15)),
+    marginBottom: Math.round(verticalScale(30)),
+    paddingBottom: Math.round(verticalScale(10)),
   },
   flightView: {
-    flex: 0.6,
+    marginBottom: Math.round(verticalScale(20)),
   },
   flightNumberLabel: {
     color: COLORS.lightSandy,
@@ -578,7 +593,6 @@ const styles = StyleSheet.create({
 
   // itinerary View
   itineraryView: {
-    flex: 1 / 3,
     flexDirection: "row",
     alignItems: "center",
   },
@@ -586,6 +600,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   plane_icon: {
+    flex: 1,
     color: COLORS.lightSandy,
     textAlign: "center",
     fontSize: Math.round(moderateScale(35, 0.0625)),
@@ -607,9 +622,9 @@ const styles = StyleSheet.create({
   },
   // Seat Index View
   seatIndexView: {
-    flex: 0.3,
     flexDirection: "row",
     alignItems: "center",
+    marginTop: Math.round(verticalScale(20)),
   },
   switchView: {
     flex: 1,
@@ -626,8 +641,8 @@ const styles = StyleSheet.create({
     fontSize: Math.round(moderateScale(14, 0.0625)),
   },
   // Mid Inner View
-  midInnerView: {
-    flex: 1 / 9,
+  tabView: {
+    flex: 1 / 10,
     flexDirection: "row",
     alignItems: "center",
     borderRadius: 10,
@@ -642,8 +657,6 @@ const styles = StyleSheet.create({
   },
   tabButtonActive: {
     flex: 1,
-    height: "100%",
-    justifyContent: "center",
     backgroundColor: COLORS.opaqueGreyForestGreen,
   },
   tabTextInActive: {
@@ -654,8 +667,6 @@ const styles = StyleSheet.create({
   },
   tabButtonInActive: {
     flex: 1,
-    height: "100%",
-    justifyContent: "center",
     backgroundColor: "transparent",
   },
 
@@ -668,6 +679,9 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins",
     fontSize: Math.round(moderateScale(14, 0.0625)),
   },
+  dataView: {
+    marginBottom: Math.round(verticalScale(15)),
+  },
   dataText: {
     color: COLORS.lightSandy,
     fontFamily: "Poppins",
@@ -677,12 +691,6 @@ const styles = StyleSheet.create({
     color: COLORS.lightSandy,
     fontFamily: "Poppins",
     fontSize: Math.round(moderateScale(18, 0.0625)),
-  },
-  dataView: {
-    flex: 1,
-  },
-  navigationView: {
-    flex: 1,
   },
   submitButton: {
     alignItems: "center",
