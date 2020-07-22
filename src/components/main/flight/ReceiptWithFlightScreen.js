@@ -143,13 +143,16 @@ const styles = StyleSheet.create({
     marginLeft: Math.round(moderateScale(105, 0.625)),
     marginRight: Math.round(moderateScale(20, 0.0625)),
     marginTop: Math.round(moderateScale(70, 0.0625)),
+    marginBottom: Math.round(moderateScale(30, 0.25)),
   },
   topInnerView: {
     flex: 1,
+    justifyContent: "space-evenly",
     // backgroundColor: "black",
   },
   bottomInnerView: {
     flex: 1,
+    justifyContent: "space-evenly",
     // backgroundColor: "red",
   },
   flightNumberLabel: {

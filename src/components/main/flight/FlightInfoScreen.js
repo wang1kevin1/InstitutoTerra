@@ -397,42 +397,44 @@ export default class FlightInfoScreen extends React.Component {
                   </Text>
                 </View>
 
-                {/* Arrival Departure  Airport Names*/}
-                <View style={styles.itineraryView}>
-                  <View style={styles.itineraryViewItem}>
-                    <View>
-                      <Text style={styles.itineraryLabel}>
-                        {depAirportName}
-                      </Text>
+                <View>
+                  {/* Arrival Departure  Airport Names*/}
+                  <View style={styles.itineraryView}>
+                    <View style={styles.itineraryViewItem}>
+                      <View>
+                        <Text style={styles.itineraryLabel}>
+                          {depAirportName}
+                        </Text>
+                      </View>
+                    </View>
+
+                    <View style={styles.plane_icon_view}></View>
+
+                    <View style={styles.itineraryViewItem}>
+                      <View>
+                        <Text style={styles.itineraryLabel}>
+                          {arrAirportName}
+                        </Text>
+                      </View>
                     </View>
                   </View>
 
-                  <View style={styles.plane_icon_view}></View>
-
-                  <View style={styles.itineraryViewItem}>
-                    <View>
-                      <Text style={styles.itineraryLabel}>
-                        {arrAirportName}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-
-                {/* Arrival Departure Airport Iata Codes*/}
-                <View style={styles.itineraryView}>
-                  <View style={styles.itineraryViewItem}>
-                    <Text style={styles.itineraryAirportCode}>
-                      {departureIata}
-                    </Text>
-                  </View>
-
-                  <Ionicons name={"ios-airplane"} style={styles.plane_icon} />
-
-                  <View style={styles.itineraryViewItem}>
-                    <View>
+                  {/* Arrival Departure Airport Iata Codes*/}
+                  <View style={styles.itineraryView}>
+                    <View style={styles.itineraryViewItem}>
                       <Text style={styles.itineraryAirportCode}>
-                        {arrivalIata}
+                        {departureIata}
                       </Text>
+                    </View>
+
+                    <Ionicons name={"ios-airplane"} style={styles.plane_icon} />
+
+                    <View style={styles.itineraryViewItem}>
+                      <View>
+                        <Text style={styles.itineraryAirportCode}>
+                          {arrivalIata}
+                        </Text>
+                      </View>
                     </View>
                   </View>
                 </View>
@@ -558,20 +560,20 @@ const styles = StyleSheet.create({
   // Content Wrapper
   innerView: {
     flex: 1,
+    justifyContent: "flex-end",
     flexDirection: "column",
     marginLeft: Math.round(moderateScale(105, 0.625)),
     marginRight: Math.round(moderateScale(20, 0.0625)),
-    marginTop: Math.round(moderateScale(70, 0.0625)),
+    marginTop: Math.round(moderateScale(50, 0.25)),
+    marginBottom: Math.round(moderateScale(30, 0.25)),
   },
 
   // Top Inner View
   topInnerView: {
+    flex: 1,
+    justifyContent: "space-evenly",
     flexDirection: "column",
-    marginBottom: Math.round(verticalScale(20)),
-    paddingBottom: Math.round(verticalScale(10)),
-  },
-  flightView: {
-    marginBottom: Math.round(verticalScale(20)),
+    marginBottom: Math.round(verticalScale(10)),
   },
   flightNumberLabel: {
     color: COLORS.lightSandy,
@@ -623,7 +625,7 @@ const styles = StyleSheet.create({
   seatIndexView: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: Math.round(verticalScale(20)),
+    marginTop: Math.round(verticalScale(10)),
   },
   switchView: {
     flex: 1,
@@ -646,7 +648,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderRadius: 10,
     backgroundColor: COLORS.lightSandy,
-    marginBottom: Math.round(verticalScale(30)),
+    marginBottom: Math.round(verticalScale(10)),
   },
   tabButtonActive: {
     flex: 1,
@@ -678,6 +680,7 @@ const styles = StyleSheet.create({
   // Bottom Inner View
   bottomInnerView: {
     flex: 1,
+    justifyContent: "space-evenly",
   },
   label: {
     color: COLORS.lightSandy,
@@ -685,7 +688,7 @@ const styles = StyleSheet.create({
     fontSize: Math.round(moderateScale(14, 0.0625)),
   },
   dataView: {
-    marginBottom: Math.round(verticalScale(15)),
+    // marginBottom: Math.round(verticalScale(15)),
   },
   dataText: {
     color: COLORS.lightSandy,
@@ -700,7 +703,6 @@ const styles = StyleSheet.create({
   submitButton: {
     alignItems: "center",
     borderRadius: 10,
-    marginTop: Math.round(verticalScale(5)),
     padding: Math.round(verticalScale(10)),
     backgroundColor: COLORS.lightSandy,
   },
