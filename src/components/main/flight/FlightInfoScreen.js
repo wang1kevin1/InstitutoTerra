@@ -26,7 +26,7 @@ export default class FlightInfoScreen extends React.Component {
     iata: "",
     isReady: false,
     seatIndex: "Economy",
-    tripIndex: false,
+    isTwoWay: false,
   };
 
   constructor(props) {
@@ -325,13 +325,13 @@ export default class FlightInfoScreen extends React.Component {
     return style;
   }
 
-  handleTripIndex() {
-    if (this.state.tripIndex) {
-      this.setState({ tripIndex: false });
-      this.setState({ distanceTraveled: this.state.distanceTraveled / 2 });
+  handleIsTwoWay() {
+    if (this.state.isTwoWay) {
+      this.setState({ isTwoWay: false });
+      // this.setState({ distanceTraveled: this.state.distanceTraveled / 2 });
     } else {
-      this.setState({ tripIndex: true });
-      this.setState({ distanceTraveled: this.state.distanceTraveled * 2 });
+      this.setState({ isTwoWay: true });
+      // this.setState({ distanceTraveled: this.state.distanceTraveled * 2 });
     }
   }
 
@@ -340,7 +340,7 @@ export default class FlightInfoScreen extends React.Component {
       isReady,
       flightChars,
       flightNums,
-      tripIndex,
+      isTwoWay,
       arrivalIata,
       departureIata,
       arrAirportName,
@@ -451,8 +451,8 @@ export default class FlightInfoScreen extends React.Component {
                         false: COLORS.sandy,
                         true: COLORS.sandy,
                       }}
-                      onValueChange={() => this.handleTripIndex()}
-                      value={this.state.tripIndex}
+                      onValueChange={() => this.handleIsTwoWay()}
+                      value={this.state.isTwoWay}
                       thumbColor={COLORS.forestgreen}
                       ios_backgroundColor={COLORS.sandy}
                       style={{ transform: [{ scaleX: 1.1 }, { scaleY: 1.1 }] }}
@@ -501,7 +501,7 @@ export default class FlightInfoScreen extends React.Component {
                 <View style={styles.dataView}>
                   <Text style={styles.label}>Distance</Text>
                   <Text style={styles.dataText}>
-                    {distanceTraveled}
+                    {isTwoWay == true ? distanceTraveled * 2 : distanceTraveled}
                     <Text style={styles.unit_label}>{"km".toLowerCase()}</Text>
                   </Text>
                 </View>
@@ -522,7 +522,7 @@ export default class FlightInfoScreen extends React.Component {
                     disabled={this.state.isLoading}
                     onPress={() =>
                       this.props.navigation.navigate("CheckoutWithFlight", {
-                        tripIndex: tripIndex,
+                        isTwoWay: isTwoWay,
                         depCityName: depCityName,
                         arrCityName: arrCityName,
                         distance: distanceTraveled,
