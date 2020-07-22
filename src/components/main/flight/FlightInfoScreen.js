@@ -328,10 +328,8 @@ export default class FlightInfoScreen extends React.Component {
   handleIsTwoWay() {
     if (this.state.isTwoWay) {
       this.setState({ isTwoWay: false });
-      // this.setState({ distanceTraveled: this.state.distanceTraveled / 2 });
     } else {
       this.setState({ isTwoWay: true });
-      // this.setState({ distanceTraveled: this.state.distanceTraveled * 2 });
     }
   }
 
@@ -556,6 +554,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "transparent",
   },
+
   // Content Wrapper
   innerView: {
     flex: 1,
@@ -619,6 +618,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: Math.round(moderateScale(40, 0.0625)),
   },
+
   // Seat Index View
   seatIndexView: {
     flexDirection: "row",
@@ -639,6 +639,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: Math.round(moderateScale(14, 0.0625)),
   },
+
   // Tab Inner View
   tabView: {
     flex: 1 / 10,
@@ -673,6 +674,7 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins",
     fontSize: Math.round(moderateScale(12, 0.3)),
   },
+
   // Bottom Inner View
   bottomInnerView: {
     flex: 1,
