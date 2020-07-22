@@ -52,7 +52,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
       flightNums,
     } = this.state;
     return (
-      <SafeAreaView style={styles.backDrop}>
+      <View style={styles.backDrop}>
         <View style={styles.innerView}>
           <View style={styles.topInnerView}>
             <Text style={styles.flightNumberLabel}>
@@ -126,7 +126,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
           </View>
         </View>
         <MenuBar navigation={this.props.navigation} />
-      </SafeAreaView>
+      </View>
     );
   }
 }
@@ -142,7 +142,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     marginLeft: Math.round(moderateScale(105, 0.625)),
     marginRight: Math.round(moderateScale(20, 0.0625)),
-    marginBottom: Math.round(moderateScale(30, 0.0625)),
     marginTop: Math.round(moderateScale(70, 0.0625)),
   },
   topInnerView: {

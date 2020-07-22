@@ -562,14 +562,13 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     marginLeft: Math.round(moderateScale(105, 0.625)),
     marginRight: Math.round(moderateScale(20, 0.0625)),
-    marginBottom: Math.round(moderateScale(30, 0.0625)),
-    marginTop: Math.round(moderateScale(80, 0.0625)),
+    marginTop: Math.round(moderateScale(70, 0.0625)),
   },
 
   // Top Inner View
   topInnerView: {
     flexDirection: "column",
-    marginBottom: Math.round(verticalScale(30)),
+    marginBottom: Math.round(verticalScale(20)),
     paddingBottom: Math.round(verticalScale(10)),
   },
   flightView: {
@@ -640,14 +639,20 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: Math.round(moderateScale(14, 0.0625)),
   },
-  // Mid Inner View
+  // Tab Inner View
   tabView: {
     flex: 1 / 10,
     flexDirection: "row",
-    alignItems: "center",
     borderRadius: 10,
     backgroundColor: COLORS.lightSandy,
     marginBottom: Math.round(verticalScale(30)),
+  },
+  tabButtonActive: {
+    flex: 1,
+    height: "100%",
+    justifyContent: "center",
+    borderRadius: 10,
+    backgroundColor: COLORS.opaqueGreyForestGreen,
   },
   tabTextActive: {
     color: COLORS.forestgreen,
@@ -655,9 +660,12 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins",
     fontSize: Math.round(moderateScale(12, 0.3)),
   },
-  tabButtonActive: {
+  tabButtonInActive: {
     flex: 1,
-    backgroundColor: COLORS.opaqueGreyForestGreen,
+    height: "100%",
+    borderRadius: 10,
+    justifyContent: "center",
+    backgroundColor: "transparent",
   },
   tabTextInActive: {
     color: COLORS.opaqueForestGreen,
@@ -665,11 +673,6 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins",
     fontSize: Math.round(moderateScale(12, 0.3)),
   },
-  tabButtonInActive: {
-    flex: 1,
-    backgroundColor: "transparent",
-  },
-
   // Bottom Inner View
   bottomInnerView: {
     flex: 1,
@@ -695,13 +698,14 @@ const styles = StyleSheet.create({
   submitButton: {
     alignItems: "center",
     borderRadius: 10,
+    marginTop: Math.round(verticalScale(5)),
     padding: Math.round(verticalScale(10)),
     backgroundColor: COLORS.lightSandy,
   },
   submitLabel: {
     color: COLORS.forestgreen,
     fontSize: Math.round(moderateScale(20, 0.05)),
-    padding: Math.round(moderateScale(10, 0.0125)),
     fontFamily: "Poppins-bold",
+    padding: Math.round(moderateScale(10, 0.0125)),
   },
 });
