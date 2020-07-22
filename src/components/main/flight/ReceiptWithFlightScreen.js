@@ -52,7 +52,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
       flightNums,
     } = this.state;
     return (
-      <SafeAreaView style={styles.backDrop}>
+      <View style={styles.backDrop}>
         <View style={styles.innerView}>
           <View style={styles.topInnerView}>
             <Text style={styles.flightNumberLabel}>
@@ -126,7 +126,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
           </View>
         </View>
         <MenuBar navigation={this.props.navigation} />
-      </SafeAreaView>
+      </View>
     );
   }
 }
@@ -142,50 +142,53 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     marginLeft: Math.round(moderateScale(105, 0.625)),
     marginRight: Math.round(moderateScale(20, 0.0625)),
-    marginBottom: Math.round(moderateScale(15, 0.0625)),
-    marginTop: Math.round(moderateScale(20, 0.0625)),
+    marginTop: Math.round(moderateScale(70, 0.0625)),
+    marginBottom: Math.round(moderateScale(30, 0.25)),
   },
   topInnerView: {
-    flex: 1 / 2,
-    marginBottom: verticalScale(10),
+    flex: 1,
+    justifyContent: "space-evenly",
+    // backgroundColor: "black",
   },
   bottomInnerView: {
-    flex: 1 / 2,
-    marginTop: verticalScale(30),
+    flex: 1,
+    justifyContent: "space-evenly",
+    // backgroundColor: "red",
   },
   flightNumberLabel: {
     color: COLORS.forestgreen,
     textAlign: "center",
     fontFamily: "Poppins",
-    fontSize: Math.round(moderateScale(16, 0.0625)),
+    fontSize: Math.round(moderateScale(17, 0.0625)),
+    marginBottom: Math.round(verticalScale(5)),
   },
   header: {
     color: COLORS.forestgreen,
     textAlign: "center",
     fontFamily: "Poppins-bold",
     fontSize: Math.round(moderateScale(18, 0.0625)),
-    marginTop: Math.round(verticalScale(20)),
+    paddingBottom: Math.round(verticalScale(10)),
   },
   leaf_img: {
     width: "100%",
-    height: 250,
+    height: verticalScale(200),
     resizeMode: "contain",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 30,
+      height: verticalScale(17),
     },
     shadowOpacity: 0.53,
-    shadowRadius: 20,
+    shadowRadius: verticalScale(12),
   },
   itemTitle: {
     color: COLORS.forestgreen,
-    fontSize: Math.round(moderateScale(11, 0.125)),
+    fontSize: Math.round(moderateScale(12, 0.125)),
     fontFamily: "Poppins",
   },
   itemValue: {
     color: COLORS.forestgreen,
-    fontSize: Math.round(moderateScale(11, 0.125)),
+    fontSize: Math.round(moderateScale(12, 0.125)),
     fontFamily: "Poppins-bold",
   },
   submitButton: {

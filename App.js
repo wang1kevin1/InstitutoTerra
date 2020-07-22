@@ -27,7 +27,6 @@ import UserProfileScreen from "./src/components/user/UserProfileScreen";
 
 // FlightStack
 import FlightInfoScreen from "./src/components/main/flight/FlightInfoScreen";
-import CarbonEmissionsScreen from "./src/components/main/flight/CarbonEmissionsScreen";
 import CheckoutWithFlightScreen from "./src/components/main/flight/CheckoutWithFlightScreen";
 import ReceiptWithFlightScreen from "./src/components/main/flight/ReceiptWithFlightScreen";
 
@@ -79,28 +78,27 @@ i18n.fallbacks = true;
 
 const AppStackNavigator = createStackNavigator(
   {
-    Home: HomeScreen,                                   // Main Stack
+    Home: HomeScreen, // Main Stack
     UserProfile: UserProfileScreen,
 
-    FlightInfo: FlightInfoScreen,                       // Flight Stack
-    CarbonEmissions: CarbonEmissionsScreen,
+    FlightInfo: FlightInfoScreen, // Flight Stack
     CheckoutWithFlight: CheckoutWithFlightScreen,
-    ReceiptWithFlight: ReceiptWithFlightScreen, 
-    
+    ReceiptWithFlight: ReceiptWithFlightScreen,
+
     CheckoutWithoutFlight: CheckoutWithoutFlightScreen, // NoFlight Stack
     ReceiptWithoutFlight: ReceiptWithoutFlightScreen,
 
-    Payment: PaymentScreen,                             // Payment Stack
+    Payment: PaymentScreen, // Payment Stack
     ThankYou: ThankYouScreen,
 
-    SettingsList: SettingsListScreen,                   // Settings Stack
+    SettingsList: SettingsListScreen, // Settings Stack
     SettingsName: SettingsNameScreen,
     SettingsEmail: SettingsEmailScreen,
     SettingsPassword: SettingsPasswordScreen,
 
-    SignIn: SignInScreen,                               // Auth Stack
+    SignIn: SignInScreen, // Auth Stack
     SignUp: SignUpScreen,
-    ForgotPassword: ForgotPasswordScreen, 
+    ForgotPassword: ForgotPasswordScreen,
   },
   {
     headerMode: "none",
