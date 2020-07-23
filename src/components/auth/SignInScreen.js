@@ -143,9 +143,8 @@ export default class SignInScreen extends React.Component {
                 </Text>
                 {" "}
               </Text>
-              {/* Loading ActivityIndicator */}
             </View>
-              <KeyboardAvoidingView
+            <KeyboardAvoidingView
               keyboardVerticalOffset={offset}
               style={styles.container2}
               behavior={Platform.OS == "ios" ? "position" : null}
@@ -158,7 +157,7 @@ export default class SignInScreen extends React.Component {
                 {!this.state.isLoading &&
                   <Text style={styles.buttonText1}>
                     Entrar
-                    </Text>
+                  </Text>
                 }
                 {this.state.isLoading &&
                   <View>
@@ -213,7 +212,7 @@ const styles = StyleSheet.create({
 
   input: {
     flex: 1,
-    fontSize: Math.round(scale(18, 0.00125)),
+    fontSize: Platform.OS == "ios" ? Math.round(scale(18, 0.00125)) : Math.round(scale(16, .00125)),
     fontWeight: 'normal',
     color: COLORS.forestgreen,
     fontFamily: 'Poppins'
@@ -256,7 +255,7 @@ const styles = StyleSheet.create({
   },
 
   buttonText2: {
-    fontSize: Math.round(scale(12, 0.00125)),
+    fontSize: Platform.OS == "ios" ? Math.round(scale(12, 0.00125)) : Math.round(scale(10, 0.00125)),
     fontWeight: 'normal',
     color: COLORS.forestgreen,
     fontFamily: 'Poppins',
@@ -264,7 +263,7 @@ const styles = StyleSheet.create({
   },
 
   buttonText2link: {
-    fontSize: Math.round(scale(12, 0.00125)),
+    fontSize: Platform.OS == "ios" ? Math.round(scale(12, 0.00125)) : Math.round(scale(10, 0.00125)),
     fontWeight: 'bold',
     textDecorationLine: 'underline',
     color: COLORS.forestgreen,
