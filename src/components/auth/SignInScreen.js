@@ -147,8 +147,7 @@ export default class SignInScreen extends React.Component {
             <KeyboardAvoidingView
               keyboardVerticalOffset={offset}
               style={styles.container2}
-              behavior={Platform.OS == "ios" ? "position" : null}
-              enabled>
+              behavior="position">
               {/* Sign In Button */}
               <TouchableOpacity
                 onPress={() => this.handleSignIn()}
@@ -173,7 +172,7 @@ export default class SignInScreen extends React.Component {
   }
 }
 
-const offset = (Platform.OS == 'android') ? 200 : 0;
+const offset = (Platform.OS == 'android') ? -20 : 0;
 
 const { width, height } = Dimensions.get('screen');
 
@@ -211,9 +210,6 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    flex: 1,
-    fontSize: Platform.OS == "ios" ? Math.round(scale(18, 0.00125)) : Math.round(scale(16, .00125)),
-    fontWeight: 'normal',
     color: COLORS.forestgreen,
     fontFamily: 'Poppins'
   },
