@@ -80,11 +80,11 @@ export default class SignInScreen extends React.Component {
     
     render() {
       return (
-        <SafeAreaView style={styles.container}>
-        <MenuBar navigation={this.props.navigation}/>
+        <View style={styles.container}>
         <TouchableWithoutFeedback
           style={styles.container}
           onPress={Keyboard.dismiss}>
+          <View style={styles.container}>
           <Container style={styles.infoContainer}>
             <View style={styles.container1}>
               {/* Email */}
@@ -166,8 +166,10 @@ export default class SignInScreen extends React.Component {
               </TouchableOpacity>
             </KeyboardAvoidingView>
           </Container>          
+          <MenuBar navigation={this.props.navigation}/>
+          </View>
         </TouchableWithoutFeedback>
-      </SafeAreaView>
+      </View>
     )
   }
 }
