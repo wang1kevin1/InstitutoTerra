@@ -17,8 +17,10 @@ const COLORS = {
   lightgreen: "#CAF28D",
   mutedgreen: "#9CA670",
   darkgreen: "#557718",
+
   forestgreen: "#2F6443",
   opaqueForestGreen: "rgba(47, 100, 67, 0.3)",
+  opaqueGreyForestGreen: "rgba(204, 204, 204, 0.3)",
 
   lightblue: "#82A2F4",
 

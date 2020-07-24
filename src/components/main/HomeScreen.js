@@ -145,6 +145,7 @@ export default class HomeScreen extends React.Component {
 
   render() {
     return (
+      <View style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : null}
@@ -160,27 +161,24 @@ export default class HomeScreen extends React.Component {
                   <Text style={styles.largeWhiteText}>
                     A cada $6 uma árvore é plantada.
                   </Text>
-
                   <Text style={styles.mediumWhiteText}>
                     Faça sua doação e ajude a recuperar a Mata Atlântica da
                     Fazenda do Bulcão.
                   </Text>
-
                   <Text style={styles.smallWhiteText}>
-                    Insira o número de vôo para iniciar ou
-                  </Text>
-
-                  <Text style={styles.linkWhiteText}>
-                    doe sem número de vôo{" "}
+                    Insira o número de vôo para iniciar ou{'\n'}
+                    <Text 
+                      style={styles.linkWhiteText}
+                      onPress={() => this.props.navigation.navigate("CheckoutWithoutFlight")}>
+                      doe sem número de vôo
                     <MaterialCommunityIcons
                       name="chevron-double-right"
                       style={styles.chevronIcon}
-                      onPress={() =>
-                        this.props.navigation.navigate("CheckoutWithoutFlight")
-                      }></MaterialCommunityIcons>
+                      />
+                  </Text>
+                  
                   </Text>
                 </View>
-
                 <View style={styles.searchContainer}>
                   {/* Enter flight number */}
                   <Input
@@ -215,10 +213,11 @@ export default class HomeScreen extends React.Component {
                 </View>
               </View>
             </View>
-            <MenuBar navigation={this.props.navigation} />
           </ImageBackground>
         </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+        <MenuBar navigation={this.props.navigation}/>      
+      </View>
     );
   }
 }

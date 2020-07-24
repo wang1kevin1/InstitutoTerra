@@ -1,72 +1,51 @@
-import React from 'react'
+import React from "react";
 
 import {
   View,
   Text,
   StyleSheet,
-  Dimensions,
+  Switch,
   TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native'
+  ImageBackground,
+  SafeAreaView,
+} from "react-native";
 
-import { Ionicons, FontAwesome, Feather } from '@expo/vector-icons';
+import { verticalScale, moderateScale } from "react-native-size-matters";
+import { Ionicons } from "@expo/vector-icons";
+import * as CONSTANTS from "../../utilities/Constants.js";
+import COLORS from "../../../assets/Colors.js";
+import Auth from "@aws-amplify/auth";
+import MenuBar from "../MenuBar.js";
+import i18n from "i18n-js";
 
-import Dash from 'react-native-dash';
-
-import COLORS from '../../../assets/Colors.js';
-
-import MenuBar from '../MenuBar.js';
-
-import Auth from '@aws-amplify/auth';
-
-import i18n from 'i18n-js'
-
-console.log(process.env.REACT_APP_API_KEY)
+const background_image = require("../../../assets/background/flightInfo/bg_flightInfo.png");
+const plane_image = require("../../../assets/icons/ic_plane.png");
 
 export default class FlightInfoScreen extends React.Component {
   state = {
-    isAuthenticated: 'false',
-    iata: '',
+    iata: "",
     isReady: false,
-    seatIndex: 'Economy',
-    tripIndex: 1,
+    seatIndex: "Economy",
+    isTwoWay: false,
+  };
+
+  constructor(props) {
+    super(props);
+    this.background = background_image;
   }
 
   componentDidMount = () => {
-    this.checkAuth()
-    this.getFlight()
-  }
-
-  // Checks if a user is logged in
-  async checkAuth() {
-    await Auth.currentAuthenticatedUser({ bypassCache: true })
-      .then(() => {
-        console.log('A user is logged in')
-        this.setState({ isAuthenticated: true })
-      })
-      .catch(err => {
-        console.log('Nobody is logged in')
-        this.setState({ isAuthenticated: false })
-      })
-  }
-
-  // Sends user to sign up or profile depending on Auth state
-  handleUserRedirect() {
-    if (this.state.isAuthenticated) {
-      this.props.navigation.navigate('UserProfile')
-    } else {
-      this.props.navigation.navigate('SignIn')
-    }
-  }
+    this.getFlight();
+  };
 
   /* Fetch route data using flight number*/
   getFlight() {
-    let buffer = this.props.navigation.getParam('flightNum', 'numCode');
+    let buffer = this.props.navigation.getParam("flightNum", "numCode");
     let charsIata = buffer.slice(0, 2).toUpperCase();
     let charsIcao = buffer.slice(0, 3).toUpperCase();
-    let numsIata = buffer.slice(2)
-    let numsIcao = buffer.slice(3)
-    if(isNaN(buffer.charAt(2))){
+    let numsIata = buffer.slice(2);
+    let numsIcao = buffer.slice(3);
+    if (isNaN(buffer.charAt(2))) {
       return this.callIcao(charsIcao, numsIcao);
     } else {
       return this.callIata(charsIata, numsIata);
@@ -74,10 +53,13 @@ export default class FlightInfoScreen extends React.Component {
   }
 
   //Fetch flight information using Iata flight number
-  callIata(chars, nums){
-    fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIata=${chars}&flightnumber=${nums}`, {
-      method: 'GET'
-    })
+  callIata(chars, nums) {
+    fetch(
+      `http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIata=${chars}&flightnumber=${nums}`,
+      {
+        method: "GET",
+      }
+    )
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
@@ -88,9 +70,15 @@ export default class FlightInfoScreen extends React.Component {
           planeReg: responseJson[0].regNumber,
           flightChars: chars,
           flightNums: nums,
-        })
-        return [this.state.arrivalIata, this.state.departureIata, this.state.planeReg, this.state.airlineIata]
-      }).then((Codes) => {
+        });
+        return [
+          this.state.arrivalIata,
+          this.state.departureIata,
+          this.state.planeReg,
+          this.state.airlineIata,
+        ];
+      })
+      .then((Codes) => {
         this.getPortsPlanes(Codes);
       })
       .catch((error) => {
@@ -99,10 +87,13 @@ export default class FlightInfoScreen extends React.Component {
   }
 
   // Fetch flight Information using Icao flight number
-  callIcao(chars, nums){
-    fetch(`http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIcao=${chars}&flightnumber=${nums}`, {
-      method: 'GET'
-    })
+  callIcao(chars, nums) {
+    fetch(
+      `http://aviation-edge.com/v2/public/routes?key=760fd0-cefe7a&airlineIcao=${chars}&flightnumber=${nums}`,
+      {
+        method: "GET",
+      }
+    )
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
@@ -113,9 +104,15 @@ export default class FlightInfoScreen extends React.Component {
           planeReg: responseJson[0].regNumber,
           flightChars: chars,
           flightNums: nums,
-        })
-        return [this.state.arrivalIata, this.state.departureIata, this.state.planeReg, this.state.airlineIata]
-      }).then((Codes) => {
+        });
+        return [
+          this.state.arrivalIata,
+          this.state.departureIata,
+          this.state.planeReg,
+          this.state.airlineIata,
+        ];
+      })
+      .then((Codes) => {
         this.getPortsPlanes(Codes);
       })
       .catch((error) => {
@@ -125,81 +122,108 @@ export default class FlightInfoScreen extends React.Component {
 
   /* Fetch departure/arrival airports, airline, and airplane information */
   getPortsPlanes(Codes) {
-    if (Codes[2]){
-    let arrAirportCall = fetch(`https://aviation-edge.com/v2/public/airportDatabase?key=760fd0-cefe7a&codeIataAirport=${Codes[0]}`);
-    let depAirportCall = fetch(`https://aviation-edge.com/v2/public/airportDatabase?key=760fd0-cefe7a&codeIataAirport=${Codes[1]}`);
-    let planeCall = fetch(`https://aviation-edge.com/v2/public/airplaneDatabase?key=760fd0-cefe7a&numberRegistration=${Codes[2][0]}`);
-    let airlineCall = fetch(`https://aviation-edge.com/v2/public/airlineDatabase?key=760fd0-cefe7a&codeIataAirline=${Codes[3]}`)
-    Promise.all([arrAirportCall, depAirportCall, planeCall, airlineCall])
-      .then(values => Promise.all(values.map(value => value.json())))
-      .then(response => {
-        console.log(response[2][0]);
-        console.log(response[1][0]);
-        let makeArray = response[2][0].productionLine.split(" ");
-        this.setState({
-          arrCityIata: response[0][0].codeIataCity,
-          arrLat: response[0][0].latitudeAirport,
-          arrLong: response[0][0].longitudeAirport,
-          depCityIata: response[1][0].codeIataCity,
-          depLat: response[1][0].latitudeAirport,
-          depLong: response[1][0].longitudeAirport,
-          planeModel: response[2][0].planeModel,
-          planeMake: makeArray[0],
-          airlineName: response[3][0].nameAirline,
+    if (Codes[2]) {
+      let arrAirportCall = fetch(
+        `https://aviation-edge.com/v2/public/airportDatabase?key=760fd0-cefe7a&codeIataAirport=${Codes[0]}`
+      );
+      let depAirportCall = fetch(
+        `https://aviation-edge.com/v2/public/airportDatabase?key=760fd0-cefe7a&codeIataAirport=${Codes[1]}`
+      );
+      let planeCall = fetch(
+        `https://aviation-edge.com/v2/public/airplaneDatabase?key=760fd0-cefe7a&numberRegistration=${Codes[2][0]}`
+      );
+      let airlineCall = fetch(
+        `https://aviation-edge.com/v2/public/airlineDatabase?key=760fd0-cefe7a&codeIataAirline=${Codes[3]}`
+      );
+      Promise.all([arrAirportCall, depAirportCall, planeCall, airlineCall])
+        .then((values) => Promise.all(values.map((value) => value.json())))
+        .then((response) => {
+          // console.log(response[2][0]);
+          // console.log(response[1][0]);
+          // console.log(`Response 0: \n${response}`);
+          let makeArray = response[2][0].productionLine.split(" ");
+          this.setState({
+            arrCityIata: response[0][0].codeIataCity,
+            arrLat: response[0][0].latitudeAirport,
+            arrLong: response[0][0].longitudeAirport,
+            arrAirportName: response[0][0].nameAirport,
+            depCityIata: response[1][0].codeIataCity,
+            depLat: response[1][0].latitudeAirport,
+            depLong: response[1][0].longitudeAirport,
+            depAirportName: response[1][0].nameAirport,
+            planeModel: response[2][0].planeModel,
+            planeMake: makeArray[0],
+            airlineName: response[3][0].nameAirline,
+          });
+          // console.log(this.state.planeMake);
+          this.getDistance();
+          return [this.state.arrCityIata, this.state.depCityIata];
         })
-        console.log(this.state.planeMake);
-        this.getDistance();
-        return [this.state.arrCityIata, this.state.depCityIata]
-      }).then((IataCodes) => {
-        this.getCities(IataCodes);
-      }).catch((error) => {
-        console.error(error);
-      });
-    } 
+        .then((IataCodes) => {
+          this.getCities(IataCodes);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
     // if no plane info
     else {
-      let arrAirportCall = fetch(`https://aviation-edge.com/v2/public/airportDatabase?key=760fd0-cefe7a&codeIataAirport=${Codes[0]}`);
-      let depAirportCall = fetch(`https://aviation-edge.com/v2/public/airportDatabase?key=760fd0-cefe7a&codeIataAirport=${Codes[1]}`);
-      let airlineCall = fetch(`https://aviation-edge.com/v2/public/airlineDatabase?key=760fd0-cefe7a&codeIataAirline=${Codes[3]}`)
-        Promise.all([arrAirportCall, depAirportCall, airlineCall])
-          .then(values => Promise.all(values.map(value => value.json())))
-          .then(response => {
-            console.log(response[1][0]);
-            this.setState({
-              arrCityIata: response[0][0].codeIataCity,
-              arrLat: response[0][0].latitudeAirport,
-              arrLong: response[0][0].longitudeAirport,
-              depCityIata: response[1][0].codeIataCity,
-              depLat: response[1][0].latitudeAirport,
-              depLong: response[1][0].longitudeAirport,
-              planeModel: "N/A",
-              planeMake: "",
-              airlineName: response[2][0].nameAirline,
+      let arrAirportCall = fetch(
+        `https://aviation-edge.com/v2/public/airportDatabase?key=760fd0-cefe7a&codeIataAirport=${Codes[0]}`
+      );
+      let depAirportCall = fetch(
+        `https://aviation-edge.com/v2/public/airportDatabase?key=760fd0-cefe7a&codeIataAirport=${Codes[1]}`
+      );
+      let airlineCall = fetch(
+        `https://aviation-edge.com/v2/public/airlineDatabase?key=760fd0-cefe7a&codeIataAirline=${Codes[3]}`
+      );
+      Promise.all([arrAirportCall, depAirportCall, airlineCall])
+        .then((values) => Promise.all(values.map((value) => value.json())))
+        .then((response) => {
+          // console.log(response[1][0]);
+          // console.log(`Response 1: \n${response}`);
+          this.setState({
+            arrCityIata: response[0][0].codeIataCity,
+            arrLat: response[0][0].latitudeAirport,
+            arrLong: response[0][0].longitudeAirport,
+            depCityIata: response[1][0].codeIataCity,
+            depLat: response[1][0].latitudeAirport,
+            depLong: response[1][0].longitudeAirport,
+            planeModel: "N/A",
+            planeMake: "",
+            airlineName: response[2][0].nameAirline,
+          });
+          // console.log(this.state.planeMake);
+          this.getDistance();
+          return [this.state.arrCityIata, this.state.depCityIata];
         })
-        console.log(this.state.planeMake);
-        this.getDistance();
-        return [this.state.arrCityIata, this.state.depCityIata]
-      }).then((IataCodes) => {
-        this.getCities(IataCodes);
-      }).catch((error) => {
-        console.error(error);
-      });
+        .then((IataCodes) => {
+          this.getCities(IataCodes);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
   }
 
   /* Fetch arrival/departure city information */
   getCities(IataCodes) {
-    let arrCityCall = fetch(`https://aviation-edge.com/v2/public/cityDatabase?key=760fd0-cefe7a&codeIataCity=${IataCodes[0]}`)
-    let depCityCall = fetch(`https://aviation-edge.com/v2/public/cityDatabase?key=760fd0-cefe7a&codeIataCity=${IataCodes[1]}`)
+    let arrCityCall = fetch(
+      `https://aviation-edge.com/v2/public/cityDatabase?key=760fd0-cefe7a&codeIataCity=${IataCodes[0]}`
+    );
+    let depCityCall = fetch(
+      `https://aviation-edge.com/v2/public/cityDatabase?key=760fd0-cefe7a&codeIataCity=${IataCodes[1]}`
+    );
     Promise.all([arrCityCall, depCityCall])
-      .then(values => Promise.all(values.map(value => value.json())))
-      .then(response => {
+      .then((values) => Promise.all(values.map((value) => value.json())))
+      .then((response) => {
         this.setState({
           arrCityName: response[0][0].nameCity,
           depCityName: response[1][0].nameCity,
           isReady: true,
-        })
-      }).catch((error) => {
+        });
+      })
+      .catch((error) => {
         console.error(error);
       });
   }
@@ -207,22 +231,106 @@ export default class FlightInfoScreen extends React.Component {
   /* Calculate distance between arrival and departure airports */
   getDistance() {
     let earthRad = 6731;
-    let latDiff = (this.state.arrLat - this.state.depLat) * Math.PI / 180;
-    let longDiff = (this.state.arrLong - this.state.depLong) * Math.PI / 180;
+    let latDiff = ((this.state.arrLat - this.state.depLat) * Math.PI) / 180;
+    let longDiff = ((this.state.arrLong - this.state.depLong) * Math.PI) / 180;
 
-    let latArr = this.state.arrLat * Math.PI / 180;
-    let latDep = this.state.depLat * Math.PI / 180;
-    let a = Math.sin(latDiff / 2) * Math.sin(latDiff / 2) + Math.sin(longDiff / 2) * Math.sin(longDiff / 2) * Math.cos(latArr) * Math.cos(latDep);
-    console.log(a);
+    let latArr = (this.state.arrLat * Math.PI) / 180;
+    let latDep = (this.state.depLat * Math.PI) / 180;
+    let a =
+      Math.sin(latDiff / 2) * Math.sin(latDiff / 2) +
+      Math.sin(longDiff / 2) *
+        Math.sin(longDiff / 2) *
+        Math.cos(latArr) *
+        Math.cos(latDep);
+    // console.log(a);
 
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    console.log(c);
+    // console.log(c);
     let d = earthRad * c;
     d = d.toFixed(2);
-    console.log(d)
+    // console.log(d);
     this.setState({
       distanceTraveled: d,
     });
+  }
+
+  //Calculate emissions using distance and seat class
+  calcEmissions() {
+    let dist = this.state.distanceTraveled;
+    let seat = this.state.distanceTraveled;
+    // console.log(seat);
+    //Short Flight
+    if (dist < 500) {
+      dist *= CONSTANTS.CARBON_MULTIPLIERS.short;
+    }
+    //Medium Flight
+    else if (dist < 1000) {
+      //Economy seat
+      if (this.state.seatIndex == "Economy") {
+        dist *= CONSTANTS.CARBON_MULTIPLIERS.medium_economy;
+      }
+      //Business seat
+      else if (
+        this.state.seatIndex == "Business" ||
+        this.state.seatIndex == "First Class"
+      ) {
+        dist *= CONSTANTS.CARBON_MULTIPLIERS.medium_business;
+      }
+    }
+    //Long Flight
+    else {
+      //Economy Seat
+      if (this.state.seatIndex == "Economy") {
+        dist *= CONSTANTS.CARBON_MULTIPLIERS.long_economy;
+        // console.log("Economy Long");
+        // console.log(dist);
+      }
+      //Business Seat
+      else if (this.state.seatIndex == "Business") {
+        dist *= CONSTANTS.CARBON_MULTIPLIERS.long_business;
+        // console.log("Business Long");
+        // console.log(dist);
+      }
+      //First Class Seat
+      else if (this.state.seatIndex == "First Class") {
+        dist *= CONSTANTS.CARBON_MULTIPLIERS.long_first;
+        // console.log("First Class Long");
+        // console.log(dist);
+      }
+    }
+    var emissions = Math.round(dist);
+    emissions /= 1000;
+    return emissions;
+  }
+
+  handleFlightClass(clss) {
+    this.setState({
+      seatIndex: clss,
+    });
+  }
+
+  handleTabStyle(clss) {
+    let style =
+      this.state.seatIndex == clss
+        ? styles.tabButtonActive
+        : styles.tabButtonInActive;
+    return style;
+  }
+
+  handleTabText(clss) {
+    let style =
+      this.state.seatIndex == clss
+        ? styles.tabTextActive
+        : styles.tabTextInActive;
+    return style;
+  }
+
+  handleIsTwoWay() {
+    if (this.state.isTwoWay) {
+      this.setState({ isTwoWay: false });
+    } else {
+      this.setState({ isTwoWay: true });
+    }
   }
 
   render() {
@@ -230,7 +338,11 @@ export default class FlightInfoScreen extends React.Component {
       isReady,
       flightChars,
       flightNums,
-      tripIndex,
+      isTwoWay,
+      arrivalIata,
+      departureIata,
+      arrAirportName,
+      depAirportName,
       arrCityName,
       depCityName,
       arrCityIata,
@@ -239,265 +351,365 @@ export default class FlightInfoScreen extends React.Component {
       airlineName,
       planeMake,
       distanceTraveled,
-      seatIndex
+      seatIndex,
     } = this.state;
+
+    const carbonEmissions = this.calcEmissions();
 
     if (!isReady) {
       return (
-        <View style={styles.containerLoading}>
-          <View style={{ flexDirection: 'column', flex: 1, justifyContent: 'center' }}>
-            <Ionicons name="ios-paper-plane" style={styles.loadingIcon} />
-            <Text style={[styles.loadingText, { alignItems: 'center', justifyContent: 'center', marginBottom: '5%' }]}>
-              {i18n.t('RETRIEVING FLIGHT')}
-            </Text>
-            <ActivityIndicator color={COLORS.lightblue} size='large' animating={!isReady} />
-          </View>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "column",
+            alignSelf: "center",
+            justifyContent: "center",
+          }}>
+          <Text
+            style={{
+              color: COLORS.forestgreen,
+              textAlign: "center",
+              fontFamily: "Poppins-bold",
+              fontSize: Math.round(moderateScale(30, 0.0625)),
+            }}>
+            Insert Loading Screen Here :)
+          </Text>
         </View>
-      )
-    }
-    else {
+      );
+    } else {
       return (
-        <View style={styles.container}>
-          <View style={styles.containerTop}>
-            <View style={styles.buttonBarNav}>
-              {/*Navigation Buttons*/}
-              <Feather style={styles.navigationIcon} name="home"
-                onPress={() => this.props.navigation.navigate('Home')} />
-              <FontAwesome style={styles.navigationIcon} name="user-circle-o"
-                onPress={() => this.handleUserRedirect()} />
-            </View>
-            <View style={styles.buttonBarTop}>
-              {/*Route Option Buttons*/}
-              <View style={[styles.leftGreenButton, { opacity: (this.state.tripIndex == 1) ? 1 : 0.5 }]}>
+        <ImageBackground
+          source={this.background}
+          style={styles.background_image}>
+          <View style={styles.backDrop}>
+            <View style={styles.innerView}>
+              {/* Flight Information */}
+              <View style={styles.topInnerView}>
+                <View style={styles.flightView}>
+                  <Text style={styles.flightNumberLabel}>Flight Number</Text>
+                  <Text style={styles.flightNumberText}>
+                    {flightChars}
+                    {flightNums}
+                  </Text>
+                  <Text style={styles.flightInfoText}>
+                    {depCityName} ({depCityIata}) to {arrCityName} (
+                    {arrCityIata}) via {airlineName}{" "}
+                  </Text>
+                </View>
+
+                <View>
+                  {/* Arrival Departure  Airport Names*/}
+                  <View style={styles.itineraryView}>
+                    <View style={styles.itineraryViewItem}>
+                      <View>
+                        <Text style={styles.itineraryLabel}>
+                          {depAirportName}
+                        </Text>
+                      </View>
+                    </View>
+
+                    <View style={styles.plane_icon_view}></View>
+
+                    <View style={styles.itineraryViewItem}>
+                      <View>
+                        <Text style={styles.itineraryLabel}>
+                          {arrAirportName}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+
+                  {/* Arrival Departure Airport Iata Codes*/}
+                  <View style={styles.itineraryView}>
+                    <View style={styles.itineraryViewItem}>
+                      <Text style={styles.itineraryAirportCode}>
+                        {departureIata}
+                      </Text>
+                    </View>
+
+                    <Ionicons name={"ios-airplane"} style={styles.plane_icon} />
+
+                    <View style={styles.itineraryViewItem}>
+                      <View>
+                        <Text style={styles.itineraryAirportCode}>
+                          {arrivalIata}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+
+                {/* One Way or Two Way*/}
+                <View style={styles.seatIndexView}>
+                  <View style={styles.seatIndexViewItem}>
+                    <Text style={styles.seatIndexLabel}>One Way</Text>
+                  </View>
+
+                  <View style={styles.switchView}>
+                    <Switch
+                      trackColor={{
+                        false: COLORS.sandy,
+                        true: COLORS.sandy,
+                      }}
+                      onValueChange={() => this.handleIsTwoWay()}
+                      value={this.state.isTwoWay}
+                      thumbColor={COLORS.forestgreen}
+                      ios_backgroundColor={COLORS.sandy}
+                      style={{ transform: [{ scaleX: 1.1 }, { scaleY: 1.1 }] }}
+                    />
+                  </View>
+
+                  <View style={styles.seatIndexViewItem}>
+                    <Text style={styles.seatIndexLabel}>Two Way</Text>
+                  </View>
+                </View>
+              </View>
+
+              {/* Tabs */}
+              <View style={styles.tabView}>
+                {/* Economy */}
                 <TouchableOpacity
-                  onPress={() => this.setState({ tripIndex: 1 })}>
-                  <Text style={styles.buttonText}>{i18n.t('ONE WAY')}</Text>
+                  style={this.handleTabStyle("Economy")}
+                  onPress={() => this.handleFlightClass("Economy")}>
+                  <Text style={this.handleTabText("Economy")}>
+                    {"Economy".toUpperCase()}
+                  </Text>
+                </TouchableOpacity>
+
+                {/* Business */}
+                <TouchableOpacity
+                  style={this.handleTabStyle("Business")}
+                  onPress={() => this.handleFlightClass("Business")}>
+                  <Text style={this.handleTabText("Business")}>
+                    {"Business".toUpperCase()}
+                  </Text>
+                </TouchableOpacity>
+
+                {/* First Class  */}
+                <TouchableOpacity
+                  style={this.handleTabStyle("First")}
+                  onPress={() => this.handleFlightClass("First")}>
+                  <Text style={this.handleTabText("First")}>
+                    {"First".toUpperCase()}
+                  </Text>
                 </TouchableOpacity>
               </View>
-              <View style={[styles.rightGreenButton, { opacity: (this.state.tripIndex == 2) ? 1 : 0.5 }]}>
-                <TouchableOpacity
-                  onPress={() => this.setState({ tripIndex: 2 })}>
-                  <Text style={styles.buttonText}>{i18n.t('ROUND TRIP')}</Text>
-                </TouchableOpacity>
+
+              {/* Distance and Carbon Emission */}
+              <View style={styles.bottomInnerView}>
+                {/* Flight Distance */}
+                <View style={styles.dataView}>
+                  <Text style={styles.label}>Distance</Text>
+                  <Text style={styles.dataText}>
+                    {isTwoWay == true ? distanceTraveled * 2 : distanceTraveled}
+                    <Text style={styles.unit_label}>{"km".toLowerCase()}</Text>
+                  </Text>
+                </View>
+
+                {/* Carbon Emissions */}
+                <View style={styles.dataView}>
+                  <Text style={styles.label}>Carbon Emissions</Text>
+                  <Text style={styles.dataText}>
+                    {carbonEmissions}{" "}
+                    <Text style={styles.unit_label}>tons of CO2</Text>
+                  </Text>
+                </View>
+
+                {/* Proceed to Checkout */}
+                <View style={styles.navigationView}>
+                  <TouchableOpacity
+                    style={styles.submitButton}
+                    disabled={this.state.isLoading}
+                    onPress={() =>
+                      this.props.navigation.navigate("CheckoutWithFlight", {
+                        isTwoWay: isTwoWay,
+                        depCityName: depCityName,
+                        arrCityName: arrCityName,
+                        distance: distanceTraveled,
+                        footprint: carbonEmissions,
+                        planeMake: planeMake,
+                        planeModel: planeModel,
+                        seatState: seatIndex,
+                        flightChars: flightChars,
+                        flightNums: flightNums,
+                      })
+                    }>
+                    <Text style={styles.submitLabel}>Plant Trees</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-            {/*Flight Number*/}
-            <Text style={styles.smallBlueText}>{i18n.t('FLIGHT NUMBER')}</Text>
-            <Text style={styles.bigBlueText}>{flightChars} {flightNums}</Text>
-            <View style={styles.planeInfoText}>
-              {/*Departure and arrival city & IATA*/}
-              <Text style={styles.midGreyText}>{depCityName}({depCityIata}) {i18n.t('to')} {arrCityName}({arrCityIata}) </Text>
-              <Text style={styles.midGreyText}>{i18n.t('via')} {airlineName}</Text>
-            </View>
-            <View style={styles.buttonBarBottom}>
-              {/*Seat class selector*/}
-              <View style={[styles.leftGreenButton, { opacity: (this.state.seatIndex == 'Economy') ? 1 : 0.5 }]}>
-                <TouchableOpacity
-                  onPress={() => this.setState({ seatIndex: 'Economy' })}>
-                  <Text style={styles.buttonText}>{i18n.t('ECONOMY')}</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={[styles.middleGreenButton, { opacity: (this.state.seatIndex == 'Business') ? 1 : 0.5 }]}>
-                <TouchableOpacity
-                  onPress={() => this.setState({ seatIndex: 'Business' })}>
-                  <Text style={styles.buttonText}>{i18n.t('BUSINESS')}</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={[styles.rightGreenButton, { opacity: (this.state.seatIndex == 'First Class') ? 1 : 0.5 }]}>
-                <TouchableOpacity
-                  onPress={() => this.setState({ seatIndex: 'First Class' })}>
-                  <Text style={styles.buttonText}>{i18n.t('FIRST CLASS')}</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <Dash style={styles.dashedLine} dashColor={COLORS.lightgrey} dashGap={0} />
-            <View style={styles.receiptContainer}>
-              {/*More flight information*/}
-              <View style={styles.textRow}>
-                <Text style={styles.receiptTextLeft}>{i18n.t('FLIGHT')}</Text>
-                {/* Departure to Arrival */}
-                {tripIndex == 1 &&
-                  <Text style={styles.receiptTextRight}>{depCityName} &#10230; {arrCityName}</Text>
-                }
-                {tripIndex == 2 &&
-                  <Text style={styles.receiptTextRight}>{depCityName} &#10231; {arrCityName}</Text>
-                }
-              </View>
-              <View style={styles.textRow}>
-                <Text style={styles.receiptTextLeft}>{i18n.t('DISTANCE')}</Text>
-                {/*Distance of flight*/}
-                <Text style={styles.receiptTextRight}>{distanceTraveled * this.state.tripIndex} km</Text>
-              </View>
-              <View style={styles.textRow}>
-                <Text style={styles.receiptTextLeft}>{i18n.t('AIRPLANE')}</Text>
-                {/*Type of plane*/}
-                <Text style={styles.receiptTextRight}>{planeMake} {planeModel}</Text>
-              </View>
-              <View style={styles.textRow}>
-                <Text style={styles.receiptTextLeft}>{i18n.t('CLASS')}</Text>
-                {/*Class of seat*/}
-                <Text style={styles.receiptTextRight}>{seatIndex}</Text>
-              </View>
-            </View>
-            {/*Navigate to next screen*/}
-            <TouchableOpacity
-              style={styles.bottomGreenButton}
-              onPress={() => this.props.navigation.navigate('CarbonEmissions', {
-                tripIndex: tripIndex,
-                depCityName: depCityName,
-                arrCityName: arrCityName,
-                distance: distanceTraveled * this.state.tripIndex,
-                planeMake: planeMake,
-                planeModel: planeModel,
-                seatState: seatIndex,
-                flightChars: flightChars,
-                flightNums: flightNums,
-              })}>
-              <Text style={styles.buttonText}>{i18n.t('CALCULATE CARBON FOOTPRINT')}</Text>
-            </TouchableOpacity>
+            <MenuBar navigation={this.props.navigation} />
           </View>
-          <MenuBar navigation={this.props.navigation}/>
-        </View>
-      )
+        </ImageBackground>
+      );
     }
   }
 }
 
-const { width, height } = Dimensions.get('screen');
-
 const styles = StyleSheet.create({
-  containerLoading: {
+  background_image: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    height: height,
-    width: width,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.black,
   },
-  loadingIcon: {
-    color: COLORS.lightblue,
-    fontSize: 120,
-    textAlign: 'center'
-  },
-  loadingText: {
-    marginTop: '5%',
-    fontFamily: 'Montserrat-bold',
-    fontSize: 12,
-    color: COLORS.lightblue,
-    textAlign: 'center'
-  },
-  container: {
+  backDrop: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: COLORS.white,
-    height: height,
-    width: width
+    backgroundColor: "transparent",
   },
-  containerTop: {
-    paddingLeft: width * 0.05,
-    paddingRight: width * 0.05,
-    paddingTop: height * 0.06,
-    marginBottom: height * 0.10,
-    backgroundColor: COLORS.white,
-  },
-  buttonBarNav: {
-    flexDirection: 'row',
-    height: height * 0.05,
-    justifyContent: 'space-between',
-    marginBottom: height * 0.05,
-  },
-  buttonBarTop: {
-    flexDirection: 'row',
-    height: height * 0.04,
-    justifyContent: 'center',
-    width: '66%',
-  },
-  buttonBarBottom: {
-    flexDirection: 'row',
-    height: height * 0.04,
-    justifyContent: 'center',
-  },
-  leftGreenButton: {
-    borderTopLeftRadius: 5,
-    borderBottomLeftRadius: 5,
-    marginRight: 3,
-    backgroundColor: COLORS.lightgreen,
+
+  // Content Wrapper
+  innerView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "flex-end",
+    flexDirection: "column",
+    marginLeft: Math.round(moderateScale(105, 0.625)),
+    marginRight: Math.round(moderateScale(20, 0.0625)),
+    marginTop: Math.round(moderateScale(50, 0.25)),
+    marginBottom: Math.round(moderateScale(30, 0.25)),
   },
-  middleGreenButton: {
-    backgroundColor: COLORS.lightgreen,
-    marginRight: 3,
+
+  // Top Inner View
+  topInnerView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "space-evenly",
+    flexDirection: "column",
+    marginBottom: Math.round(verticalScale(10)),
   },
-  rightGreenButton: {
-    borderTopRightRadius: 5,
-    borderBottomRightRadius: 5,
-    backgroundColor: COLORS.lightgreen,
+  flightNumberLabel: {
+    color: COLORS.lightSandy,
+    fontFamily: "Poppins",
+    fontSize: Math.round(moderateScale(16, 0.0625)),
+  },
+  flightNumberText: {
+    color: COLORS.lightSandy,
+    fontFamily: "Poppins-bold",
+    fontSize: Math.round(moderateScale(40, 0.0625)),
+  },
+  flightInfoText: {
+    color: COLORS.lightSandy,
+    fontFamily: "Poppins",
+    fontSize: Math.round(moderateScale(16, 0.0625)),
+  },
+
+  // itinerary View
+  itineraryView: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  plane_icon_view: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
-  planeInfoText: {
-    paddingBottom: height * 0.03,
+  plane_icon: {
+    flex: 1,
+    color: COLORS.lightSandy,
+    textAlign: "center",
+    fontSize: Math.round(moderateScale(35, 0.0625)),
   },
-  smallBlueText: {
-    marginTop: '5%',
-    fontFamily: 'Montserrat',
-    fontSize: 12,
-    color: COLORS.lightblue,
+  itineraryViewItem: {
+    flex: 1,
+    flexDirection: "column",
   },
-  bigBlueText: {
-    fontFamily: 'Montserrat-bold',
-    fontSize: 30,
-    color: COLORS.lightblue
+  itineraryLabel: {
+    color: COLORS.lightSandy,
+    textAlign: "center",
+    fontSize: Math.round(moderateScale(14, 0.0625)),
   },
-  midGreyText: {
-    fontFamily: 'Montserrat',
-    fontSize: 15,
-    color: COLORS.darkgrey,
+  itineraryAirportCode: {
+    color: COLORS.lightSandy,
+    fontFamily: "Poppins",
+    textAlign: "center",
+    fontSize: Math.round(moderateScale(40, 0.0625)),
   },
-  bottomGreenButton: {
+
+  // Seat Index View
+  seatIndexView: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: Math.round(verticalScale(10)),
+  },
+  switchView: {
+    flex: 1,
+    alignItems: "center",
+    flexDirection: "column",
+  },
+  seatIndexViewItem: {
+    flex: 1,
+    flexDirection: "column",
+  },
+  seatIndexLabel: {
+    color: COLORS.lightSandy,
+    textAlign: "center",
+    fontSize: Math.round(moderateScale(14, 0.0625)),
+  },
+
+  // Tab Inner View
+  tabView: {
+    flex: 1 / 10,
+    flexDirection: "row",
     borderRadius: 10,
-    backgroundColor: COLORS.lightgreen,
-    height: height * 0.08,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: COLORS.lightSandy,
+    marginBottom: Math.round(verticalScale(10)),
   },
-  buttonText: {
-    fontFamily: 'Montserrat-bold',
-    color: COLORS.darkgrey,
-    fontSize: 12
+  tabButtonActive: {
+    flex: 1,
+    height: "100%",
+    justifyContent: "center",
+    borderRadius: 10,
+    backgroundColor: COLORS.opaqueGreyForestGreen,
   },
-  receiptContainer: {
-    marginBottom: height * 0.1125
+  tabTextActive: {
+    color: COLORS.forestgreen,
+    textAlign: "center",
+    fontFamily: "Poppins",
+    fontSize: Math.round(moderateScale(12, 0.3)),
   },
-  receiptTextLeft: {
-    fontFamily: 'Montserrat',
-    color: COLORS.darkgrey,
-    fontSize: 12
+  tabButtonInActive: {
+    flex: 1,
+    height: "100%",
+    borderRadius: 10,
+    justifyContent: "center",
+    backgroundColor: "transparent",
   },
-  receiptTextRight: {
-    fontFamily: 'Montserrat-bold',
-    color: COLORS.darkgrey,
-    fontSize: 12
+  tabTextInActive: {
+    color: COLORS.opaqueForestGreen,
+    textAlign: "center",
+    fontFamily: "Poppins",
+    fontSize: Math.round(moderateScale(12, 0.3)),
   },
-  dashedLine: {
-    width: '100%',
-    height: 1,
-    marginTop: height * 0.02,
-    marginBottom: height * 0.02
+
+  // Bottom Inner View
+  bottomInnerView: {
+    flex: 1,
+    justifyContent: "space-evenly",
   },
-  textRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: height * 0.02,
+  label: {
+    color: COLORS.lightSandy,
+    fontFamily: "Poppins",
+    fontSize: Math.round(moderateScale(14, 0.0625)),
   },
-  navigationIcon: {
-    color: COLORS.grey,
-    fontSize: 30,
+  dataView: {
+    // marginBottom: Math.round(verticalScale(15)),
+  },
+  dataText: {
+    color: COLORS.lightSandy,
+    fontFamily: "Poppins",
+    fontSize: Math.round(moderateScale(40, 0.0625)),
+  },
+  unit_label: {
+    color: COLORS.lightSandy,
+    fontFamily: "Poppins",
+    fontSize: Math.round(moderateScale(18, 0.0625)),
+  },
+  submitButton: {
+    alignItems: "center",
+    borderRadius: 10,
+    padding: Math.round(verticalScale(10)),
+    backgroundColor: COLORS.lightSandy,
+  },
+  submitLabel: {
+    color: COLORS.forestgreen,
+    fontSize: Math.round(moderateScale(20, 0.05)),
+    fontFamily: "Poppins-bold",
+    padding: Math.round(moderateScale(10, 0.0125)),
   },
 });
