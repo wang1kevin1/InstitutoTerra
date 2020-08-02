@@ -169,8 +169,8 @@ export default class UserProfileScreen extends React.Component {
                     {
                         this.slides.map((image, index) => ( 
                             <Image key={index} source={this.slides[index].image} style={{width, height, resizeMode: 'contain'}}/>
-                        ))
-                    }
+                            ))
+                        }
                 </ScrollView>
                 {this.pagination}
                 <MenuBar navigation={this.props.navigation}/>
@@ -223,8 +223,7 @@ const styles = StyleSheet.create({
         height: height * .2,
     },
     paginationContainer: {
-        backgroundColor: COLORS.darkgrey,
-        marginBottom: height * 0.04
+        backgroundColor: 'transparent'
     },
     bottomGreenButton: {
         borderRadius: 10,
@@ -265,4 +264,5 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat',
         fontSize: 12
     }
+
 })
