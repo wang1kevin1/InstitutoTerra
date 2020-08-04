@@ -510,7 +510,7 @@ export default class FlightInfoScreen extends React.Component {
                 <View style={styles.dataView}>
                   <Text style={styles.label}>Carbon Emissions</Text>
                   <Text style={styles.dataText}>
-                    {carbonEmissions}{" "}
+                    {isTwoWay == true ? carbonEmissions * 2 : carbonEmissions}
                     <Text style={styles.unit_label}>tons of CO2</Text>
                   </Text>
                 </View>
