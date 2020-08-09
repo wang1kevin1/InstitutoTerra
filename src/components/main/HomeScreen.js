@@ -143,80 +143,102 @@ export default class HomeScreen extends React.Component {
       });
   }
 
+  handleNavTest() {
+    let fake_props = {
+      isTwoWay: false,
+      depCityName: "San Francisco",
+      arrCityName: "Abu Dabi",
+      distance: 5000,
+      footprint: 2.82,
+      flightChars: "UA",
+      flightNums: "949",
+    };
+
+    this.props.navigation.navigate("CheckoutWithFlight", fake_props);
+  }
+
   render() {
     return (
       <View style={styles.container}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS == "ios" ? "padding" : null}
-          enabled="false"
-          style={styles.container}>
-          <ImageBackground
-            source={this.background}
-            style={styles.imageBackground}>
-            <View>
-              <View style={styles.textContainer}>
-                {/* Intro Text Body View */}
-                <View>
-                  <Text style={styles.largeWhiteText}>
-                    A cada $6 uma árvore é plantada.
-                  </Text>
-                  <Text style={styles.mediumWhiteText}>
-                    Faça sua doação e ajude a recuperar a Mata Atlântica da
-                    Fazenda do Bulcão.
-                  </Text>
-                  <Text style={styles.smallWhiteText}>
-                    Insira o número de vôo para iniciar ou{'\n'}
-                    <Text 
-                      style={styles.linkWhiteText}
-                      onPress={() => this.props.navigation.navigate("CheckoutWithoutFlight")}>
-                      doe sem número de vôo
-                    <MaterialCommunityIcons
-                      name="chevron-double-right"
-                      style={styles.chevronIcon}
-                      />
-                  </Text>
-                  
-                  </Text>
-                </View>
-                <View style={styles.searchContainer}>
-                  {/* Enter flight number */}
-                  <Input
-                    containerStyle={styles.containerStyle}
-                    inputContainerStyle={styles.inputContainerStyle}
-                    inputStyle={styles.inputStyle}
-                    rightIcon={
-                      <Ionicons
-                        style={styles.searchIcon}
-                        name="md-arrow-forward"
-                        onPress={() => this.checkNum()}
-                      />
-                    }
-                    errorMessage={i18n.t("Please enter a valid flight number")}
-                    errorStyle={[
-                      {
-                        fontSize:
-                          this.state.error == false ? scale(3) : scale(10),
-                      },
-                      {
-                        color:
-                          this.state.error == false
-                            ? "transparent"
-                            : COLORS.sandy,
-                      },
-                    ]}
-                    autoCapitalize="characters"
-                    autoCorrect={false}
-                    ref={flightSearch}
-                    onChangeText={(value) => this.onChangeText("flight", value)}
-                  />
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS == "ios" ? "padding" : null}
+            enabled="false"
+            style={styles.container}>
+            <ImageBackground
+              source={this.background}
+              style={styles.imageBackground}>
+              <View>
+                <View style={styles.textContainer}>
+                  {/* Intro Text Body View */}
+                  <View>
+                    <Text style={styles.largeWhiteText}>
+                      A cada $6 uma árvore é plantada.
+                    </Text>
+                    <Text style={styles.mediumWhiteText}>
+                      Faça sua doação e ajude a recuperar a Mata Atlântica da
+                      Fazenda do Bulcão.
+                    </Text>
+                    <Text style={styles.smallWhiteText}>
+                      Insira o número de vôo para iniciar ou{"\n"}
+                      <Text
+                        style={styles.linkWhiteText}
+                        onPress={() =>
+                          this.props.navigation.navigate(
+                            "CheckoutWithoutFlight"
+                          )
+                        }>
+                        doe sem número de vôo
+                        <MaterialCommunityIcons
+                          name="chevron-double-right"
+                          style={styles.chevronIcon}
+                        />
+                      </Text>
+                    </Text>
+                  </View>
+                  <View style={styles.searchContainer}>
+                    {/* Enter flight number */}
+                    <Input
+                      containerStyle={styles.containerStyle}
+                      inputContainerStyle={styles.inputContainerStyle}
+                      inputStyle={styles.inputStyle}
+                      rightIcon={
+                        <Ionicons
+                          style={styles.searchIcon}
+                          name="md-arrow-forward"
+                          // onPress={() => this.checkNum()}
+                          onPress={() => this.handleNavTest()}
+                        />
+                      }
+                      errorMessage={i18n.t(
+                        "Please enter a valid flight number"
+                      )}
+                      errorStyle={[
+                        {
+                          fontSize:
+                            this.state.error == false ? scale(3) : scale(10),
+                        },
+                        {
+                          color:
+                            this.state.error == false
+                              ? "transparent"
+                              : COLORS.sandy,
+                        },
+                      ]}
+                      autoCapitalize="characters"
+                      autoCorrect={false}
+                      ref={flightSearch}
+                      onChangeText={(value) =>
+                        this.onChangeText("flight", value)
+                      }
+                    />
+                  </View>
                 </View>
               </View>
-            </View>
-          </ImageBackground>
-        </KeyboardAvoidingView>
+            </ImageBackground>
+          </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
-        <MenuBar navigation={this.props.navigation}/>      
+        <MenuBar navigation={this.props.navigation} />
       </View>
     );
   }

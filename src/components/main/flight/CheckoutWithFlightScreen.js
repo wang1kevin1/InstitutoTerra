@@ -118,10 +118,15 @@ export default class CheckoutWithFlightScreen extends React.Component {
                 onPress={() => this.handleAdd()}
               />
             </View>
+
+            <View>
+              <Text>hello</Text>
+            </View>
           </View>
 
-          <View></View>
+          <View style={styles.hr}></View>
 
+          {/* Number of Trees and Total Cost */}
           <View>
             <List>
               <ListItem>
@@ -183,5 +188,9 @@ const styles = StyleSheet.create({
     fontSize: Math.round(moderateScale(20, 0.05)),
     fontFamily: "Poppins-bold",
     padding: Math.round(moderateScale(10, 0.0125)),
+  },
+  hr: {
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
   },
 });
