@@ -527,9 +527,6 @@ export default class FlightInfoScreen extends React.Component {
                         arrCityName: arrCityName,
                         distance: distanceTraveled,
                         footprint: carbonEmissions,
-                        planeMake: planeMake,
-                        planeModel: planeModel,
-                        seatState: seatIndex,
                         flightChars: flightChars,
                         flightNums: flightNums,
                       })
