@@ -2,6 +2,8 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
 import { verticalScale, moderateScale } from "react-native-size-matters";
+import { List, ListItem, Left, Right } from "native-base";
+import { Ionicons } from "@expo/vector-icons";
 import Auth from "@aws-amplify/auth";
 import i18n from "i18n-js";
 
@@ -86,7 +88,69 @@ export default class CheckoutWithFlightScreen extends React.Component {
     return (
       <View style={styles.backDrop}>
         <View style={styles.innerView}>
-          <Text>Hello World</Text>
+          {/* Flight Number and Carbon Emissions */}
+          <View>
+            <Text>
+              {i18n.t("Flight Number")} {flightChars} {flightNums}
+            </Text>
+            <Text>{footprint}</Text>
+            <Text>{i18n.t("tons of CO2")}</Text>
+          </View>
+
+          {/* Number of Trees */}
+          <View>
+            <Text>{treeNum}</Text>
+          </View>
+
+          {/* Add or Remove Trees */}
+          <View>
+            {/* Minus Icon */}
+            <View>
+              <Ionicons
+                name="ios-remove-circle"
+                onPress={() => this.handleRemove()}
+              />
+            </View>
+            {/* Add Icon */}
+            <View>
+              <Ionicons
+                name="ios-add-circle"
+                onPress={() => this.handleAdd()}
+              />
+            </View>
+          </View>
+
+          <View></View>
+
+          <View>
+            <List>
+              <ListItem>
+                <Left>
+                  <Text style={styles.itemTitle}>Number of Trees</Text>
+                </Left>
+                <Right>
+                  <Text style={styles.itemValue}>{treeNum}</Text>
+                </Right>
+              </ListItem>
+              <ListItem>
+                <Left>
+                  <Text style={styles.itemTitle}>Total Cost</Text>
+                </Left>
+                <Right>
+                  <Text style={styles.itemValue}>${total_cost}</Text>
+                </Right>
+              </ListItem>
+            </List>
+          </View>
+
+          {/* Navigate to ReceiptWithFlight */}
+          <View>
+            <TouchableOpacity
+              style={styles.submitButton}
+              onPress={() => this.handleCheckout()}>
+              <Text style={styles.submitLabel}>Checkout</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <MenuBar navigation={this.props.navigation} />
       </View>
@@ -107,5 +171,17 @@ const styles = StyleSheet.create({
     marginRight: Math.round(moderateScale(20, 0.0625)),
     marginTop: Math.round(moderateScale(70, 0.0625)),
     marginBottom: Math.round(moderateScale(30, 0.25)),
+  },
+  submitButton: {
+    alignItems: "center",
+    borderRadius: 10,
+    padding: Math.round(verticalScale(10)),
+    backgroundColor: COLORS.forestgreen,
+  },
+  submitLabel: {
+    color: COLORS.sandy,
+    fontSize: Math.round(moderateScale(20, 0.05)),
+    fontFamily: "Poppins-bold",
+    padding: Math.round(moderateScale(10, 0.0125)),
   },
 });

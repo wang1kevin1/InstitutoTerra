@@ -516,7 +516,7 @@ export default class FlightInfoScreen extends React.Component {
                 </View>
 
                 {/* Proceed to Checkout */}
-                <View style={styles.navigationView}>
+                <View>
                   <TouchableOpacity
                     style={styles.submitButton}
                     disabled={this.state.isLoading}

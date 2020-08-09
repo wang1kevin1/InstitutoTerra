@@ -1,9 +1,10 @@
 {
   "made possible with": "conseguido gracias a",
-    
+
   "SIGN IN": "INICIA SESIÓN",
   "PROFILE": "PERFIL",
   "FLIGHT NUMBER": "NÚMERO DE VUELO",
+  "Flight Number": "Número de vuelo",
   "Please enter a valid flight number": "Por favor introduzca un número de vuelo válido",
   "DONATE WITH NO FLIGHT NUMBER": "DONAR SIN NÚMERO DE VUELO",
 
@@ -70,6 +71,8 @@
   "CALCULATE CARBON FOOTPRINT": "CALCULAR HUELLA DE CARBONO",
 
   "METRIC TONS": "TONELADAS",
+  "tons of CO2": "toneladas de CO2",
+
   "WE CAN FIX THIS TOGETHER": "PODEMOS MEJORARLO JUNTOS",
   "PLANT TREES": "PLANTAR ÁRBOLES",
 
