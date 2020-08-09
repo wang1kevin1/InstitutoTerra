@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
+import { verticalScale, moderateScale } from "react-native-size-matters";
 import Auth from "@aws-amplify/auth";
 import i18n from "i18n-js";
 
@@ -8,7 +9,7 @@ import * as CONSTANTS from "../../utilities/Constants.js";
 import COLORS from "../../../assets/Colors.js";
 import MenuBar from "../MenuBar.js";
 
-export default class CheckoutWithFlightScreen extends Component {
+export default class CheckoutWithFlightScreen extends React.Component {
   state = {
     treeNum: 0,
     total_cost: 0,
