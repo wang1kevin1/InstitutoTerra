@@ -82,7 +82,6 @@ export default class CheckoutWithFlightScreen extends React.Component {
     } = this.state;
 
     const years = this.calcYears();
-    const color = this.colorVariant();
 
     return (
       <View style={styles.backDrop}>
