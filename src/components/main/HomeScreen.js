@@ -149,7 +149,7 @@ export default class HomeScreen extends React.Component {
       depCityName: "San Francisco",
       arrCityName: "Abu Dabi",
       distance: 5000,
-      footprint: 2.82,
+      footprint: 0.098,
       flightChars: "UA",
       flightNums: "949",
     };

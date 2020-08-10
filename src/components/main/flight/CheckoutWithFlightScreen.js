@@ -90,11 +90,11 @@ export default class CheckoutWithFlightScreen extends React.Component {
         <View style={styles.innerView}>
           {/* Flight Number and Carbon Emissions */}
           <View>
-            <Text>
+            <Text style={styles.paragraph}>
               {i18n.t("Flight Number")} {flightChars} {flightNums}
             </Text>
-            <Text>{footprint}</Text>
-            <Text>{i18n.t("tons of CO2")}</Text>
+            <Text style={styles.emissions}>{footprint}</Text>
+            <Text style={styles.emissionsUnits}>{i18n.t("tons of CO2")}</Text>
           </View>
 
           {/* Number of Trees */}
@@ -103,10 +103,11 @@ export default class CheckoutWithFlightScreen extends React.Component {
           </View>
 
           {/* Add or Remove Trees */}
-          <View>
+          <View style={styles.addRemoveView}>
             {/* Minus Icon */}
-            <View>
+            <View style={styles.iconView}>
               <Ionicons
+                style={styles.removeIcon}
                 name="ios-remove-circle"
                 onPress={() => this.handleRemove()}
               />
@@ -114,24 +115,31 @@ export default class CheckoutWithFlightScreen extends React.Component {
             {/* Add Icon */}
             <View>
               <Ionicons
+                style={styles.addIcon}
                 name="ios-add-circle"
                 onPress={() => this.handleAdd()}
               />
             </View>
-
-            <View>
-              <Text>hello</Text>
-            </View>
           </View>
 
-          <View style={styles.hr}></View>
+          <View>
+            <Text style={styles.paragraph}>
+              {i18n.t("Emissions Statement")}{" "}
+              <Text style={{ fontWeight: "bold" }}>
+                {years} {years > 1 && i18n.t("year") + "s"}
+                {years == 1 && i18n.t("year")}
+              </Text>
+            </Text>
+          </View>
+
+          <View style={styles.horizontal_line}></View>
 
           {/* Number of Trees and Total Cost */}
           <View>
             <List>
               <ListItem>
                 <Left>
-                  <Text style={styles.itemTitle}>Number of Trees</Text>
+                  <Text style={styles.paragraph}>Number of Trees</Text>
                 </Left>
                 <Right>
                   <Text style={styles.itemValue}>{treeNum}</Text>
@@ -139,7 +147,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
               </ListItem>
               <ListItem>
                 <Left>
-                  <Text style={styles.itemTitle}>Total Cost</Text>
+                  <Text style={styles.paragraph}>Total Cost</Text>
                 </Left>
                 <Right>
                   <Text style={styles.itemValue}>${total_cost}</Text>
@@ -177,6 +185,50 @@ const styles = StyleSheet.create({
     marginTop: Math.round(moderateScale(70, 0.0625)),
     marginBottom: Math.round(moderateScale(30, 0.25)),
   },
+  addRemoveView: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  iconView: {
+    marginRight: Math.round(verticalScale(30)),
+  },
+  addIcon: {
+    color: COLORS.forestgreen,
+    fontSize: Math.round(moderateScale(70, 0.0125)),
+  },
+  removeIcon: {
+    color: COLORS.opaqueForestGreen,
+    fontSize: Math.round(moderateScale(70, 0.0125)),
+  },
+  paragraph: {
+    color: COLORS.forestgreen,
+    textAlign: "center",
+    fontFamily: "Poppins",
+    fontSize: Math.round(moderateScale(16, 0.0625)),
+  },
+  emissions: {
+    color: COLORS.forestgreen,
+    textAlign: "center",
+    fontFamily: "Poppins",
+    fontSize: Math.round(moderateScale(40, 0.0125)),
+  },
+  emissionsUnits: {
+    color: COLORS.forestgreen,
+    textAlign: "center",
+    fontFamily: "Poppins",
+    fontSize: Math.round(moderateScale(14, 0.0625)),
+  },
+  horizontal_line: {
+    marginTop: Math.round(verticalScale(20)),
+    marginBottom: Math.round(verticalScale(10)),
+    borderBottomColor: COLORS.forestgreen,
+    borderBottomWidth: 0.5,
+  },
+  itemValue: {
+    color: COLORS.forestgreen,
+    fontFamily: "Poppins-bold",
+    fontSize: Math.round(moderateScale(14)),
+  },
   submitButton: {
     alignItems: "center",
     borderRadius: 10,
@@ -188,9 +240,5 @@ const styles = StyleSheet.create({
     fontSize: Math.round(moderateScale(20, 0.05)),
     fontFamily: "Poppins-bold",
     padding: Math.round(moderateScale(10, 0.0125)),
-  },
-  hr: {
-    borderBottomColor: "black",
-    borderBottomWidth: 1,
   },
 });
