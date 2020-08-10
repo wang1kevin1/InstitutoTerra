@@ -99,7 +99,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
 
           {/* Number of Trees */}
           <View>
-            <Text>{treeNum}</Text>
+            <Text style={styles.numTrees}>{treeNum}</Text>
           </View>
 
           {/* Add or Remove Trees */}
@@ -191,6 +191,12 @@ const styles = StyleSheet.create({
   },
   iconView: {
     marginRight: Math.round(verticalScale(30)),
+  },
+  numTrees: {
+    color: COLORS.forestgreen,
+    fontFamily: "Poppins-bold",
+    textAlign: "right",
+    fontSize: Math.round(moderateScale(100, 0.0125)),
   },
   addIcon: {
     color: COLORS.forestgreen,
