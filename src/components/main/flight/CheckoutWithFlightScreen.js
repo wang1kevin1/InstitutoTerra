@@ -13,7 +13,7 @@ import MenuBar from "../MenuBar.js";
 
 export default class CheckoutWithFlightScreen extends React.Component {
   state = {
-    treeNum: 0,
+    treeNum: 1,
     total_cost: 0,
   };
 
@@ -58,7 +58,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
 
   // handle remove
   handleRemove() {
-    if (this.state.treeNum != 0) {
+    if (this.state.treeNum > 1) {
       this.setState({
         treeNum: this.state.treeNum - 1,
         total_cost: this.state.total_cost - CONSTANTS.COST,
