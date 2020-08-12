@@ -143,20 +143,6 @@ export default class HomeScreen extends React.Component {
       });
   }
 
-  handleNavTest() {
-    let fake_props = {
-      isTwoWay: false,
-      depCityName: "San Francisco",
-      arrCityName: "Abu Dabi",
-      distance: 5000,
-      footprint: 0.098,
-      flightChars: "UA",
-      flightNums: "949",
-    };
-
-    this.props.navigation.navigate("CheckoutWithFlight", fake_props);
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -206,8 +192,7 @@ export default class HomeScreen extends React.Component {
                         <Ionicons
                           style={styles.searchIcon}
                           name="md-arrow-forward"
-                          // onPress={() => this.checkNum()}
-                          onPress={() => this.handleNavTest()}
+                          onPress={() => this.checkNum()}
                         />
                       }
                       errorMessage={i18n.t(
