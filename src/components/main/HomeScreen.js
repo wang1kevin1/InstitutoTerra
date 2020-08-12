@@ -143,6 +143,10 @@ export default class HomeScreen extends React.Component {
       });
   }
 
+  handleSkip() {
+    this.props.navigation.navigate("FlightInfo");
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -192,7 +196,13 @@ export default class HomeScreen extends React.Component {
                         <Ionicons
                           style={styles.searchIcon}
                           name="md-arrow-forward"
-                          onPress={() => this.checkNum()}
+                          /* 
+                            DEP when API calls available. 
+                            use onPress={() => this.checkNum()} below
+                            instead
+                          */
+                          onPress={() => this.handleSkip()}
+                          // onPress={() => this.checkNum()}
                         />
                       }
                       errorMessage={i18n.t(
