@@ -34,9 +34,37 @@ export default class FlightInfoScreen extends React.Component {
     this.background = background_image;
   }
 
+  /* 
+    handleFakeData() will be DEP once we get API calls
+    use this.getFlight() below instead
+  */
   componentDidMount = () => {
-    this.getFlight();
+    this.handleFakeData();
+    // this.getFlight();
   };
+
+  // Remove post Dev
+  handleFakeData() {
+    let fakeData = {
+      isReady: true,
+      flightChars: "UA",
+      flightNums: "949",
+      arrivalIata: "SFO",
+      departureIata: "LHR",
+      arrAirportName: "San Francisco International",
+      depAirportName: "Heathrow",
+      arrCityName: "San Francisco",
+      depCityName: "London",
+      arrCityIata: "SFO",
+      depCityIata: "LON",
+      planeModel: "777",
+      airlineName: "United Airlines",
+      planeMake: "Boeing",
+      distanceTraveled: 5000,
+    };
+
+    this.setState(fakeData);
+  }
 
   /* Fetch route data using flight number*/
   getFlight() {
