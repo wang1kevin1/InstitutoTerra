@@ -183,12 +183,12 @@ const styles = StyleSheet.create({
   },
   itemTitle: {
     color: COLORS.forestgreen,
-    fontSize: Math.round(moderateScale(12, 0.125)),
+    fontSize: Math.round(moderateScale(14, 0.125)),
     fontFamily: "Poppins",
   },
   itemValue: {
     color: COLORS.forestgreen,
-    fontSize: Math.round(moderateScale(12, 0.125)),
+    fontSize: Math.round(moderateScale(14, 0.125)),
     fontFamily: "Poppins-bold",
   },
   submitButton: {

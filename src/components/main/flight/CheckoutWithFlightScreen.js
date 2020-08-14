@@ -97,86 +97,91 @@ export default class CheckoutWithFlightScreen extends React.Component {
     return (
       <View style={styles.backDrop}>
         <View style={styles.innerView}>
-          {/* Flight Number and Carbon Emissions */}
-          <View>
-            <Text style={styles.paragraph}>
-              {i18n.t("Flight Number")} {flightChars} {flightNums}
-            </Text>
-            <Text style={styles.emissions}>{footprint}</Text>
-            <Text style={styles.emissionsUnits}>{i18n.t("tons of CO2")}</Text>
-          </View>
-
-          {/* Number of Trees */}
-          <View style={styles.treeNumRow}>
+          <View style={styles.top}>
+            {/* Flight Number and Carbon Emissions */}
             <View>
-              <Image source={tree} style={styles.treeImg} />
-            </View>
-            <View>
-              <Text style={styles.numTrees}>{treeNum}</Text>
-            </View>
-          </View>
-
-          {/* Add or Remove Trees */}
-          <View style={styles.addRemoveView}>
-            {/* Minus Icon */}
-            <View style={styles.iconView}>
-              <Ionicons
-                style={styles.removeIcon}
-                name="ios-remove-circle"
-                onPress={() => this.handleRemove()}
-              />
-            </View>
-            {/* Add Icon */}
-            <View>
-              <Ionicons
-                style={styles.addIcon}
-                name="ios-add-circle"
-                onPress={() => this.handleAdd()}
-              />
-            </View>
-          </View>
-
-          <View>
-            <Text style={styles.paragraph}>
-              {i18n.t("Emissions Statement")}{" "}
-              <Text style={{ fontWeight: "bold" }}>
-                {years} {years > 1 && i18n.t("year") + "s"}
-                {years == 1 && i18n.t("year")}
+              <Text style={styles.paragraph}>
+                {i18n.t("Flight Number")} {flightChars} {flightNums}
               </Text>
-            </Text>
+              <Text style={styles.emissions}>{footprint}</Text>
+              <Text style={styles.emissionsUnits}>{i18n.t("tons of CO2")}</Text>
+            </View>
+
+            {/* Number of Trees */}
+            <View style={styles.treeNumRow}>
+              <View style={styles.treeNumCol}>
+                <Image source={tree} style={styles.treeImg} />
+              </View>
+              <View style={styles.treeNumCol}>
+                <Text style={styles.numTrees}>{treeNum}</Text>
+              </View>
+            </View>
+
+            {/* Add or Remove Trees */}
+            <View style={styles.addRemoveView}>
+              {/* Minus Icon */}
+              <View style={styles.iconView}>
+                <Ionicons
+                  style={styles.removeIcon}
+                  name="ios-remove-circle"
+                  onPress={() => this.handleRemove()}
+                />
+              </View>
+              {/* Add Icon */}
+              <View>
+                <Ionicons
+                  style={styles.addIcon}
+                  name="ios-add-circle"
+                  onPress={() => this.handleAdd()}
+                />
+              </View>
+            </View>
+
+            <View>
+              <Text style={styles.paragraph}>
+                {i18n.t("Emissions Statement")}{" "}
+                <Text style={{ fontWeight: "bold" }}>
+                  {years} {years > 1 && i18n.t("year") + "s"}
+                  {years == 1 && i18n.t("year")}
+                </Text>
+              </Text>
+            </View>
           </View>
 
           <View style={styles.horizontal_line}></View>
 
           {/* Number of Trees and Total Cost */}
-          <View>
-            <List>
-              <ListItem>
-                <Left>
-                  <Text style={styles.paragraph}>Number of Trees</Text>
-                </Left>
-                <Right>
-                  <Text style={styles.itemValue}>{treeNum}</Text>
-                </Right>
-              </ListItem>
-              <ListItem>
-                <Left>
-                  <Text style={styles.paragraph}>Total Cost</Text>
-                </Left>
-                <Right>
-                  <Text style={styles.itemValue}>${total_cost}</Text>
-                </Right>
-              </ListItem>
-            </List>
-          </View>
 
-          {/* Navigate to ReceiptWithFlight */}
-          <View>
-            <TouchableOpacity
-              style={styles.submitButton}
-              onPress={() => this.handleCheckout()}>
-              <Text style={styles.submitLabel}>Checkout</Text>
-            </TouchableOpacity>
+          <View style={styles.bottom}>
+            <View>
+              <List>
+                <ListItem>
+                  <Left>
+                    <Text style={styles.paragraph}>Number of Trees</Text>
+                  </Left>
+                  <Right>
+                    <Text style={styles.itemValue}>{treeNum}</Text>
+                  </Right>
+                </ListItem>
+                <ListItem>
+                  <Left>
+                    <Text style={styles.paragraph}>Total Cost</Text>
+                  </Left>
+                  <Right>
+                    <Text style={styles.itemValue}>${total_cost}</Text>
+                  </Right>
+                </ListItem>
+              </List>
+            </View>
+
+            {/* Navigate to ReceiptWithFlight */}
+            <View>
+              <TouchableOpacity
+                style={styles.submitButton}
+                onPress={() => this.handleCheckout()}>
+                <Text style={styles.submitLabel}>Checkout</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
         <MenuBar navigation={this.props.navigation} />
@@ -194,7 +199,7 @@ const styles = StyleSheet.create({
   innerView: {
     flex: 1,
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
     marginLeft: Math.round(moderateScale(105, 0.625)),
     marginRight: Math.round(moderateScale(20, 0.0625)),
     marginTop: Math.round(moderateScale(70, 0.0625)),
@@ -216,42 +221,40 @@ const styles = StyleSheet.create({
     right: 30,
     fontFamily: "Poppins-bold",
     textAlign: "right",
-    fontSize: Math.round(moderateScale(128, 0.0125)),
+    fontSize: Math.round(moderateScale(90, 2)),
   },
   treeImg: {
-    width: verticalScale(100),
-    height: verticalScale(110),
+    height: Math.round(verticalScale(100)),
+    width: Math.round(verticalScale(100)),
     resizeMode: "contain",
   },
   addIcon: {
     color: COLORS.forestgreen,
-    fontSize: Math.round(moderateScale(80, 0.0125)),
+    fontSize: Math.round(moderateScale(50, 0.9)),
   },
   removeIcon: {
     color: COLORS.opaqueForestGreen,
-    fontSize: Math.round(moderateScale(80, 0.0125)),
+    fontSize: Math.round(moderateScale(50, 0.9)),
   },
   paragraph: {
     color: COLORS.forestgreen,
     textAlign: "center",
     fontFamily: "Poppins",
-    fontSize: Math.round(moderateScale(16, 0.0625)),
+    fontSize: Math.round(moderateScale(14, 1.5)),
   },
   emissions: {
     color: COLORS.forestgreen,
     textAlign: "center",
     fontFamily: "Poppins",
-    fontSize: Math.round(moderateScale(60, 0.0125)),
+    fontSize: Math.round(moderateScale(40, 0.125)),
   },
   emissionsUnits: {
     color: COLORS.forestgreen,
     textAlign: "center",
     fontFamily: "Poppins",
-    fontSize: Math.round(moderateScale(18, 0.0625)),
+    fontSize: Math.round(moderateScale(14, 0.625)),
   },
   horizontal_line: {
-    marginTop: Math.round(verticalScale(20)),
-    marginBottom: Math.round(verticalScale(10)),
     borderBottomColor: COLORS.forestgreen,
     borderBottomWidth: 0.5,
   },
@@ -270,6 +273,6 @@ const styles = StyleSheet.create({
     color: COLORS.sandy,
     fontSize: Math.round(moderateScale(20, 0.05)),
     fontFamily: "Poppins-bold",
-    padding: Math.round(moderateScale(10, 0.0125)),
+    padding: Math.round(moderateScale(10, 0.125)),
   },
 });
