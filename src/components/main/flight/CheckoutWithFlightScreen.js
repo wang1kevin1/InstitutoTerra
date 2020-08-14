@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  PickerIOSComponent,
+} from "react-native";
 
 import { verticalScale, moderateScale } from "react-native-size-matters";
 import { List, ListItem, Left, Right } from "native-base";
@@ -10,6 +17,8 @@ import i18n from "i18n-js";
 import * as CONSTANTS from "../../utilities/Constants.js";
 import COLORS from "../../../assets/Colors.js";
 import MenuBar from "../MenuBar.js";
+
+const tree = require("../../../assets/images/img_checkout_tree.png");
 
 export default class CheckoutWithFlightScreen extends React.Component {
   state = {
@@ -98,8 +107,13 @@ export default class CheckoutWithFlightScreen extends React.Component {
           </View>
 
           {/* Number of Trees */}
-          <View>
-            <Text style={styles.numTrees}>{treeNum}</Text>
+          <View style={styles.treeNumRow}>
+            <View>
+              <Image source={tree} style={styles.treeImg} />
+            </View>
+            <View>
+              <Text style={styles.numTrees}>{treeNum}</Text>
+            </View>
           </View>
 
           {/* Add or Remove Trees */}
@@ -180,6 +194,7 @@ const styles = StyleSheet.create({
   innerView: {
     flex: 1,
     flexDirection: "column",
+    justifyContent: "space-between",
     marginLeft: Math.round(moderateScale(105, 0.625)),
     marginRight: Math.round(moderateScale(20, 0.0625)),
     marginTop: Math.round(moderateScale(70, 0.0625)),
@@ -192,19 +207,29 @@ const styles = StyleSheet.create({
   iconView: {
     marginRight: Math.round(verticalScale(30)),
   },
+  treeNumRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
   numTrees: {
     color: COLORS.forestgreen,
+    right: 30,
     fontFamily: "Poppins-bold",
     textAlign: "right",
-    fontSize: Math.round(moderateScale(100, 0.0125)),
+    fontSize: Math.round(moderateScale(128, 0.0125)),
+  },
+  treeImg: {
+    width: verticalScale(100),
+    height: verticalScale(110),
+    resizeMode: "contain",
   },
   addIcon: {
     color: COLORS.forestgreen,
-    fontSize: Math.round(moderateScale(70, 0.0125)),
+    fontSize: Math.round(moderateScale(80, 0.0125)),
   },
   removeIcon: {
     color: COLORS.opaqueForestGreen,
-    fontSize: Math.round(moderateScale(70, 0.0125)),
+    fontSize: Math.round(moderateScale(80, 0.0125)),
   },
   paragraph: {
     color: COLORS.forestgreen,
@@ -216,13 +241,13 @@ const styles = StyleSheet.create({
     color: COLORS.forestgreen,
     textAlign: "center",
     fontFamily: "Poppins",
-    fontSize: Math.round(moderateScale(40, 0.0125)),
+    fontSize: Math.round(moderateScale(60, 0.0125)),
   },
   emissionsUnits: {
     color: COLORS.forestgreen,
     textAlign: "center",
     fontFamily: "Poppins",
-    fontSize: Math.round(moderateScale(14, 0.0625)),
+    fontSize: Math.round(moderateScale(18, 0.0625)),
   },
   horizontal_line: {
     marginTop: Math.round(verticalScale(20)),
@@ -233,7 +258,7 @@ const styles = StyleSheet.create({
   itemValue: {
     color: COLORS.forestgreen,
     fontFamily: "Poppins-bold",
-    fontSize: Math.round(moderateScale(14)),
+    fontSize: Math.round(moderateScale(16)),
   },
   submitButton: {
     alignItems: "center",
