@@ -17,13 +17,14 @@ import i18n from "i18n-js";
 import * as CONSTANTS from "../../utilities/Constants.js";
 import COLORS from "../../../assets/Colors.js";
 import MenuBar from "../MenuBar.js";
+import { withTheme } from "react-native-elements";
 
 const tree = require("../../../assets/images/img_checkout_tree.png");
 
 export default class CheckoutWithFlightScreen extends React.Component {
   state = {
     treeNum: 1,
-    total_cost: 0,
+    total_cost: CONSTANTS.COST,
   };
 
   componentDidMount = () => {
@@ -139,7 +140,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
 
             <View>
               <Text style={styles.paragraph}>
-                {i18n.t("Emissions Statement")}{" "}
+                {i18n.t("Your flight's CO2 emission will be neutralized in")}{" "}
                 <Text style={{ fontWeight: "bold" }}>
                   {years} {years > 1 && i18n.t("year") + "s"}
                   {years == 1 && i18n.t("year")}
@@ -208,6 +209,7 @@ const styles = StyleSheet.create({
   addRemoveView: {
     flexDirection: "row",
     justifyContent: "center",
+    marginBottom: 20,
   },
   iconView: {
     marginRight: Math.round(verticalScale(30)),
@@ -215,6 +217,10 @@ const styles = StyleSheet.create({
   treeNumRow: {
     flexDirection: "row",
     justifyContent: "center",
+    // backgroundColor: "black",
+  },
+  treeNumCol: {
+    // backgroundColor: "white",
   },
   numTrees: {
     color: COLORS.forestgreen,
@@ -257,6 +263,8 @@ const styles = StyleSheet.create({
   horizontal_line: {
     borderBottomColor: COLORS.forestgreen,
     borderBottomWidth: 0.5,
+    marginTop: Math.round(moderateScale(5, 0.625)),
+    marginBottom: Math.round(moderateScale(5, 0.625)),
   },
   itemValue: {
     color: COLORS.forestgreen,
@@ -271,7 +279,7 @@ const styles = StyleSheet.create({
   },
   submitLabel: {
     color: COLORS.sandy,
-    fontSize: Math.round(moderateScale(20, 0.05)),
+    fontSize: Math.round(moderateScale(20, 0.5)),
     fontFamily: "Poppins-bold",
     padding: Math.round(moderateScale(10, 0.125)),
   },
