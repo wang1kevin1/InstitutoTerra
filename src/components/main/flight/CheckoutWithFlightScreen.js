@@ -81,7 +81,24 @@ export default class CheckoutWithFlightScreen extends React.Component {
     let tempY = this.state.footprint * 1000;
     let factor = this.state.treeNum * 18;
     tempY /= factor;
-    return Math.round(tempY);
+
+    if (tempY >= 1) {
+      return Math.round(tempY);
+    } else {
+      return tempY.toFixed(2);
+    }
+  }
+
+  getYears(years) {
+    if (years > 1) {
+      return `${years} years`;
+    } else if (years === 1) {
+      return `${years} year`;
+    } else if (years < 0.08) {
+      return `a few days`;
+    } else {
+      return `${years * 12} months`;
+    }
   }
 
   render() {
@@ -137,8 +154,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
               <Text style={styles.paragraph}>
                 {i18n.t("Your flight's CO2 emission will be neutralized in")}{" "}
                 <Text style={{ fontWeight: "bold" }}>
-                  {years} {years > 1 && i18n.t("year") + "s"}
-                  {years == 1 && i18n.t("year")}
+                  {this.getYears(years)}
                 </Text>
               </Text>
             </View>
