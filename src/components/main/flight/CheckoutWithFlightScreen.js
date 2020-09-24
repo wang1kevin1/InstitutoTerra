@@ -108,8 +108,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
           </View>
 
           {/* Number of Trees */}
-          <View style={styles.oneBox}>
-            <Image source={tree} style={styles.treeImg} />
+          <View height={Math.round(moderateScale(150, 0.3))}>
             <Text style={styles.numTrees}>{treeNum}</Text>
           </View>
 
@@ -209,24 +208,15 @@ const styles = StyleSheet.create({
     paddingBottom: Math.round(verticalScale(20)),
   },
   oneBox: {
-    position: "relative",
     flexDirection: "row",
-    alignSelf: "center",
-    marginBottom: Math.round(verticalScale(20)),
+    justifyContent: "space-between",
+    overflow: "hidden",
   },
   numTrees: {
-    position: "absolute",
-    top: Math.round(moderateScale(-5, 3)),
-    left: Math.round(verticalScale(30, 0.3)),
     color: COLORS.forestgreen,
+    textAlign: "center",
     fontFamily: "Poppins-bold",
-    fontSize: Math.round(moderateScale(95, 2)),
-  },
-  treeImg: {
-    height: Math.round(verticalScale(100)),
-    width: Math.round(verticalScale(100)),
-    right: Math.round(verticalScale(30, 0.3)),
-    resizeMode: "contain",
+    fontSize: Math.round(moderateScale(70, 2)),
   },
   addIcon: {
     color: COLORS.forestgreen,
@@ -240,7 +230,7 @@ const styles = StyleSheet.create({
     color: COLORS.forestgreen,
     textAlign: "center",
     fontFamily: "Poppins",
-    fontSize: Math.round(moderateScale(14, 1.5)),
+    fontSize: Math.round(moderateScale(12, 1.5)),
   },
   emissions: {
     color: COLORS.forestgreen,
@@ -261,7 +251,7 @@ const styles = StyleSheet.create({
   itemValue: {
     color: COLORS.forestgreen,
     fontFamily: "Poppins-bold",
-    fontSize: Math.round(moderateScale(16)),
+    fontSize: Math.round(moderateScale(14)),
   },
   submitButton: {
     alignItems: "center",
