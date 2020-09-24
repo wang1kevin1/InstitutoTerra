@@ -98,30 +98,26 @@ export default class CheckoutWithFlightScreen extends React.Component {
     return (
       <View style={styles.backDrop}>
         <View style={styles.innerView}>
-          <View style={styles.top}>
-            {/* Flight Number and Carbon Emissions */}
-            <View>
-              <Text style={styles.paragraph}>
-                {i18n.t("Flight Number")} {flightChars} {flightNums}
-              </Text>
-              <Text style={styles.emissions}>{footprint}</Text>
-              <Text style={styles.emissionsUnits}>{i18n.t("tons of CO2")}</Text>
-            </View>
+          {/* Flight Number and Carbon Emissions */}
+          <View>
+            <Text style={styles.paragraph}>
+              {i18n.t("Flight Number")} {flightChars} {flightNums}
+            </Text>
+            <Text style={styles.emissions}>{footprint}</Text>
+            <Text style={styles.emissionsUnits}>{i18n.t("tons of CO2")}</Text>
+          </View>
 
-            {/* Number of Trees */}
-            <View style={styles.treeNumRow}>
-              <View style={styles.treeNumCol}>
-                <Image source={tree} style={styles.treeImg} />
-              </View>
-              <View style={styles.treeNumCol}>
-                <Text style={styles.numTrees}>{treeNum}</Text>
-              </View>
-            </View>
+          {/* Number of Trees */}
+          <View style={styles.oneBox}>
+            <Image source={tree} style={styles.treeImg} />
+            <Text style={styles.numTrees}>{treeNum}</Text>
+          </View>
 
-            {/* Add or Remove Trees */}
-            <View style={styles.addRemoveView}>
-              {/* Minus Icon */}
-              <View style={styles.iconView}>
+          {/* Add or Remove Trees */}
+          <View style={styles.addRemoveView}>
+            {/* Minus Icon */}
+            <View style={styles.iconView}>
+              <View style={{ marginRight: Math.round(moderateScale(30, 0.3)) }}>
                 <Ionicons
                   style={styles.removeIcon}
                   name="ios-remove-circle"
@@ -149,40 +145,37 @@ export default class CheckoutWithFlightScreen extends React.Component {
             </View>
           </View>
 
-          <View style={styles.horizontal_line}></View>
-
           {/* Number of Trees and Total Cost */}
 
-          <View style={styles.bottom}>
-            <View>
-              <List>
-                <ListItem>
-                  <Left>
-                    <Text style={styles.paragraph}>Number of Trees</Text>
-                  </Left>
-                  <Right>
-                    <Text style={styles.itemValue}>{treeNum}</Text>
-                  </Right>
-                </ListItem>
-                <ListItem>
-                  <Left>
-                    <Text style={styles.paragraph}>Total Cost</Text>
-                  </Left>
-                  <Right>
-                    <Text style={styles.itemValue}>${total_cost}</Text>
-                  </Right>
-                </ListItem>
-              </List>
-            </View>
+          <View style={styles.horizontal_line}></View>
+          <View>
+            <List>
+              <ListItem>
+                <Left>
+                  <Text style={styles.paragraph}>Number of Trees</Text>
+                </Left>
+                <Right>
+                  <Text style={styles.itemValue}>{treeNum}</Text>
+                </Right>
+              </ListItem>
+              <ListItem>
+                <Left>
+                  <Text style={styles.paragraph}>Total Cost</Text>
+                </Left>
+                <Right>
+                  <Text style={styles.itemValue}>${total_cost}</Text>
+                </Right>
+              </ListItem>
+            </List>
+          </View>
 
-            {/* Navigate to ReceiptWithFlight */}
-            <View>
-              <TouchableOpacity
-                style={styles.submitButton}
-                onPress={() => this.handleCheckout()}>
-                <Text style={styles.submitLabel}>Checkout</Text>
-              </TouchableOpacity>
-            </View>
+          {/* Navigate to ReceiptWithFlight */}
+          <View>
+            <TouchableOpacity
+              style={styles.submitButton}
+              onPress={() => this.handleCheckout()}>
+              <Text style={styles.submitLabel}>Checkout</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <MenuBar navigation={this.props.navigation} />
@@ -204,34 +197,35 @@ const styles = StyleSheet.create({
     marginLeft: Math.round(moderateScale(105, 0.625)),
     marginRight: Math.round(moderateScale(20, 0.0625)),
     marginTop: Math.round(moderateScale(70, 0.0625)),
-    marginBottom: Math.round(moderateScale(30, 0.25)),
+    marginBottom: Math.round(moderateScale(10, 0.25)),
   },
   addRemoveView: {
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "center",
-    marginBottom: 20,
   },
   iconView: {
-    marginRight: Math.round(verticalScale(30)),
-  },
-  treeNumRow: {
     flexDirection: "row",
     justifyContent: "center",
-    // backgroundColor: "black",
+    paddingBottom: Math.round(verticalScale(20)),
   },
-  treeNumCol: {
-    // backgroundColor: "white",
+  oneBox: {
+    position: "relative",
+    flexDirection: "row",
+    alignSelf: "center",
+    marginBottom: Math.round(verticalScale(20)),
   },
   numTrees: {
+    position: "absolute",
+    top: Math.round(moderateScale(-5, 3)),
+    left: Math.round(verticalScale(30, 0.3)),
     color: COLORS.forestgreen,
-    right: 30,
     fontFamily: "Poppins-bold",
-    textAlign: "right",
-    fontSize: Math.round(moderateScale(90, 2)),
+    fontSize: Math.round(moderateScale(95, 2)),
   },
   treeImg: {
     height: Math.round(verticalScale(100)),
     width: Math.round(verticalScale(100)),
+    right: Math.round(verticalScale(30, 0.3)),
     resizeMode: "contain",
   },
   addIcon: {
@@ -263,8 +257,6 @@ const styles = StyleSheet.create({
   horizontal_line: {
     borderBottomColor: COLORS.forestgreen,
     borderBottomWidth: 0.5,
-    marginTop: Math.round(moderateScale(5, 0.625)),
-    marginBottom: Math.round(moderateScale(5, 0.625)),
   },
   itemValue: {
     color: COLORS.forestgreen,
