@@ -1,9 +1,10 @@
 {
   "made possible with": "possivel através do",
-    
+
   "SIGN IN": "FAZER LOGIN",
   "PROFILE": "PERFIL",
   "FLIGHT NUMBER": "NÚMERO DE VÔO",
+  "Flight number": "Número de vôo",
   "Please enter a valid flight number": "Por favor, adicione um número de vôo válido",
   "DONATE WITH NO FLIGHT NUMBER": "DOAR SEM NÚMERO DE VÔO",
 
@@ -70,6 +71,10 @@
   "CALCULATE CARBON FOOTPRINT": "CALCULAR EMISSÃO DE CARBONO",
 
   "METRIC TONS": "TONELADAS",
+  "tons of CO2": "toneladas de CO2",
+  "Your flight's CO2 emission will be neutralized in": "a emissäo de co2 do seu vôo serà neutralizada em",
+  "year": "ano",
+
   "WE CAN FIX THIS TOGETHER": "JUNTOS, PODEMOS RESOLVER ISSO",
   "PLANT TREES": "PLANTAR ÁRVORES",
 

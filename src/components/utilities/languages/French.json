@@ -1,9 +1,10 @@
 {
   "made possible with": "rendu possible grâce à",
-    
+
   "SIGN IN": "SE CONNECTER",
   "PROFILE": "PROFIL",
   "FLIGHT NUMBER": "NUMÉRO DE VOL",
+  "Flight Number": "Numèro de vol",
   "Please enter a valid flight number": "Veuillez saisir un numéro de vol valide",
   "DONATE WITH NO FLIGHT NUMBER": "FAIRE UN DON SANS NUMÉRO DE VOL",
 
@@ -62,19 +63,23 @@
   "via": "via",
   "ECONOMY": "ÉCONOMIQUE",
   "BUSINESS": "BUSINESS",
-  "FIRST CLASS": "PREMIÈRE CLASSE",  
+  "FIRST CLASS": "PREMIÈRE CLASSE",
   "FLIGHT": "VOL",
   "DISTANCE": "DISTANCE",
   "AIRPLANE": "AVION",
   "CLASS": "CLASSE",
-  "CALCULATE CARBON FOOTPRINT": "CALCULER L'EMPREINTE CARBONE", 
+  "CALCULATE CARBON FOOTPRINT": "CALCULER L'EMPREINTE CARBONE",
 
   "METRIC TONS": "TONNES MÉTRIQUES",
+  "tons of CO2": "tonnes de CO2",
+  "Your flight's CO2 emission will be neutralized in": "les émissions de CO2 de votre vol seront neutralisées en 1 an",
+  "year": "an",
+
   "WE CAN FIX THIS TOGETHER": "NOUS POUVONS RÉSOUDRE ÇA ENSEMBLE",
   "PLANT TREES": "PLANTER DES ARBRES",
 
   "YEARS TO COMPENSATE": "ANNÉES POUR COMPENSER",
-  "TOTAL TREES": "NOMBRE TOTAL D'ARBRES",   
+  "TOTAL TREES": "NOMBRE TOTAL D'ARBRES",
   "PRICE": "PRIX",
   "CHECKOUT": "FINALISER",
 

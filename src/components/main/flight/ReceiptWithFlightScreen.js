@@ -54,7 +54,7 @@ export default class ReceiptWithFlightScreen extends React.Component {
     return (
       <View style={styles.backDrop}>
         <View style={styles.innerView}>
-          <View style={styles.topInnerView}>
+          <View>
             <Text style={styles.flightNumberLabel}>
               Flight Number {""}
               <Text style={{ fontFamily: "Poppins-bold" }}>
@@ -64,66 +64,65 @@ export default class ReceiptWithFlightScreen extends React.Component {
             <Text style={styles.header}>
               The first step was taken. The rest is up to us!
             </Text>
-            <Image source={leaf} style={styles.leaf_img} />
           </View>
-          <View style={styles.bottomInnerView}>
-            <List>
-              {/* Flight Distance */}
-              <ListItem>
-                <Left>
-                  <Text style={styles.itemTitle}>Flight Distance (km)</Text>
-                </Left>
-                <Right>
-                  <Text style={styles.itemValue}>{distance}</Text>
-                </Right>
-              </ListItem>
-              {/* Carbon FootPrint */}
-              <ListItem>
-                <Left>
-                  <Text style={styles.itemTitle}>
-                    Carbon Footprint{"\n"}(Metric Tons)
-                  </Text>
-                </Left>
-                <Right>
-                  <Text style={styles.itemValue}>{footprint}</Text>
-                </Right>
-              </ListItem>
-              {/* Number of planted Trees */}
-              <ListItem>
-                <Left>
-                  <Text style={styles.itemTitle}>Planted Trees</Text>
-                </Left>
-                <Right>
-                  <Text style={styles.itemValue}>{treeNum}</Text>
-                </Right>
-              </ListItem>
-              {/* Years To Compensation*/}
-              <ListItem>
-                <Left>
-                  <Text style={styles.itemTitle}>Years to Compensate</Text>
-                </Left>
-                <Right>
-                  <Text style={styles.itemValue}>{years}</Text>
-                </Right>
-              </ListItem>
-              {/* Donation Amount */}
-              <ListItem>
-                <Left>
-                  <Text style={styles.itemTitle}>Donation Amount</Text>
-                </Left>
-                <Right>
-                  <Text style={styles.itemValue}>${total_cost}</Text>
-                </Right>
-              </ListItem>
-            </List>
-            {/* Pay With Stripe Button */}
-            <TouchableOpacity
-              onPress={() => this.handleStripePayment()}
-              disabled={this.state.isLoading}
-              style={styles.submitButton}>
-              <Text style={styles.submitLabel}>Pay With Stripe</Text>
-            </TouchableOpacity>
-          </View>
+
+          <Image source={leaf} style={styles.leaf_img} />
+          <List>
+            {/* Flight Distance */}
+            <ListItem>
+              <Left>
+                <Text style={styles.itemTitle}>Flight Distance (km)</Text>
+              </Left>
+              <Right>
+                <Text style={styles.itemValue}>{distance}</Text>
+              </Right>
+            </ListItem>
+            {/* Carbon FootPrint */}
+            <ListItem>
+              <Left>
+                <Text style={styles.itemTitle}>
+                  Carbon Footprint{"\n"}(Metric Tons)
+                </Text>
+              </Left>
+              <Right>
+                <Text style={styles.itemValue}>{footprint}</Text>
+              </Right>
+            </ListItem>
+            {/* Number of planted Trees */}
+            <ListItem>
+              <Left>
+                <Text style={styles.itemTitle}>Planted Trees</Text>
+              </Left>
+              <Right>
+                <Text style={styles.itemValue}>{treeNum}</Text>
+              </Right>
+            </ListItem>
+            {/* Years To Compensation*/}
+            <ListItem>
+              <Left>
+                <Text style={styles.itemTitle}>Years to Compensate</Text>
+              </Left>
+              <Right>
+                <Text style={styles.itemValue}>{years}</Text>
+              </Right>
+            </ListItem>
+            {/* Donation Amount */}
+            <ListItem>
+              <Left>
+                <Text style={styles.itemTitle}>Donation Amount</Text>
+              </Left>
+              <Right>
+                <Text style={styles.itemValue}>${total_cost}</Text>
+              </Right>
+            </ListItem>
+          </List>
+          {/* Pay With Stripe Button */}
+          <TouchableOpacity
+            onPress={() => this.handleStripePayment()}
+            disabled={this.state.isLoading}
+            style={styles.submitButton}>
+            <Text style={styles.submitLabel}>Pay With Stripe</Text>
+          </TouchableOpacity>
         </View>
         <MenuBar navigation={this.props.navigation} />
       </View>
@@ -133,40 +132,31 @@ export default class ReceiptWithFlightScreen extends React.Component {
 
 const styles = StyleSheet.create({
   backDrop: {
-    flex: 1,
+    height: "100%",
     flexDirection: "row",
     backgroundColor: COLORS.sandy,
   },
   innerView: {
     flex: 1,
     flexDirection: "column",
+    justifyContent: "space-evenly",
     marginLeft: Math.round(moderateScale(105, 0.625)),
     marginRight: Math.round(moderateScale(20, 0.0625)),
-    marginTop: Math.round(moderateScale(70, 0.0625)),
-    marginBottom: Math.round(moderateScale(30, 0.25)),
-  },
-  topInnerView: {
-    flex: 1,
-    justifyContent: "space-evenly",
-    // backgroundColor: "black",
-  },
-  bottomInnerView: {
-    flex: 1,
-    justifyContent: "space-evenly",
-    // backgroundColor: "red",
+    marginTop: Math.round(moderateScale(70, 0.625)),
+    marginBottom: Math.round(moderateScale(50, 0.25)),
   },
   flightNumberLabel: {
     color: COLORS.forestgreen,
     textAlign: "center",
     fontFamily: "Poppins",
-    fontSize: Math.round(moderateScale(17, 0.0625)),
+    fontSize: Math.round(moderateScale(14, 0.0625)),
     marginBottom: Math.round(verticalScale(5)),
   },
   header: {
     color: COLORS.forestgreen,
     textAlign: "center",
     fontFamily: "Poppins-bold",
-    fontSize: Math.round(moderateScale(18, 0.0625)),
+    fontSize: Math.round(moderateScale(14, 0.0625)),
     paddingBottom: Math.round(verticalScale(10)),
   },
   leaf_img: {

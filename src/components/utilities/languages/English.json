@@ -1,9 +1,10 @@
 {
   "made possible with": "made possible with",
-    
+
   "SIGN IN": "SIGN IN",
   "PROFILE": "PROFILE",
   "FLIGHT NUMBER": "FLIGHT NUMBER",
+  "Flight Number": "Flight Number",
   "Please enter a valid flight number": "Please enter a valid flight number",
   "DONATE WITH NO FLIGHT NUMBER": "DONATE WITH NO FLIGHT NUMBER",
 
@@ -70,6 +71,10 @@
   "CALCULATE CARBON FOOTPRINT": "CALCULATE CARBON FOOTPRINT",
 
   "METRIC TONS": "METRIC TONS",
+  "tons of CO2": "tons of CO2",
+  "Your flight's CO2 emission will be neutralized in": "Your flight's CO2 emission will be neutralized in",
+  "year": "year",
+
   "WE CAN FIX THIS TOGETHER": "WE CAN FIX THIS TOGETHER",
   "PLANT TREES": "PLANT TREES",
 

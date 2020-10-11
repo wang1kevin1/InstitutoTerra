@@ -4,6 +4,7 @@
   "SIGN IN": "LOG IN",
   "PROFILE": "PROFIEL",
   "FLIGHT NUMBER": "VLUCHTNUMMER",
+  "Flight number": "Vluchtnummer",
   "Please enter a valid flight number": "Vul alsjeblieft een legitiem vluchtnummer in",
   "DONATE WITH NO FLIGHT NUMBER": "SCHENKEN ZONDER VLUCHTNUMMER",
 
@@ -31,7 +32,7 @@
 
   "Save Changes": "Veranderingen Opslaan",
   "Error changing name: ": "Er is iets misgegaan bij het veranderen van de naam: ",
-  
+
   "Confirm Email": "Bevestig Email",
   "Please enter your verification code:": "Vul uw bevestigingscode in:",
   "Verify New Email": "Bevestig uw Nieuwe Email",
@@ -43,7 +44,7 @@
   "Error changing email: ": "Er is iets misgegaan bij het veranderen van uw email: ",
   "Email changed successfully": "Email succesvol veranderd",
   "Error verifying email: ": "Er is iets misgegaan bij het bevestigen van uw email: ",
-  
+
   "Current Password": "Huidig Wachtwoord",
   "New Password": "Nieuw Wachtwoord",
   "Confirm New Password": "Bevestig Nieuw Wachtwoord",
@@ -54,7 +55,7 @@
   "Reset Password": "Wijzig wachtwoord",
   "Your password has been reset": "Uw wachtwoord is gewijzigd",
   "Confirm Password Reset": "Bevestig wijziging van uw wachtwoord",
- 
+
   "RETRIEVING FLIGHT": "ONTVANGEN VLUCHT",
   "ONE WAY": "ENKEL",
   "ROUND TRIP": "RETOUR",
@@ -81,10 +82,10 @@
   "ROUTE": "ROUTE",
   "CARBON FOOTPRINT (METRIC TONS)": "CO2-VOETAFDRUK (METRIC TONS)",
   "PAY WITH": "BETALEN MET ",
-  
+
   "Thank you!": "Dankuwel!",
   "SHARE": "DELEN",
-  
+
   "Hi": "Hoi",
   "TOTAL TREES PLANTED": "TOTALE BOMEN GEPLANT",
   "CARBON COMPENSATED": "CO2 GECOMPENSEERD"

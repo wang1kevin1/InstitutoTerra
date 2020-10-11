@@ -1,108 +1,60 @@
 import React from "react";
-
 import {
   View,
   Text,
   StyleSheet,
-  Dimensions,
   TouchableOpacity,
+  Image,
+  PickerIOSComponent,
 } from "react-native";
 
-import { Ionicons, FontAwesome, Feather } from "@expo/vector-icons";
-
-import Dash from "react-native-dash";
-
-import COLORS from "../../../assets/Colors.js";
-
-import MenuBar from "../MenuBar.js";
-
+import { verticalScale, moderateScale } from "react-native-size-matters";
+import { List, ListItem, Left, Right } from "native-base";
+import { Ionicons } from "@expo/vector-icons";
 import Auth from "@aws-amplify/auth";
-
 import i18n from "i18n-js";
 
 import * as CONSTANTS from "../../utilities/Constants.js";
+import COLORS from "../../../assets/Colors.js";
+import MenuBar from "../MenuBar.js";
+import { withTheme } from "react-native-elements";
+
+const tree = require("../../../assets/images/img_checkout_tree.png");
 
 export default class CheckoutWithFlightScreen extends React.Component {
   state = {
-    isAuthenticated: "false",
-    data: [],
-    treeNum: 0,
-    total_cost: 0,
-    color: COLORS.grey,
+    treeNum: 1,
+    total_cost: CONSTANTS.COST,
   };
 
   componentDidMount = () => {
-    //set state parameters
-    this.setState({
-      tripIndex: this.props.navigation.getParam("tripIndex", "tripIndex"),
-      distance: this.props.navigation.getParam("distance", "distanceTraveled"),
-      depCityName: this.props.navigation.getParam(
-        "depCityName",
-        "departureCity"
-      ),
-      arrCityName: this.props.navigation.getParam("arrCityName", "arrivalCity"),
-      footprint: this.props.navigation.getParam("footprint", "carbonEmissions"),
-      flightChars: this.props.navigation.getParam("flightChars", "chars"),
-      flightNums: this.props.navigation.getParam("flightNums", "nums"),
-    });
-    this.checkAuth();
+    let navigation_props = {
+      tripIndex: this.props.navigation.getParam("isTwoWay", undefined),
+      distance: this.props.navigation.getParam("distance", undefined),
+      depCityName: this.props.navigation.getParam("depCityName", undefined),
+      arrCityName: this.props.navigation.getParam("arrCityName", undefined),
+      footprint: this.props.navigation.getParam("footprint", undefined),
+      flightChars: this.props.navigation.getParam("flightChars", undefined),
+      flightNums: this.props.navigation.getParam("flightNums", undefined),
+    };
+
+    this.setState(navigation_props);
   };
-
-  // Checks if a user is logged in
-  async checkAuth() {
-    await Auth.currentAuthenticatedUser({ bypassCache: true })
-      .then(() => {
-        console.log("A user is logged in");
-        this.setState({ isAuthenticated: true });
-      })
-      .catch((err) => {
-        console.log("Nobody is logged in");
-        this.setState({ isAuthenticated: false });
-      });
-  }
-
-  // Sends user to sign up or profile depending on Auth state
-  handleUserRedirect() {
-    if (this.state.isAuthenticated) {
-      this.props.navigation.navigate("UserProfile");
-    } else {
-      this.props.navigation.navigate("SignIn");
-    }
-  }
-
-  // handle color variants
-  colorVariant() {
-    switch (this.state.treeNum) {
-      case 0:
-        return COLORS.grey;
-      case 1:
-        return COLORS.greygreen1;
-      case 2:
-        return COLORS.greygreen2;
-      case 3:
-        return COLORS.greygreen3;
-      case 4:
-        return COLORS.greygreen4;
-      default:
-        return COLORS.lightgreen;
-    }
-  }
 
   //handle checkout redirect
   handleCheckout() {
+    let navigation_props = {
+      distance: this.state.distance,
+      footprint: this.state.footprint,
+      treeNum: this.state.treeNum,
+      years: this.calcYears(),
+      total_cost: this.state.total_cost,
+      flightChars: this.state.flightChars,
+      flightNums: this.state.flightNums,
+    };
+
     if (this.state.treeNum != 0) {
-      this.props.navigation.navigate("ReceiptWithFlight", {
-        tripIndex: this.state.tripIndex,
-        distance: this.state.distance,
-        depCityName: this.state.depCityName,
-        arrCityName: this.state.arrCityName,
-        footprint: this.state.footprint,
-        treeNum: this.state.treeNum,
-        years: this.calcYears(),
-        total_cost: this.state.total_cost,
-        flightChars: this.state.flightChars,
-        flightNums: this.state.flightNums,
-      });
+      this.props.navigation.navigate("ReceiptWithFlight", navigation_props);
     }
   }
 
@@ -116,7 +68,7 @@ export default class CheckoutWithFlightScreen extends React.Component {
 
   // handle remove
   handleRemove() {
-    if (this.state.treeNum != 0) {
+    if (this.state.treeNum > 1) {
       this.setState({
         treeNum: this.state.treeNum - 1,
         total_cost: this.state.total_cost - CONSTANTS.COST,
@@ -124,12 +76,29 @@ export default class CheckoutWithFlightScreen extends React.Component {
     }
   }
 
-  //Calculate years to neutralize emission footprint
+  // Calculate years to neutralize emission footprint
   calcYears() {
     let tempY = this.state.footprint * 1000;
     let factor = this.state.treeNum * 18;
     tempY /= factor;
-    return Math.round(tempY);
+
+    if (tempY >= 1) {
+      return Math.round(tempY);
+    } else {
+      return tempY.toFixed(2);
+    }
+  }
+
+  getYears(years) {
+    if (years > 1) {
+      return `${years} years`;
+    } else if (years === 1) {
+      return `${years} year`;
+    } else if (years < 0.08) {
+      return `a few days`;
+    } else {
+      return `${years * 12} months`;
+    }
   }
 
   render() {
@@ -142,121 +111,87 @@ export default class CheckoutWithFlightScreen extends React.Component {
     } = this.state;
 
     const years = this.calcYears();
-    const color = this.colorVariant();
 
     return (
-      <View style={styles.container}>
-        <View style={styles.containerTop}>
-          <View style={styles.buttonBarNav}>
-            {/*Navigation Buttons*/}
-            <Ionicons
-              style={styles.navigationIcon}
-              name="md-arrow-back"
-              onPress={() => this.props.navigation.goBack()}
-            />
-            <Text style={styles.midBlueText}>
-              {i18n.t("FLIGHT")} {flightChars} {flightNums}
+      <View style={styles.backDrop}>
+        <View style={styles.innerView}>
+          {/* Flight Number and Carbon Emissions */}
+          <View>
+            <Text style={styles.paragraph}>
+              {i18n.t("Flight Number")} {flightChars} {flightNums}
             </Text>
-            <FontAwesome
-              style={styles.navigationIcon}
-              name="user-circle-o"
-              onPress={() => this.handleUserRedirect()}
-            />
+            <Text style={styles.emissions}>{footprint}</Text>
+            <Text style={styles.emissionsUnits}>{i18n.t("tons of CO2")}</Text>
           </View>
-          <View style={styles.topText}>
-            {/*CO2 footprint*/}
-            <Text style={styles.bigGreyText}>{footprint}</Text>
-            <View style={styles.alignSubScript}>
-              <Text style={styles.midGreyText}>{i18n.t("METRIC TONS")} CO</Text>
-              <Text
-                style={{
-                  fontSize: 10,
-                  lineHeight: 30,
-                  color: COLORS.darkgrey,
-                }}>
-                2
+
+          {/* Number of Trees */}
+          <View height={Math.round(moderateScale(150, 0.3))}>
+            <Text style={styles.numTrees}>{treeNum}</Text>
+          </View>
+
+          {/* Add or Remove Trees */}
+          <View style={styles.addRemoveView}>
+            {/* Minus Icon */}
+            <View style={styles.iconView}>
+              <View style={{ marginRight: Math.round(moderateScale(30, 0.3)) }}>
+                <Ionicons
+                  style={styles.removeIcon}
+                  name="ios-remove-circle"
+                  onPress={() => this.handleRemove()}
+                />
+              </View>
+              {/* Add Icon */}
+              <View>
+                <Ionicons
+                  style={styles.addIcon}
+                  name="ios-add-circle"
+                  onPress={() => this.handleAdd()}
+                />
+              </View>
+            </View>
+
+            <View>
+              <Text style={styles.paragraph}>
+                {i18n.t("Your flight's CO2 emission will be neutralized in")}{" "}
+                <Text style={{ fontWeight: "bold" }}>
+                  {this.getYears(years)}
+                </Text>
               </Text>
             </View>
           </View>
-          <View style={styles.iterateGroup}>
-            {/*Subtract tree*/}
+
+          {/* Number of Trees and Total Cost */}
+
+          <View style={styles.horizontal_line}></View>
+          <View>
+            <List>
+              <ListItem>
+                <Left>
+                  <Text style={styles.paragraph}>Number of Trees</Text>
+                </Left>
+                <Right>
+                  <Text style={styles.itemValue}>{treeNum}</Text>
+                </Right>
+              </ListItem>
+              <ListItem>
+                <Left>
+                  <Text style={styles.paragraph}>Total Cost</Text>
+                </Left>
+                <Right>
+                  <Text style={styles.itemValue}>${total_cost}</Text>
+                </Right>
+              </ListItem>
+            </List>
+          </View>
+
+          {/* Navigate to ReceiptWithFlight */}
+          <View>
             <TouchableOpacity
-              style={[
-                styles.iterators,
-                {
-                  backgroundColor:
-                    this.state.treeNum == 0 ? COLORS.grey : COLORS.lightgreen,
-                },
-              ]}
-              onPress={() => this.handleRemove()}>
-              <Feather
-                style={[
-                  styles.iteratorIcon,
-                  {
-                    color:
-                      this.state.treeNum == 0 ? COLORS.white : COLORS.lightblue,
-                  },
-                ]}
-                name="minus"
-              />
-            </TouchableOpacity>
-            {/*Tree counter*/}
-            <View style={[styles.treeCounter, { backgroundColor: color }]}>
-              <Text style={styles.treeCountText}>{treeNum}</Text>
-            </View>
-            {/*Add tree*/}
-            <TouchableOpacity
-              style={[styles.iterators, { backgroundColor: COLORS.lightgreen }]}
-              onPress={() => this.handleAdd()}>
-              <Feather
-                style={[styles.iteratorIcon, { color: COLORS.lightblue }]}
-                name="plus"
-              />
+              style={styles.submitButton}
+              onPress={() => this.handleCheckout()}>
+              <Text style={styles.submitLabel}>Checkout</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.bottomText}>
-            {/*Years to neutralize carbon footprint*/}
-            <Text style={styles.midBlueText}>
-              {i18n.t("YEARS TO COMPENSATE")}
-            </Text>
-            {years != Infinity && (
-              <Text style={styles.bigBlueText}>{years}</Text>
-            )}
-            {years == Infinity && (
-              <Text style={styles.bigBlueText}>&#x2014;</Text>
-            )}
-          </View>
-          <Dash
-            style={styles.dashedLine}
-            dashColor={COLORS.lightgrey}
-            dashGap={0}
-          />
-          <View style={styles.receiptContainer}>
-            <View style={styles.textRow}>
-              {/*Total trees donated in transaction*/}
-              <Text style={styles.receiptTextLeft}>
-                {i18n.t("TOTAL TREES")}
-              </Text>
-              <Text style={styles.receiptTextRight}>{treeNum}</Text>
-            </View>
-            <View style={styles.textRow}>
-              {/*Cost of transaction*/}
-              <Text style={styles.receiptTextLeft}>{i18n.t("PRICE")}</Text>
-              <Text style={styles.receiptTextRight}>${total_cost}</Text>
-            </View>
-          </View>
-          {/*Navigate to checkout page*/}
-          <TouchableOpacity
-            style={[
-              styles.bottomGreenButton,
-              {
-                backgroundColor:
-                  this.state.treeNum == 0 ? COLORS.grey : COLORS.lightgreen,
-              },
-            ]}
-            onPress={() => this.handleCheckout()}>
-            <Text style={styles.buttonText}>{i18n.t("CHECKOUT")}</Text>
-          </TouchableOpacity>
         </View>
         <MenuBar navigation={this.props.navigation} />
       </View>
@@ -264,132 +199,86 @@ export default class CheckoutWithFlightScreen extends React.Component {
   }
 }
 
-const { width, height } = Dimensions.get("screen");
-
 const styles = StyleSheet.create({
-  container: {
+  backDrop: {
+    flex: 1,
+    flexDirection: "row",
+    backgroundColor: COLORS.sandy,
+  },
+  innerView: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: COLORS.white,
-    height: height,
-    width: width,
+    justifyContent: "space-evenly",
+    marginLeft: Math.round(moderateScale(105, 0.625)),
+    marginRight: Math.round(moderateScale(20, 0.0625)),
+    marginTop: Math.round(moderateScale(70, 0.0625)),
+    marginBottom: Math.round(moderateScale(10, 0.25)),
   },
-  containerTop: {
-    paddingLeft: width * 0.05,
-    paddingRight: width * 0.05,
-    paddingTop: height * 0.06,
-    marginBottom: height * 0.1,
-    backgroundColor: COLORS.white,
-  },
-  buttonBarNav: {
-    flexDirection: "row",
-    height: height * 0.05,
-    justifyContent: "space-between",
-    marginBottom: height * 0.03,
-  },
-  topText: {
-    alignItems: "center",
-  },
-  bottomText: {
-    alignItems: "center",
-  },
-  alignSubScript: {
+  addRemoveView: {
+    flexDirection: "column",
     justifyContent: "center",
-    flexDirection: "row",
   },
-  midBlueText: {
-    fontFamily: "Montserrat",
-    fontSize: 14,
-    color: COLORS.lightblue,
-    alignItems: "center",
-    lineHeight: 30,
-  },
-  bigBlueText: {
-    fontFamily: "Montserrat-bold",
-    fontSize: 25,
-    color: COLORS.lightblue,
-    lineHeight: 30,
-  },
-  midGreyText: {
-    fontFamily: "Montserrat",
-    fontSize: 14,
-    color: COLORS.darkgrey,
-    lineHeight: 25,
-  },
-  bigGreyText: {
-    fontFamily: "Montserrat-bold",
-    fontSize: 20,
-    color: COLORS.darkgrey,
-    lineHeight: 25,
-  },
-  iterateGroup: {
+  iconView: {
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center",
-    height: height * 0.25,
+    paddingBottom: Math.round(verticalScale(20)),
   },
-  iterators: {
-    borderRadius: 5,
-    justifyContent: "center",
-    alignItems: "center",
-    width: width * 0.1,
-    aspectRatio: 1 / 1,
-  },
-  iteratorIcon: {
-    fontSize: 25,
-  },
-  treeCounter: {
-    marginLeft: width * 0.2,
-    marginRight: width * 0.2,
-    justifyContent: "center",
-    alignItems: "center",
-    width: width * 0.3,
-    aspectRatio: 3 / 4,
-    borderRadius: 25,
-  },
-  treeCountText: {
-    fontFamily: "Montserrat-bold",
-    color: COLORS.white,
-    fontSize: 50,
-  },
-  receiptContainer: {
-    marginBottom: height * 0.07,
-  },
-  receiptTextLeft: {
-    fontFamily: "Montserrat",
-    color: COLORS.darkgrey,
-    fontSize: 12,
-  },
-  receiptTextRight: {
-    fontFamily: "Montserrat-bold",
-    color: COLORS.darkgrey,
-    fontSize: 12,
-  },
-  dashedLine: {
-    width: "100%",
-    height: 1,
-    marginTop: height * 0.025,
-    marginBottom: height * 0.02,
-  },
-  textRow: {
+  oneBox: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: height * 0.02,
+    overflow: "hidden",
   },
-  bottomGreenButton: {
+  numTrees: {
+    color: COLORS.forestgreen,
+    textAlign: "center",
+    fontFamily: "Poppins-bold",
+    fontSize: Math.round(moderateScale(70, 2)),
+  },
+  addIcon: {
+    color: COLORS.forestgreen,
+    fontSize: Math.round(moderateScale(50, 0.9)),
+  },
+  removeIcon: {
+    color: COLORS.opaqueForestGreen,
+    fontSize: Math.round(moderateScale(50, 0.9)),
+  },
+  paragraph: {
+    color: COLORS.forestgreen,
+    textAlign: "center",
+    fontFamily: "Poppins",
+    fontSize: Math.round(moderateScale(12, 1.5)),
+  },
+  emissions: {
+    color: COLORS.forestgreen,
+    textAlign: "center",
+    fontFamily: "Poppins",
+    fontSize: Math.round(moderateScale(40, 0.125)),
+  },
+  emissionsUnits: {
+    color: COLORS.forestgreen,
+    textAlign: "center",
+    fontFamily: "Poppins",
+    fontSize: Math.round(moderateScale(14, 0.625)),
+  },
+  horizontal_line: {
+    borderBottomColor: COLORS.forestgreen,
+    borderBottomWidth: 0.5,
+  },
+  itemValue: {
+    color: COLORS.forestgreen,
+    fontFamily: "Poppins-bold",
+    fontSize: Math.round(moderateScale(14)),
+  },
+  submitButton: {
+    alignItems: "center",
     borderRadius: 10,
-    backgroundColor: COLORS.lightgreen,
-    height: height * 0.08,
-    justifyContent: "center",
-    alignItems: "center",
+    padding: Math.round(verticalScale(10)),
+    backgroundColor: COLORS.forestgreen,
   },
-  buttonText: {
-    fontFamily: "Montserrat-bold",
-    color: COLORS.darkgrey,
-    fontSize: 12,
-  },
-  navigationIcon: {
-    color: COLORS.grey,
-    fontSize: 30,
+  submitLabel: {
+    color: COLORS.sandy,
+    fontSize: Math.round(moderateScale(20, 0.5)),
+    fontFamily: "Poppins-bold",
+    padding: Math.round(moderateScale(10, 0.125)),
   },
 });
